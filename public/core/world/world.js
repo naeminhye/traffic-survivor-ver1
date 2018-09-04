@@ -192,11 +192,18 @@ WORLD.init = function() {
         boxMesh.receiveShadow = true;
         boxes.push(boxBody);
         boxMeshes.push(boxMesh);
-        // boxBody.addEventListener('collide', function(object) {
-        //     if(object.body.id == 0) 
-        //         console.log("Collided!!", object.body);
-        // });
+        boxBody.addEventListener('collide', function(object) {
+            // if(object.body.id == 0) 
+                // console.log("Collided!!", object.body);
+        });
     }
+
+    var planeGeometry = new THREE.PlaneBufferGeometry(50, 50, 50, 50); // vuong goc voi mat dat
+    // planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+    // planeGeometry.rotateX( - Math.PI / 2);
+    var planeMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+    var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+    WORLD.scene.add( plane );
 }
 
 function onWindowResize() {
@@ -225,6 +232,7 @@ WORLD.animate = function() {
         //     boxMeshes[i].position.copy(boxes[i].position);
         //     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
         // }
+        // WORLD.checkDangerArea();
     }
 
     controls.update(Date.now() - time);

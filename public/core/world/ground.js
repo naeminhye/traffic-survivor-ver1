@@ -15,3 +15,7 @@ WORLD.drawGround = function() {
     mesh.receiveShadow = true;
     WORLD.scene.add(mesh);
 }
+
+// WORLD.checkDangerArea = function() {
+//     console.log("controls.getObject().position:",controls.getObject().position)
+// }

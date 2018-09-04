@@ -151,8 +151,8 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_LEFT:
             case keys.KEY_A:
-                moveLeft = true; 
-                // rotateLeft = true;
+                // moveLeft = true; 
+                rotateLeft = true;
                 break;
             case keys.KEY_DOWN: // down
             case keys.KEY_S: // s
@@ -160,8 +160,8 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_RIGHT: // right
             case keys.KEY_D: // d
-                moveRight = true;
-                // rotateRight = true;
+                // moveRight = true;
+                rotateRight = true;
                 break;
             /** keep moving forward without holding key W or arrow up */
             case keys.KEY_Z:
@@ -191,8 +191,8 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_LEFT: // left
             case keys.KEY_A: // a
-                moveLeft = false;
-                // rotateLeft = false;
+                // moveLeft = false;
+                rotateLeft = false;
                 break;
             case keys.KEY_DOWN: // down
             case keys.KEY_S: // s
@@ -200,13 +200,13 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_RIGHT: // right
             case keys.KEY_D: // d
-                moveRight = false;
-                // rotateRight = false;
+                // moveRight = false;
+                rotateRight = false;
                 break;
         }
     };
 
-    document.addEventListener('mousemove', onMouseMove, false);
+    // document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('keyup', onKeyUp, false);
 
@@ -247,18 +247,6 @@ var PointerLockControls = function (camera, cannonBody) {
             inputVelocity.x = velocityFactor * delta;
         }
 
-        // /** Rotation */
-        // if(rotateLeft) {
-        //     // yawObject.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-        //     pitchObject.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-        // }
-        // else if(rotateRight) {
-        //     // player.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-        //     // yawObject.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-        //     pitchObject.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-        //     console.log("rotate right");
-        // }
-
         // Convert velocity to world coordinates
         euler.x = pitchObject.rotation.x;
         euler.y = yawObject.rotation.y;
@@ -272,6 +260,14 @@ var PointerLockControls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
 
         yawObject.position.copy(cannonBody.position);
+
+        /** Rotation */
+        if(rotateLeft) {
+            yawObject.rotation.y += rotateAngle;
+        }
+        else if(rotateRight) {
+            yawObject.rotation.y -= rotateAngle;
+        }
     };
 };
 
