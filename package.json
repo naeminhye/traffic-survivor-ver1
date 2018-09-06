@@ -1,5 +1,5 @@
 {
-  "name": "traffic-survivor-ver1  ",
+  "name": "traffic-survivor-ver1",
   "version": "1.0.0",
   "description": "Traffic Survivor VR WebGame using three.js and WebVR",
   "main": "app.js",
