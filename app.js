@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
+var http = require('http');
 var io = require('socket.io')(http);
 // var world = require('./js/server_world');
 
@@ -44,6 +44,8 @@ io.on('connection', function(socket){
 //     console.log( "Listening on " + ip_address + ", server_port " + port );
 // });
 
-http.listen(process.env.OPENSHIFT_NODEJS_PORT || 3000, function(){
+var server = http.createServer(app);
+
+server.listen(process.env.PORT || 3000, function(){
    console.log('listening on *: 3000');
 });
