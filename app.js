@@ -2,19 +2,19 @@ var express = require('express');
 var app = express();
 var http = require('http');
 // var io = require('socket.io')(http);
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://13.231.255.77/traffic-survivor', { useNewUrlParser: true });
-//Ép Mongoose sử dụng thư viện promise toàn cục
-mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://13.231.255.77/traffic-survivor', { useNewUrlParser: true });
+// //Ép Mongoose sử dụng thư viện promise toàn cục
+// mongoose.Promise = global.Promise;
 
-mongoose.connection.once('open', function() {
-    console.log("[Success] Database connected.");
-}).on('error', function(e) {
-    console.log("[Error]", e);
-})
+// mongoose.connection.once('open', function() {
+//     console.log("[Success] Database connected.");
+// }).on('error', function(e) {
+//     console.log("[Error]", e);
+// })
 
 // Handle connection
 // io.on('connection', function(socket){
