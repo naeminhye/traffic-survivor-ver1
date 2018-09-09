@@ -11,7 +11,9 @@ var geometry, material, mesh;
 var controls, time = Date.now();
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
-var dangerZoneBBox = null;
+var dangerZoneBBox = null;                                   
+const objs = [];
+var clock = new THREE.Clock();
 
 var blocker = document.getElementById('blocker');
 var instructions = document.getElementById('instructions');
@@ -117,7 +119,7 @@ WORLD.initCannon = function() {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(0, 1, 100);
+    sphereBody.position.set(0, 1, 10);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -162,7 +164,7 @@ WORLD.init = function() {
     controls = new PointerLockControls(WORLD.camera, sphereBody);
     WORLD.player = controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(0, 1, 100);
+    WORLD.player.position.set(0, 1, 10);
 
     WORLD.scene.updateMatrixWorld(true);
 
@@ -245,6 +247,83 @@ WORLD.init = function() {
     var meshBody = addPhysicalBody(mesh, { mass: 5 });
     WORLD.world.add(meshBody);
 
+    // Model
+	
+	// var jsonLoader = new THREE.JSONLoader();
+    // jsonLoader.load( "models/android-animations.js", addModelToScene );
+    // model
+    // load fbx model and texture            
+    const loader = new THREE.FBXLoader();
+    loader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
+        // model is a THREE.Group (THREE.Object3D)                              
+        const mixer = new THREE.AnimationMixer(object);
+        // animations is a list of THREE.AnimationClip                          
+        mixer.clipAction(object.animations[0]).play();
+
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+                child.scale.set(.1,.1,.1)
+                child.position.set(10, 0, -10);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+
+    loader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+                child.scale.set(.025,.025,.025)
+                child.position.set(-10, 0, -10);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+
+    loader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+                child.scale.set(.025,.025,.025)
+                child.position.set(-10, 0, -20);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+
+    loader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+                child.scale.set(.1,.1,.1)
+                child.position.set(-20, 0, -20);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+
+
 }
 
 function onWindowResize() {
@@ -278,12 +357,25 @@ WORLD.animate = function() {
     else {
         isDangerous = false;
     }
-
+    // animation with THREE.AnimationMixer.update(timedelta)                
+    objs.forEach(({mixer}) => {mixer.update(clock.getDelta());});
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
 }
+
+// function addModelToScene( geometry, materials ) 
+// {
+// 	// for preparing animation
+// 	for (var i = 0; i < materials.length; i++)
+// 		materials[i].morphTargets = true;
+		
+// 	var material = new THREE.MeshFaceMaterial( materials );
+// 	mesh = new THREE.Mesh( geometry, material );
+// 	mesh.scale.set(10,10,10);
+// 	WORLD.scene.add( mesh );
+// }
 
 function addPhysicalBody(mesh, bodyOptions) {
     var shape;

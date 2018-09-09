@@ -1,13 +1,23 @@
 var express = require('express');
 var app = express();
 var http = require('http');
-var io = require('socket.io')(http);
-// var world = require('./js/server_world');
+// var io = require('socket.io')(http);
+var mongoose = require('mongoose');
 
 app.use(express.static(__dirname + '/public'));
 
+mongoose.connect('mongodb://13.231.255.77/traffic-survivor', { useNewUrlParser: true });
+//Ép Mongoose sử dụng thư viện promise toàn cục
+mongoose.Promise = global.Promise;
+
+mongoose.connection.once('open', function() {
+    console.log("[Success] Database connected.");
+}).on('error', function(e) {
+    console.log("[Error]", e);
+})
+
 // Handle connection
-io.on('connection', function(socket){
+// io.on('connection', function(socket){
     // console.log('a user connected');
 
     // var id = socket.id;
@@ -34,7 +44,7 @@ io.on('connection', function(socket){
     //     world.removePlayer( player );
     // });
 
-});
+// });
 
 // Handle environment changes
 // var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
