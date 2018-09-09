@@ -22,7 +22,8 @@ const keys = {
 var PointerLockControls = function (camera, cannonBody) {
 
     var eyeYPos = 2; // eyes are 2 meters above the ground
-    var velocityFactor = 0.2;
+    const INITIAL_SPEED = 0.2;
+    var velocityFactor = INITIAL_SPEED;
     var jumpVelocity = 20;
     var scope = this;
 
@@ -41,6 +42,7 @@ var PointerLockControls = function (camera, cannonBody) {
     var moveRight = false;
     var rotateLeft = false;
     var rotateRight = false;
+    var speedup = false;
 
     var canJump = false;
 
@@ -118,7 +120,9 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             /** accelerate */
             case keys.KEY_SHIFT:
-            // TODO: 
+                if(!speedup) {
+                    speedup = true;
+                }
                 break;
         }
     };
@@ -141,6 +145,9 @@ var PointerLockControls = function (camera, cannonBody) {
             case keys.KEY_D: // d
                 // moveRight = false;
                 rotateRight = false;
+                break;
+            case keys.KEY_SHIFT:
+                speedup = false;
                 break;
         }
     };
@@ -171,6 +178,9 @@ var PointerLockControls = function (camera, cannonBody) {
         var rotateAngle = Math.PI / 2 * 0.005;
 
         inputVelocity.set(0, 0, 0);
+        if(speedup) {
+            velocityFactor += 0.001;
+        }
 
         if (moveForward) {
             inputVelocity.z = -velocityFactor * delta;

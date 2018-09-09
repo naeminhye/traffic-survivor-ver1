@@ -1,5 +1,5 @@
 WORLD.drawGround = function() {
-    var floorTexture = new THREE.TextureLoader().load('./images/floor.jpg');
+    var floorTexture = new THREE.TextureLoader().load('./images/grasslight-big.jpg');
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(256, 256);
 

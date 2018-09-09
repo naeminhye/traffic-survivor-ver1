@@ -5,6 +5,8 @@ WORLD.camera = null;
 WORLD.scene = null;
 WORLD.renderer = null;
 WORLD.player = null;
+var target = new THREE.Vector3(20, 0, -50);
+var isDangerous = false;
 var geometry, material, mesh;
 var controls, time = Date.now();
 var dangerZoneMesh = null;
@@ -115,7 +117,7 @@ WORLD.initCannon = function() {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(0, 5, 0);
+    sphereBody.position.set(0, 1, 100);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -132,6 +134,7 @@ WORLD.init = function() {
     WORLD.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     WORLD.scene = new THREE.Scene();
+    WORLD.scene.background = new THREE.Color( 0xcce0ff );
     WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
 
     var ambient = new THREE.AmbientLight(0x111111);
@@ -159,8 +162,9 @@ WORLD.init = function() {
     controls = new PointerLockControls(WORLD.camera, sphereBody);
     WORLD.player = controls.getObject();
     WORLD.scene.add(WORLD.player);
-    // WORLD.player.position.set(0, 1, 0);
-    // WORLD.scene.updateMatrixWorld(true);
+    WORLD.player.position.set(0, 1, 100);
+
+    WORLD.scene.updateMatrixWorld(true);
 
     WORLD.drawGround();
 
@@ -179,9 +183,6 @@ WORLD.init = function() {
     var boxShape = new CANNON.Box(halfExtents);
     var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
     for (var i = 0; i < 2; i++) {
-        // var x = 20;
-        // var y = 1;
-        // var z = 20;
         var x = (Math.random()-0.5)*20;
         var y = 1 + (Math.random()-0.5)*1;
         var z = (Math.random()-0.5)*20;
@@ -204,14 +205,6 @@ WORLD.init = function() {
         });
     }
 
-    var planeGeometry = new THREE.PlaneBufferGeometry(50, 50, 2, 3); // vuong goc voi mat dat
-    // planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    planeGeometry.rotateX( - Math.PI / 2);
-    var planeMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-    var plane = new THREE.Mesh( planeGeometry, planeMaterial );
-    plane.position.set(0, 2, 0);
-    // WORLD.scene.add( plane );
-
     dangerZoneGeometry = new THREE.BoxGeometry(20, 20, 20);
     dangerZoneMaterial = new THREE.MeshBasicMaterial({
         color: 0xff0000,
@@ -228,6 +221,30 @@ WORLD.init = function() {
     dangerZoneMesh.geometry.computeBoundingBox();
     dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
     WORLD.scene.add(dangerZoneMesh);
+
+    // poles
+
+    var poleGeo = new THREE.CubeGeometry( .3, 60, .3 );
+    var poleMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x111111, shininess: 100, flatShading: false } );
+
+    var mesh = new THREE.Mesh( poleGeo, poleMat );
+    mesh.position.set(20, 0, -50);
+    mesh.receiveShadow = true;
+    mesh.castShadow = true;
+    WORLD.scene.add( mesh );
+    var meshBody = addPhysicalBody(mesh, { mass: 5 });
+    WORLD.world.add(meshBody);
+
+
+    var gg = new THREE.CubeGeometry( 1, 1, 1 );
+    var mesh = new THREE.Mesh( gg, poleMat );
+    mesh.position.set(20, 0, -50);
+    mesh.receiveShadow = true;
+    mesh.castShadow = true;
+    WORLD.scene.add( mesh );
+    var meshBody = addPhysicalBody(mesh, { mass: 5 });
+    WORLD.world.add(meshBody);
+
 }
 
 function onWindowResize() {
@@ -242,53 +259,64 @@ WORLD.animate = function() {
     if (controls.enabled) {
 
         WORLD.world.step(dt);
-
-        // // Update box positions
-        // for (var i = 0; i < boxes.length; i++) {
-        //     boxMeshes[i].position.copy(boxes[i].position);
-        //     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
-        // }
-        // 
     }
         
     controls.update(Date.now() - time);
-    if(dangerZoneBBox.containsPoint(controls.getObject().position)) {
-        console.log("You're in danger zone!");
+    var windStrength = Math.cos( time / 7000 ) * 20 + 40;
+    windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) )
+    windForce.normalize()
+    windForce.multiplyScalar( windStrength );
+
+    $("#message").text("You are now " + Math.round(WORLD.player.position.distanceTo(target)) + "m far away from the final place.");
+
+    if(dangerZoneBBox.containsPoint(WORLD.player.position)) {
+        if(!isDangerous) {
+            toastr.error("You're in the dangerous zone!");
+            isDangerous = true;
+        }
     }
+    else {
+        isDangerous = false;
+    }
+
+
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
 }
 
-// function addPhysicalBody(mesh, bodyOptions) {
-//     var shape;
-//     // create a Sphere shape for spheres and thorus knots,
-//     // a Box shape otherwise
-//     if (mesh.geometry.type === 'SphereGeometry' ||
-//     mesh.geometry.type === 'ThorusKnotGeometry') {
-//         mesh.geometry.computeBoundingSphere();
-//         shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
-//     }
-//     else {
-//         mesh.geometry.computeBoundingBox();
-//         var box = mesh.geometry.boundingBox;
-//         shape = new CANNON.Box(new CANNON.Vec3(
-//             (box.max.x - box.min.x) / 2,
-//             (box.max.y - box.min.y) / 2,
-//             (box.max.z - box.min.z) / 2
-//         ));
-//     }
+function addPhysicalBody(mesh, bodyOptions) {
+    var shape;
+    // create a Sphere shape for spheres and thorus knots,
+    // a Box shape otherwise
+    // if (mesh.geometry.type === 'SphereGeometry' ||
+    // mesh.geometry.type === 'ThorusKnotGeometry') {
+    //     mesh.geometry.computeBoundingSphere();
+    //     shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
+    // }
+    // else {
+    mesh.geometry.computeBoundingBox();
+    var box = mesh.geometry.boundingBox;
+    shape = new CANNON.Box(new CANNON.Vec3(
+        (box.max.x - box.min.x) / 2,
+        (box.max.y - box.min.y) / 2,
+        (box.max.z - box.min.z) / 2
+    ));
+    // }
 
-//     var body = new CANNON.Body(bodyOptions);
-//     body.addShape(shape);
-//     body.position.copy(mesh.position);
-//     body.computeAABB();
-//     // disable collision response so objects don't move when they collide
-//     // against each other
-//     body.collisionResponse = false;
-//     // keep a reference to the mesh so we can update its properties later
-//     body.mesh = mesh;
+    var body = new CANNON.Body(bodyOptions);
+    body.addShape(shape);
+    body.position.copy(mesh.position);
+    body.computeAABB();
+    // disable collision response so objects don't move when they collide
+    // against each other
+    body.collisionResponse = false;
+    // keep a reference to the mesh so we can update its properties later
+    body.mesh = mesh;
 
-//     WORLD.world.addBody(body);
-//     return body;
-// };
+    body.addEventListener('collide', function(object) {
+        if(object.body.id == 0) 
+            console.log("Collided!!", object.body);
+    });
+    return body;
+};
