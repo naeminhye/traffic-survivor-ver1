@@ -2,23 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <title>Three.js</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel=stylesheet href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/info.css">
 </head>
 <body>
+    <div id="infoButton"></div>
+    <div id="infoBox" title="Demo Information">This is a demo, part of a collection at</div>
+
     <div id="blocker">
         <div id="instructions">
             <span style="font-size:40px">Click to play</span>
-            <br /> (W,A,S,D = Move, SPACE = Jump, MOUSE = Look)
+            <br /> 
+            W, A = Move, S, D = Rotate, MOUSE = Look around
+            <br /> 
+            Z = Keep Moving Forward, X = Stop Moving
         </div>
     </div>
+    <div class="info">
+        <div id="message"></div>
+    </div>
+
+    <!-- Code to display an information button and box when clicked. -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="js/info.js"></script>
+
+
     <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.min.js'></script> -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/96/three.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js'></script>
     <script src='https://threejs.org/examples/js/renderers/Projector.js'></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
     <script src="core/controls/PointerLockControls.js"></script>
     <script src="core/world/world.js"></script>

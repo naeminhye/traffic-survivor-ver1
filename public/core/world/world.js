@@ -4,8 +4,12 @@ WORLD.world = null;
 WORLD.camera = null;
 WORLD.scene = null;
 WORLD.renderer = null;
+WORLD.player = null;
 var geometry, material, mesh;
 var controls, time = Date.now();
+var dangerZoneMesh = null;
+var dangerZoneGeometry = null;
+var dangerZoneBBox = null;
 
 var blocker = document.getElementById('blocker');
 var instructions = document.getElementById('instructions');
@@ -153,8 +157,10 @@ WORLD.init = function() {
     WORLD.scene.add(light);
 
     controls = new PointerLockControls(WORLD.camera, sphereBody);
-    WORLD.scene.add(controls.getObject());
-    console.log("player:", controls.getObject())
+    WORLD.player = controls.getObject();
+    WORLD.scene.add(WORLD.player);
+    // WORLD.player.position.set(0, 1, 0);
+    // WORLD.scene.updateMatrixWorld(true);
 
     WORLD.drawGround();
 
@@ -194,16 +200,34 @@ WORLD.init = function() {
         boxMeshes.push(boxMesh);
         boxBody.addEventListener('collide', function(object) {
             // if(object.body.id == 0) 
-                // console.log("Collided!!", object.body);
+            //     console.log("Collided!!", object.body);
         });
     }
 
-    var planeGeometry = new THREE.PlaneBufferGeometry(50, 50, 50, 50); // vuong goc voi mat dat
+    var planeGeometry = new THREE.PlaneBufferGeometry(50, 50, 2, 3); // vuong goc voi mat dat
     // planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    // planeGeometry.rotateX( - Math.PI / 2);
+    planeGeometry.rotateX( - Math.PI / 2);
     var planeMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
     var plane = new THREE.Mesh( planeGeometry, planeMaterial );
-    WORLD.scene.add( plane );
+    plane.position.set(0, 2, 0);
+    // WORLD.scene.add( plane );
+
+    dangerZoneGeometry = new THREE.BoxGeometry(20, 20, 20);
+    dangerZoneMaterial = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        wireframe: true
+    });
+    dangerZoneMesh = new THREE.Mesh(
+                        new THREE.BoxGeometry(20, 20, 20), 
+                        new THREE.MeshBasicMaterial({
+                            color: 0xff0000,
+                            wireframe: true
+                        })
+                    );
+    dangerZoneMesh.position.set(0, 10, -20);
+    dangerZoneMesh.geometry.computeBoundingBox();
+    dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
+    WORLD.scene.add(dangerZoneMesh);
 }
 
 function onWindowResize() {
@@ -217,14 +241,6 @@ WORLD.animate = function() {
     requestAnimationFrame(WORLD.animate);
     if (controls.enabled) {
 
-        // /** Rotation */
-        // if(rotateLeft) {
-        //     player.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-        // }
-        // else if(rotateRight) {
-        //     player.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-        // }
-        
         WORLD.world.step(dt);
 
         // // Update box positions
@@ -232,11 +248,47 @@ WORLD.animate = function() {
         //     boxMeshes[i].position.copy(boxes[i].position);
         //     boxMeshes[i].quaternion.copy(boxes[i].quaternion);
         // }
-        // WORLD.checkDangerArea();
+        // 
     }
-
+        
     controls.update(Date.now() - time);
+    if(dangerZoneBBox.containsPoint(controls.getObject().position)) {
+        console.log("You're in danger zone!");
+    }
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
 }
+
+// function addPhysicalBody(mesh, bodyOptions) {
+//     var shape;
+//     // create a Sphere shape for spheres and thorus knots,
+//     // a Box shape otherwise
+//     if (mesh.geometry.type === 'SphereGeometry' ||
+//     mesh.geometry.type === 'ThorusKnotGeometry') {
+//         mesh.geometry.computeBoundingSphere();
+//         shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
+//     }
+//     else {
+//         mesh.geometry.computeBoundingBox();
+//         var box = mesh.geometry.boundingBox;
+//         shape = new CANNON.Box(new CANNON.Vec3(
+//             (box.max.x - box.min.x) / 2,
+//             (box.max.y - box.min.y) / 2,
+//             (box.max.z - box.min.z) / 2
+//         ));
+//     }
+
+//     var body = new CANNON.Body(bodyOptions);
+//     body.addShape(shape);
+//     body.position.copy(mesh.position);
+//     body.computeAABB();
+//     // disable collision response so objects don't move when they collide
+//     // against each other
+//     body.collisionResponse = false;
+//     // keep a reference to the mesh so we can update its properties later
+//     body.mesh = mesh;
+
+//     WORLD.world.addBody(body);
+//     return body;
+// };

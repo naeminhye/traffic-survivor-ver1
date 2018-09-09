@@ -9,6 +9,19 @@
                 overflow: hidden;
                 font-family: arial;
             }
+            .info {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                padding: 20px;
+                background-color: rgba(255,255,255,0.1);
+            }
+            .info > span {
+                font-weight: 600;
+                font-size: 20px;
+                color: #ffffff;
+            }
+            
 
             #blocker {
 

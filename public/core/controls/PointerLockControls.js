@@ -30,7 +30,7 @@ var PointerLockControls = function (camera, cannonBody) {
     pitchObject.add(camera);
 
     var yawObject = new THREE.Object3D();
-    yawObject.position.y = 2;
+    yawObject.position.y = 1;
     yawObject.add(pitchObject);
 
     var quat = new THREE.Quaternion();
@@ -60,8 +60,8 @@ var PointerLockControls = function (camera, cannonBody) {
             contactNormal.copy(contact.ni); // bi is something else. Keep the normal as it is
 
         // If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
-        if (contactNormal.dot(upAxis) > 0.5) // Use a "good" threshold value between 0 and 1 here!
-            canJump = true;
+        // if (contactNormal.dot(upAxis) > 0.5) // Use a "good" threshold value between 0 and 1 here!
+        //     canJump = true;
     });
 
     var velocity = cannonBody.velocity;
@@ -109,8 +109,8 @@ var PointerLockControls = function (camera, cannonBody) {
             /** stop */
             case keys.KEY_X:
             // TODO: inertia
-                if ( moveForward === true ) velocity.z += 100;
-                moveForward = false;
+                if ( moveForward === true )
+                    moveForward = false;
                 break;
             case keys.KEY_SPACE: // space
                 if ( canJump === true ) velocity.y += 350;
@@ -145,7 +145,7 @@ var PointerLockControls = function (camera, cannonBody) {
         }
     };
 
-    // document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('keyup', onKeyUp, false);
 
