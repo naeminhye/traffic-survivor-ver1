@@ -263,8 +263,8 @@ WORLD.init = function() {
         object.traverse( function ( child ) {
             if ( child.isMesh ) {
 
-                child.castShadow = true;
-                child.receiveShadow = true;
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
                 child.scale.set(.1,.1,.1)
                 child.position.set(10, 0, -10);
@@ -279,8 +279,8 @@ WORLD.init = function() {
         object.traverse( function ( child ) {
             if ( child.isMesh ) {
 
-                child.castShadow = true;
-                child.receiveShadow = true;
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
                 child.scale.set(.025,.025,.025)
                 child.position.set(-10, 0, -10);
@@ -295,8 +295,8 @@ WORLD.init = function() {
         object.traverse( function ( child ) {
             if ( child.isMesh ) {
 
-                child.castShadow = true;
-                child.receiveShadow = true;
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
                 child.scale.set(.025,.025,.025)
                 child.position.set(-10, 0, -20);
@@ -311,8 +311,8 @@ WORLD.init = function() {
         object.traverse( function ( child ) {
             if ( child.isMesh ) {
 
-                child.castShadow = true;
-                child.receiveShadow = true;
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
                 child.scale.set(.1,.1,.1)
                 child.position.set(-20, 0, -20);
@@ -323,7 +323,86 @@ WORLD.init = function() {
         objs.push({model, mixer});
     });
 
+    // car model
+    loader.load("./models/fbx/car/car.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
 
+                // child.castShadow = true;
+                // child.receiveShadow = true;
+
+                child.position.set(10, 0, 30);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+    
+    // bus_stop.fbx
+    loader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                // child.castShadow = true;
+                // child.receiveShadow = true;
+
+                child.scale.set(.03,.03,.03);
+                child.position.set(0, 0, 0);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+
+    //village-house.fbx
+    loader.load("./models/fbx/village-house/village-house.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                // child.castShadow = true;
+                // child.receiveShadow = true;
+
+                child.scale.set(.5,.5,.5);
+                child.position.set(-40, 0, 0);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+    //trees
+    loader.load("./models/fbx/tree1/Tree.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                // child.castShadow = true;
+                // child.receiveShadow = true;
+
+                child.position.set(-10, 0, 0);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
+    //Bench.fbx
+    loader.load("./models/fbx/Bench.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+
+                // child.castShadow = true;
+                // child.receiveShadow = true;
+
+                child.scale.set(.01,.01,.01);
+                child.position.set(-10, 0, -5);
+
+            }
+        } );
+        WORLD.scene.add( object );
+        objs.push({model, mixer});
+    });
 }
 
 function onWindowResize() {
