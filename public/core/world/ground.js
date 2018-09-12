@@ -13,9 +13,5 @@ WORLD.drawGround = function() {
     mesh = new THREE.Mesh(geometry, material);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
-    WORLD.scene.add(mesh);
+    // WORLD.scene.add(mesh);
 }
-
-// WORLD.checkDangerArea = function() {
-//     console.log("controls.getObject().position:",controls.getObject().position)
-// }

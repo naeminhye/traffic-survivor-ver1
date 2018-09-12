@@ -11,7 +11,7 @@ var geometry, material, mesh;
 var controls, time = Date.now();
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
-var dangerZoneBBox = null;                                   
+var dangerZoneBBox = null;
 const objs = [];
 var clock = new THREE.Clock();
 
@@ -82,7 +82,7 @@ if (havePointerLock) {
     instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
 }
 
-WORLD.initCannon = function() {
+WORLD.initCannon = function () {
     // Setup our world
     WORLD.world = new CANNON.World();
     WORLD.world.quatNormalizeSkip = 0;
@@ -131,12 +131,12 @@ WORLD.initCannon = function() {
     WORLD.world.add(groundBody);
 }
 
-WORLD.init = function() {
+WORLD.init = function () {
 
     WORLD.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     WORLD.scene = new THREE.Scene();
-    WORLD.scene.background = new THREE.Color( 0xcce0ff );
+    WORLD.scene.background = new THREE.Color(0xcce0ff);
     WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
 
     var ambient = new THREE.AmbientLight(0x111111);
@@ -181,31 +181,31 @@ WORLD.init = function() {
     window.addEventListener('resize', onWindowResize, false);
 
     // Add boxes
-    var halfExtents = new CANNON.Vec3(1, 1, 1);
-    var boxShape = new CANNON.Box(halfExtents);
-    var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
-    for (var i = 0; i < 2; i++) {
-        var x = (Math.random()-0.5)*20;
-        var y = 1 + (Math.random()-0.5)*1;
-        var z = (Math.random()-0.5)*20;
-        var boxBody = new CANNON.Body({ mass: 5 });
-        boxBody.addShape(boxShape);
-        var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-        material2 = new THREE.MeshLambertMaterial({ color: randomColor });
-        var boxMesh = new THREE.Mesh(boxGeometry, material2);
-        WORLD.world.add(boxBody);
-        WORLD.scene.add(boxMesh);
-        boxBody.position.set(x, y, z);
-        boxMesh.position.set(x, y, z);
-        boxMesh.castShadow = true;
-        boxMesh.receiveShadow = true;
-        boxes.push(boxBody);
-        boxMeshes.push(boxMesh);
-        boxBody.addEventListener('collide', function(object) {
-            // if(object.body.id == 0) 
-            //     console.log("Collided!!", object.body);
-        });
-    }
+    // var halfExtents = new CANNON.Vec3(1, 1, 1);
+    // var boxShape = new CANNON.Box(halfExtents);
+    // var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
+    // for (var i = 0; i < 2; i++) {
+    //     var x = (Math.random()-0.5)*20;
+    //     var y = 1 + (Math.random()-0.5)*1;
+    //     var z = (Math.random()-0.5)*20;
+    //     var boxBody = new CANNON.Body({ mass: 5 });
+    //     boxBody.addShape(boxShape);
+    //     var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+    //     material2 = new THREE.MeshLambertMaterial({ color: randomColor });
+    //     var boxMesh = new THREE.Mesh(boxGeometry, material2);
+    //     WORLD.world.add(boxBody);
+    //     WORLD.scene.add(boxMesh);
+    //     boxBody.position.set(x, y, z);
+    //     boxMesh.position.set(x, y, z);
+    //     boxMesh.castShadow = true;
+    //     boxMesh.receiveShadow = true;
+    //     boxes.push(boxBody);
+    //     boxMeshes.push(boxMesh);
+    //     boxBody.addEventListener('collide', function(object) {
+    //         // if(object.body.id == 0) 
+    //         //     console.log("Collided!!", object.body);
+    //     });
+    // }
 
     dangerZoneGeometry = new THREE.BoxGeometry(20, 20, 20);
     dangerZoneMaterial = new THREE.MeshBasicMaterial({
@@ -213,12 +213,12 @@ WORLD.init = function() {
         wireframe: true
     });
     dangerZoneMesh = new THREE.Mesh(
-                        new THREE.BoxGeometry(20, 20, 20), 
-                        new THREE.MeshBasicMaterial({
-                            color: 0xff0000,
-                            wireframe: true
-                        })
-                    );
+        new THREE.BoxGeometry(20, 20, 20),
+        new THREE.MeshBasicMaterial({
+            color: 0xff0000,
+            wireframe: true
+        })
+    );
     dangerZoneMesh.position.set(0, 10, -20);
     dangerZoneMesh.geometry.computeBoundingBox();
     dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
@@ -226,183 +226,227 @@ WORLD.init = function() {
 
     // poles
 
-    var poleGeo = new THREE.CubeGeometry( .3, 60, .3 );
-    var poleMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x111111, shininess: 100, flatShading: false } );
+    var poleGeo = new THREE.CubeGeometry(.3, 60, .3);
+    var poleMat = new THREE.MeshPhongMaterial({ color: 0xffffff, specular: 0x111111, shininess: 100, flatShading: false });
 
-    var mesh = new THREE.Mesh( poleGeo, poleMat );
+    var mesh = new THREE.Mesh(poleGeo, poleMat);
     mesh.position.set(20, 0, -50);
     mesh.receiveShadow = true;
     mesh.castShadow = true;
-    WORLD.scene.add( mesh );
+    WORLD.scene.add(mesh);
     var meshBody = addPhysicalBody(mesh, { mass: 5 });
     WORLD.world.add(meshBody);
 
 
-    var gg = new THREE.CubeGeometry( 1, 1, 1 );
-    var mesh = new THREE.Mesh( gg, poleMat );
+    var gg = new THREE.CubeGeometry(1, 1, 1);
+    var mesh = new THREE.Mesh(gg, poleMat);
     mesh.position.set(20, 0, -50);
     mesh.receiveShadow = true;
     mesh.castShadow = true;
-    WORLD.scene.add( mesh );
+    WORLD.scene.add(mesh);
     var meshBody = addPhysicalBody(mesh, { mass: 5 });
     WORLD.world.add(meshBody);
 
     // Model
-	
-	// var jsonLoader = new THREE.JSONLoader();
-    // jsonLoader.load( "models/android-animations.js", addModelToScene );
-    // model
-    // load fbx model and texture            
-    const loader = new THREE.FBXLoader();
-    loader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
-        // model is a THREE.Group (THREE.Object3D)                              
-        const mixer = new THREE.AnimationMixer(object);
-        // animations is a list of THREE.AnimationClip                          
-        mixer.clipAction(object.animations[0]).play();
+    var manager = new THREE.LoadingManager();
+    manager.onProgress = function (item, loaded, total) {
+        console.log(item, loaded, total);
+    };
+    var onProgress = function (xhr) {
+        if (xhr.lengthComputable) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
+        }
+    };
+    var onError = function (xhr) {
+        console.log(xhr);
+    };
+    var loader = new THREE.FBXLoader(manager);
 
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
+    loader.load("./models/sign.fbx", function (object) {
+        // object instanceof THREE.Group
+        object.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.receiveShadow = true;
+                child.receiveShadow = true;
 
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.1,.1,.1)
-                child.position.set(10, 0, -10);
-
+                child.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+                if (child.name === "Circle") {
+                    child.scale.set(2,2,2);
+                    child.position.set(0, 0, 8);
+                }
+                else {
+                    child.scale.set(.2,4,.2);
+                    child.position.set(0, 0, 4);
+                }
             }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
+        });
+        // object.scale.set(.01, .01, .01);
+        object.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+        object.applyMatrix(new THREE.Matrix4().makeRotationY(- Math.PI));
+        object.position.x = 0;
+        object.position.y = 0;
+        object.position.z = -10;
+        WORLD.scene.add(object);
+    }, onProgress, onError);
 
-    loader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
+    // loader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
+    //     // model is a THREE.Group (THREE.Object3D)                              
+    //     const mixer = new THREE.AnimationMixer(object);
+    //     // animations is a list of THREE.AnimationClip                          
+    //     mixer.clipAction(object.animations[0]).play();
+
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             child.scale.set(.1,.1,.1)
+    //             child.position.set(10, 0, -10);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // loader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             child.scale.set(.025,.025,.025)
+    //             child.position.set(-10, 0, -10);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // loader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             // child.castShadow = true;
+    //             // child.receiveShadow = true;
+
+    //             child.scale.set(.025,.025,.025)
+    //             child.position.set(-10, 0, -20);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    //     objs.push({model, mixer});
+    // }, onProgress, onError );
+
+    // loader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             // child.castShadow = true;
+    //             // child.receiveShadow = true;
+
+    //             child.scale.set(.1,.1,.1)
+    //             child.position.set(-20, 0, -20);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // // car model
+    // loader.load("./models/fbx/car/car.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             // child.castShadow = true;
+    //             // child.receiveShadow = true;
+
+    //             child.position.set(10, 0, 30);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // // bus_stop.fbx
+    // loader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
+    //     // object instanceof THREE.Group
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             child.scale.set(.03,.03,.03);
+    //             if(child.name === "sign") {
+    //                 child.position.set(-2, 2, 2);
+    //                 child.rotateZ( Math.PI / 2 )
+    //             }
+    //             else {
+    //                 child.position.set(0, 0, 0);
+    //             }
+    //             console.log("bus_stop:",child)
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // //village-house.fbx
+    // loader.load("./models/fbx/village-house/village-house.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             // child.castShadow = true;
+    //             // child.receiveShadow = true;
+
+    //             child.scale.set(.5,.5,.5);
+    //             child.position.set(-40, 0, 0);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // //trees
+    // loader.load("./models/fbx/tree1/Tree.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             // child.castShadow = true;
+    //             // child.receiveShadow = true;
+
+    //             child.position.set(-10, 0, 0);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    //     objs.push({model, mixer});
+    // }, onProgress, onError );
+
+    // //Bench.fbx
+    // loader.load("./models/fbx/Bench.fbx", function ( object ) {
+    //     object.traverse( function ( child ) {
+    //         if ( child instanceof THREE.Mesh ) {
+
+    //             child.scale.set(.01,.01,.01);
+    //             child.position.set(-10, 0, -5);
+
+    //         }
+    //     } );
+    //     WORLD.scene.add( object );
+    // }, onProgress, onError );
+
+    // road-straight
+    loader.load("./models/fbx/road-straight/road-straight.fbx", function ( object ) {
         object.traverse( function ( child ) {
-            if ( child.isMesh ) {
+            if ( child instanceof THREE.Mesh && child.name === "Cylinder012" ) {
 
                 // child.castShadow = true;
                 // child.receiveShadow = true;
-
-                child.scale.set(.025,.025,.025)
-                child.position.set(-10, 0, -10);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-
-    loader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.025,.025,.025)
-                child.position.set(-10, 0, -20);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-
-    loader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.1,.1,.1)
-                child.position.set(-20, 0, -20);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-
-    // car model
-    loader.load("./models/fbx/car/car.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.position.set(10, 0, 30);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-    
-    // bus_stop.fbx
-    loader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.03,.03,.03);
+                console.log("child",child)
+                child.scale.set(.1,.1,.1);
                 child.position.set(0, 0, 0);
 
             }
         } );
+        object.scale.set(.1,.1,.1);
         WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-
-    //village-house.fbx
-    loader.load("./models/fbx/village-house/village-house.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.5,.5,.5);
-                child.position.set(-40, 0, 0);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-    //trees
-    loader.load("./models/fbx/tree1/Tree.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.position.set(-10, 0, 0);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
-    //Bench.fbx
-    loader.load("./models/fbx/Bench.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.01,.01,.01);
-                child.position.set(-10, 0, -5);
-
-            }
-        } );
-        WORLD.scene.add( object );
-        objs.push({model, mixer});
-    });
+    }, onProgress, onError );
 }
 
 function onWindowResize() {
@@ -412,23 +456,23 @@ function onWindowResize() {
 }
 
 var dt = 1 / 60;
-WORLD.animate = function() {
+WORLD.animate = function () {
     requestAnimationFrame(WORLD.animate);
     if (controls.enabled) {
 
         WORLD.world.step(dt);
     }
-        
+
     controls.update(Date.now() - time);
-    var windStrength = Math.cos( time / 7000 ) * 20 + 40;
-    windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) )
+    var windStrength = Math.cos(time / 7000) * 20 + 40;
+    windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
     windForce.normalize()
-    windForce.multiplyScalar( windStrength );
+    windForce.multiplyScalar(windStrength);
 
     $("#message").text("You are now " + Math.round(WORLD.player.position.distanceTo(target)) + "m far away from the final place.");
 
-    if(dangerZoneBBox.containsPoint(WORLD.player.position)) {
-        if(!isDangerous) {
+    if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
+        if (!isDangerous) {
             toastr.error("You're in the dangerous zone!");
             isDangerous = true;
         }
@@ -437,7 +481,7 @@ WORLD.animate = function() {
         isDangerous = false;
     }
     // animation with THREE.AnimationMixer.update(timedelta)                
-    objs.forEach(({mixer}) => {mixer.update(clock.getDelta());});
+    objs.forEach(({ mixer }) => { mixer.update(clock.getDelta()); });
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
@@ -449,7 +493,7 @@ WORLD.animate = function() {
 // 	// for preparing animation
 // 	for (var i = 0; i < materials.length; i++)
 // 		materials[i].morphTargets = true;
-		
+
 // 	var material = new THREE.MeshFaceMaterial( materials );
 // 	mesh = new THREE.Mesh( geometry, material );
 // 	mesh.scale.set(10,10,10);
@@ -485,8 +529,8 @@ function addPhysicalBody(mesh, bodyOptions) {
     // keep a reference to the mesh so we can update its properties later
     body.mesh = mesh;
 
-    body.addEventListener('collide', function(object) {
-        if(object.body.id == 0) 
+    body.addEventListener('collide', function (object) {
+        if (object.body.id == 0)
             console.log("Collided!!", object.body);
     });
     return body;
