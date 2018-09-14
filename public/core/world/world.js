@@ -263,6 +263,32 @@ WORLD.init = function () {
     };
     var fbxLoader = new THREE.FBXLoader(manager);
 
+    // instantiate a loader
+    var loader = new THREE.JSONLoader();
+
+    // load a resource
+    loader.load(
+        // resource URL
+        './models/json/untitled.json',
+
+        // onLoad callback
+        function ( geometry, materials ) {
+            var material = materials[ 0 ];
+            var object = new THREE.Mesh( geometry, material );
+            WORLD.scene.add( object );
+        },
+
+        // onProgress callback
+        function ( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+
+        // onError callback
+        function( err ) {
+            console.log( 'An error happened' );
+        }
+    );
+    
     // fbxLoader.load("./models/sign.fbx", function (object) {
     //     // object instanceof THREE.Group
     //     object.traverse(function (child) {
