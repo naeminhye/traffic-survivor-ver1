@@ -269,11 +269,11 @@ WORLD.init = function () {
     // load a resource
     loader.load(
         // resource URL
-        './models/json/untitled.json',
+        './models/json/cubetest.json',
 
         // onLoad callback
         function ( geometry, materials ) {
-            var material = materials[ 0 ];
+            var material = materials[ 1 ];
             var object = new THREE.Mesh( geometry, material );
             WORLD.scene.add( object );
         },
@@ -288,7 +288,38 @@ WORLD.init = function () {
             console.log( 'An error happened' );
         }
     );
+    /////////
+	// CAR //
+    /////////		 
+    // var CARS = {
+    //     "Porsche":{
+    //         name: "Porsche",
+    //         url: "models/json/testJson.json",
+    //         //init_material: 4,
+    //         //body_materials: [ 2 ],
+
+    //         object: null,
+    //         buttons: null,
+    //         materials: null
+    //     }
+    // };
+
+    // loader.load(CARS[ "Porsche" ].url, function (carGeometry) { 
+    //     /*createScene( geometry, "Veyron" )*/
+    //     var carMaterial = new THREE.MeshBasicMaterial({ color: 0x995500, opacity: 1.0, transparent: false });
+    //     var carMesh = new THREE.Mesh(carGeometry, carMaterial);
+    //     // carMesh.scale.set(10, 10, 10);
+    //     carMesh.position.y = 1; 
+    //     carMesh.position.z = -10;
+    //     carMesh.rotateY(Math.PI);
+    //     WORLD.scene.add(carMesh);
+    // });
+    // loader.load("models/json/testJson.json", function(geometry, materials ) {// onLoad callback
+    //     var material = materials[ 0 ];
+    //     var object = new THREE.Mesh( geometry, material );
+    //     WORLD.scene.add(object);
     
+    // }, onProgress, onError);
     // fbxLoader.load("./models/sign.fbx", function (object) {
     //     // object instanceof THREE.Group
     //     object.traverse(function (child) {
