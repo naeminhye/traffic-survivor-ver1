@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Scene 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="css/info.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="infoButton"></div>
+    <div id="infoBox" title="Instruction">
+        <p>Cubes are obstacles, the big red cube is the dangerous zone.</p>
+    </div>
+
+    <div id="blocker">
+        <div id="instructions">
+            <span style="font-size:40px">Click to play</span>
+            <br /> 
+            W, A = Move, S, D = Rotate, MOUSE = Look around
+            <br /> 
+            Z = Keep Moving Forward, X = Stop Moving
+        </div>
+    </div>
+    <div class="info">
+        <div id="message"></div>
+    </div>
+
+    <!-- Code to display an information button and box when clicked. -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="js/info.js"></script>
+
+
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.min.js'></script> -->
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/three.js/96/three.min.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js'></script>
+    <script type="text/javascript" src='https://threejs.org/examples/js/renderers/Projector.js'></script>
+    <script type="text/javascript" src='core/libs/Detector.js'></script>
+    <script type="text/javascript" src='core/libs/Cloth.js'></script>
+    <script type="text/javascript" src='core/libs/inflate.min.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/DDSLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/MTLLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/OBJLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/FBXLoader.js'></script>
+    <script type="text/javascript" src="core/libs/loaders/GLTFLoader.js"></script>
+    <script type="text/javascript" src="core/libs/loaders/GLTF2Loader.js"></script>
+    
+    <script type="x-shader/x-fragment" id="fragmentShaderDepth">
+
+        uniform sampler2D texture;
+        varying vec2 vUV;
+
+        vec4 pack_depth( const in float depth ) {
+
+            const vec4 bit_shift = vec4( 256.0 * 256.0 * 256.0, 256.0 * 256.0, 256.0, 1.0 );
+            const vec4 bit_mask  = vec4( 0.0, 1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0 );
+            vec4 res = fract( depth * bit_shift );
+            res -= res.xxyz * bit_mask;
+            return res;
+
+        }
+
+        void main() {
+
+            vec4 pixel = texture2D( texture, vUV );
+
+            if ( pixel.a < 0.5 ) discard;
+
+            gl_FragData[ 0 ] = pack_depth( gl_FragCoord.z );
+
+        }
+    </script>
+
+    <script type="x-shader/x-vertex" id="vertexShaderDepth">
+
+        varying vec2 vUV;
+
+        void main() {
+
+            vUV = 0.75 * uv;
+
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+            gl_Position = projectionMatrix * mvPosition;
+
+        }
+
+    </script>
+
+    <script src="core/controls/PointerLockControls.js" defer="defer"></script>
+    <script src="core/world/world.js" defer="defer"></script>
+    <script src="core/world/ground.js" defer="defer"></script>
+    <script src="core/controls/loaders.js" defer="defer"></script>
+    <script src="core/controls/run.js" defer="defer"></script>
+    <!-- <script src="js/index.js"></script> -->
+</body>
+</html>
