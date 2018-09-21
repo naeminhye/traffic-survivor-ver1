@@ -8,12 +8,21 @@ WORLD.player = null;
 var target = new THREE.Vector3(20, 0, -50);
 var isDangerous = false;
 var geometry, material, mesh;
-var controls, time = Date.now();
+var time = Date.now();
+WORLD.controls = null;
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
 var dangerZoneBBox = null;
 const objs = [];
 var clock = new THREE.Clock();
+WORLD.collidableObjects = [];
+
+// Flag to determine if the player lost the game
+var gameOver = false;
+
+// Velocity vectors for the player and dino
+WORLD.playerVelocity = new THREE.Vector3();
+var carVelocity = new THREE.Vector3();
 
 var blocker = document.getElementById('blocker');
 var instructions = document.getElementById('instructions');
@@ -24,10 +33,10 @@ if (havePointerLock) {
     var element = document.body;
     var pointerlockchange = function (event) {
         if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
-            controls.enabled = true;
+            WORLD.controls.enabled = true;
             blocker.style.display = 'none';
         } else {
-            controls.enabled = false;
+            WORLD.controls.enabled = false;
             blocker.style.display = '-webkit-box';
             blocker.style.display = '-moz-box';
             blocker.style.display = 'box';
@@ -161,8 +170,8 @@ WORLD.init = function () {
     }
     WORLD.scene.add(light);
 
-    controls = new PointerLockControls(WORLD.camera, sphereBody);
-    WORLD.player = controls.getObject();
+    WORLD.controls = new PointerLockControls(WORLD.camera, sphereBody);
+    WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
     WORLD.player.position.set(0, 1, 10);
 
@@ -179,33 +188,6 @@ WORLD.init = function () {
     document.body.appendChild(WORLD.renderer.domElement);
 
     window.addEventListener('resize', onWindowResize, false);
-
-    // Add boxes
-    // var halfExtents = new CANNON.Vec3(1, 1, 1);
-    // var boxShape = new CANNON.Box(halfExtents);
-    // var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
-    // for (var i = 0; i < 2; i++) {
-    //     var x = (Math.random()-0.5)*20;
-    //     var y = 1 + (Math.random()-0.5)*1;
-    //     var z = (Math.random()-0.5)*20;
-    //     var boxBody = new CANNON.Body({ mass: 5 });
-    //     boxBody.addShape(boxShape);
-    //     var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-    //     material2 = new THREE.MeshLambertMaterial({ color: randomColor });
-    //     var boxMesh = new THREE.Mesh(boxGeometry, material2);
-    //     WORLD.world.add(boxBody);
-    //     WORLD.scene.add(boxMesh);
-    //     boxBody.position.set(x, y, z);
-    //     boxMesh.position.set(x, y, z);
-    //     boxMesh.castShadow = true;
-    //     boxMesh.receiveShadow = true;
-    //     boxes.push(boxBody);
-    //     boxMeshes.push(boxMesh);
-    //     boxBody.addEventListener('collide', function(object) {
-    //         // if(object.body.id == 0) 
-    //         //     console.log("Collided!!", object.body);
-    //     });
-    // }
 
     dangerZoneGeometry = new THREE.BoxGeometry(20, 20, 20);
     dangerZoneMaterial = new THREE.MeshBasicMaterial({
@@ -224,75 +206,26 @@ WORLD.init = function () {
     dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
     WORLD.scene.add(dangerZoneMesh);
 
-    // poles
-
-    var poleGeo = new THREE.CubeGeometry(.3, 60, .3);
-    var poleMat = new THREE.MeshPhongMaterial({ color: 0xffffff, specular: 0x111111, shininess: 100, flatShading: false });
-
-    var mesh = new THREE.Mesh(poleGeo, poleMat);
-    mesh.position.set(20, 0, -50);
-    mesh.receiveShadow = true;
-    mesh.castShadow = true;
-    WORLD.scene.add(mesh);
-    var meshBody = addPhysicalBody(mesh, { mass: 5 });
-    WORLD.world.add(meshBody);
-
-
-    var gg = new THREE.CubeGeometry(1, 1, 1);
-    var mesh = new THREE.Mesh(gg, poleMat);
-    mesh.position.set(20, 0, -50);
-    mesh.receiveShadow = true;
-    mesh.castShadow = true;
-    WORLD.scene.add(mesh);
-    var meshBody = addPhysicalBody(mesh, { mass: 5 });
-    WORLD.world.add(meshBody);
-
-    /* fbxLoader */
-    var manager = new THREE.LoadingManager();
-    manager.onProgress = function (item, loaded, total) {
-        console.log(item, loaded, total);
-    };
-    var onProgress = function (xhr) {
-        if (xhr.lengthComputable) {
-            var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log(Math.round(percentComplete, 2) + '% downloaded');
-        }
-    };
-    var onError = function (xhr) {
-        console.log(xhr);
-    };
-    // var fbxLoader = new THREE.FBXLoader(manager);
-
-    // // instantiate a loader
-    // var loader = new THREE.ObjectLoader(manager);
-
-    // // load a resource
-    // loader.load(
-    //     // resource URL
-    //     './models/json/untitled.json',
-
-    //     // onLoad callback
-    //     // function ( geometry, materials ) {
-    //     //     var material = materials[ 1 ];
-    //     //     var object = new THREE.Mesh( geometry, material );
-    //     //     WORLD.scene.add( object );
-    //     // },
-    //     function ( obj ) {
-    //         // Add the loaded object to the scene
-    //         WORLD.scene.add( obj );
-    //     },
-
-    //     // onProgress callback
-    //     function ( xhr ) {
-    //         console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-    //     },
-
-    //     // onError callback
-    //     function( err ) {
-    //         console.log( 'An error happened' );
+    // /* fbxLoader */
+    // var manager = new THREE.LoadingManager();
+    // manager.onProgress = function (item, loaded, total) {
+    //     console.log(item, loaded, total);
+    // };
+    // var onProgress = function (xhr) {
+    //     if (xhr.lengthComputable) {
+    //         var percentComplete = xhr.loaded / xhr.total * 100;
+    //         console.log(Math.round(percentComplete, 2) + '% downloaded');
     //     }
-    // );
+    // };
+    // var onError = function (xhr) {
+    //     console.log(xhr);
+    // };
+    WORLD.obj = null;
 
+    // load a resource
+    WORLD.loadModelToWorld("object", "./models/json/test_sign.json", new THREE.Vector3(0, 10, 3), new THREE.Euler(0, - Math.PI / 2, Math.PI, "XYZ"), new THREE.Vector3(1, 1, 1), "hihi");
+    WORLD.loadModelToWorld("object", "./models/json/volkeswagon-vw-beetle.json", new THREE.Vector3(0, 1.5, 0), new THREE.Euler(0, 0, 0, "XYZ"), new THREE.Vector3(.005, .005, 0.005), "car");
+    
     // load gltf model and texture   
     // Instantiate a loader
     // var loader = new THREE.GLTFLoader();                   
@@ -333,11 +266,12 @@ WORLD.init = function () {
         // for (const anim of gltf.animations) {
         //     mixer.clipAction(anim).play();
         // }
+ 
         gltf.scene.scale.set(0.1, 0.1, 0.1);
         gltf.scene.rotation.copy(new THREE.Euler(0, -3 * Math.PI / 4, 0));
         gltf.scene.position.set(2, 0, 0);
         
-        WORLD.scene.add(gltf.scene);
+        // WORLD.scene.add(gltf.scene);
     });
 
 
@@ -373,7 +307,7 @@ WORLD.init = function () {
     //     WORLD.scene.add(object);
     
     // }, onProgress, onError);
-    // fbxLoader.load("./models/sign.fbx", function (object) {
+    // WORLD.fbxLoader.load("./models/sign.fbx", function (object) {
     //     // object instanceof THREE.Group
     //     object.traverse(function (child) {
     //         if (child instanceof THREE.Mesh) {
@@ -400,65 +334,70 @@ WORLD.init = function () {
     //     WORLD.scene.add(object);
     // }, onProgress, onError);
 
-    // fbxLoader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
-    //     // model is a THREE.Group (THREE.Object3D)                              
-    //     const mixer = new THREE.AnimationMixer(object);
-    //     // animations is a list of THREE.AnimationClip                          
-    //     mixer.clipAction(object.animations[0]).play();
+    WORLD.fbxLoader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
+        // model is a THREE.Group (THREE.Object3D)                              
+        const mixer = new THREE.AnimationMixer(object);
+        // animations is a list of THREE.AnimationClip                          
+        mixer.clipAction(object.animations[0]).play();
 
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
 
-    //             child.scale.set(.1,.1,.1)
-    //             child.position.set(10, 0, -10);
+                child.scale.set(.1,.1,.1)
+                child.position.set(10, 0, -10);
+            }
+        } );
+        WORLD.scene.add( object );
+        object.children.forEach(function(child) {
+            if( child instanceof THREE.Mesh ) {
 
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
+                var childBody = addPhysicalBody(child, { mass: 0 });
+                WORLD.world.add(childBody);
 
-    // fbxLoader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
+            }
+        });
+    }, onProgress, onError );
 
-    //             child.scale.set(.025,.025,.025)
-    //             child.position.set(-10, 0, -10);
+    WORLD.fbxLoader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
 
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
+                child.scale.set(.025,.025,.025)
+                child.position.set(-10, 0, -10);
 
-    // fbxLoader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
+            }
+        } );
+        WORLD.scene.add( object );
+    }, onProgress, onError );
 
-    //             // child.castShadow = true;
-    //             // child.receiveShadow = true;
+    WORLD.fbxLoader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
 
-    //             child.scale.set(.025,.025,.025)
-    //             child.position.set(-10, 0, -20);
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    //     objs.push({model, mixer});
-    // }, onProgress, onError );
+                child.scale.set(.025,.025,.025)
+                child.position.set(-10, 0, -20);
+            }
+        } );
+        WORLD.scene.add( object );
+    }, onProgress, onError );
 
-    // fbxLoader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
+    WORLD.fbxLoader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
 
-    //             // child.castShadow = true;
-    //             // child.receiveShadow = true;
+                // child.castShadow = true;
+                // child.receiveShadow = true;
 
-    //             child.scale.set(.1,.1,.1)
-    //             child.position.set(-20, 0, -20);
+                child.scale.set(.1,.1,.1)
+                child.position.set(-20, 0, -20);
 
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
+            }
+        } );
+        WORLD.scene.add( object );
+    }, onProgress, onError );
 
     // car model
     // fbxLoader.load("./models/fbx/car/car.fbx", function ( object ) {
@@ -475,26 +414,40 @@ WORLD.init = function () {
     //     WORLD.scene.add( object );
     // }, onProgress, onError );
 
-    // // bus_stop.fbx
-    // fbxLoader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
-    //     // object instanceof THREE.Group
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
+    // bus_stop.fbx
+    WORLD.fbxLoader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
+        // object instanceof THREE.Group
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
 
-    //             child.scale.set(.03,.03,.03);
-    //             if(child.name === "sign") {
-    //                 child.position.set(-2, 2, 2);
-    //                 child.rotateZ( Math.PI / 2 )
-    //             }
-    //             else {
-    //                 child.position.set(0, 0, 0);
-    //             }
-    //             console.log("bus_stop:",child)
+                child.scale.set(.03,.03,.03);
+                if(child.name === "sign") {
+                    child.position.set(-2, 2, 2);
+                    child.rotateZ( Math.PI / 2 )
+                }
+                else {
+                    child.position.set(0, 0, 0);
+                }
+                console.log("bus_stop:",child)
 
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
+                if(child.name !== "sign") {
+                    var childBody = addPhysicalBody(child, { mass: 0 });
+                    WORLD.world.add(childBody);
+
+                }
+
+            }
+        } );
+        // WORLD.scene.add( object );
+        // object.children.forEach(function(child) {
+        //     if( child instanceof THREE.Mesh ) {
+
+        //         var childBody = addPhysicalBody(child, { mass: 0 });
+        //         WORLD.world.add(childBody);
+
+        //     }
+        // });
+    }, onProgress, onError );
 
     // //village-house.fbx
     // fbxLoader.load("./models/fbx/village-house/village-house.fbx", function ( object ) {
@@ -569,18 +522,20 @@ function onWindowResize() {
 var dt = 1 / 60;
 WORLD.animate = function () {
     requestAnimationFrame(WORLD.animate);
-    if (controls.enabled) {
+    if (WORLD.controls.enabled) {
 
         WORLD.world.step(dt);
     }
+    
+    WORLD.controls.update(Date.now() - time);
+    // var windStrength = Math.cos(time / 7000) * 20 + 40;
+    // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
+    // windForce.normalize()
+    // windForce.multiplyScalar(windStrength);
 
-    controls.update(Date.now() - time);
-    var windStrength = Math.cos(time / 7000) * 20 + 40;
-    windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
-    windForce.normalize()
-    windForce.multiplyScalar(windStrength);
-
-    $("#message").text("You are now " + Math.round(WORLD.player.position.distanceTo(target)) + "m far away from the final place.");
+    // $("#message").text(compass(WORLD.camera.getWorldDirection(new THREE.Vector3(0, 0, 0))));
+    // $("#message").text("Delta: " + (Date.now() - time));
+    // $("#message").text("Velocity: " + WORLD.playerVelocity.length());
 
     if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
         if (!isDangerous) {
@@ -591,8 +546,31 @@ WORLD.animate = function () {
     else {
         isDangerous = false;
     }
+
+    //position.setFromMatrixPosition(dino.matrixWorld);
+    var car = WORLD.scene.getObjectByName("car");
+
+    // Get the rotation matrix from dino
+    // var matrix = new THREE.Matrix4();
+    // matrix.extractRotation(car.matrix);
+    // Create direction vector
+    // var directionFront = new THREE.Vector3(0, 0, 1);
+
+    // Get the vectors coming from the front of the dino
+    // directionFront.applyMatrix4(matrix);
+
+    // Create raycaster
+    // var rayCasterF = new THREE.Raycaster(car.position, directionFront);
+
+    
+    // If we have a front collision, we have to adjust our direction so return true
+    // if (rayIntersect(rayCasterF, 55))
+    //     return true;
+    // else
+    //     return false;
+
     // animation with THREE.AnimationMixer.update(timedelta)                
-    objs.forEach(({ mixer }) => { mixer.update(clock.getDelta()); });
+    // objs.forEach(({ mixer }) => { mixer.update(clock.getDelta()); });
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
@@ -611,25 +589,41 @@ WORLD.animate = function () {
 // 	WORLD.scene.add( mesh );
 // }
 
+// Takes a ray and sees if it's colliding with anything from the list of collidable objects
+// Returns true if certain distance away from object
+function rayIntersect(ray, distance) {
+    var intersects = ray.intersectObjects(WORLD.collidableObjects);
+    for (var i = 0; i < intersects.length; i++) {
+        if (intersects[i].distance < distance) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addPhysicalBody(mesh, bodyOptions) {
+    console.log("addPhysicalBody")
     var shape;
     // create a Sphere shape for spheres and thorus knots,
     // a Box shape otherwise
-    // if (mesh.geometry.type === 'SphereGeometry' ||
-    // mesh.geometry.type === 'ThorusKnotGeometry') {
-    //     mesh.geometry.computeBoundingSphere();
-    //     shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
-    // }
-    // else {
-    mesh.geometry.computeBoundingBox();
-    var box = mesh.geometry.boundingBox;
-    shape = new CANNON.Box(new CANNON.Vec3(
-        (box.max.x - box.min.x) / 2,
-        (box.max.y - box.min.y) / 2,
-        (box.max.z - box.min.z) / 2
-    ));
-    // }
+    if(mesh.geometry.boundingSphere !== null) {
+        console.log("computeBoundingSphere")
 
+        mesh.geometry.computeBoundingSphere();
+        shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
+    }
+    else if(mesh.geometry.boundingBox) {
+        console.log("computeBoundingBox")
+        mesh.geometry.computeBoundingBox();
+        var box = mesh.geometry.boundingBox;
+        shape = new CANNON.Box(new CANNON.Vec3(
+            (box.max.x - box.min.x) / 2,
+            (box.max.y - box.min.y) / 2,
+            (box.max.z - box.min.z) / 2
+        ));
+    }
+
+    console.log("body")
     var body = new CANNON.Body(bodyOptions);
     body.addShape(shape);
     body.position.copy(mesh.position);
@@ -641,8 +635,47 @@ function addPhysicalBody(mesh, bodyOptions) {
     body.mesh = mesh;
 
     body.addEventListener('collide', function (object) {
+        console.log("addEventListener")
         if (object.body.id == 0)
             console.log("Collided!!", object.body);
     });
     return body;
 };
+
+function compass(vector) {
+    const _north = new THREE.Vector3(0, 0, -1); // North
+    const _east = new THREE.Vector3(1, 0, 0); // East
+    const _west = new THREE.Vector3(-1, 0, 0); // West
+    const _south = new THREE.Vector3(0, 0, 1); // South
+
+    return "Lech voi huong Bac " + THREE.Math.radToDeg(_north.angleTo( vector )) + " do.";
+}
+
+function box() {
+    // Add boxes
+    var halfExtents = new CANNON.Vec3(1, 1, 1);
+    var boxShape = new CANNON.Box(halfExtents);
+    var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
+    for (var i = 0; i < 2; i++) {
+        var x = (Math.random()-0.5)*20;
+        var y = 1 + (Math.random()-0.5)*1;
+        var z = (Math.random()-0.5)*20;
+        var boxBody = new CANNON.Body({ mass: 5 });
+        boxBody.addShape(boxShape);
+        var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+        material2 = new THREE.MeshLambertMaterial({ color: randomColor });
+        var boxMesh = new THREE.Mesh(boxGeometry, material2);
+        WORLD.world.add(boxBody);
+        WORLD.scene.add(boxMesh);
+        boxBody.position.set(x, y, z);
+        boxMesh.position.set(x, y, z);
+        boxMesh.castShadow = true;
+        boxMesh.receiveShadow = true;
+        boxes.push(boxBody);
+        boxMeshes.push(boxMesh);
+        boxBody.addEventListener('collide', function(object) {
+            // if(object.body.id == 0) 
+            //     console.log("Collided!!", object.body);
+        });
+    }
+}

@@ -75,12 +75,12 @@ var PointerLockControls = function (camera, cannonBody) {
         if (scope.enabled === false) return;
 
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-        var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+        // var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
         yawObject.rotation.y -= movementX * 0.002;
-        pitchObject.rotation.x -= movementY * 0.002;
+        // pitchObject.rotation.x -= movementY * 0.002;
 
-        pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
+        // pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
     };
 
     /** Keyboard events */
@@ -148,6 +148,7 @@ var PointerLockControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_SHIFT:
                 speedup = false;
+                velocityFactor = INITIAL_SPEED;
                 break;
         }
     };
@@ -179,7 +180,7 @@ var PointerLockControls = function (camera, cannonBody) {
 
         inputVelocity.set(0, 0, 0);
         if(speedup) {
-            velocityFactor += 0.001;
+            velocityFactor += 0.1;
         }
 
         if (moveForward) {
@@ -207,6 +208,8 @@ var PointerLockControls = function (camera, cannonBody) {
         // Add to the object
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
+        
+        WORLD.playerVelocity = velocity;
 
         yawObject.position.copy(cannonBody.position);
 
