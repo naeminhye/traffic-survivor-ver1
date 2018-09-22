@@ -41,7 +41,7 @@ function cloneObject(obj) {
         copy = [];
 
         for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = window.game.helpers.cloneObject(obj[i]);
+            copy[i] = cloneObject(obj[i]);
         }
 
         return copy;
@@ -52,7 +52,7 @@ function cloneObject(obj) {
 
         for (var attr in obj) {
             if (obj.hasOwnProperty(attr)) {
-                copy[attr] = window.game.helpers.cloneObject(obj[attr]);
+                copy[attr] = cloneObject(obj[attr]);
             }
         }
 

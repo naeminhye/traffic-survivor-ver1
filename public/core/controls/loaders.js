@@ -20,14 +20,23 @@ WORLD.objectLoader = new THREE.ObjectLoader(WORLD.manager);
  * @param {*} type: type of loader
  * @param {*} url: model path 
  */
-WORLD.loadModelToWorld = function(type, url, 
-    position = new THREE.Vector3(0, 0, 0), 
-    rotation = new THREE.Euler( 0, 0, 0, 'XYZ' ),
-    scale = new THREE.Vector3(1, 1, 1),
-    name) {
+WORLD.loadModelToWorld = 
+function (model) {
+    var { 
+        loader_type, 
+        url, 
+        position = new THREE.Vector3(0, 0, 0), 
+        rotation = new THREE.Euler( 0, 0, 0, 'XYZ' ), 
+        scale = new THREE.Vector3(1, 1, 1), 
+        name,
+        animate
+        //castShadow,
+        //receiveShadow
+    } = model;
+    
     var loader;
 
-    switch(type) {
+    switch(loader_type) {
         case "fbx":
             loader = WORLD.fbxLoader
             break;
@@ -43,16 +52,16 @@ WORLD.loadModelToWorld = function(type, url,
     loader.load(
         url,
         function ( obj ) {
-            // obj.traverse( function ( child ) {
-            //     if ( child instanceof THREE.Mesh ) {
-                    // child.position.y = 6;// --> THREE.Vector3(0, 6, 0)
-                    // child.rotateZ( Math.PI ); //--> THREE.Vector3(0, - Math.PI / 2, Math.PI)
-                    // child.position.set(position);
-                    // child.scale.set(scale);
-                    // child.rotation.set(rotation);
-            //     }
-            // });
-
+            if(loader_type === "gltf") {
+                obj = obj.scene;
+            }
+            
+            if(animate) {
+                // model is a THREE.Group (THREE.Object3D)                              
+                const mixer = new THREE.AnimationMixer(obj);
+                // animations is a list of THREE.AnimationClip                          
+                mixer.clipAction(obj.animations[0]).play();
+            }
             // Add the loaded object to the scene
             obj.rotation.x = rotation.x; 
             obj.rotation.y = rotation.y; 
@@ -64,9 +73,31 @@ WORLD.loadModelToWorld = function(type, url,
             obj.scale.y = scale.y;
             obj.scale.z = scale.z;
             obj.name = name;
-
             WORLD.scene.add( obj );
+
             WORLD.collidableObjects.push(obj);
+
+            /**
+             *  get boundingSphere of obj's children 
+             *
+                obj.traverse( function ( child ) {
+                    if (child instanceof THREE.Mesh) {
+                        if( child.geometry ) {
+                            if(child.geometry.boundingSphere) {
+                                // console.log("boundingSphere:",child.geometry.boundingSphere);
+                                var childMesh = new THREE.Mesh(
+                                    child.geometry,
+                                    new THREE.MeshBasicMaterial({
+                                        color: 0xff0000,
+                                        wireframe: true
+                                    })
+                                );
+                                // WORLD.scene.add(childMesh);
+                            }
+                        }
+                    }
+                });
+             */
         }, onProgress, onError
     );
 }

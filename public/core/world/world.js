@@ -149,7 +149,7 @@ WORLD.init = function () {
     WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
 
     var ambient = new THREE.AmbientLight(0x111111);
-    WORLD.scene.add(ambient);
+    // WORLD.scene.add(ambient);
 
     light = new THREE.SpotLight(0xffffff);
     light.position.set(10, 30, 20);
@@ -168,7 +168,8 @@ WORLD.init = function () {
 
         //light.shadowCameraVisible = true;
     }
-    WORLD.scene.add(light);
+    // WORLD.scene.add(light);
+    addSunlight(WORLD.scene);
 
     WORLD.controls = new PointerLockControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
@@ -195,11 +196,8 @@ WORLD.init = function () {
         wireframe: true
     });
     dangerZoneMesh = new THREE.Mesh(
-        new THREE.BoxGeometry(20, 20, 20),
-        new THREE.MeshBasicMaterial({
-            color: 0xff0000,
-            wireframe: true
-        })
+        dangerZoneGeometry,
+        dangerZoneMaterial
     );
     dangerZoneMesh.position.set(0, 10, -20);
     dangerZoneMesh.geometry.computeBoundingBox();
@@ -220,60 +218,88 @@ WORLD.init = function () {
     // var onError = function (xhr) {
     //     console.log(xhr);
     // };
-    WORLD.obj = null;
 
-    // load a resource
-    WORLD.loadModelToWorld("object", "./models/json/test_sign.json", new THREE.Vector3(0, 10, 3), new THREE.Euler(0, - Math.PI / 2, Math.PI, "XYZ"), new THREE.Vector3(1, 1, 1), "hihi");
-    WORLD.loadModelToWorld("object", "./models/json/volkeswagon-vw-beetle.json", new THREE.Vector3(0, 1.5, 0), new THREE.Euler(0, 0, 0, "XYZ"), new THREE.Vector3(.005, .005, 0.005), "car");
-    
-    // load gltf model and texture   
-    // Instantiate a loader
-    // var loader = new THREE.GLTFLoader();                   
-    // loader.load(
-    //     // resource URL
-    //     './models/gltf/untitled.gltf',
-    //     // called when the resource is loaded
-    //     function ( gltf ) {
-    
-    //         scene.add( gltf.scene );
-    
-    //         gltf.animations; // Array<THREE.AnimationClip>
-    //         gltf.scene; // THREE.Scene
-    //         gltf.scenes; // Array<THREE.Scene>
-    //         gltf.cameras; // Array<THREE.Camera>
-    //         gltf.asset; // Object
-    
-    //     },
-    //     // called while loading is progressing
-    //     function ( xhr ) {
-    
-    //         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    
-    //     },
-    //     // called when loading has errors
-    //     function ( error ) {
-    
-    //         console.log( 'An error happened' );
-    
-    //     }
-    // );
-    
-    // load gltf model and texture                            
-    WORLD.gltfLoader.load("./models/gltf/road_block/scene.gltf", gltf => {
-        // model is a THREE.Group (THREE.Object3D)                              
-        // const mixer = new THREE.AnimationMixer(gltf.scene);
-        // animations is a list of THREE.AnimationClip
-        // for (const anim of gltf.animations) {
-        //     mixer.clipAction(anim).play();
+    var models = [
+        {
+            name: "sign",
+            loader_type: "object",
+            url: "./models/json/test_sign.json",
+            position: new THREE.Vector3(-10, 10, 0),
+            rotation: new THREE.Euler(0, - Math.PI / 2, Math.PI, "XYZ"),
+            // scale: new THREE.Vector3(1, 1, 1),
+            animate: false
+        },
+        {
+            name: "car",
+            loader_type: "object",
+            url: "./models/json/volkeswagon-vw-beetle.json",
+            position: new THREE.Vector3(0, 1.5, 0),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.005, .005, 0.005),
+            animate: true
+        },
+        {
+            name: "parkingsign",
+            loader_type: "fbx",
+            url: "./models/fbx/parking-sign/parkingsign.fbx",
+            position: new THREE.Vector3(-10, 0, -10),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.025,.025,.025),
+            animate: false
+        },
+        {
+            name: "chair",
+            loader_type: "fbx",
+            url: "./models/fbx/basic-park-bench/chair.fbx",
+            position: new THREE.Vector3(-20, 0, -20),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.1,.1,.1),
+            animate: true
+        },
+        // {
+        //     name: "marine",
+        //     loader_type: "object",
+        //     url: "./models/json/marine_anims_core.json",
+        //     position: new THREE.Vector3(-20, 0, -20),
+        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        //     scale: new THREE.Vector3(.05,.05,.05),
+        //     animate: false
         // }
- 
-        gltf.scene.scale.set(0.1, 0.1, 0.1);
-        gltf.scene.rotation.copy(new THREE.Euler(0, -3 * Math.PI / 4, 0));
-        gltf.scene.position.set(2, 0, 0);
-        
-        // WORLD.scene.add(gltf.scene);
-    });
+        // {
+        //     name: "Tree",
+        //     loader_type: "fbx",
+        //     url: "./models/fbx/tree1/Tree.fbx",
+        //     position: new THREE.Vector3(-10, 0, 0),
+        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        //     scale: new THREE.Vector3(1,1,1)
+        // },
+        {
+            name: "speedlimitsign",
+            loader_type: "fbx",
+            url: "./models/fbx/speed-limit-sign/speedlimitsign.fbx",
+            position: new THREE.Vector3(-10, 0, -20),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.025,.025,.025)
+        },
+        {
+            name: "traffic-light",
+            loader_type: "fbx",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(10, 0, -10),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.1,.1,.1)
+        },
+        {
+            name: "road_block",
+            loader_type: "gltf",
+            url: "./models/gltf/road_block/scene.gltf",
+            position: new THREE.Vector3(2, 0, 0),
+            rotation: new THREE.Euler(0, -3 * Math.PI / 4, 0),
+            scale: new THREE.Vector3(0.1, 0.1, 0.1)
+        }
+    ];
 
+    models.forEach(md => WORLD.loadModelToWorld(md));
 
     /////////
 	// CAR //
@@ -333,71 +359,6 @@ WORLD.init = function () {
     //     object.position.z = -10;
     //     WORLD.scene.add(object);
     // }, onProgress, onError);
-
-    WORLD.fbxLoader.load("./models/fbx/traffic-light/traffic-light.fbx", function ( object ) {
-        // model is a THREE.Group (THREE.Object3D)                              
-        const mixer = new THREE.AnimationMixer(object);
-        // animations is a list of THREE.AnimationClip                          
-        mixer.clipAction(object.animations[0]).play();
-
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-
-                child.scale.set(.1,.1,.1)
-                child.position.set(10, 0, -10);
-            }
-        } );
-        WORLD.scene.add( object );
-        object.children.forEach(function(child) {
-            if( child instanceof THREE.Mesh ) {
-
-                var childBody = addPhysicalBody(child, { mass: 0 });
-                WORLD.world.add(childBody);
-
-            }
-        });
-    }, onProgress, onError );
-
-    WORLD.fbxLoader.load("./models/fbx/parking-sign/parkingsign.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-
-                child.scale.set(.025,.025,.025)
-                child.position.set(-10, 0, -10);
-
-            }
-        } );
-        WORLD.scene.add( object );
-    }, onProgress, onError );
-
-    WORLD.fbxLoader.load("./models/fbx/speed-limit-sign/speedlimitsign.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.025,.025,.025)
-                child.position.set(-10, 0, -20);
-            }
-        } );
-        WORLD.scene.add( object );
-    }, onProgress, onError );
-
-    WORLD.fbxLoader.load("./models/fbx/basic-park-bench/chair.fbx", function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-
-                // child.castShadow = true;
-                // child.receiveShadow = true;
-
-                child.scale.set(.1,.1,.1)
-                child.position.set(-20, 0, -20);
-
-            }
-        } );
-        WORLD.scene.add( object );
-    }, onProgress, onError );
 
     // car model
     // fbxLoader.load("./models/fbx/car/car.fbx", function ( object ) {
@@ -465,21 +426,6 @@ WORLD.init = function () {
     //     WORLD.scene.add( object );
     // }, onProgress, onError );
 
-    // //trees
-    // fbxLoader.load("./models/fbx/tree1/Tree.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
-
-    //             // child.castShadow = true;
-    //             // child.receiveShadow = true;
-
-    //             child.position.set(-10, 0, 0);
-
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    //     objs.push({model, mixer});
-    // }, onProgress, onError );
 
     // //Bench.fbx
     // fbxLoader.load("./models/fbx/Bench.fbx", function ( object ) {
@@ -547,8 +493,14 @@ WORLD.animate = function () {
         isDangerous = false;
     }
 
-    //position.setFromMatrixPosition(dino.matrixWorld);
-    var car = WORLD.scene.getObjectByName("car");
+    // WORLD.collidableObjects.forEach(function(obj) {
+        // if(obj instanceof THREE.Sphere) {
+        //     if (obj.containsPoint(WORLD.player.position)) {
+        // console.log("obj:",obj);
+        //         // console.log("Collideddddddd!");
+        //     }
+        // }
+    // });
 
     // Get the rotation matrix from dino
     // var matrix = new THREE.Matrix4();
@@ -679,3 +631,20 @@ function box() {
         });
     }
 }
+
+function addSunlight(scene) {
+    var sunlight = new THREE.DirectionalLight();
+    sunlight.position.set(250, 250, 250);
+    sunlight.intensity = 0.5;
+    sunlight.castShadow = true;
+    // sunlight.shadowDarkness = 0.9;
+    sunlight.shadow.mapSize.width = sunlight.shadow.mapSize.height = 2048;
+    sunlight.shadow.camera.near = 250;
+    sunlight.shadow.camera.far = 600;
+    sunlight.shadow.camera.left = -200;
+    sunlight.shadow.camera.right = 200;
+    sunlight.shadow.camera.top = 200;
+    sunlight.shadow.camera.bottom = -200;
+
+    scene.add(sunlight);
+  }
