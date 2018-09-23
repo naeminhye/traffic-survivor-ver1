@@ -137,8 +137,7 @@ function makeTextSprite( message, parameters )
 	texture.needsUpdate = true;
 
 	var spriteMaterial = new THREE.SpriteMaterial( 
-		{ map: texture,
-            useScreenCoordinates: false } );
+		{ map: texture } );
 	var sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(2, 1, 1);
 	return sprite;	

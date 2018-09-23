@@ -44,6 +44,7 @@ WORLD.drawGround = function() {
                 WORLD.scene.add( plane );
             }
             else {
+                // Cubes are on behalf of building blocks
                 var cubeHeight = Math.floor((Math.random() * (UNIT_SIZE)) + (UNIT_SIZE / 2));;
                 var cube = new THREE.Mesh(new THREE.BoxGeometry(UNIT_SIZE, UNIT_SIZE, UNIT_SIZE), new THREE.MeshPhongMaterial({
                     color: 0x81cfe0,
@@ -53,8 +54,10 @@ WORLD.drawGround = function() {
                 cube.position.y = UNIT_SIZE / 2;
                 // Add the cube
                 WORLD.scene.add(cube);
+
                 // Used later for collision detection
-                WORLD.collidableObjects.push(cube);
+                var bbox = new THREE.Box3().setFromObject(cube);
+                WORLD.collidableObjects.push(bbox);
             }
         }
 

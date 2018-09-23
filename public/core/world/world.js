@@ -484,39 +484,33 @@ WORLD.animate = function () {
     // $("#message").text("Delta: " + (Date.now() - time));
     // $("#message").text("Velocity: " + WORLD.playerVelocity.length());
 
-    if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
-        if (!isDangerous) {
-            toastr.error("You're in the dangerous zone!");
-            isDangerous = true;
-        }
-    }
-    else {
-        isDangerous = false;
-    }
+    // if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
+    //     if (!isDangerous) {
+    //         toastr.error("You're in the dangerous zone!");
+    //         isDangerous = true;
+    //     }
+    // }
+    // else {
+    //     isDangerous = false;
+    // }
 
-    WORLD.collidableObjects.forEach((object) => {
-        if(object instanceof THREE.Sphere) {
-            if (object.containsPoint(WORLD.player.position)) {
-                console.log("Collideddddddd!");
-            }
-        }
-    });
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
 }
 
-// function addModelToScene( geometry, materials ) 
-// {
-// 	// for preparing animation
-// 	for (var i = 0; i < materials.length; i++)
-// 		materials[i].morphTargets = true;
-
-// 	var material = new THREE.MeshFaceMaterial( materials );
-// 	mesh = new THREE.Mesh( geometry, material );
-// 	mesh.scale.set(10,10,10);
-// 	WORLD.scene.add( mesh );
-// }
+WORLD.detectCollision = () => {
+    var flag = 0;
+    WORLD.collidableObjects.forEach((object) => {
+        if(object instanceof THREE.Sphere || object instanceof THREE.Box3) {
+            if (object.containsPoint(WORLD.player.position)) {
+                toastr.error("Collided!");
+                flag ++;
+            }
+        }
+    });
+    return flag;
+}
 
 // Takes a ray and sees if it's colliding with anything from the list of collidable objects
 // Returns true if certain distance away from object

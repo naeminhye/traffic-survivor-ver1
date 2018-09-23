@@ -183,6 +183,10 @@ var PointerLockControls = function (camera, cannonBody) {
             velocityFactor += 0.1;
         }
 
+        if(WORLD.detectCollision() !== 0){
+            // TODO: Handle collision event
+        }
+
         if (moveForward) {
             inputVelocity.z = -velocityFactor * delta;
         }
@@ -204,7 +208,6 @@ var PointerLockControls = function (camera, cannonBody) {
         quat.setFromEuler(euler);
         inputVelocity.applyQuaternion(quat);
         //quat.multiplyVector3(inputVelocity);
-
         // Add to the object
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;

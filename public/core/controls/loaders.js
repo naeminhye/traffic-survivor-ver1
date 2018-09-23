@@ -56,12 +56,12 @@ WORLD.loadModelToWorld = (model) => {
                 obj = obj.scene;
             }
             
-            if(animate) {
-                // model is a THREE.Group (THREE.Object3D)                              
-                const mixer = new THREE.AnimationMixer(obj);
-                // animations is a list of THREE.AnimationClip                          
-                mixer.clipAction(obj.animations[0]).play();
-            }
+            // if(animate) {
+            //     // model is a THREE.Group (THREE.Object3D)                              
+            //     const mixer = new THREE.AnimationMixer(obj);
+            //     // animations is a list of THREE.AnimationClip                          
+            //     mixer.clipAction(obj.animations[0]).play();
+            // }
             // Add the loaded object to the scene
             obj.rotation.x = rotation.x; 
             obj.rotation.y = rotation.y; 
@@ -90,54 +90,24 @@ WORLD.loadModelToWorld = (model) => {
                 }
               });
                 sprite.position.set(position.x + 2, position.y, position.z);
+
+				sprite.center.set( 1.0, 0.0 );
                 // WORLD.scene.add( sprite );
 
             WORLD.scene.add( obj );
             console.log("obj:",obj);
+            var helper = new THREE.BoxHelper(obj, 0xff0000);
+            helper.update();
 
-            /**
-             *  get boundingSphere of obj's children 
-             */
+            // If you want a visible bounding box
+            // WORLD.scene.add(helper);
+            var bbox = new THREE.Box3().setFromObject(helper);
+            WORLD.collidableObjects.push(bbox);
+
             obj.traverse((child) => {
                 if (child instanceof THREE.Mesh) {
                     child.castShadow = castShadow;
                     child.receiveShadow = receiveShadow;
-                    if( child.geometry ) {
-                        if(child.geometry.boundingSphere) {
-                            // console.log("boundingSphere:",child.geometry.boundingSphere);
-                            var childMesh = new THREE.Mesh(
-                                child.geometry,
-                                new THREE.MeshBasicMaterial({
-                                    color: 0xff0000,
-                                    wireframe: true
-                                })
-                            );
-                            childMesh.rotation.y = Math.PI; 
-                            childMesh.rotation.x = Math.PI / 2;
-                            childMesh.position.y = position.y;
-                            childMesh.position.x = position.x;
-                            childMesh.position.z = position.z;
-                            childMesh.scale.x = scale.x;
-                            childMesh.scale.y = scale.y;
-                            childMesh.scale.z = scale.z;
-
-                            // WORLD.scene.add(childMesh);
-                            // var mass = 5;
-                            // var sphereShape = new CANNON.Sphere(radius);
-                            // var sphereBody = new CANNON.Body({ mass: mass });
-                            // sphereBody.addShape(sphereShape);
-                            // sphereBody.position.y = position.y;
-                            // sphereBody.position.x = position.z;
-                            // sphereBody.position.z = position.x;
-                            // sphereBody.linearDamping = 0.9;
-                            // WORLD.world.add(sphereBody);
-                            var center = childMesh.geometry.boundingSphere.center;
-                            var radius = childMesh.geometry.boundingSphere.radius * scale.x;
-                            var sphere = new THREE.Sphere(center, radius);
-                            sphere.position = position;
-                            WORLD.collidableObjects.push(sphere);
-                        }
-                    }
                 }
             });
         }, onProgress, onError
