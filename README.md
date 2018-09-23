@@ -23,12 +23,15 @@ Things you need before going on with this repo:
 - [ ] Rung lắc/ không thể di chuyến xuyên qua vật khi va chạm
 - [ ] Xét vị trí so với model để hiển thị cảnh báo khi người chơi sắp va chạm vào model
 - [ ] Hiển thị hướng đi, tốc độ trên màn hình
-- [ ] Tạo map 
+- [x] Vẽ đường giao thông cơ bản
+- [x] Tạo map cho đường giao thông đó
+- [ ] Tạo map cho toàn game
 - [ ] Tạo các scheme Database
 - [ ] Chia loại model object: Street Signs, Building, ...
 - [ ] Sửa lại xử lý điều khiển chuột
 
 ## Deployment
+Here's the [Deploy version](https://traffic-survivor-ver1.herokuapp.com/) on Heroku.
 
 ## Contributing
 
