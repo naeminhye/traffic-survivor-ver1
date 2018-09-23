@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     WORLD.initCannon();
     WORLD.init();
     WORLD.animate();

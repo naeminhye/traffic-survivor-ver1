@@ -1,4 +1,6 @@
 var WORLD = WORLD || {};
+var UNITWIDTH = 9;                 // Width of a cubes in the maze
+var UNITHEIGHT = 9;                // Height of the cubes in the maze
 var sphereShape, sphereBody, physicsMaterial, walls = [], balls = [], ballMeshes = [], boxes = [], boxMeshes = [];
 WORLD.world = null;
 WORLD.camera = null;
@@ -142,7 +144,8 @@ WORLD.initCannon = function () {
 
 WORLD.init = function () {
 
-    WORLD.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // WORLD.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+    WORLD.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
 
     WORLD.scene = new THREE.Scene();
     WORLD.scene.background = new THREE.Color(0xcce0ff);
@@ -177,7 +180,6 @@ WORLD.init = function () {
     WORLD.player.position.set(0, 1, 10);
 
     WORLD.scene.updateMatrixWorld(true);
-
     WORLD.drawGround();
 
     WORLD.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -202,7 +204,7 @@ WORLD.init = function () {
     dangerZoneMesh.position.set(0, 10, -20);
     dangerZoneMesh.geometry.computeBoundingBox();
     dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
-    WORLD.scene.add(dangerZoneMesh);
+    // WORLD.scene.add(dangerZoneMesh);
 
     // /* fbxLoader */
     // var manager = new THREE.LoadingManager();
@@ -224,9 +226,8 @@ WORLD.init = function () {
             name: "sign",
             loader_type: "object",
             url: "./models/json/test_sign.json",
-            position: new THREE.Vector3(-10, 10, 0),
-            rotation: new THREE.Euler(0, - Math.PI / 2, Math.PI, "XYZ"),
-            // scale: new THREE.Vector3(1, 1, 1),
+            position: new THREE.Vector3(-10, 10, -20),
+            rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
             animate: false
         },
         {
@@ -234,7 +235,6 @@ WORLD.init = function () {
             loader_type: "object",
             url: "./models/json/volkeswagon-vw-beetle.json",
             position: new THREE.Vector3(0, 1.5, 0),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
             scale: new THREE.Vector3(.005, .005, 0.005),
             animate: true
         },
@@ -264,7 +264,7 @@ WORLD.init = function () {
         //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
         //     scale: new THREE.Vector3(.05,.05,.05),
         //     animate: false
-        // }
+        // },
         // {
         //     name: "Tree",
         //     loader_type: "fbx",
@@ -299,6 +299,7 @@ WORLD.init = function () {
         }
     ];
 
+    // add models to the world
     models.forEach(md => WORLD.loadModelToWorld(md));
 
     /////////
@@ -493,37 +494,13 @@ WORLD.animate = function () {
         isDangerous = false;
     }
 
-    // WORLD.collidableObjects.forEach(function(obj) {
-        // if(obj instanceof THREE.Sphere) {
-        //     if (obj.containsPoint(WORLD.player.position)) {
-        // console.log("obj:",obj);
-        //         // console.log("Collideddddddd!");
-        //     }
-        // }
-    // });
-
-    // Get the rotation matrix from dino
-    // var matrix = new THREE.Matrix4();
-    // matrix.extractRotation(car.matrix);
-    // Create direction vector
-    // var directionFront = new THREE.Vector3(0, 0, 1);
-
-    // Get the vectors coming from the front of the dino
-    // directionFront.applyMatrix4(matrix);
-
-    // Create raycaster
-    // var rayCasterF = new THREE.Raycaster(car.position, directionFront);
-
-    
-    // If we have a front collision, we have to adjust our direction so return true
-    // if (rayIntersect(rayCasterF, 55))
-    //     return true;
-    // else
-    //     return false;
-
-    // animation with THREE.AnimationMixer.update(timedelta)                
-    // objs.forEach(({ mixer }) => { mixer.update(clock.getDelta()); });
-
+    WORLD.collidableObjects.forEach((object) => {
+        if(object instanceof THREE.Sphere) {
+            if (object.containsPoint(WORLD.player.position)) {
+                console.log("Collideddddddd!");
+            }
+        }
+    });
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
@@ -593,15 +570,6 @@ function addPhysicalBody(mesh, bodyOptions) {
     });
     return body;
 };
-
-function compass(vector) {
-    const _north = new THREE.Vector3(0, 0, -1); // North
-    const _east = new THREE.Vector3(1, 0, 0); // East
-    const _west = new THREE.Vector3(-1, 0, 0); // West
-    const _south = new THREE.Vector3(0, 0, 1); // South
-
-    return "Lech voi huong Bac " + THREE.Math.radToDeg(_north.angleTo( vector )) + " do.";
-}
 
 function box() {
     // Add boxes
