@@ -29,6 +29,7 @@ Things you need before going on with this repo:
 - [ ] Tạo các scheme Database
 - [ ] Chia loại model object: Street Signs, Building, ...
 - [ ] Sửa lại xử lý điều khiển chuột
+- [ ] Thêm Option/Setting, Exit... hiển thị bên góc màn hình.
 
 ## Deployment
 Here's the [Deploy version](https://traffic-survivor-ver1.herokuapp.com/) on Heroku.
