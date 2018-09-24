@@ -100,9 +100,25 @@ WORLD.loadModelToWorld = (model) => {
             helper.update();
 
             // If you want a visible bounding box
-            // WORLD.scene.add(helper);
+            WORLD.scene.add(helper);
             var bbox = new THREE.Box3().setFromObject(helper);
             WORLD.collidableObjects.push(bbox);
+            var sizeVector = new THREE.Vector3(1, 1, 1);
+            bbox.getSize(sizeVector);
+
+            // create a cannon body
+            var shape = new CANNON.Box(new CANNON.Vec3(sizeVector.x, sizeVector.y, sizeVector.z));
+            var boxBody = new CANNON.Body({ mass: 5 });
+            boxBody.addShape(shape);
+            boxBody.position.y = position.y;
+            boxBody.position.x = position.x;
+            boxBody.position.z = position.z;
+            boxBody.useQuaternion = true;
+            boxBody.addEventListener('collide', function(object) {
+                if(object.body.id == 0) 
+                    console.log("Play collided", object.body);
+            });
+            WORLD.world.addBody(boxBody);
 
             obj.traverse((child) => {
                 if (child instanceof THREE.Mesh) {
