@@ -130,7 +130,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(0, 1, 10);
+    sphereBody.position.set(20, 1, -10);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -177,7 +177,8 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(0, 1, 10);
+    WORLD.player.position.set(20, 1, -10);
+    WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
     WORLD.drawGround();
@@ -266,33 +267,55 @@ WORLD.init = function () {
         //     scale: new THREE.Vector3(.03,.03,.03)
         // },
         {
-            name: "traffic-light",
+            name: "traffic-light-1",
             loader_type: "fbx",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(4, 0, 5),
+            position: new THREE.Vector3(6, 0, 6),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
             scale: new THREE.Vector3(.1,.1,.1)
         },
         {
-            name: "traffic-light",
+            name: "traffic-light-2",
             loader_type: "fbx",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(-12, 0, -15),
+            position: new THREE.Vector3(-16, 0, -16),
             rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
             scale: new THREE.Vector3(.1,.1,.1)
         },
-        // {
-        //     name: "road_block",
-        //     loader_type: "gltf",
-        //     url: "./models/gltf/road_block/scene.gltf",
-        //     position: new THREE.Vector3(2, 0, 0),
-        //     rotation: new THREE.Euler(0, -3 * Math.PI / 4, 0),
-        //     scale: new THREE.Vector3(0.1, 0.1, 0.1)
-        // }
+        {
+            name: "traffic-light-3",
+            loader_type: "fbx",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(-16, 0, 6),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.1,.1,.1)
+        },
+        {
+            name: "traffic-light-4",
+            loader_type: "fbx",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(6, 0, -16),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.1,.1,.1)
+        },
+        {
+            name: "bus_stop",
+            loader_type: "fbx",
+            url: "./models/fbx/bus_stop/bus_stop.FBX",
+            position: new THREE.Vector3(-45, 0, -23),
+            rotation: new THREE.Euler(0, 0, 0),
+            scale: new THREE.Vector3(.05,.05,.05),
+            children: {
+                "sign": {
+                    position: new THREE.Vector3(0, 60, 100),
+                    rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
+                }
+            }
+        }
     ];
 
     // add models to the world
-    models.forEach(md => WORLD.loadModelToWorld(md));
+    models.forEach(md => loadModelToWorld(md));
 
     /////////
 	// CAR //
@@ -368,34 +391,25 @@ WORLD.init = function () {
     //     WORLD.scene.add( object );
     // }, onProgress, onError );
 
-    // bus_stop.fbx
+    /** bus stop */
     WORLD.fbxLoader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
         // object instanceof THREE.Group
         object.traverse( function ( child ) {
             if ( child instanceof THREE.Mesh ) {
 
-                child.scale.set(.03,.03,.03);
+                child.scale.set(.05,.05,.05);
                 if(child.name === "sign") {
-                    child.position.set(-2, 2, 2);
+                    child.position.set(-4, 2, 4);
                     child.rotateZ( Math.PI / 2 )
                 }
                 else {
                     child.position.set(0, 0, 0);
                 }
-                console.log("bus_stop:",child)
-
-
             }
         } );
+        // object.position.set(0, 0, 0);
+        object.position.set(-45, 0, -23);
         // WORLD.scene.add( object );
-        // object.children.forEach(function(child) {
-        //     if( child instanceof THREE.Mesh ) {
-
-        //         var childBody = addPhysicalBody(child, { mass: 0 });
-        //         WORLD.world.add(childBody);
-
-        //     }
-        // });
     }, onProgress, onError );
 
     // //village-house.fbx

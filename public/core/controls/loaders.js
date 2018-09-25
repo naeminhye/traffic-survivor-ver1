@@ -21,7 +21,7 @@ WORLD.textureLoader = new THREE.TextureLoader();
  * @param {*} type: type of loader
  * @param {*} url: model path 
  */
-WORLD.loadModelToWorld = (model) => {
+const loadModelToWorld = (model) => {
     let { 
         loader_type, 
         url = "object", 
@@ -31,7 +31,8 @@ WORLD.loadModelToWorld = (model) => {
         name = "Unknown Model",
         animate = false,
         castShadow = false,
-        receiveShadow = false
+        receiveShadow = false,
+        children
     } = model;
     
     let loader;
@@ -129,6 +130,20 @@ WORLD.loadModelToWorld = (model) => {
                 if (child instanceof THREE.Mesh) {
                     child.castShadow = castShadow;
                     child.receiveShadow = receiveShadow;
+
+                    if(children) {
+                        if(children.hasOwnProperty(child.name)) {
+                            child.rotation.x = children[child.name].rotation.x || 0; 
+                            child.rotation.y = children[child.name].rotation.y || 0; 
+                            child.rotation.z = children[child.name].rotation.z || 0;
+                            child.position.y = children[child.name].position.y || 0;
+                            child.position.x = children[child.name].position.x || 0;
+                            child.position.z = children[child.name].position.z || 0;
+                            child.scale.x = children[child.name].scale.x || 1;
+                            child.scale.y = children[child.name].scale.y || 1;
+                            child.scale.z = children[child.name].scale.z || 1;
+                        }
+                    }
                 }
             });
         }, onProgress, onError
