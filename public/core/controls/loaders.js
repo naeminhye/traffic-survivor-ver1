@@ -89,13 +89,13 @@ WORLD.loadModelToWorld = (model) => {
                   a: 0.8
                 }
               });
-                sprite.position.set(position.x + 2, position.y, position.z);
+            sprite.position.set(position.x + 2, position.y, position.z);
 
-				sprite.center.set( 1.0, 0.0 );
-                // WORLD.scene.add( sprite );
+            sprite.center.set( 1.0, 0.0 );
+            // WORLD.scene.add( sprite );
 
             WORLD.scene.add( obj );
-            console.log("obj:",obj);
+
             var helper = new THREE.BoxHelper(obj, 0xff0000);
             helper.update();
 
@@ -103,22 +103,27 @@ WORLD.loadModelToWorld = (model) => {
             WORLD.scene.add(helper);
             var bbox = new THREE.Box3().setFromObject(helper);
             WORLD.collidableObjects.push(bbox);
-            var sizeVector = new THREE.Vector3(1, 1, 1);
-            bbox.getSize(sizeVector);
 
             // create a cannon body
-            var shape = new CANNON.Box(new CANNON.Vec3(sizeVector.x, sizeVector.y, sizeVector.z));
+            var shape = new CANNON.Box(new CANNON.Vec3(
+                (bbox.max.x - bbox.min.x) / 2,
+                (bbox.max.y - bbox.min.y) / 2,
+                (bbox.max.z - bbox.min.z) / 2
+            ));
             var boxBody = new CANNON.Body({ mass: 5 });
             boxBody.addShape(shape);
-            boxBody.position.y = position.y;
-            boxBody.position.x = position.x;
-            boxBody.position.z = position.z;
+            boxBody.position.copy(helper.position);
             boxBody.useQuaternion = true;
+            boxBody.computeAABB();
+            // disable collision response so objects don't move when they collide
+            // against each other
+            boxBody.collisionResponse = true;
+            // keep a reference to the mesh so we can update its properties later
             boxBody.addEventListener('collide', function(object) {
                 if(object.body.id == 0) 
-                    console.log("Play collided", object.body);
+                    console.log("Player collided with object.");
             });
-            WORLD.world.addBody(boxBody);
+            // WORLD.world.addBody(boxBody);
 
             obj.traverse((child) => {
                 if (child instanceof THREE.Mesh) {

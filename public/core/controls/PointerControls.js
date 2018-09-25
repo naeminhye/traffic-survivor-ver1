@@ -19,10 +19,10 @@ const keys = {
     KEY_Z: 90,
 };
 
-var PointerLockControls = function (camera, cannonBody) {
+var PointerControls = function (camera, cannonBody) {
 
     var eyeYPos = 2; // eyes are 2 meters above the ground
-    const INITIAL_SPEED = 0.2;
+    const INITIAL_SPEED = 0.1;
     var velocityFactor = INITIAL_SPEED;
     var jumpVelocity = 20;
     var scope = this;
@@ -56,7 +56,7 @@ var PointerLockControls = function (camera, cannonBody) {
         if (contact.bi.id == cannonBody.id)  // bi is the player body, flip the contact normal
         {
             contact.ni.negate(contactNormal);
-            console.log("collided!!!");
+            // console.log("collided!!!");
         }
         else
             contactNormal.copy(contact.ni); // bi is something else. Keep the normal as it is
@@ -77,7 +77,7 @@ var PointerLockControls = function (camera, cannonBody) {
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
         // var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-        yawObject.rotation.y -= movementX * 0.002;
+        yawObject.rotation.y -= movementX * 0.0002;
         // pitchObject.rotation.x -= movementY * 0.002;
 
         // pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
@@ -185,6 +185,7 @@ var PointerLockControls = function (camera, cannonBody) {
 
         if(WORLD.detectCollision() !== 0){
             // TODO: Handle collision event
+            console.log("collision")
         }
 
         if (moveForward) {

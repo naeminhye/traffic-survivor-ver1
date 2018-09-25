@@ -174,7 +174,7 @@ WORLD.init = function () {
     // WORLD.scene.add(light);
     addSunlight(WORLD.scene);
 
-    WORLD.controls = new PointerLockControls(WORLD.camera, sphereBody);
+    WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
     WORLD.player.position.set(0, 1, 10);
@@ -222,81 +222,73 @@ WORLD.init = function () {
     // };
 
     var models = [
-        {
-            name: "sign",
-            loader_type: "object",
-            url: "./models/json/test_sign.json",
-            position: new THREE.Vector3(-10, 10, -20),
-            rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
-            animate: false
-        },
+        // {
+        //     name: "sign",
+        //     loader_type: "object",
+        //     url: "./models/json/test_sign.json",
+        //     position: new THREE.Vector3(-10, 10, -20),
+        //     rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
+        //     animate: false
+        // },
         {
             name: "car",
             loader_type: "object",
             url: "./models/json/volkeswagon-vw-beetle.json",
-            position: new THREE.Vector3(0, 1.5, 0),
+            position: new THREE.Vector3(10, 1.5, 0),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
             scale: new THREE.Vector3(.005, .005, 0.005),
             animate: true
         },
-        {
-            name: "parkingsign",
-            loader_type: "fbx",
-            url: "./models/fbx/parking-sign/parkingsign.fbx",
-            position: new THREE.Vector3(-10, 0, -10),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            scale: new THREE.Vector3(.025,.025,.025),
-            animate: false
-        },
-        {
-            name: "chair",
-            loader_type: "fbx",
-            url: "./models/fbx/basic-park-bench/chair.fbx",
-            position: new THREE.Vector3(-20, 0, -20),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            scale: new THREE.Vector3(.1,.1,.1),
-            animate: true
-        },
         // {
-        //     name: "marine",
-        //     loader_type: "object",
-        //     url: "./models/json/marine_anims_core.json",
-        //     position: new THREE.Vector3(-20, 0, -20),
+        //     name: "parkingsign",
+        //     loader_type: "fbx",
+        //     url: "./models/fbx/parking-sign/parkingsign.fbx",
+        //     position: new THREE.Vector3(-10, 0, -10),
         //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.05,.05,.05),
+        //     scale: new THREE.Vector3(.025,.025,.025),
         //     animate: false
         // },
         // {
-        //     name: "Tree",
+        //     name: "chair",
         //     loader_type: "fbx",
-        //     url: "./models/fbx/tree1/Tree.fbx",
-        //     position: new THREE.Vector3(-10, 0, 0),
+        //     url: "./models/fbx/basic-park-bench/chair.fbx",
+        //     position: new THREE.Vector3(-20, 0, -20),
         //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(1,1,1)
+        //     scale: new THREE.Vector3(.1,.1,.1),
+        //     animate: true
+        // },
+        // {
+        //     name: "speedlimitsign",
+        //     loader_type: "fbx",
+        //     url: "./models/fbx/speed-limit-sign/speedlimitsign.fbx",
+        //     position: new THREE.Vector3(10, 0, -10),
+        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        //     scale: new THREE.Vector3(.03,.03,.03)
         // },
         {
-            name: "speedlimitsign",
+            name: "traffic-light",
             loader_type: "fbx",
-            url: "./models/fbx/speed-limit-sign/speedlimitsign.fbx",
-            position: new THREE.Vector3(-10, 0, -20),
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(4, 0, 5),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            scale: new THREE.Vector3(.025,.025,.025)
+            scale: new THREE.Vector3(.1,.1,.1)
         },
         {
             name: "traffic-light",
             loader_type: "fbx",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(10, 0, -10),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            position: new THREE.Vector3(-12, 0, -15),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
             scale: new THREE.Vector3(.1,.1,.1)
         },
-        {
-            name: "road_block",
-            loader_type: "gltf",
-            url: "./models/gltf/road_block/scene.gltf",
-            position: new THREE.Vector3(2, 0, 0),
-            rotation: new THREE.Euler(0, -3 * Math.PI / 4, 0),
-            scale: new THREE.Vector3(0.1, 0.1, 0.1)
-        }
+        // {
+        //     name: "road_block",
+        //     loader_type: "gltf",
+        //     url: "./models/gltf/road_block/scene.gltf",
+        //     position: new THREE.Vector3(2, 0, 0),
+        //     rotation: new THREE.Euler(0, -3 * Math.PI / 4, 0),
+        //     scale: new THREE.Vector3(0.1, 0.1, 0.1)
+        // }
     ];
 
     // add models to the world
@@ -392,11 +384,6 @@ WORLD.init = function () {
                 }
                 console.log("bus_stop:",child)
 
-                if(child.name !== "sign") {
-                    var childBody = addPhysicalBody(child, { mass: 0 });
-                    WORLD.world.add(childBody);
-
-                }
 
             }
         } );
@@ -523,47 +510,6 @@ function rayIntersect(ray, distance) {
     }
     return false;
 }
-
-function addPhysicalBody(mesh, bodyOptions) {
-    console.log("addPhysicalBody")
-    var shape;
-    // create a Sphere shape for spheres and thorus knots,
-    // a Box shape otherwise
-    if(mesh.geometry.boundingSphere !== null) {
-        console.log("computeBoundingSphere")
-
-        mesh.geometry.computeBoundingSphere();
-        shape = new CANNON.Sphere(mesh.geometry.boundingSphere.radius);
-    }
-    else if(mesh.geometry.boundingBox) {
-        console.log("computeBoundingBox")
-        mesh.geometry.computeBoundingBox();
-        var box = mesh.geometry.boundingBox;
-        shape = new CANNON.Box(new CANNON.Vec3(
-            (box.max.x - box.min.x) / 2,
-            (box.max.y - box.min.y) / 2,
-            (box.max.z - box.min.z) / 2
-        ));
-    }
-
-    console.log("body")
-    var body = new CANNON.Body(bodyOptions);
-    body.addShape(shape);
-    body.position.copy(mesh.position);
-    body.computeAABB();
-    // disable collision response so objects don't move when they collide
-    // against each other
-    body.collisionResponse = false;
-    // keep a reference to the mesh so we can update its properties later
-    body.mesh = mesh;
-
-    body.addEventListener('collide', function (object) {
-        console.log("addEventListener")
-        if (object.body.id == 0)
-            console.log("Collided!!", object.body);
-    });
-    return body;
-};
 
 function box() {
     // Add boxes
