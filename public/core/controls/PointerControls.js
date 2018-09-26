@@ -213,8 +213,6 @@ var PointerControls = function (camera, cannonBody) {
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
         
-        WORLD.playerVelocity = velocity;
-
         yawObject.position.copy(cannonBody.position);
 
         /** Rotation */

@@ -87,7 +87,7 @@ function roundRect(ctx, x, y, w, h, r)
 	ctx.stroke();   
 }
 
-function makeTextSprite( message, parameters ) {
+const makeTextSprite = ( message, parameters ) => {
 	if ( parameters === undefined ) parameters = {};
 	var fontface = parameters.hasOwnProperty("fontface") ? parameters["fontface"] : "Arial";
 	var fontsize = parameters.hasOwnProperty("fontsize") ? parameters["fontsize"] : 18;
@@ -118,4 +118,33 @@ function makeTextSprite( message, parameters ) {
 	var sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(0.5 * fontsize, 0.25 * fontsize, 0.75 * fontsize);
 	return sprite;  
+}
+
+const objectToBody = (object) => {
+	var helper = new THREE.BoxHelper(object, 0xff0000);
+	helper.update();
+
+	var bbox = new THREE.Box3().setFromObject(helper);
+	WORLD.collidableObjects.push(bbox);
+
+	// create a cannon body
+	var shape = new CANNON.Box(new CANNON.Vec3(
+		(bbox.max.x - bbox.min.x) / 2,
+		(bbox.max.y - bbox.min.y) / 2,
+		(bbox.max.z - bbox.min.z) / 2
+	));
+	var boxBody = new CANNON.Body({ mass: 5 });
+	boxBody.addShape(shape);
+	boxBody.position.copy(helper.position);
+	boxBody.useQuaternion = true;
+	boxBody.computeAABB();
+	// disable collision response so objects don't move when they collide
+	// against each other
+	boxBody.collisionResponse = true;
+	// keep a reference to the mesh so we can update its properties later
+	boxBody.addEventListener('collide', function(object) {
+		if(object.body.id == 0) 
+			console.log("Player collided with object.");
+	});
+	return boxBody;
 }

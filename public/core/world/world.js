@@ -18,6 +18,9 @@ var dangerZoneBBox = null;
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
+WORLD.streetSignList = [];
+WORLD.vehicle = [];
+var initialPosition 
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -130,7 +133,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(20, 1, -10);
+    sphereBody.position.set(40, 1, -10);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -177,7 +180,7 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(20, 1, -10);
+    WORLD.player.position.set(40, 1, -10);
     WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
@@ -193,7 +196,7 @@ WORLD.init = function () {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    dangerZoneGeometry = new THREE.BoxGeometry(20, 20, 20);
+    dangerZoneGeometry = new THREE.BoxGeometry(60, 40, 60);
     dangerZoneMaterial = new THREE.MeshBasicMaterial({
         color: 0xff0000,
         wireframe: true
@@ -202,7 +205,7 @@ WORLD.init = function () {
         dangerZoneGeometry,
         dangerZoneMaterial
     );
-    dangerZoneMesh.position.set(0, 10, -20);
+    dangerZoneMesh.position.set(-10, 20, 0);
     dangerZoneMesh.geometry.computeBoundingBox();
     dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
     // WORLD.scene.add(dangerZoneMesh);
@@ -223,17 +226,19 @@ WORLD.init = function () {
     // };
 
     var models = [
-        // {
-        //     name: "sign",
-        //     loader_type: "object",
-        //     url: "./models/json/test_sign.json",
-        //     position: new THREE.Vector3(-10, 10, -20),
-        //     rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
-        //     animate: false
-        // },
+        {
+            name: "sign",
+            loader_type: "object",
+            object_type: "street_sign",
+            url: "./models/json/test_sign.json",
+            position: new THREE.Vector3(-10, 10, -20),
+            rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
+            animate: false
+        },
         {
             name: "car",
             loader_type: "object",
+            object_type: "vehicle",
             url: "./models/json/volkeswagon-vw-beetle.json",
             position: new THREE.Vector3(10, 1.5, 0),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
@@ -269,6 +274,7 @@ WORLD.init = function () {
         {
             name: "traffic-light-1",
             loader_type: "fbx",
+            object_type: "traffic_light",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
             position: new THREE.Vector3(6, 0, 6),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
@@ -277,6 +283,7 @@ WORLD.init = function () {
         {
             name: "traffic-light-2",
             loader_type: "fbx",
+            object_type: "traffic_light",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
             position: new THREE.Vector3(-16, 0, -16),
             rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
@@ -285,6 +292,7 @@ WORLD.init = function () {
         {
             name: "traffic-light-3",
             loader_type: "fbx",
+            object_type: "traffic_light",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
             position: new THREE.Vector3(-16, 0, 6),
             rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
@@ -293,6 +301,7 @@ WORLD.init = function () {
         {
             name: "traffic-light-4",
             loader_type: "fbx",
+            object_type: "traffic_light",
             url: "./models/fbx/traffic-light/traffic-light.fbx",
             position: new THREE.Vector3(6, 0, -16),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
@@ -311,6 +320,15 @@ WORLD.init = function () {
                     rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
                 }
             }
+        },
+        {
+            name: "uv",
+            loader_type: "json",
+            object_type: "street_sign",
+            url: "./models/uv.json",
+            // position: new THREE.Vector3(-10, 10, -20),
+            // rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
+            animate: false
         }
     ];
 
@@ -476,6 +494,7 @@ WORLD.animate = function () {
     }
     
     WORLD.controls.update(Date.now() - time);
+    checkDistance();
     // var windStrength = Math.cos(time / 7000) * 20 + 40;
     // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
     // windForce.normalize()
@@ -483,17 +502,8 @@ WORLD.animate = function () {
 
     // $("#message").text(compass(WORLD.camera.getWorldDirection(new THREE.Vector3(0, 0, 0))));
     // $("#message").text("Delta: " + (Date.now() - time));
-    // $("#message").text("Velocity: " + WORLD.playerVelocity.length());
+    // $("#message").text("Velocity: " + WORLD.playerVelocity);
 
-    // if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
-    //     if (!isDangerous) {
-    //         toastr.error("You're in the dangerous zone!");
-    //         isDangerous = true;
-    //     }
-    // }
-    // else {
-    //     isDangerous = false;
-    // }
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
@@ -570,3 +580,41 @@ function addSunlight(scene) {
 
     scene.add(sunlight);
   }
+  // Make the dino chase the player
+function checkDistance() {
+    WORLD.streetSignList.forEach((sign) => {
+        // Check if in dino agro range
+        if (sign.position.distanceTo(WORLD.player.position) < 20) {
+            // Adject the target's y value. We only care about x and z for movement.
+            // var lookTarget = new THREE.Vector3();
+            // lookTarget.copy(WORLD.player.position);
+            // lookTarget.y = sign.position.y;
+
+            // Make dino face camera
+            // sign.lookAt(lookTarget);
+            // var matrix = new THREE.Matrix4();
+            // matrix.extractRotation( sign.matrix );
+
+            // var direction = new THREE.Vector3( 0, 0, 1 );
+            // matrix.multiplyVector3( direction );
+            // console.log("direction of the sign:", direction)
+
+            // Get distance between dino and camera with a 120 unit offset
+            // Game over when dino is the value of CATCHOFFSET units away from camera
+            var distanceFrom = (sign.position.distanceTo(WORLD.player.position));
+            // Alert and display distance between camera and dino
+            $("#message").text("Sign has spotted you! Distance from you: " + distanceFrom);
+            // Not in agro range, don't start distance countdown
+        } 
+    });
+    
+    if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
+        if (!isDangerous) {
+            toastr.error("You're about to meet the intersection!");
+            isDangerous = true;
+        }
+    }
+    else {
+        isDangerous = false;
+    }
+}
