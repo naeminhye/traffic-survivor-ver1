@@ -60,15 +60,14 @@ const loadModelToWorld = (model) => {
         loader.load(url, function(geometry, materials) {
 
             var material = 
-            // materials ? materials[0] : 
+            materials ? materials[0] : 
             new THREE.MeshPhongMaterial({
                 color: new THREE.Color(0xd3d3d3),
                 specular: new THREE.Color(0xffffff),
                 shininess: 100,
-                shading: THREE.SmoothShading,
+                flatShading: THREE.SmoothShading,
                 reflectivity: 100,
-                ambient: new THREE.Color(0xffffff),
-                map: THREE.ImageUtils.loadTexture('./models/uv.png')
+                map: new THREE.TextureLoader().load('./models/uv.png')
             });
     
             var mesh = new THREE.Mesh(geometry, material);
