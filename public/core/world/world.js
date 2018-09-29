@@ -196,7 +196,7 @@ WORLD.init = function () {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    dangerZoneGeometry = new THREE.BoxGeometry(60, 40, 60);
+    dangerZoneGeometry = new THREE.BoxGeometry(80, 40, 80);
     dangerZoneMaterial = new THREE.MeshBasicMaterial({
         color: 0xff0000,
         wireframe: true
@@ -231,9 +231,11 @@ WORLD.init = function () {
             loader_type: "object",
             object_type: "street_sign",
             url: "./models/json/test_sign.json",
-            position: new THREE.Vector3(-10, 10, -20),
-            rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
-            animate: false
+            // position: new THREE.Vector3(-10, 10, -20),
+            position: new THREE.Vector3(0, 10, 0),
+            rotation: new THREE.Euler(0, Math.PI, Math.PI, "XYZ"),
+            animate: false,
+            angle: 90
         },
         {
             name: "car",
@@ -584,7 +586,7 @@ function addSunlight(scene) {
 function checkDistance() {
     WORLD.streetSignList.forEach((sign) => {
         // Check if in dino agro range
-        if (sign.position.distanceTo(WORLD.player.position) < 20) {
+        if (sign.object.position.distanceTo(WORLD.player.position) < 20) {
             // Adject the target's y value. We only care about x and z for movement.
             // var lookTarget = new THREE.Vector3();
             // lookTarget.copy(WORLD.player.position);
@@ -592,18 +594,19 @@ function checkDistance() {
 
             // Make dino face camera
             // sign.lookAt(lookTarget);
-            // var matrix = new THREE.Matrix4();
-            // matrix.extractRotation( sign.matrix );
-
-            // var direction = new THREE.Vector3( 0, 0, 1 );
-            // matrix.multiplyVector3( direction );
-            // console.log("direction of the sign:", direction)
 
             // Get distance between dino and camera with a 120 unit offset
             // Game over when dino is the value of CATCHOFFSET units away from camera
-            var distanceFrom = (sign.position.distanceTo(WORLD.player.position));
+            var distanceFrom = (sign.object.position.distanceTo(WORLD.player.position));
+
+            var vector = WORLD.player.getWorldDirection();
+            var theta = Math.atan2(vector.x,vector.z);
+            var playerAngle  = THREE.Math.radToDeg(theta);
+            if(sign.angle - playerAngle <= 90 && sign.angle - playerAngle >= -90) {
+                console.log("sds")
+            }
             // Alert and display distance between camera and dino
-            $("#message").text("Sign has spotted you! Distance from you: " + distanceFrom);
+            // $("#message").text("Sign's distance from you: " + distanceFrom);
             // Not in agro range, don't start distance countdown
         } 
     });

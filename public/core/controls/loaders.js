@@ -34,7 +34,8 @@ const loadModelToWorld = (model) => {
         castShadow = false,
         receiveShadow = false,
         children,
-        object_type
+        object_type,
+        angle
     } = model;
     
     let loader;
@@ -82,13 +83,6 @@ const loadModelToWorld = (model) => {
                 if(loader_type === "gltf") {
                     obj = obj.scene;
                 }
-
-                if(object_type === "street_sign") {
-                    WORLD.streetSignList.push(obj);
-                }
-                else if(object_type === "vehicle") {
-                    WORLD.vehicle.push(obj);
-                }
                 
                 // if(animate) {
                 //     // model is a THREE.Group (THREE.Object3D)                              
@@ -107,6 +101,27 @@ const loadModelToWorld = (model) => {
                 obj.scale.y = scale.y;
                 obj.scale.z = scale.z;
                 obj.name = name;
+
+                if(!angle) {
+
+                    var vector = obj.getWorldDirection();
+                    var theta = Math.atan2(vector.x,vector.z);
+                    angle = THREE.Math.radToDeg(theta);
+
+                }
+
+                var storeObj = {
+                    object: obj,
+                    angle: angle
+                }
+
+                if(object_type === "street_sign") {
+                    WORLD.streetSignList.push(storeObj);
+                }
+                else if(object_type === "vehicle") {
+                    WORLD.vehicle.push(storeObj);
+                }
+                    console.log(name + ": " + angle + " degree")
 
                 var sprite = makeTextSprite("Object: " + obj.name, {
                     fontsize: 24,
@@ -174,9 +189,9 @@ const loadModelToWorld = (model) => {
                                 child.position.y = children[child.name].position.y || 0;
                                 child.position.x = children[child.name].position.x || 0;
                                 child.position.z = children[child.name].position.z || 0;
-                                child.scale.x = children[child.name].scale.x || 1;
-                                child.scale.y = children[child.name].scale.y || 1;
-                                child.scale.z = children[child.name].scale.z || 1;
+                                // child.scale.x = children[child.name].scale.x || 1;
+                                // child.scale.y = children[child.name].scale.y || 1;
+                                // child.scale.z = children[child.name].scale.z || 1;
                             }
                         }
                     }

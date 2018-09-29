@@ -47,7 +47,12 @@
     text-align: center;
   }
   .content-container {
-    font-size: 1.3em;
+    font-size: 1.3em;    
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .content-container .content {
     margin: 1em;
@@ -74,9 +79,3 @@
     color: #294548;
     box-shadow: 0 0 0.2em rgba(255, 255, 255, 0.8);
   }
-  .center {
-    margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px;
-}  
