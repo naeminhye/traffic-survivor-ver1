@@ -324,12 +324,11 @@ WORLD.init = function () {
             }
         },
         {
-            name: "uv",
-            loader_type: "json",
-            object_type: "street_sign",
-            url: "./models/uv.json",
-            // position: new THREE.Vector3(-10, 10, -20),
-            // rotation: new THREE.Euler(0, Math.PI / 2, Math.PI, "XYZ"),
+            name: "stripes-uv",
+            loader_type: "object",
+            object_type: "sign",
+            url: "./models/stripes-uv.json",
+            textureUrl: './models/stripes2.png',
             animate: false
         }
     ];
@@ -337,148 +336,24 @@ WORLD.init = function () {
     // add models to the world
     models.forEach(md => loadModelToWorld(md));
 
-    /////////
-	// CAR //
-    /////////		 
-    // var CARS = {
-    //     "Porsche":{
-    //         name: "Porsche",
-    //         url: "models/json/testJson.json",
-    //         //init_material: 4,
-    //         //body_materials: [ 2 ],
-
-    //         object: null,
-    //         buttons: null,
-    //         materials: null
-    //     }
-    // };
-
-    // loader.load(CARS[ "Porsche" ].url, function (carGeometry) { 
-    //     /*createScene( geometry, "Veyron" )*/
-    //     var carMaterial = new THREE.MeshBasicMaterial({ color: 0x995500, opacity: 1.0, transparent: false });
-    //     var carMesh = new THREE.Mesh(carGeometry, carMaterial);
-    //     // carMesh.scale.set(10, 10, 10);
-    //     carMesh.position.y = 1; 
-    //     carMesh.position.z = -10;
-    //     carMesh.rotateY(Math.PI);
-    //     WORLD.scene.add(carMesh);
-    // });
-    // loader.load("models/json/testJson.json", function(geometry, materials ) {// onLoad callback
-    //     var material = materials[ 0 ];
-    //     var object = new THREE.Mesh( geometry, material );
-    //     WORLD.scene.add(object);
-    
-    // }, onProgress, onError);
-    // WORLD.fbxLoader.load("./models/sign.fbx", function (object) {
-    //     // object instanceof THREE.Group
-    //     object.traverse(function (child) {
-    //         if (child instanceof THREE.Mesh) {
-    //             child.receiveShadow = true;
-    //             child.receiveShadow = true;
-
-    //             child.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    //             if (child.name === "Circle") {
-    //                 child.scale.set(2,2,2);
-    //                 child.position.set(0, 0, 8);
-    //             }
-    //             else {
-    //                 child.scale.set(.2,4,.2);
-    //                 child.position.set(0, 0, 4);
-    //             }
-    //         }
-    //     });
-    //     // object.scale.set(.01, .01, .01);
-    //     object.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    //     object.applyMatrix(new THREE.Matrix4().makeRotationY(- Math.PI));
-    //     object.position.x = 0;
-    //     object.position.y = 0;
-    //     object.position.z = -10;
-    //     WORLD.scene.add(object);
-    // }, onProgress, onError);
-
-    // car model
-    // fbxLoader.load("./models/fbx/car/car.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
-
-    //             child.castShadow = true;
-    //             child.receiveShadow = true;
-
-    //             child.position.set(10, 0, 10);
-
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
-
-    /** bus stop */
-    WORLD.fbxLoader.load("./models/fbx/bus_stop/bus_stop.FBX", function ( object ) {
-        // object instanceof THREE.Group
+    var loader = new THREE.ObjectLoader(WORLD.manager);
+    loader.load("models/stripes-uv.json", function(object) {// onLoad callback
+        var texture = new THREE.TextureLoader().load('./models/stripes2.png');
+            // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
+        var material = new THREE.MeshBasicMaterial({
+            map: texture
+        });
+        material.map.minFilter = THREE.LinearFilter;
         object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
 
-                child.scale.set(.05,.05,.05);
-                if(child.name === "sign") {
-                    child.position.set(-4, 2, 4);
-                    child.rotateZ( Math.PI / 2 )
-                }
-                else {
-                    child.position.set(0, 0, 0);
-                }
+            if ( child instanceof THREE.Mesh ) {
+    
+                child.material = material;
+    
             }
         } );
-        // object.position.set(0, 0, 0);
-        object.position.set(-45, 0, -23);
-        // WORLD.scene.add( object );
-    }, onProgress, onError );
-
-    // //village-house.fbx
-    // fbxLoader.load("./models/fbx/village-house/village-house.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
-
-    //             // child.castShadow = true;
-    //             // child.receiveShadow = true;
-
-    //             child.scale.set(.5,.5,.5);
-    //             child.position.set(-40, 0, 0);
-
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
-
-
-    // //Bench.fbx
-    // fbxLoader.load("./models/fbx/Bench.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh ) {
-
-    //             child.scale.set(.01,.01,.01);
-    //             child.position.set(-10, 0, -5);
-
-    //         }
-    //     } );
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
-
-    // road-straight
-    // fbxLoader.load("./models/fbx/road-straight/road-straight.fbx", function ( object ) {
-    //     object.traverse( function ( child ) {
-    //         if ( child instanceof THREE.Mesh && child.name === "Cylinder012" ) {
-
-    //             child.castShadow = true;
-    //             child.receiveShadow = true;
-    //             console.log("child",child)
-    //             child.scale.set(.1,.1,.1);
-    //             child.position.set(0, 0, 0);
-
-    //         }
-    //     } );
-    //     object.scale.set(.1,.1,.1);
-    //     WORLD.scene.add( object );
-    // }, onProgress, onError );
-
+        // WORLD.scene.add(object);
+    });
 }
 
 function onWindowResize() {

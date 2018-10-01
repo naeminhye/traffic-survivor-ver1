@@ -35,7 +35,8 @@ const loadModelToWorld = (model) => {
         receiveShadow = false,
         children,
         object_type,
-        angle
+        angle, 
+        textureUrl
     } = model;
     
     let loader;
@@ -62,7 +63,7 @@ const loadModelToWorld = (model) => {
 
             var material = 
             materials ? materials[0] : 
-            new THREE.MeshPhongMaterial({
+            new THREE.MeshBasicMaterial({
                 color: new THREE.Color(0xd3d3d3),
                 specular: new THREE.Color(0xffffff),
                 shininess: 100,
@@ -84,12 +85,12 @@ const loadModelToWorld = (model) => {
                     obj = obj.scene;
                 }
                 
-                // if(animate) {
-                //     // model is a THREE.Group (THREE.Object3D)                              
-                //     const mixer = new THREE.AnimationMixer(obj);
-                //     // animations is a list of THREE.AnimationClip                          
-                //     mixer.clipAction(obj.animations[0]).play();
-                // }
+                if(animate) {
+                    // model is a THREE.Group (THREE.Object3D)                              
+                    const mixer = new THREE.AnimationMixer(obj);
+                    // animations is a list of THREE.AnimationClip                          
+                    mixer.clipAction(obj.animations[0]).play();
+                }
                 // Add the loaded object to the scene
                 obj.rotation.x = rotation.x; 
                 obj.rotation.y = rotation.y; 
@@ -101,7 +102,7 @@ const loadModelToWorld = (model) => {
                 obj.scale.y = scale.y;
                 obj.scale.z = scale.z;
                 obj.name = name;
-
+                
                 if(!angle) {
 
                     var vector = obj.getWorldDirection();
@@ -121,22 +122,11 @@ const loadModelToWorld = (model) => {
                 else if(object_type === "vehicle") {
                     WORLD.vehicle.push(storeObj);
                 }
-                    console.log(name + ": " + angle + " degree")
 
                 var sprite = makeTextSprite("Object: " + obj.name, {
                     fontsize: 24,
-                    borderColor: {
-                    r: 255,
-                    g: 0,
-                    b: 0,
-                    a: 1.0
-                    },
-                    backgroundColor: {
-                    r: 255,
-                    g: 100,
-                    b: 100,
-                    a: 0.8
-                    }
+                    borderColor: { r: 255, g: 0, b: 0, a: 1.0 },
+                    backgroundColor: { r: 255, g: 100, b: 100, a: 0.8 }
                 });
                 sprite.position.set(position.x + 2, position.y, position.z);
 
@@ -177,10 +167,20 @@ const loadModelToWorld = (model) => {
                 // WORLD.world.addBody(boxBody);
 
                 obj.traverse((child) => {
+
                     if (child instanceof THREE.Mesh) {
                         child.castShadow = castShadow;
                         child.receiveShadow = receiveShadow;
 
+                        if(textureUrl) {
+                            var texture = new THREE.TextureLoader().load(textureUrl);
+                            // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
+                            var material = new THREE.MeshBasicMaterial({
+                                map: texture
+                            });  
+                            material.map.minFilter = THREE.LinearFilter;
+                            child.material = material;
+                        }
                         if(children) {
                             if(children.hasOwnProperty(child.name)) {
                                 child.rotation.x = children[child.name].rotation.x || 0; 
