@@ -247,32 +247,6 @@ WORLD.init = function () {
             scale: new THREE.Vector3(.005, .005, 0.005),
             animate: true
         },
-        // {
-        //     name: "parkingsign",
-        //     loader_type: "fbx",
-        //     url: "./models/fbx/parking-sign/parkingsign.fbx",
-        //     position: new THREE.Vector3(-10, 0, -10),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.025,.025,.025),
-        //     animate: false
-        // },
-        // {
-        //     name: "chair",
-        //     loader_type: "fbx",
-        //     url: "./models/fbx/basic-park-bench/chair.fbx",
-        //     position: new THREE.Vector3(-20, 0, -20),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.1,.1,.1),
-        //     animate: true
-        // },
-        // {
-        //     name: "speedlimitsign",
-        //     loader_type: "fbx",
-        //     url: "./models/fbx/speed-limit-sign/speedlimitsign.fbx",
-        //     position: new THREE.Vector3(10, 0, -10),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.03,.03,.03)
-        // },
         {
             name: "traffic-light-1",
             loader_type: "fbx",
@@ -323,12 +297,20 @@ WORLD.init = function () {
                 }
             }
         },
+        // {
+        //     name: "stripes-uv",
+        //     loader_type: "object",
+        //     object_type: "sign",
+        //     url: "./models/stripes-uv.json",
+        //     textureUrl: './models/stripes2.png',
+        //     animate: false
+        // },
         {
-            name: "stripes-uv",
-            loader_type: "object",
+            name: "land_ocean_ice_small",
+            loader_type: "json",
             object_type: "sign",
-            url: "./models/stripes-uv.json",
-            textureUrl: './models/stripes2.png',
+            url: "./models/earth.json",
+            textureUrl: './models/land_ocean_ice_small.png',
             animate: false
         }
     ];

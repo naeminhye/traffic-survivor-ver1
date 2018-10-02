@@ -61,17 +61,16 @@ const loadModelToWorld = (model) => {
 
         loader.load(url, function(geometry, materials) {
 
-            var material = 
-            materials ? materials[0] : 
+            var texture = new THREE.TextureLoader().load(textureUrl);
+            texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
+
+            var material = textureUrl ?  
             new THREE.MeshBasicMaterial({
-                color: new THREE.Color(0xd3d3d3),
-                specular: new THREE.Color(0xffffff),
-                shininess: 100,
-                flatShading: THREE.SmoothShading,
-                reflectivity: 100,
-                map: new THREE.TextureLoader().load('./models/uv.png')
-            });
+                map: texture
+            })
+            : materials[0];
     
+            // material.map.minFilter = THREE.LinearFilter;
             var mesh = new THREE.Mesh(geometry, material);
             mesh.position.set(0, 3, 0);
             WORLD.scene.add(mesh);
