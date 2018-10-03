@@ -16,6 +16,7 @@ WORLD.gltfLoader = new THREE.GLTFLoader(WORLD.manager);
 WORLD.objectLoader = new THREE.ObjectLoader(WORLD.manager);
 WORLD.jsonLoader = new THREE.JSONLoader(WORLD.manager);
 WORLD.textureLoader = new THREE.TextureLoader();
+WORLD.tdsLoader = new THREE.TDSLoader();
 
 /**
  * 
@@ -50,6 +51,10 @@ const loadModelToWorld = (model) => {
             break;
         case "json":
             loader = WORLD.jsonLoader;
+            break;
+        case "tds":
+        case "3ds":
+            loader = WORLD.tdsLoader;
             break;
         case "object":
         default:
@@ -171,14 +176,19 @@ const loadModelToWorld = (model) => {
                         child.castShadow = castShadow;
                         child.receiveShadow = receiveShadow;
 
-                        if(textureUrl) {
+                        if (textureUrl) {
                             var texture = new THREE.TextureLoader().load(textureUrl);
                             // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
-                            var material = new THREE.MeshBasicMaterial({
-                                map: texture
-                            });  
-                            material.map.minFilter = THREE.LinearFilter;
-                            child.material = material;
+                            // if (loader_type === "tds" || loader_type === "3ds") {
+                            //     child.material.map = texture;
+                            // }
+                            // else {
+                                var material = new THREE.MeshBasicMaterial({
+                                    map: texture
+                                });  
+                                material.map.minFilter = THREE.LinearFilter;
+                                child.material = material;
+                            // }
                         }
                         if(children) {
                             if(children.hasOwnProperty(child.name)) {

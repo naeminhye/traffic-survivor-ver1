@@ -305,37 +305,29 @@ WORLD.init = function () {
         //     textureUrl: './models/stripes2.png',
         //     animate: false
         // },
-        {
-            name: "land_ocean_ice_small",
-            loader_type: "json",
-            object_type: "sign",
-            url: "./models/earth.json",
-            textureUrl: './models/land_ocean_ice_small.png',
-            animate: false
-        }
+        // {
+        //     name: "land_ocean_ice_small",
+        //     loader_type: "json",
+        //     object_type: "sign",
+        //     url: "./models/earth.json",
+        //     textureUrl: './models/land_ocean_ice_small.png',
+        //     animate: false
+        // },
+        // {
+        //     name: "SignN281107",
+        //     loader_type: "object",
+        //     object_type: "sign",
+        //     url: "./models/tds/SignN281107.json",
+        //     textureUrl: './models/tds/perexod.jpg',
+        //     scale: new THREE.Vector3(10, 10, 10),
+        //     rotation: new THREE.Euler( - Math.PI / 2, 0, 0, "XYZ"),
+        //     animate: false
+        // }
     ];
 
     // add models to the world
     models.forEach(md => loadModelToWorld(md));
 
-    var loader = new THREE.ObjectLoader(WORLD.manager);
-    loader.load("models/stripes-uv.json", function(object) {// onLoad callback
-        var texture = new THREE.TextureLoader().load('./models/stripes2.png');
-            // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
-        var material = new THREE.MeshBasicMaterial({
-            map: texture
-        });
-        material.map.minFilter = THREE.LinearFilter;
-        object.traverse( function ( child ) {
-
-            if ( child instanceof THREE.Mesh ) {
-    
-                child.material = material;
-    
-            }
-        } );
-        // WORLD.scene.add(object);
-    });
 }
 
 function onWindowResize() {
