@@ -75,12 +75,12 @@ var PointerControls = function (camera, cannonBody) {
         if (scope.enabled === false) return;
 
         var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-        // var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+        var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
         yawObject.rotation.y -= movementX * 0.0002;
-        // pitchObject.rotation.x -= movementY * 0.002;
+        pitchObject.rotation.x = (pitchObject.rotation.x - movementY * 0.002 < 0.5 && pitchObject.rotation.x - movementY * 0.002 > -0.5) ? (pitchObject.rotation.x - movementY * 0.002) : pitchObject.rotation.x;
 
-        // pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
+        pitchObject.rotation.x = Math.max(- PI_2, Math.min(PI_2, pitchObject.rotation.x));
     };
 
     /** Keyboard events */

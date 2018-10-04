@@ -226,17 +226,17 @@ WORLD.init = function () {
     // };
 
     var models = [
-        {
-            name: "sign",
-            loader_type: "object",
-            object_type: "street_sign",
-            url: "./models/json/test_sign.json",
-            // position: new THREE.Vector3(-10, 10, -20),
-            position: new THREE.Vector3(0, 10, 0),
-            rotation: new THREE.Euler(0, Math.PI, Math.PI, "XYZ"),
-            animate: false,
-            angle: 90
-        },
+        // {
+        //     name: "sign",
+        //     loader_type: "object",
+        //     object_type: "street_sign",
+        //     url: "./models/json/test_sign.json",
+        //     // position: new THREE.Vector3(-10, 10, -20),
+        //     position: new THREE.Vector3(0, 10, 0),
+        //     rotation: new THREE.Euler(0, Math.PI, Math.PI, "XYZ"),
+        //     animate: false,
+        //     angle: 90
+        // },
         {
             name: "car",
             loader_type: "object",
@@ -296,6 +296,87 @@ WORLD.init = function () {
                     rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
                 }
             }
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-45, -3, 20),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),
+        },
+        // {
+        //     name: "tree2",
+        //     loader_type: "object",
+        //     url: "./models/trees/tree2/tree2.json",
+        //     position: new THREE.Vector3(-25, 0, 35),
+        //     rotation: new THREE.Euler(0, 0, 0),
+        //     textureUrl: './models/json/leaves1.png',
+        //     scale: new THREE.Vector3(.2,.2,.2),
+        // },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-45, -3, 35),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-45, -3, 50),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),            
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-45, -3, 65),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),            
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-60, -3, 65),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),            
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-60, -3, 50),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),            
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-60, -3, 20),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),
+        },
+        {
+            name: "tree1",
+            loader_type: "object",
+            url: "./models/trees/tree1/tree1.json",
+            position: new THREE.Vector3(-60, -3, 35),
+            rotation: new THREE.Euler(0, 0, 0),
+            textureUrl: './models/json/leaves1.png',
+            scale: new THREE.Vector3(.5,.5,.5),
         },
         // {
         //     name: "stripes-uv",
@@ -452,7 +533,7 @@ function checkDistance() {
             var theta = Math.atan2(vector.x,vector.z);
             var playerAngle  = THREE.Math.radToDeg(theta);
             if(sign.angle - playerAngle <= 90 && sign.angle - playerAngle >= -90) {
-                console.log("sds")
+                // console.log("sds")
             }
             // Alert and display distance between camera and dino
             // $("#message").text("Sign's distance from you: " + distanceFrom);
