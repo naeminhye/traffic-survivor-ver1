@@ -381,6 +381,7 @@ WORLD.init = function () {
         {
             name: "bus", 
             loader_type: "gltf", 
+            position: new THREE.Vector3(0, 0, 10),
             scale: new THREE.Vector3(.015,.015,.015),
             url: "./models/gltf/fortnitecity_bus/scene.gltf",
             animate: false
@@ -389,7 +390,7 @@ WORLD.init = function () {
             name: "bus_2", 
             loader_type: "gltf", 
             scale: new THREE.Vector3(.25,.25,.25),
-            position: new THREE.Vector3(-20, 0, -15),
+            position: new THREE.Vector3(-35, 0, -12),
             url: "./models/gltf/bus/scene.gltf",
             animate: false
         }
