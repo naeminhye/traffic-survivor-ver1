@@ -133,7 +133,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(40, 1, -10);
+    sphereBody.position.set(40, 2, -10);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -180,7 +180,7 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(40, 1, -10);
+    WORLD.player.position.set(40, 2, -10);
     WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
@@ -242,7 +242,7 @@ WORLD.init = function () {
             loader_type: "object",
             object_type: "vehicle",
             url: "./models/json/volkeswagon-vw-beetle.json",
-            position: new THREE.Vector3(10, 1.5, 0),
+            position: new THREE.Vector3(10, 1.5, -10),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
             scale: new THREE.Vector3(.005, .005, 0.005),
             animate: true
@@ -381,6 +381,7 @@ WORLD.init = function () {
         {
             name: "bus", 
             loader_type: "gltf", 
+            object_type: "vehicle",
             position: new THREE.Vector3(0, 0, 10),
             scale: new THREE.Vector3(.015,.015,.015),
             url: "./models/gltf/fortnitecity_bus/scene.gltf",
@@ -389,8 +390,9 @@ WORLD.init = function () {
         {
             name: "bus_2", 
             loader_type: "gltf", 
+            object_type: "vehicle",
             scale: new THREE.Vector3(.25,.25,.25),
-            position: new THREE.Vector3(-35, 0, -12),
+            position: new THREE.Vector3(-35, 0, -2),
             url: "./models/gltf/bus/scene.gltf",
             animate: false
         }
@@ -442,6 +444,7 @@ WORLD.animate = function () {
     }
     
     WORLD.controls.update(Date.now() - time);
+    animateVehicle(Date.now() - time);
     checkDistance();
     // var windStrength = Math.cos(time / 7000) * 20 + 40;
     // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
@@ -566,4 +569,32 @@ function checkDistance() {
     else {
         isDangerous = false;
     }
+}
+
+function animateVehicle(delta) {
+    // WORLD.vehicle.forEach((sign) => {
+        // console.log("object:", sign.object)
+        // sign.object.position.x += 0.5;
+    // });
+
+    WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.2 : null;
+    WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
+    WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.x -= 0.2 : null;
+    
+
+    // // If no collision, apply movement velocity
+    // if (detectDinoCollision() == false) {
+    //     dinoVelocity.z += DINOSPEED * delta;
+    //     // Move the dino
+    //     dino.translateZ(dinoVelocity.z * delta);
+
+    // } else {
+    //     // Collision. Adjust direction
+    //     var directionMultiples = [-1, 1, 2];
+    //     var randomIndex = getRandomInt(0, 2);
+    //     var randomDirection = degreesToRadians(90 * directionMultiples[randomIndex]);
+
+    //     dinoVelocity.z += DINOSPEED * delta;
+    //     dino.rotation.y += randomDirection;
+    // }
 }
