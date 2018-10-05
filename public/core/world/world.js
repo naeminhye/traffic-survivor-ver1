@@ -242,7 +242,7 @@ WORLD.init = function () {
             loader_type: "object",
             object_type: "vehicle",
             url: "./models/json/volkeswagon-vw-beetle.json",
-            position: new THREE.Vector3(10, 1.5, -10),
+            position: new THREE.Vector3(100, 1.5, -10),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
             scale: new THREE.Vector3(.005, .005, 0.005),
             animate: true
@@ -382,7 +382,7 @@ WORLD.init = function () {
             name: "bus", 
             loader_type: "gltf", 
             object_type: "vehicle",
-            position: new THREE.Vector3(0, 0, 10),
+            position: new THREE.Vector3(0, 0, -80),
             scale: new THREE.Vector3(.015,.015,.015),
             url: "./models/gltf/fortnitecity_bus/scene.gltf",
             animate: false
