@@ -248,6 +248,16 @@ WORLD.init = function () {
             animate: true
         },
         {
+            name: "bus_2", 
+            loader_type: "gltf", 
+            object_type: "vehicle",
+            scale: new THREE.Vector3(.25,.25,.25),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            position: new THREE.Vector3(0, 0, 150),
+            url: "./models/gltf/bus/scene.gltf",
+            animate: false
+        },
+        {
             name: "traffic-light-1",
             loader_type: "fbx",
             object_type: "traffic_light",
@@ -386,6 +396,16 @@ WORLD.init = function () {
             scale: new THREE.Vector3(.015,.015,.015),
             url: "./models/gltf/fortnitecity_bus/scene.gltf",
             animate: false
+        },
+        {
+            name: "car2",
+            loader_type: "object",
+            object_type: "vehicle",
+            url: "./models/json/volkeswagon-vw-beetle.json",
+            position: new THREE.Vector3(-10, 1.5, -130),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.005, .005, 0.005),
+            animate: true
         },
         {
             name: "bus_2", 
@@ -580,6 +600,7 @@ function animateVehicle(delta) {
     WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.2 : null;
     WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
     WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.z -= 0.2 : null;
+    WORLD.scene.getObjectByName("car2") ? WORLD.scene.getObjectByName("car2").position.z += 0.2 : null;
     
 
     // // If no collision, apply movement velocity
