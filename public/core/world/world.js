@@ -378,6 +378,21 @@ WORLD.init = function () {
             textureUrl: './models/json/leaves1.png',
             scale: new THREE.Vector3(.5,.5,.5),
         },
+        {
+            name: "bus", 
+            loader_type: "gltf", 
+            scale: new THREE.Vector3(.015,.015,.015),
+            url: "./models/gltf/fortnitecity_bus/scene.gltf",
+            animate: false
+        },
+        {
+            name: "bus_2", 
+            loader_type: "gltf", 
+            scale: new THREE.Vector3(.25,.25,.25),
+            position: new THREE.Vector3(-20, 0, -15),
+            url: "./models/gltf/bus/scene.gltf",
+            animate: false
+        }
         // {
         //     name: "stripes-uv",
         //     loader_type: "object",
