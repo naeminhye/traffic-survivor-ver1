@@ -192,15 +192,41 @@ const loadModelToWorld = (model) => {
                         }
                         if(children) {
                             if(children.hasOwnProperty(child.name)) {
-                                child.rotation.x = children[child.name].rotation.x || 0; 
-                                child.rotation.y = children[child.name].rotation.y || 0; 
-                                child.rotation.z = children[child.name].rotation.z || 0;
-                                child.position.y = children[child.name].position.y || 0;
-                                child.position.x = children[child.name].position.x || 0;
-                                child.position.z = children[child.name].position.z || 0;
-                                // child.scale.x = children[child.name].scale.x || 1;
-                                // child.scale.y = children[child.name].scale.y || 1;
-                                // child.scale.z = children[child.name].scale.z || 1;
+                                
+                                if (children[child.name].textureUrl) {
+                                    var childTexture = children[child.name].textureUrl;
+                                    var texture = new THREE.TextureLoader().load(childTexture);
+                                    // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
+                                    var material = new THREE.MeshBasicMaterial({
+                                        map: texture
+                                    });  
+                                    material.map.minFilter = THREE.LinearFilter;
+                                    child.material = material;
+                                }
+
+                                if(children[child.name].rotation) {
+
+                                    child.rotation.x = children[child.name].rotation.x; 
+                                    child.rotation.y = children[child.name].rotation.y; 
+                                    child.rotation.z = children[child.name].rotation.z;
+
+                                }
+
+                                if(children[child.name].position) {
+
+                                    child.position.y = children[child.name].position.y;
+                                    child.position.x = children[child.name].position.x;
+                                    child.position.z = children[child.name].position.z;
+                                    
+                                }
+
+                                if(children[child.name].scale) {
+                                    
+                                    child.scale.x = children[child.name].scale.x;
+                                    child.scale.y = children[child.name].scale.y;
+                                    child.scale.z = children[child.name].scale.z;
+                                    
+                                }
                             }
                         }
                     }
