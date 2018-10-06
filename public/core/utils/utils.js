@@ -245,3 +245,30 @@ var createLoader = (function () {
     }
 
 })();
+
+WORLD.getMapFromFile = (file) => {
+    var map = [];
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                // console.log(allText);
+                // By lines
+                var lines = allText.split('\n');
+                
+                for(var line = 0; line < lines.length; line++){
+                    map[line] = lines[line].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+                }
+            }
+        }
+    }
+    rawFile.send(null);
+
+    return map;
+}
