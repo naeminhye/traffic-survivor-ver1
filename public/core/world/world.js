@@ -27,6 +27,7 @@ var gameOver = false;
 
 // Velocity vectors for the player and dino
 WORLD.playerVelocity = new THREE.Vector3();
+WORLD.playerSpeed = 0;
 var carVelocity = new THREE.Vector3();
 
 var blocker = document.getElementById('blocker');
@@ -133,7 +134,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(40, 2, -10);
+    sphereBody.position.set(40, 1, -10);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -180,7 +181,7 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(40, 2, -10);
+    WORLD.player.position.set(40, 1, -10);
     WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
@@ -475,6 +476,7 @@ WORLD.animate = function () {
     // $("#message").text("Delta: " + (Date.now() - time));
     // $("#message").text("Velocity: " + WORLD.playerVelocity);
 
+    WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();

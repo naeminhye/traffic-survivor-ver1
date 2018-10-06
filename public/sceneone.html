@@ -31,13 +31,19 @@
     </div>
     <div class="map">
     </div>
+    <div class="gauge-container">
+        <div id="speed-gauge"></div>
+    </div>
 
     <!-- Code to display an information button and box when clicked. -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="js/info.js"></script>
-
+    
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/solid-gauge.js"></script>
 
     <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.min.js'></script> -->
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js'></script>
@@ -99,6 +105,7 @@
     <script src="core/controls/PointerControls.js" defer="defer"></script>
     <script src="core/utils/utils.js" defer="defer"></script>
     <script src="core/world/world.js" defer="defer"></script>
+    <script src="core/controls/gauge.js" defer="defer"></script>
     <script src="core/world/ground.js" defer="defer"></script>
     <script src="core/controls/loaders.js" defer="defer"></script>
     <script src="core/controls/run.js" defer="defer"></script>

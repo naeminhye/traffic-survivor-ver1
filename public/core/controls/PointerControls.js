@@ -212,7 +212,10 @@ var PointerControls = function (camera, cannonBody) {
         // Add to the object
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
-        
+
+        var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
+        WORLD.playerSpeed = (speed).toFixed(0) * 5;
+
         yawObject.position.copy(cannonBody.position);
 
         /** Rotation */

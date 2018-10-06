@@ -57,3 +57,17 @@ body {
     cursor: pointer;
 
 }
+#speed-gauge {
+    min-width: 310px; 
+    max-width: 400px; 
+    height: 300px; 
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    transform: scale(.5);
+   }
+
+   .gauge-container {
+     width: 100%;
+     background-color: transparent;
+   }

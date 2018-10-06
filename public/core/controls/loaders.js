@@ -107,13 +107,13 @@ const loadModelToWorld = (model) => {
                 obj.scale.z = scale.z;
                 obj.name = name;
                 
-                if(!angle) {
+                // if(!angle) {
 
-                    var vector = obj.getWorldDirection();
-                    var theta = Math.atan2(vector.x,vector.z);
-                    angle = THREE.Math.radToDeg(theta);
+                //     var vector = obj.getWorldDirection();
+                //     var theta = Math.atan2(vector.x,vector.z);
+                //     angle = THREE.Math.radToDeg(theta);
 
-                }
+                // }
 
                 var storeObj = {
                     object: obj,
