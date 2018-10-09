@@ -188,22 +188,25 @@ var drawGround = function() {
         });
 
         // WARNING_AREAS
-        mapInfo.warning_areas.forEach(function(area) {
-            var pos = area.position;
+        mapInfo.warning_areas.forEach(function(child) {
+            var pos = child.position;
 
-            var dangerZoneMesh, dangerZoneBBox;
-            dangerZoneMesh = new THREE.Mesh(
-                new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 80, pos.z_width * UNIT_SIZE),
+            var area, areaBBox;
+            area = new THREE.Mesh(
+                new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
                 new THREE.MeshBasicMaterial({
                     color: 0xff0000,
                     wireframe: true
                 })
             );
-            dangerZoneMesh.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 4, UNIT_SIZE * i);
-            dangerZoneMesh.geometry.computeBoundingBox();
-            dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
-            WORLD.scene.add(dangerZoneMesh);
-            
+            var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+            var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+            // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
+            area.position.set(XWidth, 0, ZWidth);
+            area.geometry.computeBoundingBox();
+            areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+            WORLD.scene.add(area);
+            WORLD.dangerZoneBBox.push({ box: area, bbox: areaBBox, direction: child.direction});
         })
     });
 }

@@ -14,7 +14,7 @@ var time = Date.now();
 WORLD.controls = null;
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
-var dangerZoneBBox = null;
+WORLD.dangerZoneBBox = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
@@ -332,18 +332,23 @@ function checkDistance() {
         } 
     });
     
-    // chair.forEach(function() {
-    //     if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
-    //         console.log("zone!");
-    //         if (!isDangerous) {
-    //             toastr.error("zone!");
-    //             isDangerous = true;
-    //         }
-    //         else {
-    //             isDangerous = false;
-    //         }
-    //     }
-    // });
+    if(WORLD.dangerZoneBBox) {
+        WORLD.dangerZoneBBox.forEach(function(child) {
+            if (child.bbox.containsPoint(WORLD.player.position)) {
+                var v = new THREE.Vector3();
+                var vector = WORLD.player.getWorldDirection(v);
+                var vector2 = child.direction;
+                var theta = Math.atan2(vector.x,vector.z);
+                var theta2 = Math.atan2(vector2.x,vector2.z);
+                var playerAngle  = THREE.Math.radToDeg(theta);
+                var zoneAngle  = THREE.Math.radToDeg(theta2);
+                if(!(zoneAngle - playerAngle <= 90 && zoneAngle - playerAngle >= -90)) {
+                    toastr.error("WRONGGGG!");
+                }
+                
+            }
+        });
+    }
 }
 
 function animateVehicle(delta) {

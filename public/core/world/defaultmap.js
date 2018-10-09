@@ -12,7 +12,7 @@ WORLD.loadMap = () => {
     );
     dangerZoneMesh.position.set(-10, 20, 0);
     dangerZoneMesh.geometry.computeBoundingBox();
-    dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
+    // dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
     // WORLD.scene.add(dangerZoneMesh);
 
     // /* fbxLoader */
