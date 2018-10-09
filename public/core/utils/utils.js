@@ -246,7 +246,7 @@ var createLoader = (function () {
 
 })();
 
-WORLD.getMapFromFile = (file) => {
+var getMapFromFile = (file) => {
     var map = [];
 
     var rawFile = new XMLHttpRequest();
@@ -271,4 +271,17 @@ WORLD.getMapFromFile = (file) => {
     rawFile.send(null);
 
     return map;
+}
+
+const loadMapFromJSON = (path, callback) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("application/json");
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == "200") {
+            callback(xhr.responseText);
+        } 
+    }
+    xhr.send();
 }

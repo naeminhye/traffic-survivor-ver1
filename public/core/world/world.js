@@ -134,7 +134,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(40, 1, -10);
+    sphereBody.position.set(42, 1 , 52);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -181,7 +181,7 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(40, 1, -10);
+    WORLD.player.position.set(42, 1 , 52);
     WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
@@ -225,7 +225,7 @@ WORLD.animate = function () {
     // $("#message").text("Delta: " + (Date.now() - time));
     // $("#message").text("Velocity: " + WORLD.playerVelocity);
 
-    WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
+    // WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
 
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
@@ -331,15 +331,15 @@ function checkDistance() {
         } 
     });
     
-    if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
-        if (!isDangerous) {
-            toastr.error("You're about to meet the intersection!");
-            isDangerous = true;
-        }
-    }
-    else {
-        isDangerous = false;
-    }
+    // if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
+    //     if (!isDangerous) {
+    //         toastr.error("You're about to meet the intersection!");
+    //         isDangerous = true;
+    //     }
+    // }
+    // else {
+    //     isDangerous = false;
+    // }
 }
 
 function animateVehicle(delta) {
