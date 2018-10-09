@@ -145,51 +145,66 @@ var drawGround = function() {
                     buildingMaterial.map.repeat.set( pos.x_width, 1 );
 
                     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-                    // var plane = new THREE.Mesh( 
-                    //     new THREE.PlaneGeometry(pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), 
-                    //     new THREE.MeshBasicMaterial({ color: 0x123435}) 
-                    // );
-                    // plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    // WORLD.scene.add( plane );
 
                     var buildingXWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
                     var buildingZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
             
                     var cube = new THREE.Mesh(new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, UNIT_SIZE, pos.z_width * UNIT_SIZE), buildingMaterial);
                     // Set the cube position
-                    // cube.position.set(pos.x * UNIT_SIZE + (pos.x_width * UNIT_SIZE) / 2 - (UNIT_SIZE / 2), 0, pos.z * UNIT_SIZE + (pos.z_width * UNIT_SIZE) / 2 - (UNIT_SIZE / 2));
-
                     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
                     // Add the cube
                     WORLD.scene.add(cube);
-
-                    // Used later for collision detection
-                    var bbox = new THREE.Box3().setFromObject(cube);
-                    WORLD.collidableObjects.push(bbox);
-
-                    // create a cannon body
-                    var shape = new CANNON.Box(new CANNON.Vec3(
-                        (bbox.max.x - bbox.min.x) / 2,
-                        (bbox.max.y - bbox.min.y) / 2,
-                        (bbox.max.z - bbox.min.z) / 2
-                    ));
-                    var boxBody = new CANNON.Body({ mass: 5 });
-                    boxBody.addShape(shape);
-                    boxBody.position.copy(cube.position);
-                    boxBody.useQuaternion = true;
-                    boxBody.computeAABB();
-                    // disable collision response so objects don't move when they collide
-                    // against each other
-                    boxBody.collisionResponse = true;
-                    // keep a reference to the mesh so we can update its properties later
-                    boxBody.addEventListener('collide', function(object) {
+                    WORLD.world.addBody(createBoxBody(cube, function(object) {
                         if(object.body.id == 0) 
                             console.log("Player collided with walls.");
-                    });
-                    WORLD.world.addBody(boxBody);
+                    }));
+
+                    // // Used later for collision detection
+                    // var bbox = new THREE.Box3().setFromObject(cube);
+                    // WORLD.collidableObjects.push(bbox);
+
+                    // // create a cannon body
+                    // var shape = new CANNON.Box(new CANNON.Vec3(
+                    //     (bbox.max.x - bbox.min.x) / 2,
+                    //     (bbox.max.y - bbox.min.y) / 2,
+                    //     (bbox.max.z - bbox.min.z) / 2
+                    // ));
+                    // var boxBody = new CANNON.Body({ mass: 5 });
+                    // boxBody.addShape(shape);
+                    // boxBody.position.copy(cube.position);
+                    // boxBody.useQuaternion = true;
+                    // boxBody.computeAABB();
+                    // // disable collision response so objects don't move when they collide
+                    // // against each other
+                    // boxBody.collisionResponse = true;
+                    // // keep a reference to the mesh so we can update its properties later
+                    // boxBody.addEventListener('collide', function(object) {
+                    //     if(object.body.id == 0) 
+                    //         console.log("Player collided with walls.");
+                    // });
+                    // WORLD.world.addBody(boxBody);
                 }
             });
         });
+
+        // WARNING_AREAS
+        mapInfo.warning_areas.forEach(function(area) {
+            var pos = area.position;
+
+            var dangerZoneMesh, dangerZoneBBox;
+            dangerZoneMesh = new THREE.Mesh(
+                new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 80, pos.z_width * UNIT_SIZE),
+                new THREE.MeshBasicMaterial({
+                    color: 0xff0000,
+                    wireframe: true
+                })
+            );
+            dangerZoneMesh.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 4, UNIT_SIZE * i);
+            dangerZoneMesh.geometry.computeBoundingBox();
+            dangerZoneBBox = new THREE.Box3(dangerZoneMesh.geometry.boundingBox.min.add(dangerZoneMesh.position), dangerZoneMesh.geometry.boundingBox.max.add(dangerZoneMesh.position));
+            WORLD.scene.add(dangerZoneMesh);
+            
+        })
     });
 }
 
@@ -419,19 +434,19 @@ WORLD.loadMap = () => {
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
         },
-        {
-            name: "safety-temporary-fence",
-            loader_type: "fbx",
-            url: "./models/safety-temporary-fence/source/safety-temporary-fence.fbx",
-            position: new THREE.Vector3(42, 0, 25),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0),
-            scale: new THREE.Vector3(.01,.01,.01),
-            children: {
-                "barrière_low001": {
-                    textureUrl: "./models/safety-temporary-fence/textures/barriere_low_baseColor.png"
-                }
-            }
-        }
+        // {
+        //     name: "safety-temporary-fence",
+        //     loader_type: "fbx",
+        //     url: "./models/safety-temporary-fence/source/safety-temporary-fence.fbx",
+        //     position: new THREE.Vector3(42, 0, 25),
+        //     rotation: new THREE.Euler(0, Math.PI / 2, 0),
+        //     scale: new THREE.Vector3(.006,.006,.006),
+        //     children: {
+        //         "barrière_low001": {
+        //             textureUrl: "./models/safety-temporary-fence/textures/barriere_low_baseColor.png"
+        //         }
+        //     }
+        // }
     ];
 
     // add models to the world

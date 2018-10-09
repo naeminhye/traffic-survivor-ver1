@@ -82,5 +82,14 @@
 				}
 			]
 		}
-	}
+	},
+	"warning_areas": [{
+		"direction": {"x": -1, "y": 0, "z": 0},
+		"position": {
+			"x": 0,
+			"z": 4,
+			"x_width": 1, 
+			"z_width": 17
+		}
+	}]
 }

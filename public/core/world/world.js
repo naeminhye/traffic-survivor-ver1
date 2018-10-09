@@ -215,7 +215,7 @@ WORLD.animate = function () {
     }
     
     WORLD.controls.update(Date.now() - time);
-    animateVehicle(Date.now() - time);
+    // animateVehicle(Date.now() - time);
     checkDistance();
     // var windStrength = Math.cos(time / 7000) * 20 + 40;
     // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
@@ -319,8 +319,8 @@ function checkDistance() {
             // Get distance between dino and camera with a 120 unit offset
             // Game over when dino is the value of CATCHOFFSET units away from camera
             var distanceFrom = (sign.object.position.distanceTo(WORLD.player.position));
-
-            var vector = WORLD.player.getWorldDirection();
+            var v = new THREE.Vector3();
+            var vector = WORLD.player.getWorldDirection(v);
             var theta = Math.atan2(vector.x,vector.z);
             var playerAngle  = THREE.Math.radToDeg(theta);
             if(sign.angle - playerAngle <= 90 && sign.angle - playerAngle >= -90) {
@@ -332,42 +332,25 @@ function checkDistance() {
         } 
     });
     
-    // if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
-    //     if (!isDangerous) {
-    //         toastr.error("You're about to meet the intersection!");
-    //         isDangerous = true;
+    // chair.forEach(function() {
+    //     if (dangerZoneBBox.containsPoint(WORLD.player.position)) {
+    //         console.log("zone!");
+    //         if (!isDangerous) {
+    //             toastr.error("zone!");
+    //             isDangerous = true;
+    //         }
+    //         else {
+    //             isDangerous = false;
+    //         }
     //     }
-    // }
-    // else {
-    //     isDangerous = false;
-    // }
+    // });
 }
 
 function animateVehicle(delta) {
-    // WORLD.vehicle.forEach((sign) => {
-        // console.log("object:", sign.object)
-        // sign.object.position.x += 0.5;
-    // });
 
     WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.2 : null;
     WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
     WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.z -= 0.2 : null;
     WORLD.scene.getObjectByName("car2") ? WORLD.scene.getObjectByName("car2").position.z += 0.2 : null;
     
-
-    // // If no collision, apply movement velocity
-    // if (detectDinoCollision() == false) {
-    //     dinoVelocity.z += DINOSPEED * delta;
-    //     // Move the dino
-    //     dino.translateZ(dinoVelocity.z * delta);
-
-    // } else {
-    //     // Collision. Adjust direction
-    //     var directionMultiples = [-1, 1, 2];
-    //     var randomIndex = getRandomInt(0, 2);
-    //     var randomDirection = degreesToRadians(90 * directionMultiples[randomIndex]);
-
-    //     dinoVelocity.z += DINOSPEED * delta;
-    //     dino.rotation.y += randomDirection;
-    // }
 }
