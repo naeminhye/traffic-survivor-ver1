@@ -134,7 +134,7 @@ WORLD.initCannon = function () {
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({ mass: mass });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(42, 1 , 52);
+    sphereBody.position.set(44, 1.3 , 53);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -181,8 +181,9 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(42, 1 , 52);
-    WORLD.player.rotateY(Math.PI / 2);
+    WORLD.player.position.set(44, 1.3 , 53);
+    // WORLD.lookAt()
+    // WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
 

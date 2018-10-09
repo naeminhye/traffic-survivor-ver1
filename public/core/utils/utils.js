@@ -285,3 +285,29 @@ const loadMapFromJSON = (path, callback) => {
     }
     xhr.send();
 }
+
+function createBoxBody(cube, callback) {
+
+    // Used later for collision detection
+    var bbox = new THREE.Box3().setFromObject(cube);
+    WORLD.collidableObjects.push(bbox);
+
+    // create a cannon body
+    var shape = new CANNON.Box(new CANNON.Vec3(
+        (bbox.max.x - bbox.min.x) / 2,
+        (bbox.max.y - bbox.min.y) / 2,
+        (bbox.max.z - bbox.min.z) / 2
+    ));
+    var boxBody = new CANNON.Body({ mass: 5 });
+    boxBody.addShape(shape);
+    boxBody.position.copy(cube.position);
+    boxBody.useQuaternion = true;
+    boxBody.computeAABB();
+    // disable collision response so objects don't move when they collide
+    // against each other
+    boxBody.collisionResponse = true;
+    boxBody.addEventListener('collide', callback);
+    //WORLD.world.addBody(boxBody);
+
+    return boxBody;
+}

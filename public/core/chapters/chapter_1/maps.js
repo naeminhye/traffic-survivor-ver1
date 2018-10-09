@@ -44,36 +44,33 @@ var drawGround = function() {
                                     new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), 
                                     pavementMaterial
                                 );
-                    cube.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
                     // Set the cube position
-                    cube.position.y = PAVEMENT_HEIGHT / 2;
+                    cube.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 2, UNIT_SIZE * i);
+
                     // Add the cube
                     WORLD.scene.add(cube);
-    
-                    // Used later for collision detection
-                    var bbox = new THREE.Box3().setFromObject(cube);
-                    WORLD.collidableObjects.push(bbox);
-    
-                    // create a cannon body
-                    var shape = new CANNON.Box(new CANNON.Vec3(
-                        (bbox.max.x - bbox.min.x) / 2,
-                        (bbox.max.y - bbox.min.y) / 2,
-                        (bbox.max.z - bbox.min.z) / 2
-                    ));
-                    var boxBody = new CANNON.Body({ mass: 5 });
-                    boxBody.addShape(shape);
-                    boxBody.position.copy(cube.position);
-                    boxBody.useQuaternion = true;
-                    boxBody.computeAABB();
-                    // disable collision response so objects don't move when they collide
-                    // against each other
-                    boxBody.collisionResponse = true;
-                    boxBody.addEventListener('collide', function(object) {
+                    WORLD.world.addBody(createBoxBody(cube, function(object) {
                         if(object.body.id == 0) 
                             toastr.error("You're in the PAVEMENT!!! Please go back to the road.");
-                    });
-                    WORLD.world.addBody(boxBody);
+                    }));
 
+                }
+                /** Draw Grass */
+                if(roadMap[i][j] === GRASS_ID) {
+                    grassMaterial.map.repeat.set(1, 1);
+                    var cube = new THREE.Mesh(
+                                    new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), 
+                                    grassMaterial
+                                );
+                    // Set the cube position
+                    cube.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 4, UNIT_SIZE * i);
+
+                    // Add the cube
+                    WORLD.scene.add(cube);
+                    WORLD.world.addBody(createBoxBody(cube, function(object) {
+                        if(object.body.id == 0) 
+                            toastr.error("You're in the GRASS!!! Please go back to the road.");
+                    }));
                 }
                 /** Draw Road */
                 else if(roadMap[i][j] === ROAD_POS_Z || roadMap[i][j] === BLOCKED_POS_Z) {
@@ -106,6 +103,9 @@ var drawGround = function() {
                         new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
                         new THREE.MeshBasicMaterial({ color: 0x123435})  
                     );
+
+                    console.log("x:",UNIT_SIZE * j + UNIT_SIZE / 2)
+                    console.log("z:",UNIT_SIZE * i + UNIT_SIZE / 2)
                     plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
                     plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
                     WORLD.scene.add( plane );
@@ -120,12 +120,12 @@ var drawGround = function() {
 
             block.positions.forEach(function(pos) {
                 if(key === GRASS_ID) {
-                    var plane = new THREE.Mesh( 
-                                    new THREE.PlaneGeometry(pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), 
-                                    grassMaterial 
-                                );
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    WORLD.scene.add( plane );
+                    // var plane = new THREE.Mesh( 
+                    //                 new THREE.PlaneGeometry(pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), 
+                    //                 grassMaterial 
+                    //             );
+                    // plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+                    // WORLD.scene.add( plane );
                 }
                 else {
                     // Cubes are on behalf of building blocks
@@ -190,287 +190,173 @@ var drawGround = function() {
                 }
             });
         });
-    
     });
-
-    // floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-    // floorTexture.repeat.set(400, 400);
-
-    // // floor geometry
-    // geometry = new THREE.PlaneGeometry(300, 300, 50, 50);
-    // geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-
-    // mesh = new THREE.Mesh(geometry, grassMaterial );
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
-    // // WORLD.scene.add(mesh);
-
-    // var roadMap = getMapFromFile("./core/chapters/chapter_1/chapter_1.txt");
-
-    // var mapWidth = roadMap.length;
-    // var mapHeight = roadMap[0].length;
-    // var UNIT_SIZE = 5;
-
-    // for(var i = 0; i < mapHeight; i++) {
-    //     for(var j = 0; j < mapWidth; j++) {
-    //         if(roadMap[i][j] === PAVEMENT_ID) {
-
-    //             // Cubes are on behalf of pavement
-    //             pavementMaterial.map.wrapS = pavementMaterial.map.wrapT = THREE.RepeatWrapping;
-    //             pavementMaterial.map.repeat.set( 4, 4 );
-    //             var cube = new THREE.Mesh(new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), pavementMaterial);
-    //             cube.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-    //             // Set the cube position
-    //             cube.position.y = PAVEMENT_HEIGHT / 2;
-    //             // Add the cube
-    //             WORLD.scene.add(cube);
-
-    //             // Used later for collision detection
-    //             var bbox = new THREE.Box3().setFromObject(cube);
-    //             WORLD.collidableObjects.push(bbox);
-
-    //             // create a cannon body
-    //             var shape = new CANNON.Box(new CANNON.Vec3(
-    //                 (bbox.max.x - bbox.min.x) / 2,
-    //                 (bbox.max.y - bbox.min.y) / 2,
-    //                 (bbox.max.z - bbox.min.z) / 2
-    //             ));
-    //             var boxBody = new CANNON.Body({ mass: 5 });
-    //             boxBody.addShape(shape);
-    //             boxBody.position.copy(cube.position);
-    //             boxBody.useQuaternion = true;
-    //             boxBody.computeAABB();
-    //             // disable collision response so objects don't move when they collide
-    //             // against each other
-    //             boxBody.collisionResponse = true;
-    //             // keep a reference to the mesh so we can update its properties later
-    //             boxBody.addEventListener('collide', function(object) {
-    //                 if(object.body.id == 0) 
-    //                     console.log("Player collided with walls.");
-    //             });
-    //             WORLD.world.addBody(boxBody);
-
-    //         }
-    //         else if (roadMap[i][j] === ROAD_POS_Z) {
-    //             var plane = new THREE.Mesh( new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), roadMaterial );
-
-    //             plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-    //             plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    //             WORLD.scene.add( plane );
-    //         }
-    //         else if (roadMap[i][j] === GRASS_ID) {
-
-    //             var plane = new THREE.Mesh( new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), grassMaterial );
-
-    //             plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-    //             plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-    //             WORLD.scene.add( plane );
-
-    //         }
-    //         else {
-
-    //             // Cubes are on behalf of building blocks
-    //             var texture;
-    //             if (roadMap[i + mapHeight / 2][j + mapWidth / 2] === RESIDENTAL_BUILDING_ID) {
-    //                 /** residental buildings */
-    //                 texture = residentTexture;
-    //             } 
-    //             else if (roadMap[i + mapHeight / 2][j + mapWidth / 2] === OFFICE_BUILDING_ID) {
-    //                 /** office buildings */
-    //                 texture = glassTexture;
-    //             }
-                 
-    //             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    //             texture.repeat.set( 1, 1 );
-    //             var buildingMaterial = new THREE.MeshPhongMaterial({
-    //                 map: texture
-    //             });
-
-    //             var cube = new THREE.Mesh(new THREE.BoxGeometry(UNIT_SIZE, UNIT_SIZE, UNIT_SIZE), buildingMaterial);
-    //             cube.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-    //             // Set the cube position
-    //             cube.position.y = UNIT_SIZE / 2 + PAVEMENT_HEIGHT;
-    //             // Add the cube
-    //             WORLD.scene.add(cube);
-
-    //             // Used later for collision detection
-    //             var bbox = new THREE.Box3().setFromObject(cube);
-    //             WORLD.collidableObjects.push(bbox);
-
-    //             // create a cannon body
-    //             var shape = new CANNON.Box(new CANNON.Vec3(
-    //                 (bbox.max.x - bbox.min.x) / 2,
-    //                 (bbox.max.y - bbox.min.y) / 2,
-    //                 (bbox.max.z - bbox.min.z) / 2
-    //             ));
-    //             var boxBody = new CANNON.Body({ mass: 5 });
-    //             boxBody.addShape(shape);
-    //             boxBody.position.copy(cube.position);
-    //             boxBody.useQuaternion = true;
-    //             boxBody.computeAABB();
-    //             // disable collision response so objects don't move when they collide
-    //             // against each other
-    //             boxBody.collisionResponse = true;
-    //             // keep a reference to the mesh so we can update its properties later
-    //             boxBody.addEventListener('collide', function(object) {
-    //                 if(object.body.id == 0) 
-    //                     console.log("Player collided with walls.");
-    //             });
-    //             WORLD.world.addBody(boxBody);
-    //         }
-            
-    //     }
-
-    // }
 }
 
 WORLD.loadMap = () => {
     drawGround();
     var models = [
-        {
-            name: "car",
-            loader_type: "object",
-            object_type: "vehicle",
-            url: "./models/json/volkeswagon-vw-beetle.json",
-            position: new THREE.Vector3(0, 1.5, 100),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            scale: new THREE.Vector3(.005, .005, 0.005),
-            animate: true
-        },
-        {
-            name: "bus_2", 
-            loader_type: "gltf", 
-            object_type: "vehicle",
-            scale: new THREE.Vector3(.25,.25,.25),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            position: new THREE.Vector3(0, 0, 150),
-            url: "./models/gltf/bus/scene.gltf",
-            animate: false
-        },
-        {
-            name: "bus_stop",
-            loader_type: "fbx",
-            url: "./models/fbx/bus_stop/bus_stop.FBX",
-            position: new THREE.Vector3(-45, 0, -23),
-            rotation: new THREE.Euler(0, 0, 0),
-            scale: new THREE.Vector3(.05,.05,.05),
-            children: {
-                "sign": {
-                    position: new THREE.Vector3(0, 60, 100),
-                    rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
-                }
-            }
-        },
         // {
-        //     name: "tree1",
+        //     name: "car",
         //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-45, -3, 20),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),
+        //     object_type: "vehicle",
+        //     url: "./models/json/volkeswagon-vw-beetle.json",
+        //     position: new THREE.Vector3(0, 1.5, 100),
+        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        //     scale: new THREE.Vector3(.005, .005, 0.005),
+        //     animate: true
         // },
         // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-45, -3, 35),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),
+        //     name: "bus_2", 
+        //     loader_type: "gltf", 
+        //     object_type: "vehicle",
+        //     scale: new THREE.Vector3(.25,.25,.25),
+        //     rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+        //     position: new THREE.Vector3(0, 0, 150),
+        //     url: "./models/gltf/bus/scene.gltf",
+        //     animate: false
         // },
         // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-45, -3, 50),
+        //     name: "bus_stop",
+        //     loader_type: "fbx",
+        //     url: "./models/fbx/bus_stop/bus_stop.FBX",
+        //     position: new THREE.Vector3(-45, 0, -23),
         //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),            
+        //     scale: new THREE.Vector3(.05,.05,.05),
+        //     children: {
+        //         "sign": {
+        //             position: new THREE.Vector3(0, 60, 100),
+        //             rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
+        //         }
+        //     }
+        // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-45, -3, 20),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-45, -3, 35),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-45, -3, 50),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),            
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-45, -3, 65),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),            
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-60, -3, 65),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),            
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-60, -3, 50),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),            
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-60, -3, 20),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),
+        // // },
+        // // {
+        // //     name: "tree1",
+        // //     loader_type: "object",
+        // //     url: "./models/trees/tree1/tree1.json",
+        // //     position: new THREE.Vector3(-60, -3, 35),
+        // //     rotation: new THREE.Euler(0, 0, 0),
+        // //     textureUrl: './models/json/leaves1.png',
+        // //     scale: new THREE.Vector3(.5,.5,.5),
+        // // },
+        // {
+        //     name: "bus", 
+        //     loader_type: "gltf", 
+        //     object_type: "vehicle",
+        //     position: new THREE.Vector3(-10, 0, -80),
+        //     scale: new THREE.Vector3(.015,.015,.015),
+        //     url: "./models/gltf/fortnitecity_bus/scene.gltf",
+        //     animate: false
         // },
         // {
-        //     name: "tree1",
+        //     name: "car2",
         //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-45, -3, 65),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),            
+        //     object_type: "vehicle",
+        //     url: "./models/json/volkeswagon-vw-beetle.json",
+        //     position: new THREE.Vector3(-10, 1.5, -130),
+        //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+        //     scale: new THREE.Vector3(.005, .005, 0.005),
+        //     animate: true
         // },
         // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-60, -3, 65),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),            
+        //     name: "bus_2", 
+        //     loader_type: "gltf", 
+        //     object_type: "vehicle",
+        //     scale: new THREE.Vector3(.25,.25,.25),
+        //     position: new THREE.Vector3(-35, 0, -2),
+        //     url: "./models/gltf/bus/scene.gltf",
+        //     animate: false
         // },
+        // // {
+        // //     name: "camquaydau", 
+        // //     loader_type: "object", 
+        // //     object_type: "sign",
+        // //     url: "./models/signs/traffic-sign.json",
+        // //     textureUrl: "./models/signs/camquaydau-uvmap.png",
+        // //     animate: false,
+        // //     children: {
+        // //         "sign": {
+        // //             textureUrl: "./models/signs/camquaydau-uvmap.png"
+        // //         },
+        // //         "pole": {
+        // //             textureUrl: "./models/signs/pole-uvmap.png"
+        // //         }
+        // //     },
+        // //     scale: new THREE.Vector3(.5,.5,.5),
+        // //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+        // // },
         // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-60, -3, 50),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),            
-        // },
-        // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-60, -3, 20),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),
-        // },
-        // {
-        //     name: "tree1",
-        //     loader_type: "object",
-        //     url: "./models/trees/tree1/tree1.json",
-        //     position: new THREE.Vector3(-60, -3, 35),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     textureUrl: './models/json/leaves1.png',
-        //     scale: new THREE.Vector3(.5,.5,.5),
-        // },
-        {
-            name: "bus", 
-            loader_type: "gltf", 
-            object_type: "vehicle",
-            position: new THREE.Vector3(-10, 0, -80),
-            scale: new THREE.Vector3(.015,.015,.015),
-            url: "./models/gltf/fortnitecity_bus/scene.gltf",
-            animate: false
-        },
-        {
-            name: "car2",
-            loader_type: "object",
-            object_type: "vehicle",
-            url: "./models/json/volkeswagon-vw-beetle.json",
-            position: new THREE.Vector3(-10, 1.5, -130),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            scale: new THREE.Vector3(.005, .005, 0.005),
-            animate: true
-        },
-        {
-            name: "bus_2", 
-            loader_type: "gltf", 
-            object_type: "vehicle",
-            scale: new THREE.Vector3(.25,.25,.25),
-            position: new THREE.Vector3(-35, 0, -2),
-            url: "./models/gltf/bus/scene.gltf",
-            animate: false
-        },
-        // {
-        //     name: "camquaydau", 
+        //     name: "camrephai", 
         //     loader_type: "object", 
         //     object_type: "sign",
         //     url: "./models/signs/traffic-sign.json",
-        //     textureUrl: "./models/signs/camquaydau-uvmap.png",
         //     animate: false,
         //     children: {
         //         "sign": {
-        //             textureUrl: "./models/signs/camquaydau-uvmap.png"
+        //             textureUrl: "./models/signs/camrephai-uvmap.png"
         //         },
         //         "pole": {
         //             textureUrl: "./models/signs/pole-uvmap.png"
@@ -480,24 +366,74 @@ WORLD.loadMap = () => {
         //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
         // },
         {
-            name: "camrephai", 
+            name: "camretrai", 
             loader_type: "object", 
             object_type: "sign",
             url: "./models/signs/traffic-sign.json",
             animate: false,
             children: {
                 "sign": {
-                    textureUrl: "./models/signs/camrephai-uvmap.png"
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
                 },
                 "pole": {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            scale: new THREE.Vector3(.5,.5,.5),
+            position: new THREE.Vector3(43, 0, 28),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ")
+        },
+        {
+            name: "camretrai2", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(77, 0, 23),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+        },
+        {
+            name: "duongcam", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/duongcam-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(48, 0, 22.5),
+            scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+        },
+        {
+            name: "safety-temporary-fence",
+            loader_type: "fbx",
+            url: "./models/safety-temporary-fence/source/safety-temporary-fence.fbx",
+            position: new THREE.Vector3(42, 0, 25),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0),
+            scale: new THREE.Vector3(.01,.01,.01),
+            children: {
+                "barrière_low001": {
+                    textureUrl: "./models/safety-temporary-fence/textures/barriere_low_baseColor.png"
+                }
+            }
         }
     ];
 
     // add models to the world
-    // models.forEach(md => loadModelToWorld(md));
+    models.forEach(md => loadModelToWorld(md));
 }
