@@ -11,30 +11,56 @@
 	"blocks": {
 		"2": {
 			"name": "glass_buildings",
-			"positions": [{	
-				"x": 0,
-				"z": 0,
-				"x_width": 15, 
-				"z_width": 4
-			},
-			{
-				"x": 18,
-				"z": 0,
-				"x_width": 15, 
-				"z_width": 16
-			},
-			{
-				"x": 4,
-				"z": 25,
-				"x_width": 23, 
-				"z_width": 6
-			},
-			{
-				"x": 30,
-				"z": 23,
-				"x_width": 4, 
-				"z_width": 11
-			}]
+			"positions": [
+				{	
+					"x": 0,
+					"z": 0,
+					"x_width": 15, 
+					"z_width": 4
+				},
+				{
+					"x": 18,
+					"z": 0,
+					"x_width": 16, 
+					"z_width": 7
+				},
+				{
+					"x": 26,
+					"z": 7,
+					"x_width": 8, 
+					"z_width": 3
+				},
+				{
+					"x": 18,
+					"z": 10,
+					"x_width": 4, 
+					"z_width": 6
+				},
+				{
+					"x": 25,
+					"z": 10,
+					"x_width": 9, 
+					"z_width": 6
+				},
+				{
+					"x": 4,
+					"z": 30,
+					"x_width": 14, 
+					"z_width": 3
+				},
+				{
+					"x": 18,
+					"z": 25,
+					"x_width": 9, 
+					"z_width": 6
+				},
+				{
+					"x": 30,
+					"z": 23,
+					"x_width": 4, 
+					"z_width": 11
+				}
+			]
 		},
 		"3": {
 			"name": "residential_buildings",
@@ -61,6 +87,18 @@
 					"x": 4,
 					"z": 22,
 					"x_width": 11, 
+					"z_width": 3	
+				},
+				{
+					"x": 18,
+					"z": 19,
+					"x_width": 4, 
+					"z_width": 3	
+				},
+				{
+					"x": 25,
+					"z": 19,
+					"x_width": 9, 
 					"z_width": 3	
 				}
 			]

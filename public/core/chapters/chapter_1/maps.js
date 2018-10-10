@@ -13,6 +13,11 @@ var END = "E";
 var BLOCKED_POS_Z = "X";
 var BLOCKED_POS_X = "-X";
 var PAVEMENT_HEIGHT = 0.1;
+var INTERSECT_1 = "I1";
+var INTERSECT_2 = "I2";
+var INTERSECT_3 = "I3";
+var INTERSECT_4 = "I4";
+var INTERSECT_5 = "I5";
 
 var drawGround = function() {
     var pavementMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/sidewalk_1.jpg') });
@@ -103,6 +108,50 @@ var drawGround = function() {
                         new THREE.MeshBasicMaterial({ color: 0x123435})  
                     );
 
+                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
+                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+                    WORLD.scene.add( plane );
+                }
+                else if(roadMap[i][j] === END) {
+                    var plane = new THREE.Mesh( 
+                        new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
+                        new THREE.MeshBasicMaterial({ color: 0x4682B4})  
+                    );
+
+                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
+                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+                    WORLD.scene.add( plane );
+                }
+                else if(roadMap[i][j] === INTERSECT_1 || roadMap[i][j] === INTERSECT_2 || roadMap[i][j] === INTERSECT_3 || roadMap[i][j] === INTERSECT_4 || roadMap[i][j] === INTERSECT_5) {
+                    var texture;
+                    switch(roadMap[i][j]) {
+                        case INTERSECT_1: 
+                            texture = WORLD.textureLoader.load("/images/intersect_1.png");
+                            break;
+                        case INTERSECT_2: 
+                            texture = WORLD.textureLoader.load("/images/intersect_2.png");
+                            break;
+                        case INTERSECT_3: 
+                            texture = WORLD.textureLoader.load("/images/intersect_3.png");
+                            break;
+                        case INTERSECT_4:
+                            texture = WORLD.textureLoader.load("/images/intersect_4.png");
+                            break; 
+                        case INTERSECT_5: 
+                        default:
+                            texture = WORLD.textureLoader.load("/images/intersect_5.png");
+                            break;
+                    }
+
+                    var intersectMaterial = new THREE.MeshBasicMaterial({ map: texture });               
+                    
+                    intersectMaterial.map.wrapS = roadPosXMaterial.map.wrapT = THREE.RepeatWrapping;
+                    intersectMaterial.map.repeat.set(1, 1);
+                    intersectMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+                    var plane = new THREE.Mesh( 
+                                    new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
+                                    intersectMaterial 
+                                );
                     plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
                     plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
                     WORLD.scene.add( plane );
