@@ -25,7 +25,6 @@ var drawGround = function() {
 
     loadMapFromJSON("./core/chapters/chapter_1/map_info.json", (result) => {
         var mapInfo = JSON.parse(result);
-        console.log("MAP:", mapInfo)
         var UNIT_SIZE = mapInfo.size;
     
         /** load pavement and road */
@@ -104,8 +103,6 @@ var drawGround = function() {
                         new THREE.MeshBasicMaterial({ color: 0x123435})  
                     );
 
-                    console.log("x:",UNIT_SIZE * j + UNIT_SIZE / 2)
-                    console.log("z:",UNIT_SIZE * i + UNIT_SIZE / 2)
                     plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
                     plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
                     WORLD.scene.add( plane );
@@ -205,8 +202,7 @@ var drawGround = function() {
             area.position.set(XWidth, 0, ZWidth);
             area.geometry.computeBoundingBox();
             areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-            WORLD.scene.add(area);
-            WORLD.dangerZoneBBox.push({ box: area, bbox: areaBBox, direction: child.direction});
+            WORLD.dangerZones.push({ box: area, bbox: areaBBox, direction: child.direction});
         })
     });
 }
@@ -397,7 +393,7 @@ WORLD.loadMap = () => {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(43, 0, 28),
+            position: new THREE.Vector3(48, 0, 30),
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ")
         },

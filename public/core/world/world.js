@@ -14,7 +14,7 @@ var time = Date.now();
 WORLD.controls = null;
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
-WORLD.dangerZoneBBox = [];
+WORLD.dangerZones = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
@@ -305,45 +305,18 @@ function addSunlight(scene) {
   }
   // Make the dino chase the player
 function checkDistance() {
-    WORLD.streetSignList.forEach((sign) => {
-        // Check if in dino agro range
-        if (sign.object.position.distanceTo(WORLD.player.position) < 20) {
-            // Adject the target's y value. We only care about x and z for movement.
-            // var lookTarget = new THREE.Vector3();
-            // lookTarget.copy(WORLD.player.position);
-            // lookTarget.y = sign.position.y;
-
-            // Make dino face camera
-            // sign.lookAt(lookTarget);
-
-            // Get distance between dino and camera with a 120 unit offset
-            // Game over when dino is the value of CATCHOFFSET units away from camera
-            var distanceFrom = (sign.object.position.distanceTo(WORLD.player.position));
-            var v = new THREE.Vector3();
-            var vector = WORLD.player.getWorldDirection(v);
-            var theta = Math.atan2(vector.x,vector.z);
-            var playerAngle  = THREE.Math.radToDeg(theta);
-            if(sign.angle - playerAngle <= 90 && sign.angle - playerAngle >= -90) {
-                // console.log("sds")
-            }
-            // Alert and display distance between camera and dino
-            // $("#message").text("Sign's distance from you: " + distanceFrom);
-            // Not in agro range, don't start distance countdown
-        } 
-    });
     
-    if(WORLD.dangerZoneBBox) {
-        WORLD.dangerZoneBBox.forEach(function(child) {
+    if(WORLD.dangerZones) {
+        WORLD.dangerZones.forEach(function(child) {
             if (child.bbox.containsPoint(WORLD.player.position)) {
                 var v = new THREE.Vector3();
-                var vector = WORLD.player.getWorldDirection(v);
-                var vector2 = child.direction;
-                var theta = Math.atan2(vector.x,vector.z);
-                var theta2 = Math.atan2(vector2.x,vector2.z);
-                var playerAngle  = THREE.Math.radToDeg(theta);
-                var zoneAngle  = THREE.Math.radToDeg(theta2);
-                if(!(zoneAngle - playerAngle <= 90 && zoneAngle - playerAngle >= -90)) {
+                var playerVector = WORLD.player.getWorldDirection(v);
+                var zoneVector = child.direction;
+                var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+                var zoneAngle  = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
+                if(!(Math.abs(zoneAngle - playerAngle) <= 90)) {
                     toastr.error("WRONGGGG!");
+                    console.log(zoneAngle - playerAngle)
                 }
                 
             }
