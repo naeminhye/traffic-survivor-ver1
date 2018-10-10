@@ -314,7 +314,11 @@ function checkDistance() {
                 var zoneVector = child.direction;
                 var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
                 var zoneAngle  = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
-                if(!(Math.abs(zoneAngle - playerAngle) <= 90)) {
+                var angleDelta = zoneAngle - playerAngle;
+                while(Math.abs(angleDelta / 180) >= 1) {
+                    angleDelta %= 180;
+                }
+                if(!(angleDelta <= 90 && angleDelta >= -90)) {
                     toastr.error("WRONGGGG!");
                     console.log(zoneAngle - playerAngle)
                 }

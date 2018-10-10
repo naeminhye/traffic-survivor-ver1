@@ -411,7 +411,7 @@ WORLD.loadMap = () => {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(77, 0, 23),
+            position: new THREE.Vector3(75, 0, 28),
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, 0, 0, "XYZ")
         },
