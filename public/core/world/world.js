@@ -311,16 +311,14 @@ function checkDistance() {
             if (child.bbox.containsPoint(WORLD.player.position)) {
                 var v = new THREE.Vector3();
                 var playerVector = WORLD.player.getWorldDirection(v);
-                var zoneVector = child.direction;
+                var zoneVector = new THREE.Vector3(child.direction.x, child.direction.y, child.direction.z);
                 var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
                 var zoneAngle  = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
                 var angleDelta = zoneAngle - playerAngle;
-                while(Math.abs(angleDelta / 180) >= 1) {
-                    angleDelta %= 180;
-                }
-                if(!(angleDelta <= 90 && angleDelta >= -90)) {
+                
+                if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
                     toastr.error("WRONGGGG!");
-                    console.log(zoneAngle - playerAngle)
+                    // console.log(minifyAngle(angleDelta));
                 }
                 
             }

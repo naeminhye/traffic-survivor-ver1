@@ -311,3 +311,11 @@ function createBoxBody(cube, callback) {
 
     return boxBody;
 }
+
+const minifyAngle = (num) => {
+    var angle = num;
+    if(Math.abs(angle / 180) > 1) {
+        angle = angle % 180 - 180;
+    }
+    return angle;
+}
