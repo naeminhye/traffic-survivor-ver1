@@ -250,6 +250,7 @@ var drawGround = function() {
             // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
             area.position.set(XWidth, 0, ZWidth);
             area.geometry.computeBoundingBox();
+            WORLD.scene.add(area);
             areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
             WORLD.dangerZones.push({ box: area, bbox: areaBBox, direction: child.direction});
         })
@@ -463,6 +464,96 @@ WORLD.loadMap = () => {
             position: new THREE.Vector3(75, 0, 28),
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, 0, 0, "XYZ")
+        },
+        {
+            name: "camretrai3", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(75, 0, 88),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+        },
+        {
+            name: "camretrai4", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(75, 0, 133),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+        },
+        {
+            name: "camrephai", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camrephai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(85, 0, 38),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+        },
+        {
+            name: "camrephai2", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camrephai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(85, 0, 83),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+        },
+        {
+            name: "camrephai3", 
+            loader_type: "object", 
+            object_type: "sign",
+            url: "./models/signs/traffic-sign.json",
+            animate: false,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camrephai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(85, 0, 113),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
         },
         {
             name: "duongcam", 
