@@ -250,9 +250,9 @@ var drawGround = function() {
             // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
             area.position.set(XWidth, 0, ZWidth);
             area.geometry.computeBoundingBox();
-            WORLD.scene.add(area);
+            // WORLD.scene.add(area);
             areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-            WORLD.dangerZones.push({ box: area, bbox: areaBBox, direction: child.direction});
+            WORLD.dangerZones.push({ box: area, bbox: areaBBox, direction: child.direction, infoImg: "./images/info.png"});
         })
     });
 }

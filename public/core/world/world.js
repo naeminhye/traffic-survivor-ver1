@@ -309,8 +309,13 @@ function checkDistance() {
                 var angleDelta = zoneAngle - playerAngle;
                 
                 if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-                    toastr.error("WRONGGGG!");
-                    // console.log(minifyAngle(angleDelta));
+                    //toastr.error("WRONGGGG!");
+                    // $("infoImg").attr("src", child.infoImg);
+                    $("#infoBox").dialog("open");
+                    console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
+                }
+                else {
+                    $("#infoBox").dialog("close");
                 }
                 
             }
