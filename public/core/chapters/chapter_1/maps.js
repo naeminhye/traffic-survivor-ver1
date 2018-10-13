@@ -125,7 +125,7 @@ var drawGround = function() {
                 else if(roadMap[i][j] === INTERSECT_1 || roadMap[i][j] === INTERSECT_2 || roadMap[i][j] === INTERSECT_3 || roadMap[i][j] === INTERSECT_4 || roadMap[i][j] === INTERSECT_5) {
                     var texture;
                     switch(roadMap[i][j]) {
-                        case INTERSECT_1: 
+                        case INTERSECT_1:
                             texture = WORLD.textureLoader.load("/images/intersect_1.png");
                             break;
                         case INTERSECT_2: 
@@ -152,9 +152,14 @@ var drawGround = function() {
                                     new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
                                     intersectMaterial 
                                 );
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
                     plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i);
                     WORLD.scene.add( plane );
+                    WORLD.world.addBody(createBoxBody(plane, function(object) {
+                        // if(object.body.id == 0) 
+                            // toastr.error("Intersection");
+                    }));
+
                 }
             }
         }
@@ -445,7 +450,9 @@ WORLD.loadMap = () => {
             },
             position: new THREE.Vector3(48, 0, 30),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ")
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            infoImg: "./images/info.png",
+            direction: {x: 0, y: 0, z: -1}
         },
         {
             name: "camretrai2", 
@@ -463,7 +470,9 @@ WORLD.loadMap = () => {
             },
             position: new THREE.Vector3(75, 0, 28),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            infoImg: "./images/info.png",
+            direction: {x: 1, y: 0, z: 0}
         },
         {
             name: "camretrai3", 
@@ -481,7 +490,8 @@ WORLD.loadMap = () => {
             },
             position: new THREE.Vector3(75, 0, 88),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            infoImg: "./images/info.png"
         },
         {
             name: "camretrai4", 
@@ -499,7 +509,8 @@ WORLD.loadMap = () => {
             },
             position: new THREE.Vector3(75, 0, 133),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ")
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            infoImg: "./images/info.png"
         },
         {
             name: "camrephai", 
@@ -515,9 +526,10 @@ WORLD.loadMap = () => {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(85, 0, 38),
+            position: new THREE.Vector3(85, 0, 36),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            infoImg: "./images/info.png"
         },
         {
             name: "camrephai2", 
@@ -533,9 +545,10 @@ WORLD.loadMap = () => {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(85, 0, 83),
+            position: new THREE.Vector3(85, 0, 81),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            infoImg: "./images/info.png"
         },
         {
             name: "camrephai3", 
@@ -551,9 +564,10 @@ WORLD.loadMap = () => {
                     textureUrl: "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(85, 0, 113),
+            position: new THREE.Vector3(85, 0, 111),
             scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            infoImg: "./images/info.png",
         },
         {
             name: "duongcam", 

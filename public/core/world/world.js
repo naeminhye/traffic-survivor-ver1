@@ -20,7 +20,8 @@ var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
 WORLD.streetSignList = [];
 WORLD.vehicle = [];
-var initialPosition 
+var initialPosition;
+var infoBoxToggle = false; 
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -211,7 +212,9 @@ WORLD.animate = function () {
     
     WORLD.controls.update(Date.now() - time);
     // animateVehicle(Date.now() - time);
+    
     checkDistance();
+
     // var windStrength = Math.cos(time / 7000) * 20 + 40;
     // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
     // windForce.normalize()
@@ -297,6 +300,28 @@ function addSunlight(scene) {
   }
   // Make the dino chase the player
 function checkDistance() {
+
+    WORLD.streetSignList.forEach((sign) => {
+        
+        if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
+
+            var v = new THREE.Vector3();
+            var playerVector = WORLD.player.getWorldDirection(v);
+            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
+            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var angleDelta = signAngle - playerAngle;
+            if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+                $("#infoBox").find("img").attr("src", sign.infoImg);
+                $("#infoBox").dialog("open");
+
+                // $("#signDetail").find("img").attr("src", sign.infoImg);
+                // $("#signDetail").css("display", "block")
+            }
+
+        } 
+
+    });
     
     if(WORLD.dangerZones) {
         WORLD.dangerZones.forEach(function(child) {
@@ -311,11 +336,10 @@ function checkDistance() {
                 if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
                     //toastr.error("WRONGGGG!");
                     // $("infoImg").attr("src", child.infoImg);
-                    $("#infoBox").dialog("open");
                     console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
                 }
                 else {
-                    $("#infoBox").dialog("close");
+                    // $("#infoBox").dialog("close");
                 }
                 
             }

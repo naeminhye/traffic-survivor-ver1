@@ -36,8 +36,9 @@ const loadModelToWorld = (model) => {
         receiveShadow = false,
         children,
         object_type,
-        angle, 
-        textureUrl
+        direction, 
+        textureUrl,
+        infoImg = "./images/info2.png"
     } = model;
     
     let loader;
@@ -107,20 +108,18 @@ const loadModelToWorld = (model) => {
                 obj.scale.z = scale.z;
                 obj.name = name;
                 
-                // if(!angle) {
-
-                //     var vector = obj.getWorldDirection();
-                //     var theta = Math.atan2(vector.x,vector.z);
-                //     angle = THREE.Math.radToDeg(theta);
-
-                // }
+                if(!direction) {
+                    var v = new THREE.Vector3();
+                    direction = obj.getWorldDirection(v);
+                }
 
                 var storeObj = {
                     object: obj,
-                    angle: angle
+                    direction: direction,
+                    infoImg: infoImg
                 }
 
-                if(object_type === "street_sign") {
+                if(object_type === "sign") {
                     WORLD.streetSignList.push(storeObj);
                 }
                 else if(object_type === "vehicle") {

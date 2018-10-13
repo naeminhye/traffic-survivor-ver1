@@ -58,12 +58,13 @@
     margin: 1em;
   }
   .content-container .content .item {
+    font-family: 'Press Start 2P', cursive;
     font-size: 1.3em;
     cursor: pointer;
     background-color: #294548;
     border: 0.1em solid #0bd7d6;
     margin-top: 0.5em;
-    padding: 0.2em 0;
+    padding: 0.4em 0;
     min-width: 18em;
     color: #0bd7d6;
     text-align: center;

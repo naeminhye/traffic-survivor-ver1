@@ -286,10 +286,10 @@ const loadMapFromJSON = (path, callback) => {
     xhr.send();
 }
 
-function createBoxBody(cube, callback) {
+function createBoxBody(object, callback) {
 
     // Used later for collision detection
-    var bbox = new THREE.Box3().setFromObject(cube);
+    var bbox = new THREE.Box3().setFromObject(object);
     WORLD.collidableObjects.push(bbox);
 
     // create a cannon body
@@ -300,7 +300,7 @@ function createBoxBody(cube, callback) {
     ));
     var boxBody = new CANNON.Body({ mass: 5 });
     boxBody.addShape(shape);
-    boxBody.position.copy(cube.position);
+    boxBody.position.copy(object.position);
     boxBody.useQuaternion = true;
     boxBody.computeAABB();
     // disable collision response so objects don't move when they collide
