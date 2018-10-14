@@ -222,7 +222,8 @@ WORLD.animate = function () {
 
     // $("#message").text(compass(WORLD.camera.getWorldDirection(new THREE.Vector3(0, 0, 0))));
     // $("#message").text("Delta: " + (Date.now() - time));
-
+    // WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
+    $("#speed").text(WORLD.playerSpeed);
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
@@ -313,7 +314,7 @@ function checkDistance() {
             var angleDelta = signAngle - playerAngle;
             if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
                 $("#infoBox").find("img").attr("src", sign.infoImg);
-                $("#infoBox").dialog("open");
+                // $("#infoBox").dialog("open");
 
                 // $("#signDetail").find("img").attr("src", sign.infoImg);
                 // $("#signDetail").css("display", "block")
@@ -334,9 +335,10 @@ function checkDistance() {
                 var angleDelta = zoneAngle - playerAngle;
                 
                 if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-                    //toastr.error("WRONGGGG!");
+                    toastr.error("You made a wrong turn and have entered a one way road!");
                     // $("infoImg").attr("src", child.infoImg);
-                    console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
+                    // console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
+                    $("#message").text("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
                 }
                 else {
                     // $("#infoBox").dialog("close");

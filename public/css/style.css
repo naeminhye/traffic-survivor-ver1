@@ -71,6 +71,19 @@ body {
      width: 100%;
      background-color: transparent;
    }
+   .speed-container {
+
+        min-width: 310px; 
+        max-width: 400px; 
+        margin: 0 auto;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+   } 
+   .speed-container> span {
+    font-family: 'Press Start 2P', cursive;
+    color: orange;
+   }
 
 .sign-detail-container {
     position: absolute;

@@ -285,20 +285,20 @@ WORLD.loadMap = () => {
         //     url: "./models/gltf/bus/scene.gltf",
         //     animate: false
         // },
-        // {
-        //     name: "bus_stop",
-        //     loader_type: "fbx",
-        //     url: "./models/fbx/bus_stop/bus_stop.FBX",
-        //     position: new THREE.Vector3(-45, 0, -23),
-        //     rotation: new THREE.Euler(0, 0, 0),
-        //     scale: new THREE.Vector3(.05,.05,.05),
-        //     children: {
-        //         "sign": {
-        //             position: new THREE.Vector3(0, 60, 100),
-        //             rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
-        //         }
-        //     }
-        // },
+        {
+            name: "bus_stop",
+            loader_type: "fbx",
+            url: "./models/fbx/bus_stop/bus_stop.FBX",
+            position: new THREE.Vector3(100, 0, 34),
+            rotation: new THREE.Euler(0, 0, 0),
+            scale: new THREE.Vector3(.03,.03,.03),
+            children: {
+                "sign": {
+                    position: new THREE.Vector3(0, 60, 100),
+                    rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
+                }
+            }
+        },
         // // {
         // //     name: "tree1",
         // //     loader_type: "object",
@@ -569,37 +569,87 @@ WORLD.loadMap = () => {
             rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
             infoImg: "./images/info.png",
         },
-        {
-            name: "duongcam", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/duongcam-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(48, 0, 22.5),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
-        },
         // {
-        //     name: "safety-temporary-fence",
-        //     loader_type: "fbx",
-        //     url: "./models/safety-temporary-fence/source/safety-temporary-fence.fbx",
-        //     position: new THREE.Vector3(42, 0, 25),
-        //     rotation: new THREE.Euler(0, Math.PI / 2, 0),
-        //     scale: new THREE.Vector3(.006,.006,.006),
+        //     name: "duongcam", 
+        //     loader_type: "object", 
+        //     object_type: "sign",
+        //     url: "./models/signs/traffic-sign.json",
+        //     animate: false,
         //     children: {
-        //         "barrière_low001": {
-        //             textureUrl: "./models/safety-temporary-fence/textures/barriere_low_baseColor.png"
+        //         "sign": {
+        //             textureUrl: "./models/signs/duongcam-uvmap.png"
+        //         },
+        //         "pole": {
+        //             textureUrl: "./models/signs/pole-uvmap.png"
         //         }
-        //     }
-        // }
+        //     },
+        //     position: new THREE.Vector3(48, 0, 22.5),
+        //     scale: new THREE.Vector3(.3,.3,.3),
+        //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
+        // },
+        {
+            name: "traffic-light-1",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(77, 0, 82),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-2",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(77, 0, 88),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-3",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(83, 0, 82),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-4",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(118, 0, 88),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-5",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(112, 0, 82),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-6",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(112, 0, 88),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        },
+        {
+            name: "traffic-light-7",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(118, 0, 82),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05)
+        }
     ];
 
     // add models to the world
