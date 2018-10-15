@@ -209,34 +209,60 @@ var drawGround = function() {
                         if(object.body.id == 0) 
                             console.log("Player collided with walls.");
                     }));
-
-                    // // Used later for collision detection
-                    // var bbox = new THREE.Box3().setFromObject(cube);
-                    // WORLD.collidableObjects.push(bbox);
-
-                    // // create a cannon body
-                    // var shape = new CANNON.Box(new CANNON.Vec3(
-                    //     (bbox.max.x - bbox.min.x) / 2,
-                    //     (bbox.max.y - bbox.min.y) / 2,
-                    //     (bbox.max.z - bbox.min.z) / 2
-                    // ));
-                    // var boxBody = new CANNON.Body({ mass: 5 });
-                    // boxBody.addShape(shape);
-                    // boxBody.position.copy(cube.position);
-                    // boxBody.useQuaternion = true;
-                    // boxBody.computeAABB();
-                    // // disable collision response so objects don't move when they collide
-                    // // against each other
-                    // boxBody.collisionResponse = true;
-                    // // keep a reference to the mesh so we can update its properties later
-                    // boxBody.addEventListener('collide', function(object) {
-                    //     if(object.body.id == 0) 
-                    //         console.log("Player collided with walls.");
-                    // });
-                    // WORLD.world.addBody(boxBody);
                 }
             });
         });
+
+        // console.log("test:",findSubMat(roadMap, RESIDENTAL_BUILDING_ID))
+        // findSubMat(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
+        //     /** residental buildings */
+        //     var texture = residentTexture;
+        //     var buildingMaterial = new THREE.MeshBasicMaterial({
+        //         map: texture
+        //     });
+        //     buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+        //     buildingMaterial.map.repeat.set( tile.size, tile.size );
+
+        //     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+        //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
+        //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
+    
+        //     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
+        //     // Set the cube position
+        //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
+        //     // Add the cube
+        //     WORLD.scene.add(cube);
+        //     WORLD.world.addBody(createBoxBody(cube, function(object) {
+        //         if(object.body.id == 0) 
+        //             console.log("Player collided with walls.");
+        //     }));
+        // });
+
+        // findSubMat(roadMap, OFFICE_BUILDING_ID).forEach(function(tile) {
+        //     /** residental buildings */
+        //     var texture = glassTexture;
+        //     var buildingMaterial = new THREE.MeshBasicMaterial({
+        //         map: texture
+        //     });
+        //     buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+        //     buildingMaterial.map.repeat.set( tile.size, tile.size );
+
+        //     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+        //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
+        //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
+    
+        //     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
+        //     // Set the cube position
+        //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
+        //     // Add the cube
+        //     WORLD.scene.add(cube);
+        //     WORLD.world.addBody(createBoxBody(cube, function(object) {
+        //         if(object.body.id == 0) 
+        //             console.log("Player collided with walls.");
+        //     }));
+        // });
 
         // WARNING_AREAS
         mapInfo.warning_areas.forEach(function(child) {

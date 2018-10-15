@@ -30,6 +30,26 @@ body {
 
 }
 
+#loading {
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0,0,0);
+
+}
+
+.loading-text {
+    color: #ffffff;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+}
+
 #instructions {
 
     width: 100%;

@@ -22,6 +22,7 @@ WORLD.streetSignList = [];
 WORLD.vehicle = [];
 var initialPosition;
 var infoBoxToggle = false; 
+WORLD.loaded = false;
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -93,6 +94,15 @@ if (havePointerLock) {
     instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
 }
 
+if(!WORLD.loaded) {
+    $("#blocker").css("display", "none");
+    $("#loading").css("display", "block");
+}
+else {
+    $("#blocker").css("display", "block");
+    $("#loading").css("display", "none");
+}
+
 WORLD.initCannon = function () {
     // Setup our world
     WORLD.world = new CANNON.World();
@@ -144,8 +154,8 @@ WORLD.initCannon = function () {
 
 WORLD.init = function () {
 
-    // WORLD.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-    WORLD.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+    WORLD.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 10000);
+    // WORLD.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
 
     WORLD.scene = new THREE.Scene();
     WORLD.scene.background = new THREE.Color(0xcce0ff);

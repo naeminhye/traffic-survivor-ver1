@@ -1,22 +1,31 @@
 const manager = new THREE.LoadingManager();
 manager.onProgress = (item, loaded, total) => {
     console.log(item, loaded, total);
+    var percentComplete = loaded / total * 100;
+    if(Math.round(percentComplete, 2) == 100) {
+        WORLD.loaded = true;
+        $("#loading").css("display", "none");
+        $("#blocker").css("display", "block");
+    }
 };
 const onProgress = (xhr) => {
-    if (xhr.lengthComputable) {
-        var percentComplete = xhr.loaded / xhr.total * 100;
+    // if (xhr.lengthComputable) {
+    //     var percentComplete = xhr.loaded / xhr.total * 100;
         // console.log(Math.round(percentComplete, 2) + '% downloaded');
-    }
+        // if(Math.round(percentComplete, 2) == 100) {
+        //     WORLD.loaded = true;
+        // }
+    // }
 };
 const onError = (xhr) => {
     console.log(xhr);
 };
-WORLD.fbxLoader = new THREE.FBXLoader(WORLD.manager);
-WORLD.gltfLoader = new THREE.GLTFLoader(WORLD.manager);
-WORLD.objectLoader = new THREE.ObjectLoader(WORLD.manager);
-WORLD.jsonLoader = new THREE.JSONLoader(WORLD.manager);
-WORLD.textureLoader = new THREE.TextureLoader();
-WORLD.tdsLoader = new THREE.TDSLoader();
+WORLD.fbxLoader = new THREE.FBXLoader(manager);
+WORLD.gltfLoader = new THREE.GLTFLoader(manager);
+WORLD.objectLoader = new THREE.ObjectLoader(manager);
+WORLD.jsonLoader = new THREE.JSONLoader(manager);
+WORLD.textureLoader = new THREE.TextureLoader(manager);
+WORLD.tdsLoader = new THREE.TDSLoader(manager);
 
 /**
  * 
