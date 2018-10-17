@@ -135,8 +135,93 @@ var drawGround = function() {
     })
 }
 
+function loadModels() {
+
+    var models = [
+        // {
+        //     name: "car",
+        //     loader_type: "object",
+        //     object_type: "vehicle",
+        //     url: "./models/json/volkeswagon-vw-beetle.json",
+        //     position: new THREE.Vector3(48, 0, 30),
+        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        //     scale: new THREE.Vector3(.005, .005, 0.005),
+        //     animate: true,
+        //     path: new THREE.CatmullRomCurve3([
+        //         new THREE.Vector3(150, 0, 10),
+        //         new THREE.Vector3(150, 0, 14),
+        //         new THREE.Vector3(150, 0, 16),
+        //         new THREE.Vector3(150, 0, 18),
+        //         new THREE.Vector3(150, 0, 22),
+        //         new THREE.Vector3(151, 0, 25),
+        //         new THREE.Vector3(151, 0, 27),
+        //         new THREE.Vector3(151, 0, 30),
+        //         new THREE.Vector3(152, 0, 32),
+        //         new THREE.Vector3(152, 0, 36),
+        //         new THREE.Vector3(152, 0, 39),
+        //         new THREE.Vector3(152, 0, 43),
+        //         new THREE.Vector3(152, 0, 46),
+        //         new THREE.Vector3(152, 0, 48),
+        //         new THREE.Vector3(152, 0, 50),
+        //         new THREE.Vector3(152, 0, 54),
+        //         new THREE.Vector3(152, 0, 57),
+        //         new THREE.Vector3(158, 0, 67),
+        //         new THREE.Vector3(160, 0, 67),
+        //         new THREE.Vector3(162, 0, 67),
+        //         new THREE.Vector3(164, 0, 67),
+        //         new THREE.Vector3(168, 0, 67),
+        //         new THREE.Vector3(172, 0, 67),
+        //         new THREE.Vector3(180, 0, 67),
+        //         new THREE.Vector3(232, 0, 67)]),
+        //     velocity: 0.01
+        // },
+        {
+            name: "bus_2", 
+            loader_type: "gltf", 
+            object_type: "vehicle",
+            scale: new THREE.Vector3(.2,.2,.2),
+            position: new THREE.Vector3(48, 0, 30),
+            url: "./models/gltf/bus/scene.gltf",
+            animate: false,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(150, 0, 10),
+                new THREE.Vector3(150, 0, 14),
+                new THREE.Vector3(150, 0, 16),
+                new THREE.Vector3(150, 0, 18),
+                new THREE.Vector3(150, 0, 22),
+                new THREE.Vector3(151, 0, 25),
+                new THREE.Vector3(151, 0, 27),
+                new THREE.Vector3(151, 0, 30),
+                new THREE.Vector3(152, 0, 32),
+                new THREE.Vector3(152, 0, 36),
+                new THREE.Vector3(152, 0, 39),
+                new THREE.Vector3(152, 0, 43),
+                new THREE.Vector3(152, 0, 46),
+                new THREE.Vector3(152, 0, 48),
+                new THREE.Vector3(152, 0, 50),
+                new THREE.Vector3(152, 0, 54),
+                new THREE.Vector3(152, 0, 57),
+                new THREE.Vector3(158, 0, 67),
+                new THREE.Vector3(160, 0, 67),
+                new THREE.Vector3(162, 0, 67),
+                new THREE.Vector3(164, 0, 67),
+                new THREE.Vector3(168, 0, 67),
+                new THREE.Vector3(172, 0, 67),
+                new THREE.Vector3(180, 0, 67),
+                new THREE.Vector3(232, 0, 67)]),
+            velocity: 0.01
+        }
+    ];
+
+    // add models to the world
+    models.forEach(md => loadModelToWorld(md));
+}
+
 WORLD.loadMap = () => {
     drawGround();
+
+    loadModels();
+
     WORLD.player.position.set(56, 1.3 , 65);
     sphereBody.position.set(56, 1.3 , 65);
     WORLD.player.rotateY(- Math.PI / 2);

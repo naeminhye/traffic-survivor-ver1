@@ -1,6 +1,5 @@
 const manager = new THREE.LoadingManager();
 manager.onProgress = (item, loaded, total) => {
-    console.log(item, loaded, total);
     var percentComplete = loaded / total * 100;
     if(Math.round(percentComplete, 2) == 100) {
         WORLD.loaded = true;
@@ -47,7 +46,9 @@ const loadModelToWorld = (model) => {
         object_type,
         direction, 
         textureUrl,
-        infoImg = "./images/info2.png"
+        infoImg = "./images/info2.png",
+        path,
+        velocity
     } = model;
     
     let loader;
@@ -133,6 +134,11 @@ const loadModelToWorld = (model) => {
                 }
                 else if(object_type === "vehicle") {
                     WORLD.vehicle.push(storeObj);
+                    if(path) {
+                        var control = new CONTROLS.PathControls(obj, path, {"velocity": velocity || 0.02});
+                        control.showPath();
+                        WORLD.vehicleControls.push(control);
+                    }
                 }
 
                 var sprite = makeTextSprite("Object: " + obj.name, {

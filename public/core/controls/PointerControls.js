@@ -152,7 +152,7 @@ var PointerControls = function (camera, cannonBody) {
                 break;
         }
     };
-
+    
     document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('keyup', onKeyUp, false);

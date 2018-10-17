@@ -12,6 +12,7 @@ var isDangerous = false;
 var geometry, material, mesh;
 var time = Date.now();
 WORLD.controls = null;
+WORLD.vehicleControls = [];
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
 WORLD.dangerZones = [];
@@ -221,7 +222,13 @@ WORLD.animate = function () {
     }
     
     WORLD.controls.update(Date.now() - time);
-    // animateVehicle(Date.now() - time);
+    animateVehicle();
+
+    if(WORLD.vehicleControls.length > 0) {
+        WORLD.vehicleControls.forEach(function(control) {
+            control.update(Date.now() - time);
+        });
+    }
     
     checkDistance();
 
@@ -359,11 +366,30 @@ function checkDistance() {
     }
 }
 
-function animateVehicle(delta) {
 
-    WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.2 : null;
-    WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
-    WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.z -= 0.2 : null;
-    WORLD.scene.getObjectByName("car2") ? WORLD.scene.getObjectByName("car2").position.z += 0.2 : null;
-    
+var spline = new THREE.SplineCurve3([
+    new THREE.Vector3(40, 0, 30),
+    new THREE.Vector3(60, 0, 30),
+    new THREE.Vector3(80, 0, 30),
+    new THREE.Vector3(100, 0, 30),
+    new THREE.Vector3(120, 0, 30)]);
+var pos = 0;
+function animateVehicle() {
+    // var bus_2;
+    // if(WORLD.scene.getObjectByName("bus_2")) {
+    //     bus_2 = WORLD.scene.getObjectByName('bus_2');
+    //     if (pos <= 1) {
+    //         bus_2.position.x = spline.getPointAt(pos).x;
+    //         bus_2.position.z = spline.getPointAt(pos).z;
+    //         bus_2.position.y = spline.getPointAt(pos).y;
+    //         pos += 0.001
+    //     } else {
+    //         pos = 0; 
+    //     }
+    // }
+    // WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.1 : null;
+    // WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
+    // WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.z -= 0.2 : null;
+    // WORLD.scene.getObjectByName("car2") ? WORLD.scene.getObjectByName("car2").position.z += 0.2 : null;
+
 }
