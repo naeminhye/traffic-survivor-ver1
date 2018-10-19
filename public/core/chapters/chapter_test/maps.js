@@ -28,11 +28,9 @@ var drawGround = function() {
     var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
-    loadMapFromJSON("./core/chapters/chapter_2/chapter_2.json", (result) => {
+    loadMapFromJSON("./core/chapters/chapter_test/chapter_test.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
-        WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
-        sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
     
         /** load pavement and road */
         var roadMap = getMapFromFile(mapInfo.map_url);
@@ -222,9 +220,9 @@ function loadModels() {
 WORLD.loadMap = () => {
     drawGround();
 
-    loadModels();
+    // loadModels();
 
-    // WORLD.player.position.set(56, 1.3 , 65);
-    // sphereBody.position.set(56, 1.3 , 65);
+    WORLD.player.position.set(50, 1.3 , 110);
+    sphereBody.position.set(50, 1.3 , 110);
     WORLD.player.rotateY(- Math.PI / 2);
 }

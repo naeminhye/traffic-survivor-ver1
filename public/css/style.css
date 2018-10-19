@@ -2,45 +2,184 @@ html, body {
     width: 100%;
     height: 100%;
 }
-
 body {
     background-color: #ffffff;
     margin: 0;
     overflow: hidden;
-    /* font-family: 'Press Start 2P', cursive; */
+   /* font-family: 'Press Start 2P', cursive;
+    */
 }
-
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #20292e;
+}
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-star;
+    align-items: stretch;
+}
+.flex-center {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.flex-column-center-center {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+h2 {
+    color: #294548;
+    text-align: center;
+}
+.content-container {
+    font-size: 1.3em;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content-container .content {
+    margin: 1em;
+}
+.content-container .content .item {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.3em;
+    cursor: pointer;
+    background-color: #294548;
+    border: 0.1em solid #0bd7d6;
+    margin-top: 0.5em;
+    padding: 0.4em 0;
+    min-width: 18em;
+    color: #0bd7d6;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 0.5em;
+    transition: all 0.2s linear;
+    text-decoration: none;
+}
+.content-container .content .item:hover {
+    background-color: #0bd7d6;
+    order: 0.1em solid #294548;
+    color: #294548;
+    box-shadow: 0 0 0.2em rgba(255, 255, 255, 0.8);
+}
+.eightbit-btn {
+    cursor: pointer;
+    background: #92CD41;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    font-size: 30px;
+    padding: 20px;
+    font-family: "Press Start 2P", cursive;
+    text-decoration: none;
+    color: white;
+    box-shadow: inset -4px -4px 0px 0px #4AA52E;
+}
+.eightbit-btn:hover, .eightbit-btn:focus {
+    background: #76c442;
+    box-shadow: inset -6px -6px 0px 0px #4AA52E;
+}
+.eightbit-btn:active {
+    box-shadow: inset 4px 4px 0px 0px #4AA52E;
+}
+.eightbit-btn:before, .eightbit-btn:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+}
+.eightbit-btn:before {
+    top: -6px;
+    left: 0;
+    border-top: 6px black solid;
+    border-bottom: 6px black solid;
+}
+.eightbit-btn:after {
+    left: -6px;
+    top: 0;
+    border-left: 6px black solid;
+    border-right: 6px black solid;
+}
+.eightbit-btn--reset {
+    background: #E76E55;
+    box-shadow: inset -4px -4px 0px 0px #8C2022;
+}
+.eightbit-btn--reset:hover, .eightbit-btn--reset:focus {
+    background: #CE372B;
+    box-shadow: inset -6px -6px 0px 0px #8C2022;
+}
+.eightbit-btn--reset:active {
+    box-shadow: inset 4px 4px 0px 0px #8C2022;
+}
+.eightbit-btn--proceed {
+    background: #F7D51D;
+    box-shadow: inset -4px -4px 0px 0px #E59400;
+}
+.eightbit-btn--proceed:hover, .eightbit-btn--proceed:focus {
+    background: #F2C409;
+    box-shadow: inset -6px -6px 0px 0px #E59400;
+}
+.eightbit-btn--proceed:active {
+    box-shadow: inset 4px 4px 0px 0px #E59400;
+}
+hr {
+    margin: 10px auto;
+    max-width: 100px;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 0;
+}
 #infoButton {
     border-width: 0;
     cursor: pointer;
 }
-
 #message {
     color: #fff;
 }
-
 #blocker {
-
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     background-color: rgba(0,0,0,0.5);
-
 }
-
 #loading {
-
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     background-color: rgba(0,0,0);
-
 }
-
 .loading-text {
     color: #ffffff;
     margin: auto;
@@ -49,61 +188,50 @@ body {
     font-family: 'Press Start 2P', cursive;
     font-size: 20px;
 }
-
 #instructions {
-
     width: 100%;
     height: 100%;
-
     display: -webkit-box;
     display: -moz-box;
     display: box;
-
     -webkit-box-orient: horizontal;
     -moz-box-orient: horizontal;
     box-orient: horizontal;
-
     -webkit-box-pack: center;
     -moz-box-pack: center;
     box-pack: center;
-
     -webkit-box-align: center;
     -moz-box-align: center;
     box-align: center;
-
     color: #ffffff;
     text-align: center;
-
     cursor: pointer;
-
 }
 #speed-gauge {
-    min-width: 310px; 
-    max-width: 400px; 
-    height: 300px; 
+    min-width: 310px;
+    max-width: 400px;
+    height: 300px;
     margin: 0 auto;
     position: absolute;
     bottom: 0;
     transform: scale(.5);
 }
-
 .gauge-container {
     width: 100%;
     background-color: transparent;
 }
 .speed-container {
-    min-width: 310px; 
-    max-width: 400px; 
+    min-width: 310px;
+    max-width: 400px;
     margin: 0 auto;
     position: absolute;
     bottom: 10px;
     left: 10px;
-} 
+}
 .speed-container> span {
     font-family: 'Press Start 2P', cursive;
     color: orange;
 }
-
 .sign-detail-container {
     position: absolute;
     top: 0;
@@ -116,7 +244,6 @@ body {
     margin: auto;
     display: none;
 }
-
 .turn-signals {
     display: flex;
     justify-content: space-between;
@@ -124,46 +251,40 @@ body {
     left: 250px;
     bottom: 0;
 }
-
 .turn-signals > .right-signal > span, .turn-signals > .left-signal > span {
     font-family: 'Press Start 2P', cursive;
     color: orange;
     font-size: 10px;
 }
-
 .left-signal, .right-signal {
     margin: 5px;
 }
-
 .led {
-	border-radius: 50%;
-	background-color: #220000;
-	width: 30px;
-	height: 30px;
-	position: relative;
-	cursor: pointer;
-	margin: 20px auto;
-	border: 3px solid #222;
+    border-radius: 50%;
+    background-color: #220000;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    margin: 20px auto;
+    border: 3px solid #222;
 }
-
 .led.active {
-	background-color: #AA0000;
-	box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.4);
-	border: 3px solid rgba(120, 0, 0, 1);
+    background-color: #AA0000;
+    box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.4);
+    border: 3px solid rgba(120, 0, 0, 1);
 }
-
 .led .hilight {
-	width: 4px;
-	height: 4px;
-	border-radius: 50%;
-	position: absolute;
-	background-color: rgba(255,255,255,0.5);
-	top: 7px;
-	left: 7px;
-	box-shadow: 3px 4px 7px 9px rgba(180, 0, 0, 0.6);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: rgba(255,255,255,0.5);
+    top: 7px;
+    left: 7px;
+    box-shadow: 3px 4px 7px 9px rgba(180, 0, 0, 0.6);
 }
-
 .led.active .hilight {
-	background-color: rgba(255,255,255,1);
-	box-shadow: 4px 4px 6px 7px rgba(255, 0, 0, 1);
+    background-color: rgba(255,255,255,1);
+    box-shadow: 4px 4px 6px 7px rgba(255, 0, 0, 1);
 }

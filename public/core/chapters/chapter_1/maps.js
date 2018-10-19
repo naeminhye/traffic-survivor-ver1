@@ -478,7 +478,7 @@ WORLD.loadMap = () => {
             animate: false,
             children: {
                 "sign": {
-                    textureUrl: "./models/signs/khonguutien1-uvmap.png"
+                    textureUrl: "./models/signs/dicham-uvmap.png"
                 },
                 "pole": {
                     textureUrl: "./models/signs/pole-uvmap.png"
