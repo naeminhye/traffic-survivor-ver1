@@ -471,14 +471,14 @@ WORLD.loadMap = () => {
         //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
         // },
         {
-            name: "camretrai", 
+            name: "nguyhiem", 
             loader_type: "object", 
             object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/warning-sign.json",
             animate: false,
             children: {
                 "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                    textureUrl: "./models/signs/khonguutien1-uvmap.png"
                 },
                 "pole": {
                     textureUrl: "./models/signs/pole-uvmap.png"
@@ -490,6 +490,26 @@ WORLD.loadMap = () => {
             infoImg: "./images/info.png",
             direction: {x: 0, y: 0, z: -1}
         },
+        // {
+        //     name: "camretrai", 
+        //     loader_type: "object", 
+        //     object_type: "sign",
+        //     url: "./models/signs/traffic-sign.json",
+        //     animate: false,
+        //     children: {
+        //         "sign": {
+        //             textureUrl: "./models/signs/camretrai-uvmap.png"
+        //         },
+        //         "pole": {
+        //             textureUrl: "./models/signs/pole-uvmap.png"
+        //         }
+        //     },
+        //     position: new THREE.Vector3(48, 0, 30),
+        //     scale: new THREE.Vector3(.3,.3,.3),
+        //     rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+        //     infoImg: "./images/info.png",
+        //     direction: {x: 0, y: 0, z: -1}
+        // },
         {
             name: "camretrai2", 
             loader_type: "object", 
