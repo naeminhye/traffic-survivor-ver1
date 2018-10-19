@@ -397,3 +397,26 @@ function findSubMat(mat, target) {
     }
   return results;
 }
+
+function startSignal(counter, dir){
+    var $light;
+    if (dir === 0) { //left
+        $light = $("#left-led");
+    }
+    else {
+        $light = $("#right-led");
+
+    }
+    if(counter < 2){
+      setTimeout(function(){
+        counter++;
+        if(!$light.hasClass("active")) {
+          $light.addClass("active");
+        }
+        else {
+          $light.removeClass("active");
+        }
+        startSignal(counter, dir);
+      }, 750);
+    }
+  }

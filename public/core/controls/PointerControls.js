@@ -17,6 +17,8 @@ const keys = {
     KEY_W: 87,
     KEY_X: 88,
     KEY_Z: 90,
+    KEY_Q: 81,
+    KEY_E: 69,
 };
 
 var PointerControls = function (camera, cannonBody) {
@@ -43,6 +45,8 @@ var PointerControls = function (camera, cannonBody) {
     var rotateLeft = false;
     var rotateRight = false;
     var speedup = false;
+    var leftSignal = false;
+    var rightSignal = false;
 
     var canJump = false;
 
@@ -118,6 +122,27 @@ var PointerControls = function (camera, cannonBody) {
                 if ( canJump === true ) velocity.y += 350;
                 canJump = false;
                 break;
+            case keys.KEY_Q:
+                if ( leftSignal === true ) {
+                    leftSignal = false;
+                }
+                else {
+                    if(rightSignal) {
+                        rightSignal = false;
+                    }
+                    leftSignal = true;
+                }
+                break;
+            case keys.KEY_E:
+                if ( rightSignal === true )
+                    rightSignal = false;
+                else {
+                    if(leftSignal) {
+                        leftSignal = false;
+                    }
+                    rightSignal = true;
+                }
+            break;
             /** accelerate */
             case keys.KEY_SHIFT:
                 if(!speedup) {
@@ -186,6 +211,19 @@ var PointerControls = function (camera, cannonBody) {
         if(WORLD.detectCollision() !== 0){
             // TODO: Handle collision event
             console.log("collision")
+        }
+
+        if(leftSignal) {
+            $("#left-led").addClass("active");
+        }
+        else {
+            $("#left-led").removeClass("active");
+        }
+        if(rightSignal) {
+            $("#right-led").addClass("active");
+        }
+        else {
+            $("#right-led").removeClass("active");
         }
 
         if (moveForward) {
