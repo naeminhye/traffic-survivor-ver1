@@ -46,9 +46,9 @@ const loadModelToWorld = (model) => {
         object_type,
         direction, 
         textureUrl,
-        infoImg = "./images/info2.png",
+        info = null,
         path,
-        velocity
+        velocity,
     } = model;
     
     let loader;
@@ -88,6 +88,8 @@ const loadModelToWorld = (model) => {
     
             // material.map.minFilter = THREE.LinearFilter;
             var mesh = new THREE.Mesh(geometry, material);
+            mesh.castShadow = castShadow;
+            mesh.receiveShadow = receiveShadow;
             mesh.position.set(0, 3, 0);
             WORLD.scene.add(mesh);
         }, onProgress, onError);
@@ -117,6 +119,8 @@ const loadModelToWorld = (model) => {
                 obj.scale.y = scale.y;
                 obj.scale.z = scale.z;
                 obj.name = name;
+                obj.castShadow = castShadow;
+                obj.receiveShadow = receiveShadow;
                 
                 if(!direction) {
                     var v = new THREE.Vector3();
@@ -126,17 +130,20 @@ const loadModelToWorld = (model) => {
                 var storeObj = {
                     object: obj,
                     direction: direction,
-                    infoImg: infoImg
+                    info: info,
                 }
 
                 if(object_type === "sign") {
                     WORLD.streetSignList.push(storeObj);
                 }
+                else if(object_type === "warning-sign") {
+                    WORLD.warningSignList.push(storeObj);
+                }
                 else if(object_type === "vehicle") {
                     WORLD.vehicle.push(storeObj);
                     if(path) {
                         var control = new CONTROLS.PathControls(obj, path, {"velocity": velocity || 0.02});
-                        control.showPath();
+                        // control.showPath();
                         WORLD.vehicleControls.push(control);
                     }
                 }

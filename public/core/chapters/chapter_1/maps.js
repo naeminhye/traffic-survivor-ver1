@@ -28,12 +28,12 @@ var drawGround = function() {
     var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
-    loadMapFromJSON("./core/chapters/chapter_1/map_info.json", (result) => {
+    readMapInfoFromJson("./core/chapters/chapter_1/map_info.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
     
         /** load pavement and road */
-        var roadMap = getMapFromFile(mapInfo.map_url);
+        var roadMap = readMapFromFile(mapInfo.map_url);
         var mapWidth = roadMap.length;
         var mapHeight = roadMap[0].length;
     
@@ -213,8 +213,8 @@ var drawGround = function() {
             });
         });
 
-        // console.log("test:",findSubMat(roadMap, RESIDENTAL_BUILDING_ID))
-        // findSubMat(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
+        // console.log("test:",findSubMap(roadMap, RESIDENTAL_BUILDING_ID))
+        // findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
         //     /** residental buildings */
         //     var texture = residentTexture;
         //     var buildingMaterial = new THREE.MeshBasicMaterial({
@@ -239,7 +239,7 @@ var drawGround = function() {
         //     }));
         // });
 
-        // findSubMat(roadMap, OFFICE_BUILDING_ID).forEach(function(tile) {
+        // findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function(tile) {
         //     /** residental buildings */
         //     var texture = glassTexture;
         //     var buildingMaterial = new THREE.MeshBasicMaterial({
@@ -470,26 +470,6 @@ WORLD.loadMap = () => {
         //     scale: new THREE.Vector3(.5,.5,.5),
         //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
         // },
-        {
-            name: "nguyhiem", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/warning-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/dicham-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(48, 0, 30),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            infoImg: "./images/info.png",
-            direction: {x: 0, y: 0, z: -1}
-        },
         // {
         //     name: "camretrai", 
         //     loader_type: "object", 

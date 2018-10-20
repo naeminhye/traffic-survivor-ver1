@@ -1,6 +1,6 @@
-/** All maps of chapter 1 */
+/** All maps of chapter Test */
 
-/** Level 1 */
+/** Level Test */
 
 var PAVEMENT_ID = "0";
 var ROAD_POS_Z = "1";
@@ -18,96 +18,44 @@ var INTERSECT_2 = "I2";
 var INTERSECT_3 = "I3";
 var INTERSECT_4 = "I4";
 var INTERSECT_5 = "I5";
+var ZEBRA_CROSSING_TOP = "ZT";
+var ZEBRA_CROSSING_BOTTOM = "ZB";
+var ZEBRA_CROSSING_LEFT = "ZL";
+var ZEBRA_CROSSING_RIGHT = "ZR";
+var PARKING_LOT = "P";
 
 var drawGround = function() {
-    var pavementMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/sidewalk_1.jpg') });
-    pavementMaterial.map.wrapS = pavementMaterial.map.wrapT = THREE.RepeatWrapping;
-    var grassMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/grass.jpg') });
-    var roadPosXMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/roadposx.png') });               
-    var roadPosZMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/roadposz.png') });               
     var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
-    loadMapFromJSON("./core/chapters/chapter_test/chapter_test.json", (result) => {
+    readMapInfoFromJson("./core/chapters/chapter_test/chapter_test.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
+
+        // load player's initial position
+        WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
+        sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
     
         /** load pavement and road */
-        var roadMap = getMapFromFile(mapInfo.map_url);
+        var roadMap = readMapFromFile(mapInfo.map_url);
 
-        findSubMat(roadMap, ROAD_POS_Z).forEach(function(tile) {
-            var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-            var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            roadPosZMaterial.map.wrapS = roadPosZMaterial.map.wrapT = THREE.RepeatWrapping;
-            roadPosZMaterial.map.repeat.set(1, 1);
-            roadPosZMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-            var plane = new THREE.Mesh( 
-                            new THREE.PlaneGeometry(tile.size * UNIT_SIZE, tile.size * UNIT_SIZE), 
-                            roadPosZMaterial 
-                        );
-            plane.position.set(PLANE_X, 0, PLANE_Z)
-            plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-            WORLD.scene.add( plane );
-        });
-
-        findSubMat(roadMap, ROAD_POS_X).forEach(function(tile) {
-            var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-            var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            roadPosXMaterial.map.wrapS = roadPosXMaterial.map.wrapT = THREE.RepeatWrapping;
-            roadPosXMaterial.map.repeat.set(1, 1);
-            roadPosXMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-            var plane = new THREE.Mesh( 
-                            new THREE.PlaneGeometry(tile.size * UNIT_SIZE, tile.size * UNIT_SIZE), 
-                            roadPosXMaterial 
-                        );
-            plane.position.set(PLANE_X, 0, PLANE_Z)
-            plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-            WORLD.scene.add( plane );
-        });
-
-        findSubMat(roadMap, INTERSECT_5).forEach(function(tile) {
-            var texture = WORLD.textureLoader.load("/images/intersect_5.png");
-            var intersectMaterial = new THREE.MeshBasicMaterial({ map: texture });               
-            var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-            var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            intersectMaterial.map.wrapS = intersectMaterial.map.wrapT = THREE.RepeatWrapping;
-            intersectMaterial.map.repeat.set(1, 1);
-            intersectMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-            var plane = new THREE.Mesh( 
-                            new THREE.PlaneGeometry(tile.size * UNIT_SIZE, tile.size * UNIT_SIZE), 
-                            intersectMaterial 
-                        );
-            plane.position.set(PLANE_X, 0, PLANE_Z)
-            plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-            WORLD.scene.add( plane );
-        });
-
-        findSubMat(roadMap, PAVEMENT_ID).forEach(function(tile) {
-            var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-            var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            pavementMaterial.map.wrapS = pavementMaterial.map.wrapT = THREE.RepeatWrapping;
-            pavementMaterial.map.repeat.set(1, 1);
-            var cube = new THREE.Mesh(
-                            new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), 
-                            pavementMaterial
-                        );
-            // Set the cube position
-            cube.position.set(PLANE_X, PAVEMENT_HEIGHT / 2, PLANE_Z);
-
-            // Add the cube
-            WORLD.scene.add(cube);
-            WORLD.world.addBody(createBoxBody(cube, function(object) {
-                if(object.body.id == 0) 
-                    toastr.error("You're in the PAVEMENT!!! Please go back to the road.");
-            }));
-
-        });
-
-        findSubMat(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
+        loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true);
+        loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true);
+        
+        
+        findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
             /** residental buildings */
             var texture = residentTexture;
             var buildingMaterial = new THREE.MeshBasicMaterial({
@@ -123,7 +71,7 @@ var drawGround = function() {
     
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE + PAVEMENT_HEIGHT, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
             WORLD.world.addBody(createBoxBody(cube, function(object) {
@@ -132,85 +80,284 @@ var drawGround = function() {
             }));
         });
 
+        findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function(tile) {
+            /** residental buildings */
+            var texture = glassTexture;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set( UNIT_SIZE, 1 );
+
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
+    
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+            // Add the cube
+            WORLD.scene.add(cube);
+            WORLD.world.addBody(createBoxBody(cube, function(object) {
+                if(object.body.id == 0) 
+                    console.log("Player collided with walls.");
+            }));
+        });
     })
+}
+
+/**
+ * 
+ * @param {*} id // ID of each texture type
+ * @param {*} url // Texture url
+ * @param {*} map 
+ */
+const loadTextureToGround = ( id, url, map, unit_size, isMultiple, callback ) => {
+    findSubMap(map, id).forEach(function(tile) {
+        var PLANE_X = ((2 * tile.x + tile.size - 1) * unit_size ) / 2;
+        var PLANE_Z = ((2 * tile.z + tile.size - 1) * unit_size) / 2;
+        var material = new THREE.MeshBasicMaterial({ 
+                            map: WORLD.textureLoader.load(url) 
+                        });               
+        material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
+        if(isMultiple) {
+            material.map.repeat.set(tile.size, tile.size);
+        }
+        else {
+            material.map.repeat.set(1, 1);
+        }
+        material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+        var plane = new THREE.Mesh( 
+                        new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size), 
+                        material 
+                    );
+        plane.position.set(PLANE_X, 0, PLANE_Z)
+        plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+        WORLD.scene.add( plane );
+
+        if(callback) {
+            WORLD.world.addBody(createBoxBody(plane, callback));
+        }
+    });
 }
 
 function loadModels() {
 
     var models = [
-        // {
-        //     name: "car",
-        //     loader_type: "object",
-        //     object_type: "vehicle",
-        //     url: "./models/json/volkeswagon-vw-beetle.json",
-        //     position: new THREE.Vector3(48, 0, 30),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.005, .005, 0.005),
-        //     animate: true,
-        //     path: new THREE.CatmullRomCurve3([
-        //         new THREE.Vector3(150, 0, 10),
-        //         new THREE.Vector3(150, 0, 14),
-        //         new THREE.Vector3(150, 0, 16),
-        //         new THREE.Vector3(150, 0, 18),
-        //         new THREE.Vector3(150, 0, 22),
-        //         new THREE.Vector3(151, 0, 25),
-        //         new THREE.Vector3(151, 0, 27),
-        //         new THREE.Vector3(151, 0, 30),
-        //         new THREE.Vector3(152, 0, 32),
-        //         new THREE.Vector3(152, 0, 36),
-        //         new THREE.Vector3(152, 0, 39),
-        //         new THREE.Vector3(152, 0, 43),
-        //         new THREE.Vector3(152, 0, 46),
-        //         new THREE.Vector3(152, 0, 48),
-        //         new THREE.Vector3(152, 0, 50),
-        //         new THREE.Vector3(152, 0, 54),
-        //         new THREE.Vector3(152, 0, 57),
-        //         new THREE.Vector3(158, 0, 67),
-        //         new THREE.Vector3(160, 0, 67),
-        //         new THREE.Vector3(162, 0, 67),
-        //         new THREE.Vector3(164, 0, 67),
-        //         new THREE.Vector3(168, 0, 67),
-        //         new THREE.Vector3(172, 0, 67),
-        //         new THREE.Vector3(180, 0, 67),
-        //         new THREE.Vector3(232, 0, 67)]),
-        //     velocity: 0.01
-        // },
         {
-            name: "bus_2", 
+            name: "bus", 
             loader_type: "gltf", 
             object_type: "vehicle",
             scale: new THREE.Vector3(.2,.2,.2),
-            position: new THREE.Vector3(48, 0, 30),
+            position: new THREE.Vector3(32 * 5, 0, 0 * 5),
             url: "./models/gltf/bus/scene.gltf",
             animate: false,
+            castShadow: true,
+            receiveShadow: true,
             path: new THREE.CatmullRomCurve3([
-                new THREE.Vector3(150, 0, 10),
-                new THREE.Vector3(150, 0, 14),
-                new THREE.Vector3(150, 0, 16),
-                new THREE.Vector3(150, 0, 18),
-                new THREE.Vector3(150, 0, 22),
-                new THREE.Vector3(151, 0, 25),
-                new THREE.Vector3(151, 0, 27),
-                new THREE.Vector3(151, 0, 30),
-                new THREE.Vector3(152, 0, 32),
-                new THREE.Vector3(152, 0, 36),
-                new THREE.Vector3(152, 0, 39),
-                new THREE.Vector3(152, 0, 43),
-                new THREE.Vector3(152, 0, 46),
-                new THREE.Vector3(152, 0, 48),
-                new THREE.Vector3(152, 0, 50),
-                new THREE.Vector3(152, 0, 54),
-                new THREE.Vector3(152, 0, 57),
-                new THREE.Vector3(158, 0, 67),
-                new THREE.Vector3(160, 0, 67),
-                new THREE.Vector3(162, 0, 67),
-                new THREE.Vector3(164, 0, 67),
-                new THREE.Vector3(168, 0, 67),
-                new THREE.Vector3(172, 0, 67),
-                new THREE.Vector3(180, 0, 67),
-                new THREE.Vector3(232, 0, 67)]),
+                new THREE.Vector3(32 * 5, 0, 0 * 5),
+                new THREE.Vector3(32 * 5, 0, 66 * 5)
+            ]),
             velocity: 0.01
-        }
+        },
+        {
+            name: "bus2", 
+            loader_type: "gltf", 
+            object_type: "vehicle",
+            scale: new THREE.Vector3(.2,.2,.2),
+            position: new THREE.Vector3(33 * 5, 0, 66 * 5),
+            url: "./models/gltf/bus/scene.gltf",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(33 * 5, 0, 66 * 5),
+                new THREE.Vector3(33 * 5, 0, 0 * 5)
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "bus3", 
+            loader_type: "gltf", 
+            object_type: "vehicle",
+            scale: new THREE.Vector3(.2,.2,.2),
+            position: new THREE.Vector3(66 * 5, 0, 8 * 5),
+            url: "./models/gltf/bus/scene.gltf",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(66 * 5, 0, 8 * 5),
+                new THREE.Vector3(0 * 5, 0, 8 * 5)
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "traffic-light-20-7",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(20 * 5, 0, 7 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-17-10",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(17 * 5, 0, 10 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-20-10",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(20 * 5, 0, 10 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+		{
+            name: "traffic-light-31-7",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(31 * 5, 0, 7 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-7",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(34 * 5, 0, 7 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-10",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(31 * 5, 0, 10 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-10",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(34 * 5, 0, 10 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+		{
+            name: "traffic-light-31-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(31 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(34 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(31 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light/traffic-light.fbx",
+            position: new THREE.Vector3(34 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.05,.05,.05),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "bien-bao-duong-khong-uu-tien", 
+            loader_type: "object", 
+            object_type: "warning-sign",
+            url: "./models/signs/warning-sign.json",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/khonguutien2-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(15 * 5, 0, 10 * 5),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            direction: {x: 1, y: 0, z: 1},
+            info: "Biển báo: Giao nhau với đường không ưu tiên!"
+        },
+        {
+            name: "bien-bao-duong-uu-tien", 
+            loader_type: "object", 
+            object_type: "warning-sign",
+            url: "./models/signs/priority-warning-sign.json",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/uutien-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(28 * 5, 0, 10 * 5),
+            scale: new THREE.Vector3(.3,.3,.3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            direction: {x: 1, y: 0, z: 0},
+            info: "Biển báo: Giao nhau với đường ưu tiên!"
+        },
     ];
 
     // add models to the world
@@ -220,9 +367,9 @@ function loadModels() {
 WORLD.loadMap = () => {
     drawGround();
 
-    // loadModels();
+    loadModels();
 
-    WORLD.player.position.set(50, 1.3 , 110);
-    sphereBody.position.set(50, 1.3 , 110);
+    // WORLD.player.position.set(50, 1.3 , 110);
+    // sphereBody.position.set(50, 1.3 , 110);
     WORLD.player.rotateY(- Math.PI / 2);
 }

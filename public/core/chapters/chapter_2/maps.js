@@ -28,16 +28,17 @@ var drawGround = function() {
     var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
-    loadMapFromJSON("./core/chapters/chapter_2/chapter_2.json", (result) => {
+    readMapInfoFromJson("./core/chapters/chapter_2/chapter_2.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
+        // load player position
         WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y , mapInfo.player.position.z);
     
         /** load pavement and road */
-        var roadMap = getMapFromFile(mapInfo.map_url);
+        var roadMap = readMapFromFile(mapInfo.map_url);
 
-        findSubMat(roadMap, ROAD_POS_Z).forEach(function(tile) {
+        findSubMap(roadMap, ROAD_POS_Z).forEach(function(tile) {
             var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
             var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
@@ -53,7 +54,7 @@ var drawGround = function() {
             WORLD.scene.add( plane );
         });
 
-        findSubMat(roadMap, ROAD_POS_X).forEach(function(tile) {
+        findSubMap(roadMap, ROAD_POS_X).forEach(function(tile) {
             var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
             var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
@@ -69,7 +70,7 @@ var drawGround = function() {
             WORLD.scene.add( plane );
         });
 
-        findSubMat(roadMap, INTERSECT_5).forEach(function(tile) {
+        findSubMap(roadMap, INTERSECT_5).forEach(function(tile) {
             var texture = WORLD.textureLoader.load("/images/intersect_5.png");
             var intersectMaterial = new THREE.MeshBasicMaterial({ map: texture });               
             var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
@@ -87,7 +88,7 @@ var drawGround = function() {
             WORLD.scene.add( plane );
         });
 
-        findSubMat(roadMap, PAVEMENT_ID).forEach(function(tile) {
+        findSubMap(roadMap, PAVEMENT_ID).forEach(function(tile) {
             var PLANE_X = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
             var PLANE_Z = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
@@ -109,7 +110,7 @@ var drawGround = function() {
 
         });
 
-        findSubMat(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
+        findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
             /** residental buildings */
             var texture = residentTexture;
             var buildingMaterial = new THREE.MeshBasicMaterial({

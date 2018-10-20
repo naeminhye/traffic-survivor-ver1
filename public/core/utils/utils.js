@@ -246,7 +246,7 @@ var createLoader = (function () {
 
 })();
 
-var getMapFromFile = (file) => {
+var readMapFromFile = (file) => {
     var map = [];
 
     var rawFile = new XMLHttpRequest();
@@ -273,7 +273,7 @@ var getMapFromFile = (file) => {
     return map;
 }
 
-const loadMapFromJSON = (path, callback) => {
+const readMapInfoFromJson = (path, callback) => {
 
     var xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json");
@@ -344,7 +344,7 @@ var map = [
     [1, 1, 1, 2, 2]
 ];
 
-function findSubMat(mat, target) {
+function findSubMap(mat, target) {
 	var results = [];
     var n = mat.length;
   
@@ -420,3 +420,16 @@ function startSignal(counter, dir){
       }, 750);
     }
   }
+
+function loadCubemap(path, format) {
+    var urls = [
+      path + 'px' + '.' + format, path + 'nx' + '.' + format,
+      path + 'py' + '.' + format, path + 'ny' + '.' + format,
+      path + 'pz' + '.' + format, path + 'nz' + '.' + format
+    ];
+    var loader = new THREE.CubeTextureLoader();
+    loader.setCrossOrigin('');
+    var cubeMap = loader.load(urls);
+    cubeMap.format = THREE.RGBFormat;
+    return cubeMap;
+}

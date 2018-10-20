@@ -20,6 +20,7 @@ const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
 WORLD.streetSignList = [];
+WORLD.warningSignList = [];
 WORLD.vehicle = [];
 var initialPosition;
 var infoBoxToggle = false; 
@@ -159,7 +160,9 @@ WORLD.init = function () {
     // WORLD.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
 
     WORLD.scene = new THREE.Scene();
-    WORLD.scene.background = new THREE.Color(0xcce0ff);
+    // WORLD.scene.background = new THREE.Color(0xcce0ff);
+	var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
+    WORLD.scene.background = cubeMap;
     WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
 
     var ambient = new THREE.AmbientLight(0x111111);
@@ -330,7 +333,7 @@ function checkDistance() {
             var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
             var angleDelta = signAngle - playerAngle;
             if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-                $("#infoBox").find("img").attr("src", sign.infoImg);
+                //$("#infoBox").find("img").attr("src", sign.infoImg);
                 // $("#infoBox").dialog("open");
 
                 // $("#signDetail").find("img").attr("src", sign.infoImg);
@@ -339,6 +342,29 @@ function checkDistance() {
 
         } 
 
+    });
+
+    WORLD.warningSignList.forEach((sign) => {
+        
+        if (sign.object.position.distanceTo(WORLD.player.position) < 10) {
+
+            var v = new THREE.Vector3();
+            var playerVector = WORLD.player.getWorldDirection(v);
+            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
+            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var angleDelta = signAngle - playerAngle;
+            if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+                if(sign.info) {
+                    $("#message").text(sign.info);
+
+                }
+                // $("#infoBox").find("img").attr("src", sign.infoImg);
+
+                // $("#signDetail").find("img").attr("src", sign.infoImg);
+                // $("#signDetail").css("display", "block")
+            }
+        } 
     });
     
     if(WORLD.dangerZones) {
