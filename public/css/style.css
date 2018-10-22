@@ -165,9 +165,6 @@ hr {
     border-width: 0;
     cursor: pointer;
 }
-#message {
-    color: #fff;
-}
 #blocker {
     position: absolute;
     width: 100%;

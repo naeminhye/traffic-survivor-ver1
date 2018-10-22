@@ -334,7 +334,7 @@ function loadModels() {
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
             direction: {x: 1, y: 0, z: 1},
-            info: "Biển báo: Giao nhau với đường không ưu tiên!"
+            info: "Danger Warning Sign: Intersection with minor road"
         },
         {
             name: "bien-bao-duong-uu-tien", 
@@ -356,7 +356,7 @@ function loadModels() {
             scale: new THREE.Vector3(.3,.3,.3),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
             direction: {x: 1, y: 0, z: 0},
-            info: "Biển báo: Giao nhau với đường ưu tiên!"
+            info: "Danger Warning Sign: Priority road!"
         },
     ];
 

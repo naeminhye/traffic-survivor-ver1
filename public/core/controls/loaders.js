@@ -149,7 +149,7 @@ const loadModelToWorld = (model) => {
                 }
 
                 var sprite = makeTextSprite("Object: " + obj.name, {
-                    fontsize: 24,
+                    fontsize: 10,
                     borderColor: { r: 255, g: 0, b: 0, a: 1.0 },
                     backgroundColor: { r: 255, g: 100, b: 100, a: 0.8 }
                 });

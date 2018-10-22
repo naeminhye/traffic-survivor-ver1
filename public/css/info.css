@@ -42,14 +42,26 @@
 }
 
 .info {
+    width: 100%;
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    padding: 20px;
-    background-color: rgba(255,255,255,0.1);
+    top: 15px;
+    left: 0;
+    /* background-color: rgba(255,255,255,0.1); */
 }
-.info > span {
-    font-weight: 600;
+
+#message {
+    display: none;
+}
+
+#message.warning-message {
+    margin: 0 auto;
+    padding: 20px;
+    width: 50%;
     font-size: 20px;
-    color: #ffffff;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    color: orange;
+    background-color: #AA0000;
+    box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.4);
+    border: 3px solid rgba(120, 0, 0, 1);
 }

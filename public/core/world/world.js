@@ -25,6 +25,7 @@ WORLD.vehicle = [];
 var initialPosition;
 var infoBoxToggle = false; 
 WORLD.loaded = false;
+WORLD.warningFlag = false;
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -218,34 +219,35 @@ function onWindowResize() {
 
 var dt = 1 / 60;
 WORLD.animate = function () {
+    WORLD.warningFlag = false;
     requestAnimationFrame(WORLD.animate);
     if (WORLD.controls.enabled) {
 
         WORLD.world.step(dt);
+
+        if(WORLD.vehicleControls.length > 0) {
+            WORLD.vehicleControls.forEach(function(control) {
+                control.update(Date.now() - time);
+            });
+        }
     }
-    
+
     WORLD.controls.update(Date.now() - time);
     animateVehicle();
-
-    if(WORLD.vehicleControls.length > 0) {
-        WORLD.vehicleControls.forEach(function(control) {
-            control.update(Date.now() - time);
-        });
-    }
     
     checkDistance();
+    if(!WORLD.warningFlag) {
+        $("#message").css("display", "none");
+    }
 
-    // var windStrength = Math.cos(time / 7000) * 20 + 40;
-    // windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000))
-    // windForce.normalize()
-    // windForce.multiplyScalar(windStrength);
+    $("#speed").text(WORLD.playerSpeed);
+    WORLD.renderer.render(WORLD.scene, WORLD.camera);
+    time = Date.now();
+
 
     // $("#message").text(compass(WORLD.camera.getWorldDirection(new THREE.Vector3(0, 0, 0))));
     // $("#message").text("Delta: " + (Date.now() - time));
     // WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
-    $("#speed").text(WORLD.playerSpeed);
-    WORLD.renderer.render(WORLD.scene, WORLD.camera);
-    time = Date.now();
 
 }
 
@@ -354,17 +356,16 @@ function checkDistance() {
             var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
             var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
             var angleDelta = signAngle - playerAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
+                // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
                 if(sign.info) {
                     $("#message").text(sign.info);
-
+                    $("#message").css("display", "block");
                 }
-                // $("#infoBox").find("img").attr("src", sign.infoImg);
-
-                // $("#signDetail").find("img").attr("src", sign.infoImg);
-                // $("#signDetail").css("display", "block")
+                WORLD.warningFlag = true;
             }
         } 
+
     });
     
     if(WORLD.dangerZones) {
