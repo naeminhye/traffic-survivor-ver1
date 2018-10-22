@@ -365,7 +365,6 @@ function checkDistance() {
                 WORLD.warningFlag = true;
             }
         } 
-
     });
     
     if(WORLD.dangerZones) {
@@ -392,7 +391,6 @@ function checkDistance() {
         });
     }
 }
-
 
 var spline = new THREE.SplineCurve3([
     new THREE.Vector3(40, 0, 30),
