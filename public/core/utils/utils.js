@@ -307,7 +307,7 @@ function createBoxBody(object, callback) {
     // against each other
     boxBody.collisionResponse = true;
     boxBody.addEventListener('collide', callback);
-    //WORLD.world.addBody(boxBody);
+    //WORLD.world.add(boxBody);
 
     return boxBody;
 }

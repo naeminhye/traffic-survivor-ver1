@@ -117,7 +117,7 @@ WORLD.initCannon = function () {
     WORLD.world.defaultContactMaterial.contactEquationStiffness = 1e9;
     WORLD.world.defaultContactMaterial.contactEquationRelaxation = 4;
 
-    solver.iterations = 7;
+    solver.iterations = 10;
     solver.tolerance = 0.1;
     var split = true;
     if (split)
@@ -125,7 +125,7 @@ WORLD.initCannon = function () {
     else
         WORLD.world.solver = solver;
 
-    WORLD.world.gravity.set(0, -20, 0);
+    WORLD.world.gravity.set(0, -9.82, 0);
     WORLD.world.broadphase = new CANNON.NaiveBroadphase();
 
     // Create a slippery material (friction coefficient = 0.0)
@@ -201,6 +201,8 @@ WORLD.init = function () {
     WORLD.loadMap();
 
     WORLD.renderer = new THREE.WebGLRenderer({ antialias: true });
+    WORLD.renderer.gammaFactor = 2.2;
+    WORLD.renderer.gammaOutput = true;
     WORLD.renderer.shadowMap.enabled = true;
     WORLD.renderer.shadowMapSoft = true;
     WORLD.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -233,7 +235,6 @@ WORLD.animate = function () {
     }
 
     WORLD.controls.update(Date.now() - time);
-    animateVehicle();
     
     checkDistance();
     if(!WORLD.warningFlag) {
@@ -241,6 +242,7 @@ WORLD.animate = function () {
     }
 
     $("#speed").text(WORLD.playerSpeed);
+    // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
@@ -390,31 +392,4 @@ function checkDistance() {
             }
         });
     }
-}
-
-var spline = new THREE.SplineCurve3([
-    new THREE.Vector3(40, 0, 30),
-    new THREE.Vector3(60, 0, 30),
-    new THREE.Vector3(80, 0, 30),
-    new THREE.Vector3(100, 0, 30),
-    new THREE.Vector3(120, 0, 30)]);
-var pos = 0;
-function animateVehicle() {
-    // var bus_2;
-    // if(WORLD.scene.getObjectByName("bus_2")) {
-    //     bus_2 = WORLD.scene.getObjectByName('bus_2');
-    //     if (pos <= 1) {
-    //         bus_2.position.x = spline.getPointAt(pos).x;
-    //         bus_2.position.z = spline.getPointAt(pos).z;
-    //         bus_2.position.y = spline.getPointAt(pos).y;
-    //         pos += 0.001
-    //     } else {
-    //         pos = 0; 
-    //     }
-    // }
-    // WORLD.scene.getObjectByName("bus_2") ? WORLD.scene.getObjectByName("bus_2").position.x += 0.1 : null;
-    // WORLD.scene.getObjectByName("bus") ? WORLD.scene.getObjectByName("bus").position.z += 0.2 : null;
-    // WORLD.scene.getObjectByName("car") ? WORLD.scene.getObjectByName("car").position.z -= 0.2 : null;
-    // WORLD.scene.getObjectByName("car2") ? WORLD.scene.getObjectByName("car2").position.z += 0.2 : null;
-
 }

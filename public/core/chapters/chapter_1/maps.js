@@ -53,7 +53,7 @@ var drawGround = function() {
 
                     // Add the cube
                     WORLD.scene.add(cube);
-                    WORLD.world.addBody(createBoxBody(cube, function(object) {
+                    WORLD.world.add(createBoxBody(cube, function(object) {
                         if(object.body.id == 0) 
                             toastr.error("You're in the PAVEMENT!!! Please go back to the road.");
                     }));
@@ -71,7 +71,7 @@ var drawGround = function() {
 
                     // Add the cube
                     WORLD.scene.add(cube);
-                    WORLD.world.addBody(createBoxBody(cube, function(object) {
+                    WORLD.world.add(createBoxBody(cube, function(object) {
                         if(object.body.id == 0) 
                             toastr.error("You're in the GRASS!!! Please go back to the road.");
                     }));
@@ -155,7 +155,7 @@ var drawGround = function() {
                     plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
                     plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i);
                     WORLD.scene.add( plane );
-                    WORLD.world.addBody(createBoxBody(plane, function(object) {
+                    WORLD.world.add(createBoxBody(plane, function(object) {
                         // if(object.body.id == 0) 
                             // toastr.error("Intersection");
                     }));
@@ -205,7 +205,7 @@ var drawGround = function() {
                     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
                     // Add the cube
                     WORLD.scene.add(cube);
-                    WORLD.world.addBody(createBoxBody(cube, function(object) {
+                    WORLD.world.add(createBoxBody(cube, function(object) {
                         if(object.body.id == 0) 
                             console.log("Player collided with walls.");
                     }));
@@ -233,7 +233,7 @@ var drawGround = function() {
         //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
         //     // Add the cube
         //     WORLD.scene.add(cube);
-        //     WORLD.world.addBody(createBoxBody(cube, function(object) {
+        //     WORLD.world.add(createBoxBody(cube, function(object) {
         //         if(object.body.id == 0) 
         //             console.log("Player collided with walls.");
         //     }));
@@ -258,7 +258,7 @@ var drawGround = function() {
         //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
         //     // Add the cube
         //     WORLD.scene.add(cube);
-        //     WORLD.world.addBody(createBoxBody(cube, function(object) {
+        //     WORLD.world.add(createBoxBody(cube, function(object) {
         //         if(object.body.id == 0) 
         //             console.log("Player collided with walls.");
         //     }));

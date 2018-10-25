@@ -159,8 +159,7 @@ const loadModelToWorld = (model) => {
                 // WORLD.scene.add( sprite );
 
                 WORLD.scene.add( obj );
-
-                // WORLD.world.addBody(objectToBody(obj));
+                // WORLD.world.add(objectToBody(obj));
 
                 var helper = new THREE.BoxHelper(obj, 0xff0000);
                 helper.update();
@@ -176,7 +175,7 @@ const loadModelToWorld = (model) => {
                     (bbox.max.y - bbox.min.y) / 2,
                     (bbox.max.z - bbox.min.z) / 2
                 ));
-                var boxBody = new CANNON.Body({ mass: 5 });
+                var boxBody = new CANNON.Body({ mass: 1 });
                 boxBody.addShape(shape);
                 boxBody.position.copy(helper.position);
                 boxBody.useQuaternion = true;
@@ -189,7 +188,9 @@ const loadModelToWorld = (model) => {
                     if(object.body.id == 0) 
                         console.log("Player collided with object.");
                 });
-                // WORLD.world.addBody(boxBody);
+                boxBody.angularVelocity.set(0, 0, 3.5);
+                boxBody.angularDamping = 0.1;
+                WORLD.world.add(boxBody);
 
                 obj.traverse((child) => {
 
