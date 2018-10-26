@@ -91,6 +91,7 @@ const loadModelToWorld = (model) => {
             mesh.castShadow = castShadow;
             mesh.receiveShadow = receiveShadow;
             mesh.position.set(0, 3, 0);
+            mesh.material.side = THREE.DoubleSide;
             WORLD.scene.add(mesh);
         }, onProgress, onError);
     }
@@ -206,7 +207,8 @@ const loadModelToWorld = (model) => {
                             // }
                             // else {
                                 var material = new THREE.MeshBasicMaterial({
-                                    map: texture
+                                    map: texture,
+                                    side: THREE.DoubleSide
                                 });  
                                 material.map.minFilter = THREE.LinearFilter;
                                 child.material = material;
@@ -220,7 +222,8 @@ const loadModelToWorld = (model) => {
                                     var texture = new THREE.TextureLoader().load(childTexture);
                                     // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
                                     var material = new THREE.MeshBasicMaterial({
-                                        map: texture
+                                        map: texture,
+                                        side: THREE.DoubleSide
                                     });  
                                     material.map.minFilter = THREE.LinearFilter;
                                     child.material = material;
