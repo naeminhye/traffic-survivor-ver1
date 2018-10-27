@@ -39,7 +39,7 @@ const loadModelToWorld = (model) => {
         rotation = new THREE.Euler(0, 0, 0, 'XYZ' ), 
         scale = new THREE.Vector3(1, 1, 1), 
         name = "Unknown Model",
-        animate = false,
+        animation = null,
         castShadow = false,
         receiveShadow = false,
         children,
@@ -103,12 +103,12 @@ const loadModelToWorld = (model) => {
                     obj = obj.scene;
                 }
                 
-                if(animate) {
-                    // model is a THREE.Group (THREE.Object3D)                              
-                    const mixer = new THREE.AnimationMixer(obj);
-                    // animations is a list of THREE.AnimationClip                          
-                    mixer.clipAction(obj.animations[0]).play();
-                }
+                // if(animate) {
+                //     // model is a THREE.Group (THREE.Object3D)                              
+                //     const mixer = new THREE.AnimationMixer(obj);
+                //     // animations is a list of THREE.AnimationClip                          
+                //     mixer.clipAction(obj.animations[0]).play();
+                // }
                 // Add the loaded object to the scene
                 obj.rotation.x = rotation.x; 
                 obj.rotation.y = rotation.y; 
@@ -131,8 +131,8 @@ const loadModelToWorld = (model) => {
                 var storeObj = {
                     object: obj,
                     direction: direction,
-                    info: info,
-                }
+                    info: info
+                };
 
                 if(object_type === "sign") {
                     WORLD.streetSignList.push(storeObj);
@@ -147,6 +147,35 @@ const loadModelToWorld = (model) => {
                         // control.showPath();
                         WORLD.vehicleControls.push(control);
                     }
+                }
+                else if(object_type === "traffic_light") {
+
+                    storeObj.animation = {
+                        type: "skinned",
+                        status: [
+                            {
+                                status_name: "YELLOWLIGHT",
+                                texture: "./models/fbx/traffic-light-2/yellowlight-uvmap.png",
+                                duration: 300,
+                                action: "slowdown"
+                            },
+                            {
+                                status_name: "REDLIGHT",
+                                texture: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+                                duration: 1300,
+                                action: "stop"
+                            },
+                            {
+                                status_name: "GREENLIGHT",
+                                texture: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+                                duration: 1000,
+                                action: "stop"
+                            }
+                        ]
+                    }
+                    storeObj.ticker = 0;
+                    
+                    WORLD.trafficLightList.push(storeObj);
                 }
 
                 var sprite = makeTextSprite("Object: " + obj.name, {
@@ -259,4 +288,36 @@ const loadModelToWorld = (model) => {
             }, onProgress, onError
         );
     }
+}
+
+var updateSkinnedAnimation = (storedObject) => {
+    if(storedObject.animation) {
+
+        var ticker = storedObject.ticker;
+
+        // change skin
+        // find current skin
+        var currentFile = storedObject.object.children[0].material.map.image.currentSrc.substring(storedObject.object.children[0].material.map.image.currentSrc.lastIndexOf('/')+1);
+        
+        var nextIndex = 0;
+        var duration = 0;
+        storedObject.animation.status.forEach((stt, index) => {
+            if(stt.texture.substring(stt.texture.lastIndexOf('/')+1) === currentFile) {
+                duration = stt.duration;
+                if(ticker === duration) {
+                    nextIndex = (index === (storedObject.animation.status.length - 1)) ? 0 : (index + 1);
+                    storedObject.object.children[0].material.map = WORLD.textureLoader.load(storedObject.animation.status[nextIndex].texture);
+                    duration = storedObject.animation.status[nextIndex].duration;
+                    ticker = 0;
+                }
+                else {
+                    duration = storedObject.animation.status[index].duration;
+                    ticker = ticker + 1;
+                }
+    
+            }
+        })
+        storedObject.ticker = ticker; 
+    }
+
 }

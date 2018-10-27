@@ -21,6 +21,7 @@ var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
 WORLD.streetSignList = [];
 WORLD.warningSignList = [];
+WORLD.trafficLightList = [];
 WORLD.vehicle = [];
 var initialPosition;
 var infoBoxToggle = false; 
@@ -229,9 +230,19 @@ WORLD.animate = function () {
 
         if(WORLD.vehicleControls.length > 0) {
             WORLD.vehicleControls.forEach(function(control) {
+                // moving vehicles
                 control.update(Date.now() - time);
             });
         }
+
+        if(WORLD.trafficLightList.length > 0) {
+            WORLD.trafficLightList.forEach(function(light) {
+                // moving vehicles
+                updateSkinnedAnimation(light);
+            });
+        }
+
+            
     }
 
     WORLD.controls.update(Date.now() - time);
