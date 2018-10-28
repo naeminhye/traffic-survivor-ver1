@@ -287,7 +287,7 @@ const readMapInfoFromJson = (path, callback) => {
 }
 
 function createBoxBody(object, callback) {
-
+    WORLD.scene.add(object);
     // Used later for collision detection
     var bbox = new THREE.Box3().setFromObject(object);
     WORLD.collidableObjects.push(bbox);
@@ -307,7 +307,9 @@ function createBoxBody(object, callback) {
     // against each other
     boxBody.collisionResponse = true;
     boxBody.addEventListener('collide', callback);
-    //WORLD.world.add(boxBody);
+
+    boxBody.angularVelocity.set(0, 0, 3.5);
+    boxBody.angularDamping = 0.1;
 
     return boxBody;
 }

@@ -1,6 +1,6 @@
-/** All maps of chapter Test */
+/** All maps of chapter 2 */
 
-/** Level Test */
+/** Level 2 */
 
 var PAVEMENT_ID = "0";
 var ROAD_POS_Z = "1";
@@ -145,68 +145,135 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, callback) => {
 function loadModels() {
 
     var models = [
-        // {
-        //     name: "simple-car",
-        //     loader_type: "fbx",
-        //     object_type: "vehicle",
-        //     // scale: new THREE.Vector3(.8, .8, .8),
-        //     position: new THREE.Vector3(32 * 5, 1, 0 * 5),
-        //     rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
-        //     url: "./models/fbx/simple-car/simple-car.fbx",
-        //     textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
-        //     animate: false,
-        //     castShadow: true,
-        //     receiveShadow: true,
-        //     path: new THREE.CatmullRomCurve3([
-        //         new THREE.Vector3(32 * 5, 0, 0 * 5),
-        //         new THREE.Vector3(32 * 5, 0, 66 * 5)
-        //     ]),
-        //     velocity: 0.01
-        // },
+        // vehicles
         {
-            name: "mobile_diner",
-            loader_type: "gltf",
+            name: "simple-car",
+            loader_type: "fbx",
             object_type: "vehicle",
-            position: new THREE.Vector3(32 * 5, 0, 1 * 5),
-            url: "./models/gltf/trucks/mobile_diner/scene.gltf",
-            animate: false,
-            castShadow: true,
-            receiveShadow: true,
-            // path: new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(32 * 5, 0, 0 * 5),
-            //     new THREE.Vector3(32 * 5, 0, 66 * 5)
-            // ]),
-            // velocity: 0.01
-        },
-        {
-            name: "bus2",
-            loader_type: "gltf",
-            object_type: "vehicle",
-            scale: new THREE.Vector3(.2, .2, .2),
-            position: new THREE.Vector3(33 * 5, 0, 66 * 5),
-            url: "./models/gltf/bus/scene.gltf",
+            position: new THREE.Vector3(32 * 5, 1.3, 0 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
             animate: false,
             castShadow: true,
             receiveShadow: true,
             path: new THREE.CatmullRomCurve3([
-                new THREE.Vector3(33 * 5, 0, 66 * 5),
-                new THREE.Vector3(33 * 5, 0, 0 * 5)
+                new THREE.Vector3(32 * 5, 1.3, 0 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 66 * 5)
             ]),
             velocity: 0.01
         },
         {
-            name: "bus3",
-            loader_type: "gltf",
+            name: "simple-car2",
+            loader_type: "fbx",
             object_type: "vehicle",
-            scale: new THREE.Vector3(.2, .2, .2),
-            position: new THREE.Vector3(66 * 5, 0, 8 * 5),
-            url: "./models/gltf/bus/scene.gltf",
-            animate: false,
+            position: new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
             castShadow: true,
             receiveShadow: true,
             path: new THREE.CatmullRomCurve3([
-                new THREE.Vector3(66 * 5, 0, 8 * 5),
-                new THREE.Vector3(0 * 5, 0, 8 * 5)
+                new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 45 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(55 * 5, 1.3, 46 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car2",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 45 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(55 * 5, 1.3, 46 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car3",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(65 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(65 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(33 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 33 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(31 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 62 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car4",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(20 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(45 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 45 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car5",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(20 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(45 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 45 * 5),
             ]),
             velocity: 0.01
         },
@@ -235,6 +302,7 @@ function loadModels() {
             scale: new THREE.Vector3(.4, .4, .4),
             castShadow: true,
             receiveShadow: true,
+            direction: { x: 1, y: 0, z: 1 },
         },
         {
             name: "traffic-light-31-10",

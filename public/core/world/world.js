@@ -379,6 +379,25 @@ function checkDistance() {
             }
         } 
     });
+
+    WORLD.trafficLightList.forEach((sign) => {
+        
+        if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
+
+            var v = new THREE.Vector3();
+            var playerVector = WORLD.player.getWorldDirection(v);
+            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
+            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var angleDelta = signAngle - playerAngle;
+            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && sign.currentStatus === "REDLIGHT") {
+                // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
+                if(sign.info) {
+                    toastr.error("Red light!");
+                }
+            }
+        } 
+    });
     
     if(WORLD.dangerZones) {
         WORLD.dangerZones.forEach(function(child) {

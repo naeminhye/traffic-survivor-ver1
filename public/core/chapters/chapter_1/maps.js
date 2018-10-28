@@ -1,6 +1,3 @@
-/** All maps of chapter 1 */
-
-/** Level 1 */
 
 var PAVEMENT_ID = "0";
 var ROAD_POS_Z = "1";
@@ -18,254 +15,94 @@ var INTERSECT_2 = "I2";
 var INTERSECT_3 = "I3";
 var INTERSECT_4 = "I4";
 var INTERSECT_5 = "I5";
+var ZEBRA_CROSSING_TOP = "ZT";
+var ZEBRA_CROSSING_BOTTOM = "ZB";
+var ZEBRA_CROSSING_LEFT = "ZL";
+var ZEBRA_CROSSING_RIGHT = "ZR";
+var PARKING_LOT = "P";
 
-var drawGround = function() {
-    var pavementMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/sidewalk_1.jpg') });
-    pavementMaterial.map.wrapS = pavementMaterial.map.wrapT = THREE.RepeatWrapping;
-    var grassMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/grass.jpg') });
-    var roadPosXMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/roadposx.png') });               
-    var roadPosZMaterial = new THREE.MeshBasicMaterial({ map: WORLD.textureLoader.load('./images/roadposz.png') });               
+var drawGround = function () {
     var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
-    readMapInfoFromJson("./core/chapters/chapter_1/map_info.json", (result) => {
+    readMapInfoFromJson("./core/chapters/chapter_1/chapter_1.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
-    
+
+        // load player's initial position
+        WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
+        sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
+
         /** load pavement and road */
         var roadMap = readMapFromFile(mapInfo.map_url);
-        var mapWidth = roadMap.length;
-        var mapHeight = roadMap[0].length;
-    
-        // THIN LINES OF ROAD AND PAVEMENT
-        for(var i = 0; i < mapHeight; i++) {
-            for(var j = 0; j < mapWidth; j++) {
 
-                /** Draw Pavement */
-                if(roadMap[i][j] === PAVEMENT_ID) {
-                    pavementMaterial.map.repeat.set(UNIT_SIZE, UNIT_SIZE);
-                    var cube = new THREE.Mesh(
-                                    new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), 
-                                    pavementMaterial
-                                );
-                    // Set the cube position
-                    cube.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 2, UNIT_SIZE * i);
+        loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false);
+        loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true);
+        loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true);
 
-                    // Add the cube
-                    WORLD.scene.add(cube);
-                    WORLD.world.add(createBoxBody(cube, function(object) {
-                        if(object.body.id == 0) 
-                            toastr.error("You're in the PAVEMENT!!! Please go back to the road.");
-                    }));
 
-                }
-                /** Draw Grass */
-                if(roadMap[i][j] === GRASS_ID) {
-                    grassMaterial.map.repeat.set(1, 1);
-                    var cube = new THREE.Mesh(
-                                    new THREE.BoxGeometry(UNIT_SIZE, PAVEMENT_HEIGHT, UNIT_SIZE), 
-                                    grassMaterial
-                                );
-                    // Set the cube position
-                    cube.position.set(UNIT_SIZE * j, PAVEMENT_HEIGHT / 4, UNIT_SIZE * i);
-
-                    // Add the cube
-                    WORLD.scene.add(cube);
-                    WORLD.world.add(createBoxBody(cube, function(object) {
-                        if(object.body.id == 0) 
-                            toastr.error("You're in the GRASS!!! Please go back to the road.");
-                    }));
-                }
-                /** Draw Road */
-                else if(roadMap[i][j] === ROAD_POS_Z || roadMap[i][j] === BLOCKED_POS_Z) {
-                    roadPosZMaterial.map.wrapS = roadPosZMaterial.map.wrapT = THREE.RepeatWrapping;
-                    roadPosZMaterial.map.repeat.set(1, 1);
-                    roadPosZMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-                    var plane = new THREE.Mesh( 
-                                    new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
-                                    roadPosZMaterial 
-                                );
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    WORLD.scene.add( plane );
-
-                }
-                else if(roadMap[i][j] === ROAD_POS_X || roadMap[i][j] === BLOCKED_POS_X) {
-                    roadPosXMaterial.map.wrapS = roadPosXMaterial.map.wrapT = THREE.RepeatWrapping;
-                    roadPosXMaterial.map.repeat.set(1, 1);
-                    roadPosXMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-                    var plane = new THREE.Mesh( 
-                                    new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
-                                    roadPosXMaterial 
-                                );
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    WORLD.scene.add( plane );
-                }
-                else if(roadMap[i][j] === START) {
-                    var plane = new THREE.Mesh( 
-                        new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
-                        new THREE.MeshBasicMaterial({ color: 0x123435})  
-                    );
-
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    WORLD.scene.add( plane );
-                }
-                else if(roadMap[i][j] === END) {
-                    var plane = new THREE.Mesh( 
-                        new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
-                        new THREE.MeshBasicMaterial({ color: 0x4682B4})  
-                    );
-
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i)
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    WORLD.scene.add( plane );
-                }
-                else if(roadMap[i][j] === INTERSECT_1 || roadMap[i][j] === INTERSECT_2 || roadMap[i][j] === INTERSECT_3 || roadMap[i][j] === INTERSECT_4 || roadMap[i][j] === INTERSECT_5) {
-                    var texture;
-                    switch(roadMap[i][j]) {
-                        case INTERSECT_1:
-                            texture = WORLD.textureLoader.load("/images/intersect_1.png");
-                            break;
-                        case INTERSECT_2: 
-                            texture = WORLD.textureLoader.load("/images/intersect_2.png");
-                            break;
-                        case INTERSECT_3: 
-                            texture = WORLD.textureLoader.load("/images/intersect_3.png");
-                            break;
-                        case INTERSECT_4:
-                            texture = WORLD.textureLoader.load("/images/intersect_4.png");
-                            break; 
-                        case INTERSECT_5: 
-                        default:
-                            texture = WORLD.textureLoader.load("/images/intersect_5.png");
-                            break;
-                    }
-
-                    var intersectMaterial = new THREE.MeshBasicMaterial({ map: texture });               
-                    
-                    intersectMaterial.map.wrapS = roadPosXMaterial.map.wrapT = THREE.RepeatWrapping;
-                    intersectMaterial.map.repeat.set(1, 1);
-                    intersectMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-                    var plane = new THREE.Mesh( 
-                                    new THREE.PlaneGeometry(UNIT_SIZE, UNIT_SIZE), 
-                                    intersectMaterial 
-                                );
-                    plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    plane.position.set(UNIT_SIZE * j, 0, UNIT_SIZE * i);
-                    WORLD.scene.add( plane );
-                    WORLD.world.add(createBoxBody(plane, function(object) {
-                        // if(object.body.id == 0) 
-                            // toastr.error("Intersection");
-                    }));
-
-                }
-            }
-        }
-
-        // BUILDING BLOCKS
-        Object.keys(mapInfo.blocks).forEach(function(key) {
-            var block = mapInfo.blocks[key];
-            var nameOfBlock = block.name;
-
-            block.positions.forEach(function(pos) {
-                if(key === GRASS_ID) {
-                    // var plane = new THREE.Mesh( 
-                    //                 new THREE.PlaneGeometry(pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), 
-                    //                 grassMaterial 
-                    //             );
-                    // plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-                    // WORLD.scene.add( plane );
-                }
-                else {
-                    // Cubes are on behalf of building blocks
-                    var texture;
-                    if (key === RESIDENTAL_BUILDING_ID) {
-                        /** residental buildings */
-                        texture = residentTexture;
-                    } 
-                    else if (key === OFFICE_BUILDING_ID) {
-                        /** office buildings */
-                        texture = glassTexture;
-                    }
-                    var buildingMaterial = new THREE.MeshBasicMaterial({
-                        map: texture
-                    });
-                    buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-                    buildingMaterial.map.repeat.set( pos.x_width, 1 );
-
-                    buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-                    var buildingXWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                    var buildingZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-            
-                    var cube = new THREE.Mesh(new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, UNIT_SIZE, pos.z_width * UNIT_SIZE), buildingMaterial);
-                    // Set the cube position
-                    cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
-                    // Add the cube
-                    WORLD.scene.add(cube);
-                    WORLD.world.add(createBoxBody(cube, function(object) {
-                        if(object.body.id == 0) 
-                            console.log("Player collided with walls.");
-                    }));
-                }
+        findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
+            /** residental buildings */
+            var texture = residentTexture;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
             });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set(UNIT_SIZE, 1);
+
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
+
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
+            // Add the cube
+            WORLD.scene.add(cube);
+            WORLD.world.add(createBoxBody(cube, function (object) {
+                if (object.body.id == 0)
+                    console.log("Player collided with walls.");
+            }));
         });
 
-        // console.log("test:",findSubMap(roadMap, RESIDENTAL_BUILDING_ID))
-        // findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function(tile) {
-        //     /** residental buildings */
-        //     var texture = residentTexture;
-        //     var buildingMaterial = new THREE.MeshBasicMaterial({
-        //         map: texture
-        //     });
-        //     buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-        //     buildingMaterial.map.repeat.set( tile.size, tile.size );
+        findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function (tile) {
+            /** residental buildings */
+            var texture = glassTexture;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set(UNIT_SIZE, 1);
 
-        //     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
-        //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-        //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
-    
-        //     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
-        //     // Set the cube position
-        //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
-        //     // Add the cube
-        //     WORLD.scene.add(cube);
-        //     WORLD.world.add(createBoxBody(cube, function(object) {
-        //         if(object.body.id == 0) 
-        //             console.log("Player collided with walls.");
-        //     }));
-        // });
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
 
-        // findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function(tile) {
-        //     /** residental buildings */
-        //     var texture = glassTexture;
-        //     var buildingMaterial = new THREE.MeshBasicMaterial({
-        //         map: texture
-        //     });
-        //     buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-        //     buildingMaterial.map.repeat.set( tile.size, tile.size );
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+            // Add the cube
+            WORLD.scene.add(cube);
+            WORLD.world.add(createBoxBody(cube, function (object) {
+                if (object.body.id == 0)
+                    console.log("Player collided with walls.");
+            }));
+        });
 
-        //     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-        //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE ) / 2;
-        //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
-    
-        //     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
-        //     // Set the cube position
-        //     cube.position.set(buildingXWidth, UNIT_SIZE / 2 + PAVEMENT_HEIGHT, buildingZWidth);
-        //     // Add the cube
-        //     WORLD.scene.add(cube);
-        //     WORLD.world.add(createBoxBody(cube, function(object) {
-        //         if(object.body.id == 0) 
-        //             console.log("Player collided with walls.");
-        //     }));
-        // });
-
-        // WARNING_AREAS
-        mapInfo.warning_areas.forEach(function(child) {
+        mapInfo.one_ways.forEach(function(child) {
             var pos = child.position;
 
             var area, areaBBox;
@@ -284,410 +121,739 @@ var drawGround = function() {
             // WORLD.scene.add(area);
             areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
             WORLD.dangerZones.push({ box: area, bbox: areaBBox, direction: child.direction, infoImg: "./images/info.png"});
-        })
+        });
+    })
+}
+
+
+/**
+ * 
+ * @param {*} id // ID of each texture type
+ * @param {*} url // Texture url
+ * @param {*} map 
+ */
+const loadTextureToGround = (id, url, map, unit_size, isMultiple, callback) => {
+    findSubMap(map, id).forEach(function (tile) {
+        var PLANE_X = ((2 * tile.x + tile.size - 1) * unit_size) / 2;
+        var PLANE_Z = ((2 * tile.z + tile.size - 1) * unit_size) / 2;
+        var material = new THREE.MeshBasicMaterial({
+            map: WORLD.textureLoader.load(url)
+        });
+        material.map.wrapS = material.map.wrapT = THREE.RepeatWrapping;
+        if (isMultiple) {
+            material.map.repeat.set(tile.size, tile.size);
+        }
+        else {
+            material.map.repeat.set(1, 1);
+        }
+        material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+        var plane = new THREE.Mesh(
+            new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
+            material
+        );
+        plane.position.set(PLANE_X, 0, PLANE_Z)
+        plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+        WORLD.scene.add(plane);
+
+        if (callback) {
+            WORLD.world.add(createBoxBody(plane, callback));
+        }
     });
 }
 
-WORLD.loadMap = () => {
-    drawGround();
+function loadModels() {
+
     var models = [
-        // {
-        //     name: "car",
-        //     loader_type: "object",
-        //     object_type: "vehicle",
-        //     url: "./models/json/volkeswagon-vw-beetle.json",
-        //     position: new THREE.Vector3(0, 1.5, 100),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.005, .005, 0.005),
-        //     animate: true
-        // },
-        // {
-        //     name: "bus_2", 
-        //     loader_type: "gltf", 
-        //     object_type: "vehicle",
-        //     scale: new THREE.Vector3(.25,.25,.25),
-        //     rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-        //     position: new THREE.Vector3(0, 0, 150),
-        //     url: "./models/gltf/bus/scene.gltf",
-        //     animate: false
-        // },
+        // vehicles
         {
-            name: "bus_stop",
+            name: "simple-car",
             loader_type: "fbx",
-            url: "./models/fbx/bus_stop/bus_stop.FBX",
-            position: new THREE.Vector3(100, 0, 34),
-            rotation: new THREE.Euler(0, 0, 0),
-            scale: new THREE.Vector3(.03,.03,.03),
-            children: {
-                "sign": {
-                    position: new THREE.Vector3(0, 60, 100),
-                    rotation: new THREE.Euler( - Math.PI / 2, 0, Math.PI, "XYZ"),
-                }
-            }
-        },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-45, -3, 20),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-45, -3, 35),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-45, -3, 50),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),            
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-45, -3, 65),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),            
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-60, -3, 65),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),            
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-60, -3, 50),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),            
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-60, -3, 20),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),
-        // // },
-        // // {
-        // //     name: "tree1",
-        // //     loader_type: "object",
-        // //     url: "./models/trees/tree1/tree1.json",
-        // //     position: new THREE.Vector3(-60, -3, 35),
-        // //     rotation: new THREE.Euler(0, 0, 0),
-        // //     textureUrl: './models/json/leaves1.png',
-        // //     scale: new THREE.Vector3(.5,.5,.5),
-        // // },
-        // {
-        //     name: "bus", 
-        //     loader_type: "gltf", 
-        //     object_type: "vehicle",
-        //     position: new THREE.Vector3(48, 0, 30),
-        //     scale: new THREE.Vector3(.01,.01,.01),
-        //     url: "./models/gltf/fortnitecity_bus/scene.gltf",
-        //     animate: false
-        // },
-        // {
-        //     name: "car2",
-        //     loader_type: "object",
-        //     object_type: "vehicle",
-        //     url: "./models/json/volkeswagon-vw-beetle.json",
-        //     position: new THREE.Vector3(-10, 1.5, -130),
-        //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-        //     scale: new THREE.Vector3(.005, .005, 0.005),
-        //     animate: true
-        // },
-        // {
-        //     name: "bus_2", 
-        //     loader_type: "gltf", 
-        //     object_type: "vehicle",
-        //     scale: new THREE.Vector3(.2,.2,.2),
-        //     position: new THREE.Vector3(48, 0, 30),
-        //     url: "./models/gltf/bus/scene.gltf",
-        //     animate: false,
-        //     path: new THREE.CatmullRomCurve3([
-        //         new THREE.Vector3(40, 0, 110),
-        //         new THREE.Vector3(40, 0, 70),
-        //         new THREE.Vector3(40, 0, 60),
-        //         new THREE.Vector3(40, 0, 40),
-        //         new THREE.Vector3(40, 0, 30),
-        //         new THREE.Vector3(60, 0, 30),
-        //         new THREE.Vector3(80, 0, 30),
-        //         new THREE.Vector3(100, 0, 30),
-        //         new THREE.Vector3(120, 0, 30)])
-        // },
-        // {
-        //     name: "camquaydau", 
-        //     loader_type: "object", 
-        //     object_type: "sign",
-        //     url: "./models/signs/traffic-sign.json",
-        //     textureUrl: "./models/signs/camquaydau-uvmap.png",
-        //     animate: false,
-        //     children: {
-        //         "sign": {
-        //             textureUrl: "./models/signs/camquaydau-uvmap.png"
-        //         },
-        //         "pole": {
-        //             textureUrl: "./models/signs/pole-uvmap.png"
-        //         }
-        //     },
-        //     scale: new THREE.Vector3(.5,.5,.5),
-        //     rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
-        // },
-        {
-            name: "camrephai", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camrephai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            scale: new THREE.Vector3(.5,.5,.5),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
-        },
-        {
-            name: "camretrai", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(48, 0, 30),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            infoImg: "./images/info.png",
-            direction: {x: 0, y: 0, z: -1}
-        },
-        {
-            name: "camretrai2", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(75, 0, 28),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            infoImg: "./images/info.png",
-            direction: {x: 1, y: 0, z: 0}
-        },
-        {
-            name: "camretrai3", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(75, 0, 88),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            infoImg: "./images/info.png"
-        },
-        {
-            name: "camretrai4", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(75, 0, 133),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            infoImg: "./images/info.png"
-        },
-        {
-            name: "camrephai", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camrephai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(85, 0, 36),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            infoImg: "./images/info.png"
-        },
-        {
-            name: "camrephai2", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camrephai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(85, 0, 81),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            infoImg: "./images/info.png"
-        },
-        {
-            name: "camrephai3", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/camrephai-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(85, 0, 111),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            infoImg: "./images/info.png",
-        },
-        {
-            name: "duongcam", 
-            loader_type: "object", 
-            object_type: "sign",
-            url: "./models/signs/traffic-sign.json",
-            animate: false,
-            children: {
-                "sign": {
-                    textureUrl: "./models/signs/duongcam-uvmap.png"
-                },
-                "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
-                }
-            },
-            position: new THREE.Vector3(48, 0, 22.5),
-            scale: new THREE.Vector3(.3,.3,.3),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ")
-        },
-        {
-            name: "traffic-light-1",
-            loader_type: "fbx",
-            object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(77, 0, 82),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
-        },
-        {
-            name: "traffic-light-2",
-            loader_type: "fbx",
-            object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(77, 0, 88),
+            object_type: "vehicle",
+            position: new THREE.Vector3(32 * 5, 1.3, 0 * 5),
             rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(32 * 5, 1.3, 0 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 66 * 5)
+            ]),
+            velocity: 0.01
         },
         {
-            name: "traffic-light-3",
+            name: "simple-car2",
             loader_type: "fbx",
-            object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(83, 0, 82),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
+            object_type: "vehicle",
+            position: new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 45 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(55 * 5, 1.3, 46 * 5),
+            ]),
+            velocity: 0.01
         },
         {
-            name: "traffic-light-4",
+            name: "simple-car2",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(60 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 45 * 5),
+                new THREE.Vector3(47 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(55 * 5, 1.3, 46 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car3",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(65 * 5, 1.3, 8 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(65 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(33 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 8 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 33 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(31 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 62 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car4",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(20 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(45 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 45 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car5",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(19 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(20 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(45 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 10 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 45 * 5),
+            ]),
+            velocity: 0.01
+        },
+
+        // traffic lights
+        {
+            name: "traffic-light-31-7",
             loader_type: "fbx",
             object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(118, 0, 88),
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 7 * 5),
             rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
         },
         {
-            name: "traffic-light-5",
+            name: "traffic-light-34-7",
             loader_type: "fbx",
             object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(112, 0, 82),
-            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
-        },
-        {
-            name: "traffic-light-6",
-            loader_type: "fbx",
-            object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(112, 0, 88),
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 7 * 5),
             rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+            direction: { x: 1, y: 0, z: 1 },
         },
         {
-            name: "traffic-light-7",
+            name: "traffic-light-31-10",
             loader_type: "fbx",
             object_type: "traffic_light",
-            url: "./models/fbx/traffic-light/traffic-light.fbx",
-            position: new THREE.Vector3(118, 0, 82),
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 10 * 5),
             rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            scale: new THREE.Vector3(.05,.05,.05)
-        }
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-10",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 10 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-31-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-31-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-31-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-15",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 15 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-18",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 18 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-17-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(17 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-20-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(20 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-20-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(20 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-17-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(17 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-31-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-34-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(34 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-31-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(31 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-45-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(45 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-48-33",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(48 * 5, 0, 33 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-48-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(48 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-45-36",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(45 * 5, 0, 36 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        //
+        {
+            name: "traffic-light-17-51",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(17 * 5, 0, 51 * 5),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-20-51",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(20 * 5, 0, 51 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-20-54",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+            position: new THREE.Vector3(20 * 5, 0, 54 * 5),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+        {
+            name: "traffic-light-17-54",
+            loader_type: "fbx",
+            object_type: "traffic_light",
+            url: "./models/fbx/traffic-light-2/trafficlight.fbx",
+            textureUrl: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+            position: new THREE.Vector3(17 * 5, 0, 54 * 5),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            scale: new THREE.Vector3(.4, .4, .4),
+            castShadow: true,
+            receiveShadow: true,
+        },
+
+        // signs
+        /** bien cam re trai */
+        {
+            name: "camretrai-20-11",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(20 * 5, 0, 11 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            direction: { x: 0, y: 0, z: - 1 },
+            info: "Prohibition Sign: No Left Turn!!"
+        },
+        {
+            name: "camretrai-31-44",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(31 * 5, 0, 44 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            direction: { x: 0, y: 0, z: 1 },
+            info: "Prohibition Sign: No Left Turn!!"
+        },
+        {
+            name: "camretrai-45-44",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(45 * 5, 0, 44 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            direction: { x: 0, y: 0, z: 1 },
+            info: "Prohibition Sign: No Left Turn!!"
+        },
+        {
+            name: "camrephai-34-49",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camrephai-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(34 * 5, 0, 49 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            direction: { x: 0, y: 0, z: - 1 },
+            info: "Prohibition Sign: No Right Turn!!"
+        },
+        {
+            name: "nguocchieu-30-7",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/nguocchieu-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(30 * 5, 0, 7 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, Math.PI, 0, "XYZ"),
+            direction: { x: - 1, y: 0, z: 0 },
+            info: "Prohibition Sign: Do Not Enter!!"
+        },
+        {
+            name: "camquaydau-30-10",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camquaydau-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(30 * 5, 0, 10 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            direction: { x: 1, y: 0, z: 0 },
+            info: "Prohibition Sign: No U Turn!!"
+        },
+        {
+            name: "camquaydau-31-32",
+            loader_type: "object",
+            object_type: "warning-sign",
+            url: "./models/signs/traffic-sign.json",
+            castShadow: true,
+            receiveShadow: true,
+            children: {
+                "sign": {
+                    textureUrl: "./models/signs/camquaydau-uvmap.png"
+                },
+                "pole": {
+                    textureUrl: "./models/signs/pole-uvmap.png"
+                }
+            },
+            position: new THREE.Vector3(31 * 5, 0, 32 * 5),
+            scale: new THREE.Vector3(.3, .3, .3),
+            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+            direction: { x: 0, y: 0, z: 1 },
+            info: "Prohibition Sign: No U Turn!!"
+        },
     ];
 
     // add models to the world
     models.forEach(md => loadModelToWorld(md));
+}
+
+WORLD.loadMap = () => {
+    drawGround();
+    loadModels();
 }

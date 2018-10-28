@@ -174,22 +174,12 @@ const loadModelToWorld = (model) => {
                         ]
                     }
                     storeObj.ticker = 0;
+                    storeObj.currentStatus = "REDLIGHT";
                     
                     WORLD.trafficLightList.push(storeObj);
                 }
 
-                var sprite = makeTextSprite("Object: " + obj.name, {
-                    fontsize: 10,
-                    borderColor: { r: 255, g: 0, b: 0, a: 1.0 },
-                    backgroundColor: { r: 255, g: 100, b: 100, a: 0.8 }
-                });
-                sprite.position.set(position.x + 2, position.y, position.z);
-
-                sprite.center.set( 1.0, 0.0 );
-                // WORLD.scene.add( sprite );
-
                 WORLD.scene.add( obj );
-                // WORLD.world.add(objectToBody(obj));
 
                 var helper = new THREE.BoxHelper(obj, 0xff0000);
                 helper.update();
@@ -199,13 +189,18 @@ const loadModelToWorld = (model) => {
                 var bbox = new THREE.Box3().setFromObject(helper);
                 WORLD.collidableObjects.push(bbox);
 
+                // WORLD.world.add(createBoxBody(helper, function(object) {
+                //     if(object.body.id == 0) 
+                //         console.log("Player collided with " + name + "!");
+                // }));
+
                 // create a cannon body
                 var shape = new CANNON.Box(new CANNON.Vec3(
                     (bbox.max.x - bbox.min.x) / 2,
                     (bbox.max.y - bbox.min.y) / 2,
                     (bbox.max.z - bbox.min.z) / 2
                 ));
-                var boxBody = new CANNON.Body({ mass: 1 });
+                var boxBody = new CANNON.Body({ mass: 5 });
                 boxBody.addShape(shape);
                 boxBody.position.copy(helper.position);
                 boxBody.useQuaternion = true;
@@ -214,12 +209,12 @@ const loadModelToWorld = (model) => {
                 // against each other
                 boxBody.collisionResponse = true;
                 // keep a reference to the mesh so we can update its properties later
-                boxBody.addEventListener('collide', function(object) {
-                    if(object.body.id == 0) 
-                        console.log("Player collided with object.");
-                });
-                boxBody.angularVelocity.set(0, 0, 3.5);
-                boxBody.angularDamping = 0.1;
+                // boxBody.addEventListener('collide', function(object) {
+                //     if(object.body.id == 0) 
+                //         console.log("Player collided with object.");
+                // });
+                // boxBody.angularVelocity.set(0, 0, 3.5);
+                // boxBody.angularDamping = 0.1;
                 WORLD.world.add(boxBody);
 
                 obj.traverse((child) => {
@@ -295,29 +290,45 @@ var updateSkinnedAnimation = (storedObject) => {
 
         var ticker = storedObject.ticker;
 
-        // change skin
-        // find current skin
-        var currentFile = storedObject.object.children[0].material.map.image.currentSrc.substring(storedObject.object.children[0].material.map.image.currentSrc.lastIndexOf('/')+1);
+        if(storedObject.object.children[0].material.map.image) {
+
+            // change skin
+            // find current skin
+            var currentFile = storedObject.object.children[0].material.map.image.currentSrc.substring(storedObject.object.children[0].material.map.image.currentSrc.lastIndexOf('/')+1);
+            
+            var nextIndex = 0;
+            var duration = 0;
+            storedObject.animation.status.forEach((stt, index) => {
+                if(stt.texture.substring(stt.texture.lastIndexOf('/')+1) === currentFile) {
+                    duration = stt.duration;
+                    if(ticker === duration) {
+                        switch(currentFile) {
+                            case "greenlight-uvmap.png":
+                                currentStatus = "GREENLIGHT"
+                                break;
+                            case "yellowlight-uvmap.png":
+                                currentStatus = "YELLOWLIGHT"
+                                break;
+                            case "redlight-uvmap.png":
+                            default:
+                                currentStatus = "REDLIGHT";
+                                break;
+                        }
+                        nextIndex = (index === (storedObject.animation.status.length - 1)) ? 0 : (index + 1);
+                        storedObject.object.children[0].material.map = WORLD.textureLoader.load(storedObject.animation.status[nextIndex].texture);
+                        duration = storedObject.animation.status[nextIndex].duration;
+                        ticker = 0;
+                    }
+                    else {
+                        duration = storedObject.animation.status[index].duration;
+                        ticker = ticker + 1;
+                    }
         
-        var nextIndex = 0;
-        var duration = 0;
-        storedObject.animation.status.forEach((stt, index) => {
-            if(stt.texture.substring(stt.texture.lastIndexOf('/')+1) === currentFile) {
-                duration = stt.duration;
-                if(ticker === duration) {
-                    nextIndex = (index === (storedObject.animation.status.length - 1)) ? 0 : (index + 1);
-                    storedObject.object.children[0].material.map = WORLD.textureLoader.load(storedObject.animation.status[nextIndex].texture);
-                    duration = storedObject.animation.status[nextIndex].duration;
-                    ticker = 0;
                 }
-                else {
-                    duration = storedObject.animation.status[index].duration;
-                    ticker = ticker + 1;
-                }
-    
-            }
-        })
+            })
+        }
         storedObject.ticker = ticker; 
+
     }
 
 }

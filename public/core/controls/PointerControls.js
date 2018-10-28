@@ -205,7 +205,7 @@ var PointerControls = function (camera, cannonBody) {
 
         inputVelocity.set(0, 0, 0);
         if(speedup) {
-            velocityFactor += 0.05;
+            velocityFactor += 0.1;
         }
 
         if(WORLD.detectCollision() !== 0){

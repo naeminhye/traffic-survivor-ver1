@@ -17,7 +17,7 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 	this._pos += (this._factor * delta);
 	if (this._pos > 1) { this._pos = 0; };
 	this._object.lookAt(this.path.getPointAt(this._pos));
-	this._object.rotateY(-Math.PI / 2)
+	// this._object.rotateY(-Math.PI / 2)
 
 }
 
