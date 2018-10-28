@@ -22,6 +22,15 @@
 				"x_width": 26, 
 				"z_width": 2
 			}
+		},
+		{
+			"direction": {"x": 0, "y": 0, "z": -1},
+			"position": {
+				"x": 20,
+				"z": 180,
+				"x_width": 2, 
+				"z_width": 28
+			}
 		}
 	]
 }

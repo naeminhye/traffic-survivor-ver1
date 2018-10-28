@@ -277,6 +277,111 @@ function loadModels() {
             ]),
             velocity: 0.01
         },
+        {
+            name: "simple-car6",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(0 * 5, 1.3, 9 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(0 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(30 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 1 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 64 * 5)
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car7",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(7 * 5, 1.3, 9 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(7 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(16 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 1 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 32 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(16 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(0 * 5, 1.3, 34 * 5)
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car8",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(0 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(0 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(65 * 5, 1.3, 35 * 5)
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car9",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(33 * 5, 1.3, 64 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(33 * 5, 1.3, 64 * 5),
+                new THREE.Vector3(33 * 5, 1.3, 36 * 5),
+                new THREE.Vector3(33 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(31 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(6 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(4 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(4 * 5, 1.3, 36 * 5),
+                new THREE.Vector3(4 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(4 * 5, 1.3, 51 * 5),
+                new THREE.Vector3(6 * 5, 1.3, 53 * 5),
+                new THREE.Vector3(16 * 5, 1.3, 53 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 53 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 55 * 5),
+                new THREE.Vector3(18 * 5, 1.3, 60 * 5),
+            ]),
+            velocity: 0.01
+        },
+        {
+            name: "simple-car10",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(65 * 5, 1.3, 34 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(65 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(48 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 34 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 36 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 44 * 5),
+                new THREE.Vector3(46 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(44 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(34 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 46 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 48 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 64 * 5),
+            ]),
+            velocity: 0.01
+        },
 
         // traffic lights
         {
