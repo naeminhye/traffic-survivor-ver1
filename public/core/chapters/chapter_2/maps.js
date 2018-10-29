@@ -164,6 +164,23 @@ function loadModels() {
             velocity: 0.01
         },
         {
+            name: "simple-car",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(32 * 5, 1.3, 0 * 5),
+            rotation: new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            animate: false,
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(32 * 5, 1.3, 4 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 66 * 5)
+            ]),
+            velocity: 0.03
+        },
+        {
             name: "simple-car2",
             loader_type: "fbx",
             object_type: "vehicle",
@@ -203,7 +220,7 @@ function loadModels() {
                 new THREE.Vector3(48 * 5, 1.3, 46 * 5),
                 new THREE.Vector3(55 * 5, 1.3, 46 * 5),
             ]),
-            velocity: 0.01
+            velocity: 0.02
         },
         {
             name: "simple-car3",
@@ -227,7 +244,7 @@ function loadModels() {
                 new THREE.Vector3(18 * 5, 1.3, 35 * 5),
                 new THREE.Vector3(18 * 5, 1.3, 62 * 5),
             ]),
-            velocity: 0.01
+            velocity: 0.02
         },
         {
             name: "simple-car4",
@@ -251,7 +268,7 @@ function loadModels() {
                 new THREE.Vector3(46 * 5, 1.3, 10 * 5),
                 new THREE.Vector3(46 * 5, 1.3, 45 * 5),
             ]),
-            velocity: 0.01
+            velocity: 0.03
         },
         {
             name: "simple-car5",
@@ -275,7 +292,7 @@ function loadModels() {
                 new THREE.Vector3(46 * 5, 1.3, 10 * 5),
                 new THREE.Vector3(46 * 5, 1.3, 45 * 5),
             ]),
-            velocity: 0.01
+            velocity: 0.03
         },
         {
             name: "simple-car6",
@@ -293,7 +310,7 @@ function loadModels() {
                 new THREE.Vector3(32 * 5, 1.3, 1 * 5),
                 new THREE.Vector3(32 * 5, 1.3, 64 * 5)
             ]),
-            velocity: 0.01
+            velocity: 0.02
         },
         {
             name: "simple-car7",
@@ -314,7 +331,7 @@ function loadModels() {
                 new THREE.Vector3(16 * 5, 1.3, 34 * 5),
                 new THREE.Vector3(0 * 5, 1.3, 34 * 5)
             ]),
-            velocity: 0.01
+            velocity: 0.02
         },
         {
             name: "simple-car8",
@@ -330,6 +347,21 @@ function loadModels() {
                 new THREE.Vector3(65 * 5, 1.3, 35 * 5)
             ]),
             velocity: 0.01
+        },
+        {
+            name: "simple-car-13-35",
+            loader_type: "fbx",
+            object_type: "vehicle",
+            position: new THREE.Vector3(13 * 5, 1.3, 35 * 5),
+            url: "./models/fbx/simple-car/simple-car.fbx",
+            textureUrl: "./models/fbx/simple-car/simplecar-uvmap.png",
+            castShadow: true,
+            receiveShadow: true,
+            path: new THREE.CatmullRomCurve3([
+                new THREE.Vector3(13 * 5, 1.3, 35 * 5),
+                new THREE.Vector3(65 * 5, 1.3, 35 * 5)
+            ]),
+            velocity: 0.02
         },
         {
             name: "simple-car9",

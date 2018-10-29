@@ -14,10 +14,12 @@ CONTROLS.PathControls = function (object, path, prop) {
 
 CONTROLS.PathControls.prototype.update = function (delta) {
 	this._object.position.copy(this.path.getPointAt(this._pos));
-	this._pos += (this._factor * delta);
-	if (this._pos > 1) { this._pos = 0; };
-	this._object.lookAt(this.path.getPointAt(this._pos));
-	// this._object.rotateY(-Math.PI / 2)
+	if(this._object.position.distanceTo(WORLD.player.position) > 10) {
+		this._pos += (this._factor * delta);
+		if (this._pos > 1) { this._pos = 0; };
+		this._object.lookAt(this.path.getPointAt(this._pos));
+		// this._object.rotateY(-Math.PI / 2)
+	}
 
 }
 
