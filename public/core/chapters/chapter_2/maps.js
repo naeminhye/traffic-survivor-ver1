@@ -323,15 +323,12 @@ function loadModels() {
             receiveShadow: true,
             path: new THREE.CatmullRomCurve3([
                 new THREE.Vector3(7 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(16 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(18 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(18 * 5, 1.3, 1 * 5),
-                new THREE.Vector3(18 * 5, 1.3, 32 * 5),
-                new THREE.Vector3(18 * 5, 1.3, 34 * 5),
-                new THREE.Vector3(16 * 5, 1.3, 34 * 5),
-                new THREE.Vector3(0 * 5, 1.3, 34 * 5)
+                new THREE.Vector3(30 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 1 * 5),
+                new THREE.Vector3(32 * 5, 1.3, 64 * 5)
             ]),
-            velocity: 0.02
+            velocity: 0.03
         },
         {
             name: "simple-car8",
