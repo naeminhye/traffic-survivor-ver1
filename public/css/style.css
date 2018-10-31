@@ -218,14 +218,17 @@ hr {
     background-color: transparent;
 }
 .speed-container {
-    min-width: 310px;
-    max-width: 400px;
-    margin: 0 auto;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+    padding: 20px;
 }
-.speed-container> span {
+.speed {
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    border: solid 4px orange;
+}
+.speed > span {
     font-family: 'Press Start 2P', cursive;
     color: orange;
 }
@@ -245,15 +248,19 @@ hr {
     display: flex;
     justify-content: space-between;
     position: absolute;
-    left: 250px;
     bottom: 0;
+    width: 100%;
+    justify-content: center;
 }
-.turn-signals > .right-signal > span, .turn-signals > .left-signal > span {
+.turn-signals > .right-signal > span, 
+.turn-signals > .left-signal > span, 
+.turn-signals > .headlight > span,
+.turn-signals > .horn > span {
     font-family: 'Press Start 2P', cursive;
     color: orange;
     font-size: 10px;
 }
-.left-signal, .right-signal {
+.left-signal, .right-signal, .headlight, .horn {
     margin: 5px;
 }
 .led {
@@ -271,7 +278,12 @@ hr {
     box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.4);
     border: 3px solid rgba(120, 0, 0, 1);
 }
-.led .hilight {
+.led.yellow.active {
+    background-color:yellow;
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 0, 0.4);
+    border: 3px solid rgb(156, 145, 43);
+}
+.led > .hilight {
     width: 4px;
     height: 4px;
     border-radius: 50%;
@@ -281,7 +293,21 @@ hr {
     left: 7px;
     box-shadow: 3px 4px 7px 9px rgba(180, 0, 0, 0.6);
 }
-.led.active .hilight {
+.led.yellow > .hilight {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: rgba(255,255,255,0.5);
+    top: 7px;
+    left: 7px;
+    box-shadow: 3px 4px 7px 9px rgba(212, 183, 16, 0.6);
+}
+.led.active > .hilight {
     background-color: rgba(255,255,255,1);
     box-shadow: 4px 4px 6px 7px rgba(255, 0, 0, 1);
+}
+.led.yellow.active > .hilight {
+    background-color: rgba(255,255,255,1);
+    box-shadow: 4px 4px 6px 7px rgba(255, 255, 0, 1);
 }

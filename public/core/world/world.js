@@ -199,6 +199,30 @@ WORLD.init = function () {
 
     WORLD.scene.updateMatrixWorld(true);
 
+    // var _geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+    // var verticalMirror = new THREE.Reflector( _geometry, {
+    //     clipBias: 0.003,
+    //     textureWidth: window.innerWidth * window.devicePixelRatio,
+    //     textureHeight: window.innerHeight * window.devicePixelRatio,
+    //     color: 0x889999,
+    //     recursion: 1
+    // } );
+    // verticalMirror.position.x = 70;
+    // verticalMirror.position.z = 45;
+    // verticalMirror.position.y = 2;
+    // verticalMirror.name = "verticalMirror";
+    // WORLD.scene.add( verticalMirror );
+
+    // var cubeGeom = new THREE.CubeGeometry(100, 100, 10, 1, 1, 1);
+	// mirrorCubeCamera = new THREE.CubeCamera( 0.1, 5000, 512 );
+	// mirrorCubeCamera.renderTarget.minFilter = THREE.LinearMipMapLinearFilter;
+	// WORLD.scene.add( mirrorCubeCamera );
+    // var mirrorCubeMaterial = new THREE.MeshPhongMaterial( { emissive: 0x111111, envMap: mirrorCubeCamera.renderTarget } );
+    // mirrorCube = new THREE.Mesh( cubeGeom, mirrorCubeMaterial );
+	// mirrorCube.position.set(90, 1, 50);
+	// mirrorCubeCamera.position = mirrorCube.position;
+	// WORLD.scene.add(mirrorCube);	
+
     WORLD.loadMap();
 
     WORLD.renderer = new THREE.WebGLRenderer({ antialias: true });

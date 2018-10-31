@@ -37,11 +37,6 @@
     </div>
     <div class="map">
     </div>
-    <div class="speed-container">
-        <span>Speed:</span>
-        <span id="speed">0</span>
-        <span> km/h</span>
-    </div>
 
     <div class="turn-signals">
         <div class="left-signal">
@@ -49,6 +44,25 @@
                 <div class="hilight"></div>
             </div>
             <span>Turn Left (Q)</span>
+        </div>
+        <div class="headlight">
+            <div class="led yellow" id="headlight-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Headlight (F)</span>
+        </div>
+        <div class="speed-container">
+            <div class="speed">
+                <span>Speed:</span>
+                <span id="speed">0</span>
+                <span> km/h</span>
+            </div>
+        </div>
+        <div class="horn">
+            <div class="led yellow" id="horn-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Horn (G)</span>
         </div>
         <div class="right-signal">
             <div class="led" id="right-led">
@@ -78,6 +92,7 @@
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js'></script>
     <script type="text/javascript" src='https://threejs.org/examples/js/renderers/Projector.js'></script>
     <script type="text/javascript" src='core/libs/Detector.js'></script>
+    <script type="text/javascript" src='core/libs/Reflector.js'></script>
     <script type="text/javascript" src='core/libs/Cloth.js'></script>
     <script type="text/javascript" src='core/libs/inflate.min.js'></script>
     <script type="text/javascript" src='core/libs/loaders/DDSLoader.js'></script>
