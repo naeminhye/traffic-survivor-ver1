@@ -404,21 +404,19 @@ function checkDistance() {
         } 
     });
 
-    WORLD.trafficLightList.forEach((sign) => {
+    WORLD.trafficLightList.forEach((light) => {
         
-        if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
+        if (light.object.position.distanceTo(WORLD.player.position) < 5) {
 
             var v = new THREE.Vector3();
             var playerVector = WORLD.player.getWorldDirection(v);
-            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
+            var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
             var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
             var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
             var angleDelta = signAngle - playerAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && sign.currentStatus === "REDLIGHT") {
+            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && light.currentStatus === "REDLIGHT") {
                 // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
-                if(sign.info) {
-                    toastr.error("Red light!");
-                }
+                toastr.error("Red light!");
             }
         } 
     });
