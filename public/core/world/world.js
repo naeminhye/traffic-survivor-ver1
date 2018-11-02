@@ -33,6 +33,8 @@ var gameOver = false;
 
 var blocker = document.getElementById('blocker');
 var instructions = document.getElementById('instructions');
+var gameMenu = $("#game-menu");
+var controllers = $("#controllers");
 
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -47,12 +49,16 @@ if (havePointerLock) {
             blocker.style.display = '-webkit-box';
             blocker.style.display = '-moz-box';
             blocker.style.display = 'box';
-            instructions.style.display = '';
+            // instructions.style.display = '';
+            gameMenu.css("display", "block");
+            controllers.css("display", "none");
         }
     }
 
     var pointerlockerror = function (event) {
-        instructions.style.display = '';
+        // instructions.style.display = '';
+        gameMenu.css("display", "block");
+        controllers.css("display", "none");
     }
 
     // Hook pointer lock state change events
@@ -64,9 +70,9 @@ if (havePointerLock) {
     document.addEventListener('mozpointerlockerror', pointerlockerror, false);
     document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
 
-    instructions.addEventListener('click', function (event) {
-        instructions.style.display = 'none';
-
+    var resumeGame = (event) => {
+        gameMenu.css("display", "none");
+        controllers.css("display", "block");
         // Ask the browser to lock the pointer
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 
@@ -93,7 +99,83 @@ if (havePointerLock) {
         } else {
             element.requestPointerLock();
         }
-    }, false);
+    };
+
+    // $("#start-btn").click((event) => {
+    //     gameMenu.css("display", "none");
+    //     controllers.css("display", "block");
+    //     // Ask the browser to lock the pointer
+    //     element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+    //     if (/Firefox/i.test(navigator.userAgent)) {
+
+    //         var fullscreenchange = function (event) {
+
+    //             if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
+
+    //                 document.removeEventListener('fullscreenchange', fullscreenchange);
+    //                 document.removeEventListener('mozfullscreenchange', fullscreenchange);
+
+    //                 element.requestPointerLock();
+    //             }
+
+    //         }
+
+    //         document.addEventListener('fullscreenchange', fullscreenchange, false);
+    //         document.addEventListener('mozfullscreenchange', fullscreenchange, false);
+
+    //         element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+    //         element.requestFullscreen();
+    //     } else {
+    //         element.requestPointerLock();
+    //     }
+    // });
+
+    $("#start-btn").click(() => {
+        resumeGame();
+    });
+
+    $("#cancel-exit").click(() => {
+        $("#game-menu").css("display", "block");
+        $("#exit-dialog").css("display", "none");
+    });
+
+    $("#exit-btn").click(() => {
+        $("#exit-dialog").css("display", "block");
+        $("#game-menu").css("display", "none");
+    });
+
+    // instructions.addEventListener('click', function (event) {
+    //     instructions.style.display = 'none';
+
+    //     // Ask the browser to lock the pointer
+    //     element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+    //     if (/Firefox/i.test(navigator.userAgent)) {
+
+    //         var fullscreenchange = function (event) {
+
+    //             if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
+
+    //                 document.removeEventListener('fullscreenchange', fullscreenchange);
+    //                 document.removeEventListener('mozfullscreenchange', fullscreenchange);
+
+    //                 element.requestPointerLock();
+    //             }
+
+    //         }
+
+    //         document.addEventListener('fullscreenchange', fullscreenchange, false);
+    //         document.addEventListener('mozfullscreenchange', fullscreenchange, false);
+
+    //         element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+    //         element.requestFullscreen();
+    //     } else {
+    //         element.requestPointerLock();
+    //     }
+    // }, false);
 } else {
     instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
 }
