@@ -15,15 +15,29 @@
 <body>
 
     <div class="content-container">
-        <div class="content flex-column-center">
+        <div id="game-menu" class="content flex-column-center">
             <!-- <a class="item" href="sceneone.html">City Scene</a> -->
-            <a class="eightbit-btn eightbit-btn--reset" href="levels.html">Start</a>
-            <br />
-            <div class="eightbit-btn">Options</div>
-            <br />
+            <button id="start-btn" style="margin-bottom: 20px;" class="eightbit-btn eightbit-btn--reset">Start</button>
+            <div style="margin-bottom: 20px;" class="eightbit-btn">Options</div>
             <a href="instruction.html" class="eightbit-btn eightbit-btn--proceed">How to play</a>
-            <!-- <br />
-            <div class="eightbit-btn eightbit-btn--reset">Exit</div> -->
+            <!-- <div class="eightbit-btn eightbit-btn--reset">Exit</div> -->
+        </div>
+        <div id="login-dialog" class="center-div dialog">
+            <div class="dialog-content">
+                <div class="input-box">
+                    <label for="username">Username:</label>
+                    <input id="username" type="text">
+                </div>
+                <div class="input-box">
+                    <label for="password">Password:</label>
+                    <input id="password" type="password">
+                </div>
+
+                <div style="display: flex; justify-content: space-evenly; width: 100%;">
+                    <button id="cancel-btn" class="eightbit-btn">Cancel</button>
+                    <button id="ok-btn" class="eightbit-btn eightbit-btn--reset">Login</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -31,7 +45,23 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="js/info.js"></script>
+    <script>
+        $("#start-btn").click(() => {
+            $("#login-dialog").css("display", "block");
+            $("#game-menu").css("display", "none");
+        });
+
+        $("#cancel-btn").click(() => {
+            $("#login-dialog").css("display", "none");
+            $("#game-menu").css("display", "flex");
+        });
+
+        $("#ok-btn").click(() => {
+            console.log("name")
+            window.location.href = 'levels.html'; 
+        });
+    </script>
+    
 </body>
 
 </html>

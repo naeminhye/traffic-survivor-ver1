@@ -359,13 +359,16 @@ hr {
     display: none;
     width: 50vw;
     /* height: 50vh; */
-    height: 188px;
+    /* height: 188px; */
+    height: 250px;
 }
 .dialog-content {
     padding: 20px;
     background-color: blueviolet;
     width: 100%;
     height: 100%;
+    /* height: fit-content;
+    height: -moz-fit-content; */
     text-decoration: none;
     color: white;
     border: 6px black solid;
@@ -380,6 +383,26 @@ hr {
     font-size: 20px;
     font-family: 'Press Start 2P', cursive;
     color: #fff;
+}
+
+.dialog-content > .input-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.dialog-content > .input-box > label {
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
+}
+.dialog-content > .input-box > input {
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+    /* width: 100%; */
+    border: 6px black solid;
+    padding: 20px;
 }
 
 .lesson-container {

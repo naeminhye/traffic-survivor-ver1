@@ -226,18 +226,24 @@ var PointerControls = function (camera, cannonBody) {
             $("#right-led").removeClass("active");
         }
 
+        // PLAYER.status.moving = false;
+
         if (moveForward) {
             inputVelocity.z = -velocityFactor * delta;
+            // PLAYER.status.moving = true;
         }
         if (moveBackward) {
             inputVelocity.z = velocityFactor * delta;
+            // PLAYER.status.moving = true;
         }
 
         if (moveLeft) {
             inputVelocity.x = -velocityFactor * delta;
+            // PLAYER.status.moving = true;
         }
         if (moveRight) {
             inputVelocity.x = velocityFactor * delta;
+            // PLAYER.status.moving = true;
         }
 
         // Convert velocity to world coordinates
@@ -252,7 +258,7 @@ var PointerControls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
 
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        WORLD.playerSpeed = (speed).toFixed(0) * 5;
+        WORLD.playerSpeed = (speed).toFixed(0)// * 5;
 
         yawObject.position.copy(cannonBody.position);
 

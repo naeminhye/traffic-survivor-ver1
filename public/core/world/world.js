@@ -1,4 +1,12 @@
 var WORLD = WORLD || {};
+var GAME = GAME || {};
+var PLAYER = PLAYER || {
+    status: {
+        moving: false,
+        health: 100,
+        violation: 0
+    }
+};
 var UNITWIDTH = 9;                 // Width of a cubes in the maze
 var UNITHEIGHT = 9;                // Height of the cubes in the maze
 var sphereShape, sphereBody, physicsMaterial, walls = [], balls = [], ballMeshes = [], boxes = [], boxMeshes = [];
@@ -33,8 +41,8 @@ var gameOver = false;
 
 var blocker = document.getElementById('blocker');
 var instructions = document.getElementById('instructions');
-var gameMenu = $("#game-menu");
-var controllers = $("#controllers");
+GAME.menu = $("#game-menu");
+GAME.controllers = $("#controllers");
 
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
@@ -50,15 +58,15 @@ if (havePointerLock) {
             blocker.style.display = '-moz-box';
             blocker.style.display = 'box';
             // instructions.style.display = '';
-            gameMenu.css("display", "block");
-            controllers.css("display", "none");
+            GAME.menu.css("display", "block");
+            GAME.controllers.css("display", "none");
         }
     }
 
     var pointerlockerror = function (event) {
         // instructions.style.display = '';
-        gameMenu.css("display", "block");
-        controllers.css("display", "none");
+        GAME.menu.css("display", "block");
+        GAME.controllers.css("display", "none");
     }
 
     // Hook pointer lock state change events
@@ -71,8 +79,8 @@ if (havePointerLock) {
     document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
 
     var resumeGame = (event) => {
-        gameMenu.css("display", "none");
-        controllers.css("display", "block");
+        GAME.menu.css("display", "none");
+        GAME.controllers.css("display", "block");
         // Ask the browser to lock the pointer
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 
@@ -100,37 +108,6 @@ if (havePointerLock) {
             element.requestPointerLock();
         }
     };
-
-    // $("#start-btn").click((event) => {
-    //     gameMenu.css("display", "none");
-    //     controllers.css("display", "block");
-    //     // Ask the browser to lock the pointer
-    //     element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-
-    //     if (/Firefox/i.test(navigator.userAgent)) {
-
-    //         var fullscreenchange = function (event) {
-
-    //             if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
-
-    //                 document.removeEventListener('fullscreenchange', fullscreenchange);
-    //                 document.removeEventListener('mozfullscreenchange', fullscreenchange);
-
-    //                 element.requestPointerLock();
-    //             }
-
-    //         }
-
-    //         document.addEventListener('fullscreenchange', fullscreenchange, false);
-    //         document.addEventListener('mozfullscreenchange', fullscreenchange, false);
-
-    //         element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-
-    //         element.requestFullscreen();
-    //     } else {
-    //         element.requestPointerLock();
-    //     }
-    // });
 
     $("#start-btn").click(() => {
         resumeGame();
@@ -353,7 +330,7 @@ WORLD.animate = function () {
 
     WORLD.controls.update(Date.now() - time);
     
-    checkDistance();
+    checkViolation();
     if(!WORLD.warningFlag) {
         $("#message").css("display", "none");
     }
@@ -441,7 +418,7 @@ function addSunlight(scene) {
     scene.add(sunlight);
   }
   // Make the dino chase the player
-function checkDistance() {
+function checkViolation() {
 
     WORLD.streetSignList.forEach((sign) => {
         
