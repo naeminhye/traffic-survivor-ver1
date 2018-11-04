@@ -4,7 +4,8 @@ var PLAYER = PLAYER || {
     status: {
         moving: false,
         health: 100,
-        violation: 0
+        violation: 0,
+        speed: 0
     }
 };
 var UNITWIDTH = 9;                 // Width of a cubes in the maze
@@ -328,6 +329,10 @@ WORLD.animate = function () {
             
     }
 
+    // PLAYER.pin = $("#player-pin");
+    PLAYER.pin.css( "left", (WORLD.player.position.x / 5) * 2 - 10 );
+    PLAYER.pin.css( "top", (WORLD.player.position.z / 5) * 2 - 10 );
+
     WORLD.controls.update(Date.now() - time);
     
     checkViolation();
@@ -335,15 +340,10 @@ WORLD.animate = function () {
         $("#message").css("display", "none");
     }
 
-    $("#speed").text(WORLD.playerSpeed);
+    $("#speed").text(PLAYER.status.speed);
     // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
-
-
-    // $("#message").text(compass(WORLD.camera.getWorldDirection(new THREE.Vector3(0, 0, 0))));
-    // $("#message").text("Delta: " + (Date.now() - time));
-    // WORLD.setSpeed(WORLD.chart, WORLD.playerSpeed);
 
 }
 

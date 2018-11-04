@@ -47,7 +47,12 @@
     <!-- <div class="info">
         <div id="message" class="warning-message"></div>
     </div> -->
-    <div class="map">
+    <div class="mini-map">
+        <canvas id="miniMap"></canvas>
+        <div id="player-pin" class="pin-holder">
+            <span class="map-pin blue"></span>
+            <div class="pin-pulse"></div>
+        </div>
     </div>
 
     <div id="controllers">
@@ -163,6 +168,8 @@
 
     </script>
 
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+    <script src="core/config/firebase.js" defer="defer"></script>
     <script src="core/controls/PointerControls.js" defer="defer"></script>
     <script src="core/controls/ObjectControls.js" defer="defer"></script>
     <script src="core/utils/utils.js" defer="defer"></script>

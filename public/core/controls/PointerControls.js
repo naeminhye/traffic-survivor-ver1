@@ -258,7 +258,7 @@ var PointerControls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
 
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        WORLD.playerSpeed = (speed).toFixed(0)// * 5;
+        PLAYER.status.speed = (3.6 * speed).toFixed(1); // convert mps to kph
 
         yawObject.position.copy(cannonBody.position);
 

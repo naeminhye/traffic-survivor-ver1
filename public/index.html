@@ -45,20 +45,29 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+    <script src="core/config/firebase.js" defer="defer"></script>
     <script>
-        $("#start-btn").click(() => {
-            $("#login-dialog").css("display", "block");
-            $("#game-menu").css("display", "none");
-        });
+        $(document).ready(() => {
+            const database = firebase.database();
+            $("#start-btn").click(() => {
+                $("#login-dialog").css("display", "block");
+                $("#game-menu").css("display", "none");
+            });
 
-        $("#cancel-btn").click(() => {
-            $("#login-dialog").css("display", "none");
-            $("#game-menu").css("display", "flex");
-        });
+            $("#cancel-btn").click(() => {
+                $("#login-dialog").css("display", "none");
+                $("#game-menu").css("display", "flex");
+            });
 
-        $("#ok-btn").click(() => {
-            console.log("name")
-            window.location.href = 'levels.html'; 
+            $("#ok-btn").click(() => {
+                console.log("name")
+                // database.ref('users').push({
+                //     username: $('input#username').val(),
+                //     password: $('input#password').val()
+                // });
+                window.location.href = 'levels.html'; 
+            });
         });
     </script>
     
