@@ -28,7 +28,9 @@ var drawGround = function () {
     readMapInfoFromJson("./core/chapters/chapter_1/chapter_1.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
-        var CANVAS_UNIT = 2;
+        GAME.realMapUnit = UNIT_SIZE;
+        var CANVAS_UNIT = 3;
+        GAME.miniMapUnit = CANVAS_UNIT;
         var canvas = document.getElementById("miniMap");
 
         // load player's initial position
@@ -37,8 +39,8 @@ var drawGround = function () {
         // player's position on minimap 
         PLAYER.pin = $("#player-pin");
         PLAYER.pin.css( "display", "block" );
-        PLAYER.pin.css( "left", (WORLD.player.position.x / 5) * 2 - 10 );
-        PLAYER.pin.css( "top", (WORLD.player.position.z / 5) * 2 - 10 );
+        PLAYER.pin.css( "left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10 );
+        PLAYER.pin.css( "top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10 );
 
         /** load pavement and road */
         var roadMap = readMapFromFile(mapInfo.map_url);
@@ -47,59 +49,45 @@ var drawGround = function () {
         GAME.mapContext.canvas.height = CANVAS_UNIT * roadMap.length;
 
         loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "grey"
         });
         loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false, {
-            canvas_unit: CANVAS_UNIT,
             color: "red"
         });
         loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
-            canvas_unit: CANVAS_UNIT,
             color: "green"
         });
         loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true, {
-            canvas_unit: CANVAS_UNIT,
             color: "grey"
         });
 
@@ -190,11 +178,10 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
     findSubMap(map, id).forEach(function (tile) {
 
         if(minimap) {
-            var canvas_unit = minimap.canvas_unit;
             var color = minimap.color;
 
             GAME.mapContext.fillStyle = color;
-            GAME.mapContext.fillRect(tile.x * canvas_unit, tile.z * canvas_unit, tile.size * canvas_unit, tile.size * canvas_unit);
+            GAME.mapContext.fillRect(tile.x * GAME.miniMapUnit, tile.z * GAME.miniMapUnit, tile.size * GAME.miniMapUnit, tile.size * GAME.miniMapUnit);
         }
 
         var PLANE_X = ((2 * tile.x + tile.size - 1) * unit_size) / 2;
@@ -951,7 +938,7 @@ function loadModels() {
         {
             name: "camretrai-20-11",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -972,7 +959,7 @@ function loadModels() {
         {
             name: "camretrai-31-44",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -993,7 +980,7 @@ function loadModels() {
         {
             name: "camretrai-45-44",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1014,7 +1001,7 @@ function loadModels() {
         {
             name: "camrephai-34-49",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1035,7 +1022,7 @@ function loadModels() {
         {
             name: "camrephai-7-51",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1056,7 +1043,7 @@ function loadModels() {
         {
             name: "camrephai-7-61",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1077,7 +1064,7 @@ function loadModels() {
         {
             name: "nguocchieu-30-7",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1098,7 +1085,7 @@ function loadModels() {
         {
             name: "camquaydau-30-10",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1119,7 +1106,7 @@ function loadModels() {
         {
             name: "camquaydau-31-32",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "prohibition-sign",
             url: "./models/signs/traffic-sign.json",
             castShadow: true,
             receiveShadow: true,
@@ -1146,4 +1133,25 @@ function loadModels() {
 WORLD.loadMap = () => {
     drawGround();
     loadModels();
+
+    // WORLD.prohibitionSignList.forEach((sign) => {
+
+    //     GAME.mapContext.fillStyle = "orange";
+    //     GAME.mapContext.fillRect((sign.object.position.x / 5) * 2, (sign.object.position.z / 5) * 2, 5, 5);
+
+    // });
+
+    // WORLD.warningSignList.forEach((sign) => {
+
+    //     GAME.mapContext.fillStyle = "violet";
+    //     GAME.mapContext.fillRect((sign.object.position.x / 5) * 2, (sign.object.position.z / 5) * 2, 5, 5);
+    
+    // });
+
+    // WORLD.trafficLightList.forEach((light) => {
+
+    //     GAME.mapContext.fillStyle = "blue";
+    //     GAME.mapContext.fillRect((light.object.position.x / 5) * 2, (light.object.position.z / 5) * 2, 5, 5);
+    
+    // });
 }
