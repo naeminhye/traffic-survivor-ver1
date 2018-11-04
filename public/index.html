@@ -51,8 +51,9 @@
         $(document).ready(() => {
             const database = firebase.database();
             $("#start-btn").click(() => {
-                $("#login-dialog").css("display", "block");
-                $("#game-menu").css("display", "none");
+                window.location.href = 'levels.html'; 
+                // $("#login-dialog").css("display", "block");
+                // $("#game-menu").css("display", "none");
             });
 
             $("#cancel-btn").click(() => {

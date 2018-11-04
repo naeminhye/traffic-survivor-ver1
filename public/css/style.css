@@ -459,6 +459,7 @@ hr {
     left: 20px;
 }
 .pin-holder {
+    display: none;
     width: 20px;
     height: 20px;
     position: absolute;

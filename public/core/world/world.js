@@ -329,7 +329,7 @@ WORLD.animate = function () {
             
     }
 
-    // PLAYER.pin = $("#player-pin");
+    PLAYER.pin = $("#player-pin");
     PLAYER.pin.css( "left", (WORLD.player.position.x / 5) * 2 - 10 );
     PLAYER.pin.css( "top", (WORLD.player.position.z / 5) * 2 - 10 );
 

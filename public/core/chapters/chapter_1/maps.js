@@ -36,6 +36,7 @@ var drawGround = function () {
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
         // player's position on minimap 
         PLAYER.pin = $("#player-pin");
+        PLAYER.pin.css( "display", "block" );
         PLAYER.pin.css( "left", (WORLD.player.position.x / 5) * 2 - 10 );
         PLAYER.pin.css( "top", (WORLD.player.position.z / 5) * 2 - 10 );
 
@@ -124,10 +125,10 @@ var drawGround = function () {
             cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
-            WORLD.world.add(createBoxBody(cube, function (object) {
-                if (object.body.id == 0)
-                    console.log("Player collided with walls.");
-            }));
+            // WORLD.world.add(createBoxBody(cube, function (object) {
+            //     if (object.body.id == 0)
+            //         console.log("Player collided with walls.");
+            // }));
         });
 
         findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function (tile) {
@@ -149,10 +150,10 @@ var drawGround = function () {
             cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
-            WORLD.world.add(createBoxBody(cube, function (object) {
-                if (object.body.id == 0)
-                    console.log("Player collided with walls.");
-            }));
+            // WORLD.world.add(createBoxBody(cube, function (object) {
+            //     if (object.body.id == 0)
+            //         console.log("Player collided with walls.");
+            // }));
         });
 
         mapInfo.one_ways.forEach(function(child) {

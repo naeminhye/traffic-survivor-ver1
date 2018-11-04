@@ -31,28 +31,80 @@ var drawGround = function () {
     readMapInfoFromJson("./core/chapters/chapter_2/chapter_2.json", (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
+        var CANVAS_UNIT = 2;
+        var canvas = document.getElementById("miniMap");
 
         // load player's initial position
         WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
+        // player's position on minimap 
+        PLAYER.pin = $("#player-pin");
+        PLAYER.pin.css( "display", "block" );
+        PLAYER.pin.css( "left", (WORLD.player.position.x / 5) * 2 - 10 );
+        PLAYER.pin.css( "top", (WORLD.player.position.z / 5) * 2 - 10 );
 
         /** load pavement and road */
         var roadMap = readMapFromFile(mapInfo.map_url);
+        GAME.mapContext = canvas.getContext("2d");
+        GAME.mapContext.canvas.width  = CANVAS_UNIT * roadMap.length;
+        GAME.mapContext.canvas.height = CANVAS_UNIT * roadMap.length;
 
-        loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false);
-        loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true);
-        loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true);
+        loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "grey"
+        });
+        loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false, {
+            canvas_unit: CANVAS_UNIT,
+            color: "red"
+        });
+        loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
+            canvas_unit: CANVAS_UNIT,
+            color: "green"
+        });
+        loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true, {
+            canvas_unit: CANVAS_UNIT,
+            color: "grey"
+        });
 
 
         findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
@@ -67,7 +119,9 @@ var drawGround = function () {
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
@@ -113,8 +167,17 @@ var drawGround = function () {
  * @param {*} url // Texture url
  * @param {*} map 
  */
-const loadTextureToGround = (id, url, map, unit_size, isMultiple, callback) => {
+const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
     findSubMap(map, id).forEach(function (tile) {
+        
+        if(minimap) {
+            var canvas_unit = minimap.canvas_unit;
+            var color = minimap.color;
+
+            GAME.mapContext.fillStyle = color;
+            GAME.mapContext.fillRect(tile.x * canvas_unit, tile.z * canvas_unit, tile.size * canvas_unit, tile.size * canvas_unit);
+        }
+
         var PLANE_X = ((2 * tile.x + tile.size - 1) * unit_size) / 2;
         var PLANE_Z = ((2 * tile.z + tile.size - 1) * unit_size) / 2;
         var material = new THREE.MeshBasicMaterial({
