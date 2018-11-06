@@ -936,31 +936,31 @@ function loadModels() {
         // signs
         /** bien cam re trai */
         {
-            name: "camretrai-20-11",
-            loader_type: "object",
-            object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
-            castShadow: true,
-            receiveShadow: true,
-            children: {
+            "name": "camretrai-20-11",
+            "loader_type": "object",
+            "object_type": "prohibition-sign",
+            "url": "./models/signs/prohibition-sign.json",
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
                 "sign": {
-                    textureUrl: "./models/signs/camretrai-uvmap.png"
+                    "textureUrl": "./models/signs/camretrai-uvmap.png"
                 },
                 "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
+                    "textureUrl": "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(20 * 5, 0, 11 * 5),
-            scale: new THREE.Vector3(.3, .3, .3),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            direction: { x: 0, y: 0, z: - 1 },
-            info: "Prohibition Sign: No Left Turn!!"
+            "position": { "x": 20 * 5, "y": 0, "z": 11 * 5 },//new THREE.Vector3(20 * 5, 0, 11 * 5),
+            "scale": { "x": 0.3, "y": 0.3, "z": 0.3 },//new THREE.Vector3(.3, .3, .3),
+            "rotation": {"order": "XYZ", "x": 0, "y": Math.PI / 2, "z": 0},//new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
+            "direction": { "x": 0, "y": 0, "z": - 1 },
+            "info": "Prohibition Sign: No Left Turn!!"
         },
         {
             name: "camretrai-31-44",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -981,7 +981,7 @@ function loadModels() {
             name: "camretrai-45-44",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1002,7 +1002,7 @@ function loadModels() {
             name: "camrephai-34-49",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1023,7 +1023,7 @@ function loadModels() {
             name: "camrephai-7-51",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1044,7 +1044,7 @@ function loadModels() {
             name: "camrephai-7-61",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1065,7 +1065,7 @@ function loadModels() {
             name: "nguocchieu-30-7",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1086,7 +1086,7 @@ function loadModels() {
             name: "camquaydau-30-10",
             loader_type: "object",
             object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
+            url: "./models/signs/prohibition-sign.json",
             castShadow: true,
             receiveShadow: true,
             children: {
@@ -1104,25 +1104,25 @@ function loadModels() {
             info: "Prohibition Sign: No U Turn!!"
         },
         {
-            name: "camquaydau-31-32",
-            loader_type: "object",
-            object_type: "prohibition-sign",
-            url: "./models/signs/traffic-sign.json",
-            castShadow: true,
-            receiveShadow: true,
-            children: {
+            "name": "camquaydau-31-32",
+            "loader_type": "object",
+            "object_type": "prohibition-sign",
+            "url": "./models/signs/prohibition-sign.json",
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
                 "sign": {
-                    textureUrl: "./models/signs/camquaydau-uvmap.png"
+                    "textureUrl": "./models/signs/camquaydau-uvmap.png"
                 },
                 "pole": {
-                    textureUrl: "./models/signs/pole-uvmap.png"
+                    "textureUrl": "./models/signs/pole-uvmap.png"
                 }
             },
-            position: new THREE.Vector3(31 * 5, 0, 32 * 5),
-            scale: new THREE.Vector3(.3, .3, .3),
-            rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-            direction: { x: 0, y: 0, z: 1 },
-            info: "Prohibition Sign: No U Turn!!"
+            "position": {"x": 31 * 5, "y": 0, "z": 32 * 5},//new THREE.Vector3(31 * 5, 0, 32 * 5),
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},//new THREE.Vector3(0.3, 0.3, 0.3),
+            "rotation": {"order": "XYZ", "x": 0, "y": 0, "z": 0},//new THREE.Euler(0, 0, 0, "XYZ"),
+            "direction": { "x": 0, "y": 0, "z": 1 },
+            "info": "Prohibition Sign: No U Turn!!"
         },
     ];
 

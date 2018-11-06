@@ -36,6 +36,7 @@ var initialPosition;
 var infoBoxToggle = false; 
 WORLD.loaded = false;
 WORLD.warningFlag = false;
+var violationFlag = false;
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -491,12 +492,20 @@ function checkViolation() {
                 var angleDelta = zoneAngle - playerAngle;
                 
                 if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+                    // violation === true
+                    if(!violationFlag) {
+                        console.log("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
+                        violationFlag = true;
+                    }
                     toastr.error("You made a wrong turn and have entered a one way road!");
                     // $("infoImg").attr("src", child.infoImg);
                     // console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
                     $("#message").text("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
                 }
                 else {
+                    if(violationFlag) {
+                        violationFlag === false;
+                    }
                     // $("#infoBox").dialog("close");
                 }
                 
