@@ -822,7 +822,7 @@ function loadModels() {
             "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
             "position": new THREE.Vector3(34 * 5, 0, 36 * 5),
             "rotation": new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            "scale": {"x": 0.4, "y": 0.4, "z": 0.4},//new THREE.Vector3(.4, .4, .4),
+            "scale": {"x": 0.4, "y": 0.4, "z": 0.4},
             "castShadow": true,
             "receiveShadow": true,
         },
@@ -956,10 +956,10 @@ function loadModels() {
                     "textureUrl": "./models/signs/pole-uvmap.png"
                 }
             },
-            "position": new THREE.Vector3(20 * 5, 0, 11 * 5),
-            "scale": new THREE.Vector3(.3, .3, .3),
-            "rotation": new THREE.Euler(0, Math.PI / 2, 0, "XYZ"),
-            "direction": { x: 0, y: 0, z: -1 },
+            "position": {"x": 100, "y": 0, "z": 55},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": -1 },
             "info": "Turn Right"
         },
         {
@@ -978,11 +978,230 @@ function loadModels() {
                     "textureUrl": "./models/signs/pole-uvmap.png"
                 }
             },
-            "position": new THREE.Vector3(28 * 5, 0, 10 * 5),
-            "scale": new THREE.Vector3(.3, .3, .3),
-            "rotation": new THREE.Euler(0, 0, 0, "XYZ"),
-            "direction": { x: 1, y: 0, z: 0 },
+            "position": {"x": 140, "y": 0, "z": 50},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"},
+            "direction": { "x": 1, "y": 0, "z": 0 },
             "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "hieulenhthang-48-10",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/hieulenhthang-uvmap.png",
+                    "rotation": {"x": 0, "y": 0, "z": 3.141592653589793, "order": "XYZ"},
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 240, "y": 0, "z": 50},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": - 1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 1, "y": 0, "z": 0 }
+        },      
+        {
+            "name": "hieulenhthangphai-44-10",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/hieulenhthangphai-uvmap.png",
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 220, "y": 0, "z": 50},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"},
+            "direction": { "x": 1, "y": 0, "z": 0 }
+        },       
+        {
+            "name": "vongxuyen-55-13",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 275, "y": 0, "z": 65},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": 1 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-31-5",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 155, "y": 0, "z": 25},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": 1 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-36-7",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 180, "y": 0, "z": 35},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
+            "direction": { "x": -1, "y": 0, "z": 0 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-34-12",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 170, "y": 0, "z": 60},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": -1 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-58-20",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 290, "y": 0, "z": 100},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 1.5707963267948966, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": -1 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-53-18",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 265, "y": 0, "z": 90},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"},
+            "direction": { "x": 1, "y": 0, "z": 0 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "vongxuyen-60-15",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 300, "y": 0, "z": 75},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
+            "direction": { "x": -1, "y": 0, "z": 0 },
+            "info": "You are going to meet a roundabout"
+        },
+        {
+            "name": "huongphaiditheo-301b-20-7",
+            "loader_type": "object",
+            "object_type": "info-sign",
+            "url": "./models/signs/round-info-sign.json",
+            "animate": false,
+            "castShadow": true,
+            "receiveShadow": true,
+            "children": {
+                "sign": {
+                    "textureUrl": "./models/signs/hieulenhthang-uvmap.png",
+                    "rotation": {"x": 0, "y": 0, "z": 3.141592653589793, "order": "XYZ"}
+                },
+                "pole": {
+                    "textureUrl": "./models/signs/pole-uvmap.png"
+                }
+            },
+            "position": {"x": 100, "y": 0, "z": 35},
+            "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+            "rotation": {"x": 0, "y": 0, "z": 0, "order": "XYZ"},
+            "direction": { "x": 0, "y": 0, "z": -1 }
         },
     ];
 

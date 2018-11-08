@@ -942,8 +942,8 @@ function loadModels() {
         {
             "name": "camretrai-20-11",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -958,13 +958,13 @@ function loadModels() {
             "scale": { "x": 0.3, "y": 0.3, "z": 0.3 },
             "rotation": {"order": "XYZ", "x": 0, "y": 1.57079632679, "z": 0},
             "direction": { "x": 0, "y": 0, "z": - 1 },
-            "info": "Prohibition Sign: No Left Turn!!"
+            "info": "Regulatory Sign: No Left Turn!!"
         },
         {
             "name": "camretrai-31-44",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -979,13 +979,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": { "x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ" },
             "direction": { "x": 0, "y": 0, "z": 1 },
-            "info": "Prohibition Sign: No Left Turn!!"
+            "info": "Regulatory Sign: No Left Turn!!"
         },
         {
             "name": "camretrai-45-44",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1000,13 +1000,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": { "x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ" },
             "direction": { "x": 0, "y": 0, "z": 1 },
-            "info": "Prohibition Sign: No Left Turn!!"
+            "info": "Regulatory Sign: No Left Turn!!"
         },
         {
             "name": "camrephai-34-49",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1021,13 +1021,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": {"order": "XYZ", "x": 0, "y": 1.57079632679, "z": 0},
             "direction": { "x": 0, "y": 0, "z": - 1 },
-            "info": "Prohibition Sign: No Right Turn!!"
+            "info": "Regulatory Sign: No Right Turn!!"
         },
         {
             "name": "camrephai-7-51",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1042,13 +1042,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": {"order": "XYZ", "x": 0, "y": 1.57079632679, "z": 0},
             "direction": { "x": - 1, "y": 0, "z": 0 },
-            "info": "Prohibition Sign: No Right Turn!!"
+            "info": "Regulatory Sign: No Right Turn!!"
         },
         {
             "name": "camrephai-7-61",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1063,13 +1063,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ" },
             "direction": { "x": - 1, "y": 0, "z": 0 },
-            "info": "Prohibition Sign: No Right Turn!!"
+            "info": "Regulatory Sign: No Right Turn!!"
         },
         {
             "name": "nguocchieu-30-7",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1084,13 +1084,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ" },
             "direction": { "x": - 1, "y": 0, "z": 0 },
-            "info": "Prohibition Sign: Do Not Enter!!"
+            "info": "Regulatory Sign: Do Not Enter!!"
         },
         {
             "name": "camquaydau-30-10",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1105,13 +1105,13 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": {"order": "XYZ", "x": 0, "y": 0, "z": 0},
             "direction": { "x": 1, "y": 0, "z": 0 },
-            "info": "Prohibition Sign: No U Turn!!"
+            "info": "Regulatory Sign: No U Turn!!"
         },
         {
             "name": "camquaydau-31-32",
             "loader_type": "object",
-            "object_type": "prohibition-sign",
-            "url": "./models/signs/prohibition-sign.json",
+            "object_type": "regulatory-sign",
+            "url": "./models/signs/regulatory-sign.json",
             "castShadow": true,
             "receiveShadow": true,
             "children": {
@@ -1126,7 +1126,7 @@ function loadModels() {
             "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
             "rotation": {"order": "XYZ", "x": 0, "y": 0, "z": 0},
             "direction": { "x": 0, "y": 0, "z": 1 },
-            "info": "Prohibition Sign: No U Turn!!"
+            "info": "Regulatory Sign: No U Turn!!"
         },
     ];
 

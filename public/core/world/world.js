@@ -28,7 +28,7 @@ WORLD.dangerZones = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
-WORLD.prohibitionSignList = [];
+WORLD.regulatorySignList = [];
 WORLD.warningSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
@@ -421,7 +421,7 @@ function addSunlight(scene) {
   // Make the dino chase the player
 function checkViolation() {
 
-    WORLD.prohibitionSignList.forEach((sign) => {
+    WORLD.regulatorySignList.forEach((sign) => {
         
         if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
 

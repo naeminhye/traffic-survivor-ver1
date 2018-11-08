@@ -134,12 +134,12 @@ const loadModelToWorld = (model) => {
                     info: info
                 };
 
-                if(object_type === "prohibition-sign") {
+                if(object_type === "regulatory-sign") {
                     GAME.mapContext.fillStyle = "yellow";
                     GAME.mapContext.beginPath(); //Start path
                     GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                     GAME.mapContext.fill();
-                    WORLD.prohibitionSignList.push(storeObj);
+                    WORLD.regulatorySignList.push(storeObj);
                 }
                 else if(object_type === "warning-sign") {
                     // GAME.mapContext.fillStyle = "orange";
