@@ -14,7 +14,7 @@
                 "sign_id": "301d",
                 "name": "hieulenhphai-20-11",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -37,7 +37,7 @@
                 "sign_id": "303",
                 "name": "vongxuyen-28-10",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -60,7 +60,7 @@
                 "sign_id": "301a",
                 "name": "hieulenhthang-48-10",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -83,7 +83,7 @@
                 "sign_id": "301f",
                 "name": "hieulenhthangphai-44-10",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -105,7 +105,7 @@
                 "sign_id": "301f",
                 "name": "vongxuyen-55-13",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -125,9 +125,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-31-5",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -147,9 +148,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-36-7",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -169,9 +171,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-34-12",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -191,9 +194,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-58-20",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -213,9 +217,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-53-18",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -235,9 +240,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301f",
                 "name": "vongxuyen-60-15",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -257,9 +263,10 @@
                 "info": "You are going to meet a roundabout"
             },
             {
+                "sign_id": "301b",
                 "name": "huongphaiditheo-301b-20-7",
                 "loader_type": "object",
-                "object_type": "info-sign",
+                "object_type": "guide_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,

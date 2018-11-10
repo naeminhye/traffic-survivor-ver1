@@ -335,7 +335,7 @@ hr {
 #game-menu {
   width: 50vw;
   height: 50vh;
-  background-color: blueviolet;
+  background-color: cornflowerblue;
   padding: 20px;
   text-decoration: none;
   color: white;
@@ -364,7 +364,7 @@ hr {
 }
 .dialog-content {
     padding: 20px;
-    background-color: blueviolet;
+    background-color: cornflowerblue;
     width: 100%;
     height: 100%;
     /* height: fit-content;

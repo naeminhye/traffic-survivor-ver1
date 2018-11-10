@@ -880,14 +880,14 @@ function loadModels() {
         {
             name: "bien-bao-duong-khong-uu-tien",
             loader_type: "object",
-            object_type: "info-sign",
-            url: "./models/signs/big-square-info-sign.json",
+            object_type: "warning-sign",
+            url: "./models/signs/warning-sign.json",
             animate: false,
             castShadow: true,
             receiveShadow: true,
             children: {
                 "sign": {
-                    textureUrl: "./models/signs/haytainan-uvmap.png"
+                    textureUrl: "./models/signs/khonguutien2-uvmap.png"
                 },
                 "pole": {
                     textureUrl: "./models/signs/pole-uvmap.png"
@@ -899,28 +899,6 @@ function loadModels() {
             direction: { x: 1, y: 0, z: 1 },
             info: "Danger Warning Sign: Intersection with minor road"
         },
-        // {
-        //     name: "bien-bao-duong-khong-uu-tien",
-        //     loader_type: "object",
-        //     object_type: "warning-sign",
-        //     url: "./models/signs/warning-sign.json",
-        //     animate: false,
-        //     castShadow: true,
-        //     receiveShadow: true,
-        //     children: {
-        //         "sign": {
-        //             textureUrl: "./models/signs/khonguutien2-uvmap.png"
-        //         },
-        //         "pole": {
-        //             textureUrl: "./models/signs/pole-uvmap.png"
-        //         }
-        //     },
-        //     position: new THREE.Vector3(15 * 5, 0, 10 * 5),
-        //     scale: new THREE.Vector3(.3, .3, .3),
-        //     rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        //     direction: { x: 1, y: 0, z: 1 },
-        //     info: "Danger Warning Sign: Intersection with minor road"
-        // },
         {
             name: "bien-bao-duong-uu-tien",
             loader_type: "object",

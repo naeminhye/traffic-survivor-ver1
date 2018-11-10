@@ -405,7 +405,7 @@ function loadModels() {
             "name": "simple-car5",
             "loader_type": "fbx",
             "object_type": "vehicle",
-            "position": {"x": 5, "y": 1.3, "z": 175},//new THREE.Vector3(1 * 5, 1.3, 35 * 5),
+            "position": {"x": 5, "y": 1.3, "z": 175},
             "url": "./models/fbx/simple-car/simple-car.fbx",
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
