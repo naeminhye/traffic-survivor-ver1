@@ -516,4 +516,22 @@ hr {
       opacity: 0;
     }
   }
-  
+  .score {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  }
+  .health, .money {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .health-number, .money-number {
+    font-size: 25px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 600;
+    margin: 0 20px;
+  }

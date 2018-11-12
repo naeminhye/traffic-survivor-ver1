@@ -47,7 +47,7 @@ const loadModelToWorld = (model) => {
         direction, 
         textureUrl,
         info = null,
-        path,
+        path = null,
         velocity,
     } = model;
     
