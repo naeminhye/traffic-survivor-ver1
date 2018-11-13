@@ -156,6 +156,26 @@ var environmentInit = function (file) {
                 mapInfo.models[type].forEach(md => loadModelToWorld(md));
             });
         }
+
+        mapInfo.intersects.forEach(function(child) {
+            var pos = child;
+
+            var area, areaBBox;
+            area = new THREE.Mesh(
+                new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                new THREE.MeshBasicMaterial({
+                    color: 0xff0000,
+                    wireframe: true
+                })
+            );
+            var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+            var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+            area.position.set(XWidth, 0, ZWidth);
+            area.geometry.computeBoundingBox();
+            WORLD.scene.add(area);
+            areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+            WORLD.intersects.push({ box: area, bbox: areaBBox });
+        });
     });
 }
 

@@ -16,21 +16,21 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 	var flag = false;
 	this._object.position.copy(this.path.getPointAt(this._pos));
 
-	WORLD.trafficLightList.forEach((light) => {
+	// WORLD.trafficLightList.forEach((light) => {
         
-        if (light.object.position.distanceTo(WORLD.player.position) < 5) {
+    //     if (light.object.position.distanceTo(WORLD.player.position) < 10) {
 
-            var v = new THREE.Vector3();
-            var objectVector = this._object.getWorldDirection(v);
-            var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
-            var objectAngle  = THREE.Math.radToDeg(Math.atan2(objectVector.x, objectVector.z));
-            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-            var angleDelta = signAngle - objectAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && light.currentStatus === "REDLIGHT") {
-				flag = true;
-			}
-        } 
-    });
+    //         var v = new THREE.Vector3();
+    //         var objectVector = this._object.getWorldDirection(v);
+    //         var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
+    //         var objectAngle  = THREE.Math.radToDeg(Math.atan2(objectVector.x, objectVector.z));
+    //         var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+    //         var angleDelta = signAngle - objectAngle;
+    //         if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && light.currentStatus === "REDLIGHT") {
+	// 			flag = true;
+	// 		}
+    //     } 
+    // });
 
 	// if(!flag) {
 	// 	if(this._object.position.distanceTo(WORLD.player.position) > 10) {

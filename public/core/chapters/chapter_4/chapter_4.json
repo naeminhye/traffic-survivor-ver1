@@ -3,9 +3,9 @@
     "size": 5,
     "player": {
         "position": {
-            "x": 25,
+            "x": 115, 
             "y": 1.3,
-            "z": 245
+            "z": 175
         }
     },
     "models": {
@@ -640,5 +640,25 @@
                 "direction": { "x": -1, "y": 0, "z": 0 }
             }
         ]
-    }
+    },
+    "intersects": [
+        {
+            "x": 32,
+            "z": 8,
+            "x_width": 2, 
+            "z_width": 2
+		},
+        {
+            "x": 32,
+            "z": 16,
+            "x_width": 2, 
+            "z_width": 2
+		},
+        {
+            "x": 32,
+            "z": 34,
+            "x_width": 2, 
+            "z_width": 2
+		}
+    ]
 }

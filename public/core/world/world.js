@@ -25,6 +25,7 @@ WORLD.vehicleControls = [];
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
 WORLD.dangerZones = [];
+WORLD.intersects = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
@@ -418,8 +419,9 @@ function addSunlight(scene) {
 
     scene.add(sunlight);
   }
-  // Make the dino chase the player
-function checkViolation() {
+
+var trafficLightViolation = false;
+  function checkViolation() {
 
     WORLD.regulatorySignList.forEach((sign) => {
         
@@ -464,23 +466,45 @@ function checkViolation() {
         } 
     });
 
-    WORLD.trafficLightList.forEach((light) => {
-        
-        if (light.object.position.distanceTo(WORLD.player.position) < 5) {
+    if(!trafficLightViolation) {
+        var _flag = false;
+        WORLD.trafficLightList.forEach((light) => {
+            if ( light.object.position.distanceTo(WORLD.player.position) < 10 
+                /** kiểm tra trạng thái trước đó, 
+                 * nếu trafficLightViolation === false 
+                 * =>> vừa đi vào vùng intersect */
+                && !trafficLightViolation ) {
 
-            var v = new THREE.Vector3();
-            var playerVector = WORLD.player.getWorldDirection(v);
-            var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
-            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-            var angleDelta = signAngle - playerAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && light.currentStatus === "REDLIGHT") {
-                // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
-                toastr.error("Red light!");
+                var v = new THREE.Vector3();
+                var playerVector = WORLD.player.getWorldDirection(v);
+                var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
+                var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+                var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+                var angleDelta = signAngle - playerAngle;
+                
+                /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
+                if( !((Math.abs(minifyAngle(angleDelta)) <= 90) ) 
+                /** kiểm tra trạng thái của đèn */
+                    && light.currentStatus === "REDLIGHT" ) {
+                    _flag = true;
+                }
+            } 
+        });
+        WORLD.intersects.forEach(function(child) {
+            if (child.bbox.containsPoint(WORLD.player.position)) {
+                if(_flag && !trafficLightViolation) {
+                    toastr.error("Vượt đèn đỏ!");
+                    trafficLightViolation = true;
+                    console.log("trafficLightViolation")
+                }
             }
-        } 
-    });
-    
+        });
+        if(!_flag && trafficLightViolation) {
+            trafficLightViolation = false;
+        }
+
+    }
+
     if(WORLD.dangerZones) {
         WORLD.dangerZones.forEach(function(child) {
             if (child.bbox.containsPoint(WORLD.player.position)) {
