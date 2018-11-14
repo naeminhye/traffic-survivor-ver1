@@ -435,3 +435,52 @@ function loadCubemap(path, format) {
     cubeMap.format = THREE.RGBFormat;
     return cubeMap;
 }
+
+const jsonToThreeObject = (json) => {
+    var temp = [];
+    json.forEach((obj) => {
+        temp.push(new THREE.Vector3(p.x, p.y, p.z));        
+    });
+    return temp;
+}
+
+const mappingSigns = (sign) => {
+    var data = {
+      loader_type: "object",
+      castShadow: true,
+      receiveShadow: true
+    };
+	
+    data.object_type = sign.object_type;
+	data.sign_id = sign.sign_id;
+    data.name = sign.name;
+    data.url = sign.url;
+	
+	switch(sign.directionToMap) {
+		case "up":
+			data.direction = new THREE.Vector3(0, 0, 1);
+            data.rotation = new THREE.Euler(0, -Math.PI/2, 0, "XYZ");
+			break;
+		case "down":
+			data.direction = new THREE.Vector3(0, 0, -1);
+            data.rotation = new THREE.Euler(0, Math.PI/2, 0, "XYZ");
+			break;
+		case "left":
+			data.direction = new THREE.Vector3(1, 0, 0);
+            data.rotation = new THREE.Euler(0, 0, 0, "XYZ");
+			break;
+		case "right":
+			data.direction = new THREE.Vector3(-1, 0, 0);
+            data.rotation = new THREE.Euler(0, Math.PI, 0, "XYZ");
+			break;
+	}
+	
+	data.scale = new THREE.Vector3(0.3, 0.3, 0.3);
+    data.position = new THREE.Vector3(sign.x * UNIT_SIZE, 0, sign.z * UNIT_SIZE);    
+	
+	if(sign.children) {
+		data.children = sign.children;
+	}
+	
+	return data;
+}

@@ -226,18 +226,7 @@ function loadModels() {
             "animate": false,
             "castShadow": true,
             "receiveShadow": true,
-            // "path": new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(32 * 5, 1.3, 0 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 66 * 5)
-            // ]),
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [{"x":160,"y":1.3,"z":0},{"x":160,"y":1.3,"z":330}],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [{"x":160,"y":1.3,"z":0},{"x":160,"y":1.3,"z":330}],
             "velocity": 0.01
         },
         {
@@ -251,21 +240,10 @@ function loadModels() {
             "animate": false,
             "castShadow": true,
             "receiveShadow": true,
-            // "path": new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(32 * 5, 1.3, 4 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 66 * 5)
-            // ]),
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [
-                    { "x": 160, "y": 1.3, "z": 20 },
-                    { "x": 160, "y": 1.3, "z": 330 }
-                ],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [
+                { "x": 160, "y": 1.3, "z": 20 },
+                { "x": 160, "y": 1.3, "z": 330 }
+            ],
             "velocity": 0.03
         },
         {
@@ -277,24 +255,7 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            // "path": new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(60 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(48 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 9 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 45 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 46 * 5),
-            //     new THREE.Vector3(48 * 5, 1.3, 46 * 5),
-            //     new THREE.Vector3(55 * 5, 1.3, 46 * 5),
-            // ]),
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
             "velocity": 0.01
         },
         {
@@ -306,24 +267,7 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            // "path": new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(60 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(48 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 9 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 45 * 5),
-            //     new THREE.Vector3(47 * 5, 1.3, 46 * 5),
-            //     new THREE.Vector3(48 * 5, 1.3, 46 * 5),
-            //     new THREE.Vector3(55 * 5, 1.3, 46 * 5),
-            // ]),
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
             "velocity": 0.02
         },
         {
@@ -335,39 +279,19 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            // "path": new THREE.CatmullRomCurve3([
-            //     new THREE.Vector3(65 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(33 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 8 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 9 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 33 * 5),
-            //     new THREE.Vector3(32 * 5, 1.3, 34 * 5),
-            //     new THREE.Vector3(31 * 5, 1.3, 34 * 5),
-            //     new THREE.Vector3(19 * 5, 1.3, 34 * 5),
-            //     new THREE.Vector3(18 * 5, 1.3, 34 * 5),
-            //     new THREE.Vector3(18 * 5, 1.3, 35 * 5),
-            //     new THREE.Vector3(18 * 5, 1.3, 62 * 5),
-            // ]),
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [
-                    { "x": 325, "y": 1.3, "z": 40 },
-                    { "x": 165, "y": 1.3, "z": 40 },
-                    { "x": 160, "y": 1.3, "z": 40 },
-                    { "x": 160, "y": 1.3, "z": 45 },
-                    { "x": 160, "y": 1.3, "z": 165 },
-                    { "x": 160, "y": 1.3, "z": 170 },
-                    { "x": 155, "y": 1.3, "z": 170 },
-                    { "x": 95, "y": 1.3, "z": 170 },
-                    { "x": 90, "y": 1.3, "z": 170 },
-                    { "x": 90, "y": 1.3, "z": 175 },
-                    { "x": 90, "y": 1.3, "z": 310 }
-                ],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [
+                { "x": 325, "y": 1.3, "z": 40 },
+                { "x": 165, "y": 1.3, "z": 40 },
+                { "x": 160, "y": 1.3, "z": 40 },
+                { "x": 160, "y": 1.3, "z": 45 },
+                { "x": 160, "y": 1.3, "z": 165 },
+                { "x": 160, "y": 1.3, "z": 170 },
+                { "x": 155, "y": 1.3, "z": 170 },
+                { "x": 95, "y": 1.3, "z": 170 },
+                { "x": 90, "y": 1.3, "z": 170 },
+                { "x": 90, "y": 1.3, "z": 175 },
+                { "x": 90, "y": 1.3, "z": 310 }
+            ],
             "velocity": 0.02
         },
         {
@@ -379,26 +303,19 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [
-                    { "x": 5, "y": 1.3, "z": 175 },
-                    { "x": 90, "y": 1.3, "z": 175 },
-                    { "x": 95, "y": 1.3, "z": 175 },
-                    { "x": 95, "y": 1.3, "z": 170 },
-                    { "x": 95, "y": 1.3, "z": 50 },
-                    { "x": 95, "y": 1.3, "z": 45 },
-                    { "x": 100, "y": 1.3, "z": 45 },
-                    { "x": 225, "y": 1.3, "z": 45 },
-                    { "x": 230, "y": 1.3, "z": 45 },
-                    { "x": 230, "y": 1.3, "z": 50 },
-                    { "x": 230, "y": 1.3, "z": 225 }
-                ],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [
+                { "x": 5, "y": 1.3, "z": 175 },
+                { "x": 90, "y": 1.3, "z": 175 },
+                { "x": 95, "y": 1.3, "z": 175 },
+                { "x": 95, "y": 1.3, "z": 170 },
+                { "x": 95, "y": 1.3, "z": 50 },
+                { "x": 95, "y": 1.3, "z": 45 },
+                { "x": 100, "y": 1.3, "z": 45 },
+                { "x": 225, "y": 1.3, "z": 45 },
+                { "x": 230, "y": 1.3, "z": 45 },
+                { "x": 230, "y": 1.3, "z": 50 },
+                { "x": 230, "y": 1.3, "z": 225 }
+            ],
             "velocity": 0.03
         },
         {
@@ -410,7 +327,7 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": new THREE.CatmullRomCurve3([
+            "path": [
                 new THREE.Vector3(1 * 5, 1.3, 35 * 5),
                 new THREE.Vector3(18 * 5, 1.3, 35 * 5),
                 new THREE.Vector3(19 * 5, 1.3, 35 * 5),
@@ -422,25 +339,25 @@ function loadModels() {
                 new THREE.Vector3(46 * 5, 1.3, 9 * 5),
                 new THREE.Vector3(46 * 5, 1.3, 10 * 5),
                 new THREE.Vector3(46 * 5, 1.3, 45 * 5),
-            ]),
+            ],
             "velocity": 0.03
         },
         {
             "name": "simple-car6",
             "loader_type": "fbx",
             "object_type": "vehicle",
-            "position": {"x": 0 * 5, "y": 1.3, "z": 9 * 5},//new THREE.Vector3(0 * 5, 1.3, 9 * 5),
+            "position": {"x": 0, "y": 1.3, "z": 45},
             "url": "./models/fbx/simple-car/simple-car.fbx",
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": new THREE.CatmullRomCurve3([
-                new THREE.Vector3(0 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(30 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 1 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 64 * 5)
-            ]),
+            "path": [
+                {"x": 0, "y": 1.3, "z": 45},
+                {"x": 150, "y": 1.3, "z": 45},
+                {"x": 160, "y": 1.3, "z": 45},
+                {"x": 160, "y": 1.3, "z": 5},
+                {"x": 160, "y": 1.3, "z": 320}
+            ],
             "velocity": 0.02
         },
         {
@@ -452,13 +369,13 @@ function loadModels() {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": new THREE.CatmullRomCurve3([
-                new THREE.Vector3(7 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(30 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 9 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 1 * 5),
-                new THREE.Vector3(32 * 5, 1.3, 64 * 5)
-            ]),
+            "path": [
+                {"x": 35, "y":1.3, "z": 45},
+                {"x": 150, "y": 1.3, "z": 45},
+                {"x": 160, "y": 1.3, "z": 45},
+                {"x": 160, "y": 1.3, "z": 5},
+                {"x": 160, "y": 1.3, "z": 320}
+            ],
             "velocity": 0.02
         },
         {
@@ -1137,25 +1054,4 @@ function loadModels() {
 WORLD.loadMap = () => {
     drawGround();
     loadModels();
-
-    // WORLD.prohibitionSignList.forEach((sign) => {
-
-    //     GAME.mapContext.fillStyle = "orange";
-    //     GAME.mapContext.fillRect((sign.object.position.x / 5) * 2, (sign.object.position.z / 5) * 2, 5, 5);
-
-    // });
-
-    // WORLD.warningSignList.forEach((sign) => {
-
-    //     GAME.mapContext.fillStyle = "violet";
-    //     GAME.mapContext.fillRect((sign.object.position.x / 5) * 2, (sign.object.position.z / 5) * 2, 5, 5);
-    
-    // });
-
-    // WORLD.trafficLightList.forEach((light) => {
-
-    //     GAME.mapContext.fillStyle = "blue";
-    //     GAME.mapContext.fillRect((light.object.position.x / 5) * 2, (light.object.position.z / 5) * 2, 5, 5);
-    
-    // });
 }

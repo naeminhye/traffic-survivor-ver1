@@ -172,7 +172,6 @@ var environmentInit = function (file) {
             var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
             area.position.set(XWidth, 0, ZWidth);
             area.geometry.computeBoundingBox();
-            WORLD.scene.add(area);
             areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
             WORLD.intersects.push({ box: area, bbox: areaBBox });
         });

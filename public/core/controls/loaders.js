@@ -165,7 +165,7 @@ const loadModelToWorld = (model) => {
                 else if(object_type === "vehicle") {
                     WORLD.vehicle.push(storeObj);
                     if(path) {
-                        var control = new CONTROLS.PathControls(obj, path, {"velocity": velocity || 0.02});
+                        var control = new CONTROLS.PathControls(obj, new THREE.CatmullRomCurve3(jsonToThreeObject(path)), {"velocity": velocity || 0.02});
                         // control.showPath();
                         WORLD.vehicleControls.push(control);
                     }

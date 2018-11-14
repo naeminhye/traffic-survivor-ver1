@@ -13,17 +13,10 @@ const loadModels = () => {
             "animate": false,
             "castShadow": true,
             "receiveShadow": true,
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [
-                    {"x":160,"y":1.3,"z":0},
-                    {"x":160,"y":1.3,"z":330}
-                ],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [
+                {"x":160,"y":1.3,"z":0},
+                {"x":160,"y":1.3,"z":330}
+            ],
             "velocity": 0.01
         },
         {
@@ -37,17 +30,10 @@ const loadModels = () => {
             "animate": false,
             "castShadow": true,
             "receiveShadow": true,
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [
-                    {"x":160,"y":1.3,"z":20},
-                    {"x":160,"y":1.3,"z":330}
-                ],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [
+                {"x":160,"y":1.3,"z":20},
+                {"x":160,"y":1.3,"z":330}
+            ],
             "velocity": 0.03
         },
         {
@@ -59,14 +45,7 @@ const loadModels = () => {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
             "velocity": 0.01
         },
         {
@@ -78,14 +57,7 @@ const loadModels = () => {
             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
             "castShadow": true,
             "receiveShadow": true,
-            "path": {
-                "arcLengthDivisions": 200,
-                "closed": false,
-                "curveType": "centripetal",
-                "points": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
-                "tension": 0.5,
-                "type": "CatmullRomCurve3",
-            },
+            "path": [{"x":300,"y":1.3,"z":40},{"x":240,"y":1.3,"z":40},{"x":235,"y":1.3,"z":40},{"x":235,"y":1.3,"z":45},{"x":235,"y":1.3,"z":225},{"x":235,"y":1.3,"z":230},{"x":240,"y":1.3,"z":230},{"x":275,"y":1.3,"z":230}],
             "velocity": 0.02
         },
         {

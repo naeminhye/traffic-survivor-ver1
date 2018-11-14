@@ -466,6 +466,9 @@ var trafficLightViolation = false;
         } 
     });
 
+    /** 
+     * check Red Light violation
+     */
     if(!trafficLightViolation) {
         var _flag = false;
         WORLD.trafficLightList.forEach((light) => {
@@ -493,9 +496,11 @@ var trafficLightViolation = false;
         WORLD.intersects.forEach(function(child) {
             if (child.bbox.containsPoint(WORLD.player.position)) {
                 if(_flag && !trafficLightViolation) {
-                    toastr.error("Vượt đèn đỏ!");
                     trafficLightViolation = true;
-                    console.log("trafficLightViolation")
+                    var date = new Date();
+
+                    console.log("Violation at " + date)
+                    console.log("You have just blown through a red light!!");
                 }
             }
         });
