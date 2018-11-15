@@ -38,6 +38,7 @@ var infoBoxToggle = false;
 WORLD.loaded = false;
 WORLD.warningFlag = false;
 var violationFlag = false;
+GAME.hasStarted = false;
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -113,6 +114,10 @@ if (havePointerLock) {
     };
 
     $("#start-btn").click(() => {
+        if(!GAME.hasStarted) {
+            $("#start-btn").text("Resume");
+            GAME.hasStarted = true;
+        }
         resumeGame();
     });
 
@@ -362,47 +367,6 @@ WORLD.detectCollision = () => {
     return flag;
 }
 
-// Takes a ray and sees if it's colliding with anything from the list of collidable objects
-// Returns true if certain distance away from object
-function rayIntersect(ray, distance) {
-    var intersects = ray.intersectObjects(WORLD.collidableObjects);
-    for (var i = 0; i < intersects.length; i++) {
-        if (intersects[i].distance < distance) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function box() {
-    // Add boxes
-    var halfExtents = new CANNON.Vec3(1, 1, 1);
-    var boxShape = new CANNON.Box(halfExtents);
-    var boxGeometry = new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2);
-    for (var i = 0; i < 2; i++) {
-        var x = (Math.random()-0.5)*20;
-        var y = 1 + (Math.random()-0.5)*1;
-        var z = (Math.random()-0.5)*20;
-        var boxBody = new CANNON.Body({ mass: 5 });
-        boxBody.addShape(boxShape);
-        var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-        material2 = new THREE.MeshLambertMaterial({ color: randomColor });
-        var boxMesh = new THREE.Mesh(boxGeometry, material2);
-        WORLD.world.add(boxBody);
-        WORLD.scene.add(boxMesh);
-        boxBody.position.set(x, y, z);
-        boxMesh.position.set(x, y, z);
-        boxMesh.castShadow = true;
-        boxMesh.receiveShadow = true;
-        boxes.push(boxBody);
-        boxMeshes.push(boxMesh);
-        boxBody.addEventListener('collide', function(object) {
-            // if(object.body.id == 0) 
-            //     console.log("Collided!!", object.body);
-        });
-    }
-}
-
 function addSunlight(scene) {
     var sunlight = new THREE.DirectionalLight();
     sunlight.position.set(250, 250, 250);
@@ -500,7 +464,18 @@ var trafficLightViolation = false;
                     var date = new Date();
 
                     console.log("Violation at " + date)
-                    console.log("You have just blown through a red light!!");
+                    // console.log("You have just blown through a red light!!");
+                    toastr.error("You have just blown through a red light!!");
+                    //$("#floating-info").css("display", "flex");
+                    $("#floating-info").toggle();
+                    $('#floating-info').animateCss('fadeOutUp', function() {
+                        // hide after animation
+                        var oldNum = Number($($(".money-number")[0]).text());
+                        var newNum = -100000;
+                        $($(".money-number")[0]).text(oldNum + newNum)
+                        $("#floating-info").toggle();
+                        // $("#floating-info").css("display", "none");
+                      });
                 }
             }
         });

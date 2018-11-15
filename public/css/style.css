@@ -414,7 +414,7 @@ hr {
     position: relative;
 }
 
-.lesson-container > div {
+.lesson-container > .lesson-list {
     width: 500px; 
     display: flex; 
     min-height: 150px;
@@ -422,6 +422,16 @@ hr {
     justify-content: space-around; 
     align-items: center; 
     padding-top: 50px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.lesson-container > .lesson-list > a {
+    padding: 10px;
+    text-decoration: none;
+}
+
+.lesson-container > .lesson-list > a:hover {
+    transform: scale(1.2);
 }
 
 .lesson-item {
@@ -534,4 +544,39 @@ hr {
     font-family: 'Press Start 2P', cursive;
     font-weight: 600;
     margin: 0 20px;
+  }
+
+  .toast {
+    border: 6px black solid;
+    background-color: cornflowerblue;
+    font-family: "Press Start 2P", cursive;
+    border-radius: 0;    
+    top: 60px;
+  }
+
+  .toast-error {
+    background-color: #d9534f;
+  }
+
+  .floating-info {
+      display: none;
+      position: absolute;
+      top: 100px;
+      width: 100%;
+      background-color: transparent;
+      justify-content: center;
+  }
+  .floating-info > span {
+      text-align: center;
+      font-family: "Press Start 2P", cursive;
+      font-size: 40px;
+      color: red;
+      -webkit-text-stroke: 2px #000;
+          -webkit-text-stroke-width: 2px;
+          -webkit-text-stroke-color: rgb(0, 0, 0);
+      text-shadow:  3px 3px 0 #000, 
+                    -1px -1px 0 #000, 
+                    1px -1px 0 #000, 
+                    -1px 1px 0 #000, 
+                    1px 1px 0 #000;
   }

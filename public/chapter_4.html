@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="css/info.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 </head>
 <body>
     <div id="infoButton"></div>
@@ -54,6 +55,9 @@
                 <img src="images/money.gif" width="50" height="50"/>
                 <span class="money-number">0</span>
             </div>
+        </div>
+        <div id="floating-info" class="floating-info">
+            <span>- 100000VND</span>
         </div>
         <div class="turn-signals">
             <div class="left-signal">
@@ -165,7 +169,34 @@
         }
 
     </script>
+    <script>
+        $.fn.extend({
+            animateCss: function(animationName, callback) {
+                var animationEnd = (function(el) {
+                var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                };
 
+                for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                    return animations[t];
+                    }
+                }
+                })(document.createElement('div'));
+
+                this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+
+                if (typeof callback === 'function') callback();
+                });
+
+                return this;
+            },
+        });
+    </script>
     <script src="core/controls/PointerControls.js" defer="defer"></script>
     <script src="core/controls/ObjectControls.js" defer="defer"></script>
     <script src="core/utils/utils.js" defer="defer"></script>
