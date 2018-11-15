@@ -439,7 +439,7 @@ function loadCubemap(path, format) {
 const jsonToThreeObject = (json) => {
     var temp = [];
     json.forEach((obj) => {
-        temp.push(new THREE.Vector3(p.x, p.y, p.z));        
+        temp.push(new THREE.Vector3(obj.x, obj.y, obj.z));        
     });
     return temp;
 }

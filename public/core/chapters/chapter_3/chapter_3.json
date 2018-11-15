@@ -286,5 +286,25 @@
                 "direction": { "x": 0, "y": 0, "z": -1 }
             }
         ]
-    }
+    },
+    "intersects": [
+        {
+            "x": 4,
+            "z": 32,
+            "x_width": 2, 
+            "z_width": 2
+		},
+        {
+            "x": 18,
+            "z": 32,
+            "x_width": 2, 
+            "z_width": 2
+		},
+        {
+            "x": 42,
+            "z": 32,
+            "x_width": 2, 
+            "z_width": 2
+		}
+    ]
 }

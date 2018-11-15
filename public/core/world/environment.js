@@ -156,7 +156,8 @@ var environmentInit = function (file) {
                 mapInfo.models[type].forEach(md => loadModelToWorld(md));
             });
         }
-
+        
+        /** load intersect areas */
         mapInfo.intersects.forEach(function(child) {
             var pos = child;
 
