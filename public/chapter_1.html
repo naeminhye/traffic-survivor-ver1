@@ -28,7 +28,7 @@
         <div class="center-div" id="game-menu">
             <div class="menu-item">
                 <a id="start-btn" class="eightbit-btn">Start</a>
-                <a class="eightbit-btn eightbit-btn--proceed">Restart</a>
+                <a id="restart-btn" class="eightbit-btn eightbit-btn--proceed">Restart</a>
                 <a class="eightbit-btn eightbit-btn--reset" id="exit-btn" data-target="#exit-dialog">Exit</a>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div style="display: flex; justify-content: space-evenly; width: 100%;">
                     <a id="cancel-exit" class="eightbit-btn">No</a>
-                    <a href="index.html" class="eightbit-btn eightbit-btn--reset">Yes</a>
+                    <a href="javascript:history.back()" class="eightbit-btn eightbit-btn--reset">Yes</a>
                 </div>
             </div>
         </div>
@@ -181,6 +181,7 @@
     <script src="core/controls/ObjectControls.js" defer="defer"></script>
     <script src="core/utils/utils.js" defer="defer"></script>
     <script src="core/world/world.js" defer="defer"></script>
+    <script src="core/world/environment.js" defer="defer"></script>
     <script src="core/chapters/chapter_1/maps.js" defer="defer"></script>
     <script src="core/world/loaders.js" defer="defer"></script>
     <script src="core/controls/run.js" defer="defer"></script>

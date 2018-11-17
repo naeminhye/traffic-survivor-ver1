@@ -184,26 +184,36 @@ const loadModelToWorld = (model) => {
                             {
                                 status_name: "YELLOWLIGHT",
                                 texture: "./models/fbx/traffic-light-2/yellowlight-uvmap.png",
-                                duration: 300,
+                                duration: 150,
                                 action: "slowdown"
                             },
                             {
                                 status_name: "REDLIGHT",
                                 texture: "./models/fbx/traffic-light-2/redlight-uvmap.png",
-                                duration: 1300,
+                                duration: 850,
                                 action: "stop"
                             },
                             {
                                 status_name: "GREENLIGHT",
                                 texture: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
-                                duration: 1000,
+                                duration: 700,
                                 action: "stop"
                             }
                         ]
                     }
                     storeObj.ticker = 0;
-                    storeObj.currentStatus = "REDLIGHT";
-                    
+                    switch(textureUrl.substring(textureUrl.lastIndexOf('/') + 1)) {
+                        case "greenlight-uvmap.png":
+                            storeObj.currentStatus = "GREENLIGHT"
+                            break;
+                        case "yellowlight-uvmap.png":
+                            storeObj.currentStatus = "YELLOWLIGHT"
+                            break;
+                        case "redlight-uvmap.png":
+                        default:
+                            storeObj.currentStatus = "REDLIGHT";
+                            break;
+                    }
                     WORLD.trafficLightList.push(storeObj);
                 }
 
@@ -313,50 +323,43 @@ const loadModelToWorld = (model) => {
     }
 }
 
-var updateSkinnedAnimation = (storedObject) => {
+const updateSkinnedAnimation = (storedObject) => {
     if(storedObject.animation) {
 
-        var ticker = storedObject.ticker;
-
         if(storedObject.object.children[0].material.map.image) {
-
             // change skin
-            // find current skin
-            var currentFile = storedObject.object.children[0].material.map.image.currentSrc.substring(storedObject.object.children[0].material.map.image.currentSrc.lastIndexOf('/')+1);
-            
+
+            var ticker = storedObject.ticker;
             var nextIndex = 0;
             var duration = 0;
-            storedObject.animation.status.forEach((stt, index) => {
-                if(stt.texture.substring(stt.texture.lastIndexOf('/')+1) === currentFile) {
-                    duration = stt.duration;
-                    if(ticker === duration) {
-                        switch(currentFile) {
-                            case "greenlight-uvmap.png":
-                                currentStatus = "GREENLIGHT"
-                                break;
-                            case "yellowlight-uvmap.png":
-                                currentStatus = "YELLOWLIGHT"
-                                break;
-                            case "redlight-uvmap.png":
-                            default:
-                                currentStatus = "REDLIGHT";
-                                break;
-                        }
-                        nextIndex = (index === (storedObject.animation.status.length - 1)) ? 0 : (index + 1);
-                        storedObject.object.children[0].material.map = WORLD.textureLoader.load(storedObject.animation.status[nextIndex].texture);
-                        duration = storedObject.animation.status[nextIndex].duration;
-                        ticker = 0;
-                    }
-                    else {
-                        duration = storedObject.animation.status[index].duration;
-                        ticker = ticker + 1;
-                    }
-        
-                }
-            })
-        }
-        storedObject.ticker = ticker; 
 
+            /** get the current skin */
+            var currentFile = storedObject.object.children[0].material.map.image.currentSrc.substring(storedObject.object.children[0].material.map.image.currentSrc.lastIndexOf('/')+1);
+            /** get the current status */
+            var currentIndex  = storedObject.animation.status.findIndex(function (_status) {
+                return _status.texture.substring(_status.texture.lastIndexOf('/') + 1) === currentFile;
+            });
+            var currentStatus = storedObject.animation.status[currentIndex];
+
+            duration = currentStatus.duration;
+            /** last tick --> move to the next status */
+            if(ticker === duration) {
+
+                nextIndex = (currentIndex === (storedObject.animation.status.length - 1)) ? 0 : (currentIndex + 1);
+                storedObject.object.children[0].material.map = WORLD.textureLoader.load(storedObject.animation.status[nextIndex].texture);
+                storedObject.currentStatus = storedObject.animation.status[nextIndex].status_name;
+                storedObject.duration = storedObject.animation.status[nextIndex].duration;
+                // if(storedObject.object.name === "traffic-light-31-36") {
+                //     console.log("storedObject.currentStatus", storedObject.currentStatus);
+                // }
+                ticker = 0;
+            }
+            else {
+                duration = currentStatus.duration;
+                ticker = ticker + 1;
+            }
+            storedObject.ticker = ticker; 
+        }
     }
 
 }

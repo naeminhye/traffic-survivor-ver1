@@ -2,35 +2,56 @@
 	"map_url": "./core/chapters/chapter_1/chapter_1.txt",
 	"size": 5,
     "player": {
-        "position": {"x": 95, "y": 1.3, "z": 65}
+        "position": {
+            "x": 18, 
+            "y": 1.3,
+            "z": 160
+        }
     },
 	"one_ways": [
+		{
+			"direction": {"x": 0, "y": 0, "z": 1},
+			"position": {
+				"x": 24,
+				"z": 0,
+				"x_width": 2, 
+				"z_width": 17
+			}
+		},
 		{
 			"direction": {"x": -1, "y": 0, "z": 0},
 			"position": {
 				"x": 0,
-				"z": 8,
-				"x_width": 32, 
+				"z": 18,
+				"x_width": 50, 
 				"z_width": 2
-			}
-		},
-		{
-			"direction": {"x": 1, "y": 0, "z": 0},
-			"position": {
-				"x": 32,
-				"z": 46,
-				"x_width": 26, 
-				"z_width": 2
-			}
-		},
-		{
-			"direction": {"x": 0, "y": 0, "z": -1},
-			"position": {
-				"x": 20,
-				"z": 180,
-				"x_width": 2, 
-				"z_width": 28
 			}
 		}
-	]
+	],
+	"simple_loading": true,
+	"intersects": [],
+	"models": {
+		"vehicles": [],
+		"traffic_lights": [],
+		"regulatory_signs": [
+			{
+				"x": 5,
+				"z": 21,
+				"object_type": "regulatory-sign",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+			}
+		]
+	}
 }

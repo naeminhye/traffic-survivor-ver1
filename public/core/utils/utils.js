@@ -322,6 +322,17 @@ const minifyAngle = (num) => {
     return angle;
 }
 
+const calculateAngle = (vectorA, vectorB) => {
+    var angleA  = THREE.Math.radToDeg(Math.atan2(vectorA.x, vectorA.z));
+    var angleB  = THREE.Math.radToDeg(Math.atan2(vectorB.x, vectorB.z));
+    return angleB - angleA;
+}
+
+const calculateAngleToPlayer = (vector) => {
+    var v = new THREE.Vector3();
+    var playerVector = WORLD.player.getWorldDirection(v);
+    return calculateAngle(playerVector, vector);
+}
 
 function allEqual(arr, target) {
     return arr.every(function (v) {
@@ -444,7 +455,20 @@ const jsonToThreeObject = (json) => {
     return temp;
 }
 
-const mappingSigns = (sign) => {
+/**
+ * 
+ * @param {*} sign 
+ * sign:
+ * x
+ * z
+ * object_type
+ * sign_id
+ * name
+ * url
+ * directionToMap
+ * children
+ */
+const mappingSigns = (sign, UNIT_SIZE) => {
     var data = {
       loader_type: "object",
       castShadow: true,
@@ -453,8 +477,9 @@ const mappingSigns = (sign) => {
 	
     data.object_type = sign.object_type;
 	data.sign_id = sign.sign_id;
-    data.name = sign.name;
+    data.name = sign.name + "-" + sign.x + "-" + sign.z;
     data.url = sign.url;
+    data.info = sign.info;
 	
 	switch(sign.directionToMap) {
 		case "up":

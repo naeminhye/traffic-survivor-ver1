@@ -24,7 +24,7 @@ WORLD.controls = null;
 WORLD.vehicleControls = [];
 var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
-WORLD.dangerZones = [];
+WORLD.one_ways = [];
 WORLD.intersects = [];
 const objs = [];
 var clock = new THREE.Clock();
@@ -63,6 +63,12 @@ if (havePointerLock) {
             blocker.style.display = 'box';
             // instructions.style.display = '';
             GAME.menu.css("display", "block");
+            if(GAME.hasStarted) {
+                $("#restart-btn").css("display", "inline-block");
+            }
+            else {
+                $("#restart-btn").css("display", "none");
+            }
             GAME.controllers.css("display", "none");
         }
     }
@@ -70,6 +76,12 @@ if (havePointerLock) {
     var pointerlockerror = function (event) {
         // instructions.style.display = '';
         GAME.menu.css("display", "block");
+        if(GAME.hasStarted) {
+            $("#restart-btn").css("display", "inline-block");
+        }
+        else {
+            $("#restart-btn").css("display", "none");
+        }
         GAME.controllers.css("display", "none");
     }
 
@@ -122,14 +134,17 @@ if (havePointerLock) {
     });
 
     $("#cancel-exit").click(() => {
-        $("#game-menu").css("display", "block");
+        GAME.menu.css("display", "block");
         $("#exit-dialog").css("display", "none");
     });
 
     $("#exit-btn").click(() => {
         if(GAME.hasStarted) {
             $("#exit-dialog").css("display", "block");
-            $("#game-menu").css("display", "none");
+            GAME.menu.css("display", "none");
+        }
+        else {
+            window.location.href = history.back();
         }
     });
 
@@ -256,42 +271,15 @@ WORLD.init = function () {
 
         //light.shadowCameraVisible = true;
     }
-    // WORLD.scene.add(light);
     addSunlight(WORLD.scene);
 
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
     WORLD.player.position.set(46, 1.3 , 55);
-    // WORLD.lookAt()
-    // WORLD.player.rotateY(Math.PI / 2);
 
     WORLD.scene.updateMatrixWorld(true);
-
-    // var _geometry = new THREE.PlaneBufferGeometry( 100, 100 );
-    // var verticalMirror = new THREE.Reflector( _geometry, {
-    //     clipBias: 0.003,
-    //     textureWidth: window.innerWidth * window.devicePixelRatio,
-    //     textureHeight: window.innerHeight * window.devicePixelRatio,
-    //     color: 0x889999,
-    //     recursion: 1
-    // } );
-    // verticalMirror.position.x = 70;
-    // verticalMirror.position.z = 45;
-    // verticalMirror.position.y = 2;
-    // verticalMirror.name = "verticalMirror";
-    // WORLD.scene.add( verticalMirror );
-
-    // var cubeGeom = new THREE.CubeGeometry(100, 100, 10, 1, 1, 1);
-	// mirrorCubeCamera = new THREE.CubeCamera( 0.1, 5000, 512 );
-	// mirrorCubeCamera.renderTarget.minFilter = THREE.LinearMipMapLinearFilter;
-	// WORLD.scene.add( mirrorCubeCamera );
-    // var mirrorCubeMaterial = new THREE.MeshPhongMaterial( { emissive: 0x111111, envMap: mirrorCubeCamera.renderTarget } );
-    // mirrorCube = new THREE.Mesh( cubeGeom, mirrorCubeMaterial );
-	// mirrorCube.position.set(90, 1, 50);
-	// mirrorCubeCamera.position = mirrorCube.position;
-	// WORLD.scene.add(mirrorCube);	
-
+    
     WORLD.loadMap();
 
     WORLD.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -389,7 +377,7 @@ function addSunlight(scene) {
 var trafficLightViolation = false;
 var isInIntersectArea = false;
 var isViolating = false;
-  function checkViolation() {
+function checkViolation() {
 
     WORLD.regulatorySignList.forEach((sign) => {
         
@@ -434,63 +422,10 @@ var isViolating = false;
         } 
     });
 
-    /** 
-     * check Red Light violation
-     */
-    WORLD.trafficLightList.forEach((light) => {
-        if ( light.object.position.distanceTo(WORLD.player.position) < 10 
-            /** kiểm tra trạng thái trước đó, 
-             * nếu trafficLightViolation === false 
-             * =>> vừa đi vào vùng intersect */
-            && !trafficLightViolation ) {
+    checkTrafficLightViolation();
 
-            var v = new THREE.Vector3();
-            var playerVector = WORLD.player.getWorldDirection(v);
-            var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
-            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-            var angleDelta = signAngle - playerAngle;
-            
-            /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-            if( !((Math.abs(minifyAngle(angleDelta)) <= 90) ) 
-            /** kiểm tra trạng thái của đèn */
-                && light.currentStatus === "REDLIGHT" ) {
-                trafficLightViolation = true;
-            }
-        } 
-    });
-
-    isInIntersectArea = false;
-    WORLD.intersects.forEach(function(child) {
-        if (child.bbox.containsPoint(WORLD.player.position)) {
-            isInIntersectArea = true;
-        }
-    });
-    /** _flag = true nếu đang ở trong vùng intersect,
-     * 
-     */
-    if(isInIntersectArea && trafficLightViolation && !isViolating) {
-        var date = new Date();
-
-        console.log("Violation at " + date)
-        toastr.error("You have just blown through a red light!!");
-        $("#floating-info").addClass("shown");
-        $('#floating-info').animateCss('fadeOutUp', function() {
-            // hide after animation
-            var oldNum = Number($($(".money-number")[0]).text());
-            var newNum = -100000;
-            $($(".money-number")[0]).text(oldNum + newNum)
-            $("#floating-info").removeClass("shown");
-        });
-        isViolating = true;
-    }
-    if(!isInIntersectArea && trafficLightViolation && isViolating) {
-        trafficLightViolation = false;
-        isViolating = false;
-    }
-
-    if(WORLD.dangerZones) {
-        WORLD.dangerZones.forEach(function(child) {
+    if(WORLD.one_ways) {
+        WORLD.one_ways.forEach(function(child) {
             if (child.bbox.containsPoint(WORLD.player.position)) {
                 var v = new THREE.Vector3();
                 var playerVector = WORLD.player.getWorldDirection(v);
@@ -519,5 +454,55 @@ var isViolating = false;
                 
             }
         });
+    }
+}
+
+const checkTrafficLightViolation = () => {
+    /** 
+     * check Red Light violation
+     */
+    var length = WORLD.trafficLightList.length;
+    for(var i = 0; i < length; i++) {
+        var light = WORLD.trafficLightList[i];
+        if ( light.object.position.distanceTo(WORLD.player.position) < 10 && !trafficLightViolation ) {
+            /** kiểm tra trạng thái trước đó, 
+             * nếu trafficLightViolation === false 
+             * =>> vừa đi vào vùng intersect */
+            
+            var angleDelta = calculateAngleToPlayer(new THREE.Vector3(  light.direction.x, 
+                                                                        light.direction.y, 
+                                                                        light.direction.z));
+            
+            /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
+            if( ( (Math.abs(minifyAngle(angleDelta)) > 90) ) 
+            /** kiểm tra trạng thái của đèn */
+                && light.currentStatus === "REDLIGHT" ) {
+                trafficLightViolation = true;
+            }
+        } 
+    }
+
+    /** kiểm tra xe player có đang ở trong vùng intersect nào không */
+    isInIntersectArea = (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(WORLD.player.position)) !== -1) 
+    
+    /** _flag = true nếu đang ở trong vùng intersect */
+    if(isInIntersectArea && trafficLightViolation && !isViolating) {
+        var date = new Date();
+        console.log("Violation at " + date)
+
+        toastr.error("You have just blown through a red light!!");
+        $("#floating-info").addClass("shown");
+        $('#floating-info').animateCss('fadeOutUp', function() {
+            // hide after animation
+            var oldNum = Number($($(".money-number")[0]).text());
+            var newNum = -100000;
+            $($(".money-number")[0]).text(oldNum + newNum)
+            $("#floating-info").removeClass("shown");
+        });
+        isViolating = true;
+    }
+    if(!isInIntersectArea && trafficLightViolation && isViolating) {
+        trafficLightViolation = false;
+        isViolating = false;
     }
 }

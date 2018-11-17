@@ -4,7 +4,8 @@ var ROAD_POS_X = "-1";
 var RESIDENTAL_BUILDING_ID = "2";
 var OFFICE_BUILDING_ID = "3";
 var GRASS_ID = "4";
-var START = "S";
+var START_POS_Z = "S";
+var START_POS_X = "-S";
 var END = "E";
 var BLOCKED_POS_Z = "X";
 var BLOCKED_POS_X = "-X";
@@ -57,25 +58,31 @@ var environmentInit = function (file) {
         GAME.mapContext.canvas.height = CANVAS_UNIT * roadMap.length;
 
         loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
+            color: "orange"
+        });
+        loadTextureToGround(START_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
         loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
+            color: "orange"
+        });
+        loadTextureToGround(START_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
         loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false, {
             color: "grey"
@@ -84,13 +91,13 @@ var environmentInit = function (file) {
             color: "red"
         });
         loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
             color: "green"
@@ -156,30 +163,63 @@ var environmentInit = function (file) {
 
         /** load models */
         if(mapInfo.models) {
-            Object.keys(mapInfo.models).forEach((type) => {
-                mapInfo.models[type].forEach(md => loadModelToWorld(md));
-            });
+            if(mapInfo.simple_loading) {
+                Object.keys(mapInfo.models).forEach((type) => {
+                    mapInfo.models[type].forEach(md => loadModelToWorld(mappingSigns(md, UNIT_SIZE)));
+                });
+            }
+            else {
+                Object.keys(mapInfo.models).forEach((type) => {
+                    mapInfo.models[type].forEach(md => loadModelToWorld(md));
+                });
+            }
         }
         
         /** load intersect areas */
-        mapInfo.intersects.forEach(function(child) {
-            var pos = child;
+        if(mapInfo.intersects) {
+            mapInfo.intersects.forEach(function(child) {
+                var pos = child;
 
-            var area, areaBBox;
-            area = new THREE.Mesh(
-                new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                new THREE.MeshBasicMaterial({
-                    color: 0xff0000,
-                    wireframe: true
-                })
-            );
-            var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-            var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-            area.position.set(XWidth, 0, ZWidth);
-            area.geometry.computeBoundingBox();
-            areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-            WORLD.intersects.push({ box: area, bbox: areaBBox });
-        });
+                var area, areaBBox;
+                area = new THREE.Mesh(
+                    new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                    new THREE.MeshBasicMaterial({
+                        color: 0xff0000,
+                        wireframe: true
+                    })
+                );
+                var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                area.position.set(XWidth, 0, ZWidth);
+                area.geometry.computeBoundingBox();
+                areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                WORLD.intersects.push({ box: area, bbox: areaBBox });
+            });
+        }
+        
+        /** load one way areas */
+        if(mapInfo.one_ways) {
+            mapInfo.one_ways.forEach(function(child) {
+                var pos = child.position;
+
+                var area, areaBBox;
+                area = new THREE.Mesh(
+                    new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                    new THREE.MeshBasicMaterial({
+                        color: 0xff0000,
+                        wireframe: true
+                    })
+                );
+                var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
+                area.position.set(XWidth, 0, ZWidth);
+                area.geometry.computeBoundingBox();
+                // WORLD.scene.add(area);
+                areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                WORLD.one_ways.push({ box: area, bbox: areaBBox, direction: child.direction, infoImg: "./images/info.png"});
+            });
+        }
     });
 }
 
