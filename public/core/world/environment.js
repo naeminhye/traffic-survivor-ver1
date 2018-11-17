@@ -40,6 +40,10 @@ var environmentInit = function (file) {
         // load player's initial position
         WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
+        
+        if(mapInfo.player.rotateY) {
+            WORLD.player.rotateY(mapInfo.player.rotateY);
+        }
         // player's position on minimap 
         PLAYER.pin = $("#player-pin");
         PLAYER.pin.css( "display", "block" );

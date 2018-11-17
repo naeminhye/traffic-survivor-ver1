@@ -127,8 +127,10 @@ if (havePointerLock) {
     });
 
     $("#exit-btn").click(() => {
-        $("#exit-dialog").css("display", "block");
-        $("#game-menu").css("display", "none");
+        if(GAME.hasStarted) {
+            $("#exit-dialog").css("display", "block");
+            $("#game-menu").css("display", "none");
+        }
     });
 
     // instructions.addEventListener('click', function (event) {
@@ -385,6 +387,8 @@ function addSunlight(scene) {
   }
 
 var trafficLightViolation = false;
+var isInIntersectArea = false;
+var isViolating = false;
   function checkViolation() {
 
     WORLD.regulatorySignList.forEach((sign) => {
@@ -433,56 +437,56 @@ var trafficLightViolation = false;
     /** 
      * check Red Light violation
      */
-    if(!trafficLightViolation) {
-        var _flag = false;
-        WORLD.trafficLightList.forEach((light) => {
-            if ( light.object.position.distanceTo(WORLD.player.position) < 10 
-                /** kiểm tra trạng thái trước đó, 
-                 * nếu trafficLightViolation === false 
-                 * =>> vừa đi vào vùng intersect */
-                && !trafficLightViolation ) {
+    WORLD.trafficLightList.forEach((light) => {
+        if ( light.object.position.distanceTo(WORLD.player.position) < 10 
+            /** kiểm tra trạng thái trước đó, 
+             * nếu trafficLightViolation === false 
+             * =>> vừa đi vào vùng intersect */
+            && !trafficLightViolation ) {
 
-                var v = new THREE.Vector3();
-                var playerVector = WORLD.player.getWorldDirection(v);
-                var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
-                var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-                var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-                var angleDelta = signAngle - playerAngle;
-                
-                /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-                if( !((Math.abs(minifyAngle(angleDelta)) <= 90) ) 
-                /** kiểm tra trạng thái của đèn */
-                    && light.currentStatus === "REDLIGHT" ) {
-                    _flag = true;
-                }
-            } 
-        });
-        WORLD.intersects.forEach(function(child) {
-            if (child.bbox.containsPoint(WORLD.player.position)) {
-                if(_flag && !trafficLightViolation) {
-                    trafficLightViolation = true;
-                    var date = new Date();
-
-                    console.log("Violation at " + date)
-                    // console.log("You have just blown through a red light!!");
-                    toastr.error("You have just blown through a red light!!");
-                    //$("#floating-info").css("display", "flex");
-                    $("#floating-info").toggle();
-                    $('#floating-info').animateCss('fadeOutUp', function() {
-                        // hide after animation
-                        var oldNum = Number($($(".money-number")[0]).text());
-                        var newNum = -100000;
-                        $($(".money-number")[0]).text(oldNum + newNum)
-                        $("#floating-info").toggle();
-                        // $("#floating-info").css("display", "none");
-                      });
-                }
+            var v = new THREE.Vector3();
+            var playerVector = WORLD.player.getWorldDirection(v);
+            var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
+            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var angleDelta = signAngle - playerAngle;
+            
+            /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
+            if( !((Math.abs(minifyAngle(angleDelta)) <= 90) ) 
+            /** kiểm tra trạng thái của đèn */
+                && light.currentStatus === "REDLIGHT" ) {
+                trafficLightViolation = true;
             }
-        });
-        if(!_flag && trafficLightViolation) {
-            trafficLightViolation = false;
-        }
+        } 
+    });
 
+    isInIntersectArea = false;
+    WORLD.intersects.forEach(function(child) {
+        if (child.bbox.containsPoint(WORLD.player.position)) {
+            isInIntersectArea = true;
+        }
+    });
+    /** _flag = true nếu đang ở trong vùng intersect,
+     * 
+     */
+    if(isInIntersectArea && trafficLightViolation && !isViolating) {
+        var date = new Date();
+
+        console.log("Violation at " + date)
+        toastr.error("You have just blown through a red light!!");
+        $("#floating-info").addClass("shown");
+        $('#floating-info').animateCss('fadeOutUp', function() {
+            // hide after animation
+            var oldNum = Number($($(".money-number")[0]).text());
+            var newNum = -100000;
+            $($(".money-number")[0]).text(oldNum + newNum)
+            $("#floating-info").removeClass("shown");
+        });
+        isViolating = true;
+    }
+    if(!isInIntersectArea && trafficLightViolation && isViolating) {
+        trafficLightViolation = false;
+        isViolating = false;
     }
 
     if(WORLD.dangerZones) {

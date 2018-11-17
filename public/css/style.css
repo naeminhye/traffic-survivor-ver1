@@ -564,7 +564,10 @@ hr {
       top: 100px;
       width: 100%;
       background-color: transparent;
-      justify-content: center;
+  }
+  .floating-info.shown {
+    justify-content: center;
+    display: flex;
   }
   .floating-info > span {
       text-align: center;
