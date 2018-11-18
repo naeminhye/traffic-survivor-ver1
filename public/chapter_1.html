@@ -11,13 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="css/info.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 </head>
 <body>
-    <div id="infoButton"></div>
-    <div id="infoBox" title="Instruction">
-        <!-- <img src="./images/info2.png" width="100%"/> -->
-    </div>
     <div class="sign-detail-container">
         <div id="signDetail" class="sign-detail">
             <img src="./images/info2.png" width="100%"/>
@@ -29,6 +25,7 @@
             <div class="menu-item">
                 <a id="start-btn" class="eightbit-btn">Start</a>
                 <a id="restart-btn" class="eightbit-btn eightbit-btn--proceed">Restart</a>
+                <a id="instruction-btn" class="eightbit-btn eightbit-btn--proceed">Instruction</a>
                 <a class="eightbit-btn eightbit-btn--reset" id="exit-btn" data-target="#exit-dialog">Exit</a>
             </div>
         </div>
@@ -39,9 +36,39 @@
                 </div>
                 <div style="display: flex; justify-content: space-evenly; width: 100%;">
                     <a id="cancel-exit" class="eightbit-btn">No</a>
-                    <a href="javascript:history.back()" class="eightbit-btn eightbit-btn--reset">Yes</a>
+                    <a href="index.html" class="eightbit-btn eightbit-btn--reset">Yes</a>
                 </div>
             </div>
+        </div>
+        <div id="key-instruction" class="key-instruction-container center-div dialog">
+            <table>
+                <tr>
+                    <td class="key-name"><span>W/Up</span></td>
+                    <td class="key-definition"><span>Move Forward</span></td>
+                </tr> 
+                <tr>
+                    <td class="key-name"><span>A/Left</span></td>
+                    <td class="key-definition"><span>Rotate Left</span></td>
+                <tr>
+                    <td class="key-name"><span>D/Right</span></td>
+                    <td class="key-definition"><span>Rotate Right</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Z</span></td>
+                    <td class="key-definition"><span>Keep Moving Forward</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>X</span></td>
+                    <td class="key-definition"><span>Stop Moving</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Shift</span></td>
+                    <td class="key-definition"><span>Accelerate</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="key-instruction-btn"><a id="instruction-close" class="eightbit-btn eightbit-btn--primary">Close</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -53,9 +80,10 @@
             </div>
             <div class="money">
                 <img src="images/money.gif" width="50" height="50"/>
-                <span class="money-number">0</span>
+                <span class="money-number">0</span><span>VNĐ</span>
             </div>
         </div>
+        <div id="floating-info" class="floating-info delay-2s"></div>
         <div class="turn-signals">
             <div class="left-signal">
                 <div class="led" id="left-led">
@@ -97,6 +125,7 @@
             </div>
         </div>
     </div>
+
     <div id="loading">
         <div id="instructions">
             <div class="loading-text">Loading...</div>
@@ -104,19 +133,11 @@
     </div>
 
     <!-- Code to display an information button and box when clicked. -->
-    <!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <!-- jQuery Modal -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="js/info.js"></script>
     
-    <!-- <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="http://code.highcharts.com/modules/solid-gauge.js"></script> -->
-
-    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r77/three.min.js'></script> -->
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js'></script>
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js'></script>
     <script type="text/javascript" src='https://threejs.org/examples/js/renderers/Projector.js'></script>
@@ -132,7 +153,6 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/three.js/r92/examples/js/loaders/GLTFLoader.js"></script>
     <!-- <script type="text/javascript" src="core/libs/loaders/GLTF2Loader.js"></script> -->
     <script type="text/javascript" src="core/libs/loaders/TDSLoader.js"></script>
-    
     <script type="x-shader/x-fragment" id="fragmentShaderDepth">
 
         uniform sampler2D texture;
@@ -174,9 +194,34 @@
         }
 
     </script>
+    <script>
+        $.fn.extend({
+            animateCss: function(animationName, callback) {
+                var animationEnd = (function(el) {
+                var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                };
 
-    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
-    <script src="core/config/firebase.js" defer="defer"></script>
+                for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                    return animations[t];
+                    }
+                }
+                })(document.createElement('div'));
+
+                this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+
+                if (typeof callback === 'function') callback();
+                });
+
+                return this;
+            },
+        });
+    </script>
     <script src="core/controls/PointerControls.js" defer="defer"></script>
     <script src="core/controls/ObjectControls.js" defer="defer"></script>
     <script src="core/utils/utils.js" defer="defer"></script>

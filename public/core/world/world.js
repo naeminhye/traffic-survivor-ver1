@@ -8,9 +8,13 @@ var PLAYER = PLAYER || {
         speed: 0
     }
 };
-var UNITWIDTH = 9;                 // Width of a cubes in the maze
-var UNITHEIGHT = 9;                // Height of the cubes in the maze
-var sphereShape, sphereBody, physicsMaterial, walls = [], balls = [], ballMeshes = [], boxes = [], boxMeshes = [];
+var UNITWIDTH = 9; // Width of a cubes in the maze
+var UNITHEIGHT = 9; // Height of the cubes in the maze
+var sphereShape, sphereBody, physicsMaterial, walls = [],
+    balls = [],
+    ballMeshes = [],
+    boxes = [],
+    boxMeshes = [];
 WORLD.world = null;
 WORLD.camera = null;
 WORLD.scene = null;
@@ -34,11 +38,11 @@ WORLD.warningSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
 var initialPosition;
-var infoBoxToggle = false; 
+var infoBoxToggle = false;
 WORLD.loaded = false;
 WORLD.warningFlag = false;
-var violationFlag = false;
 GAME.hasStarted = false;
+WORLD.mapSize = 0;
 
 // Flag to determine if the player lost the game
 var gameOver = false;
@@ -63,24 +67,27 @@ if (havePointerLock) {
             blocker.style.display = 'box';
             // instructions.style.display = '';
             GAME.menu.css("display", "block");
-            if(GAME.hasStarted) {
+            if (GAME.hasStarted) {
                 $("#restart-btn").css("display", "inline-block");
-            }
-            else {
+                $("#instruction-btn").css("display", "none");
+                
+            } else {
                 $("#restart-btn").css("display", "none");
+                $("#instruction-btn").css("display", "inline-block");
             }
             GAME.controllers.css("display", "none");
         }
     }
 
-    var pointerlockerror = function (event) {
+    var pointerlockerror = (event) => {
         // instructions.style.display = '';
         GAME.menu.css("display", "block");
-        if(GAME.hasStarted) {
+        if (GAME.hasStarted) {
             $("#restart-btn").css("display", "inline-block");
-        }
-        else {
+            $("#instruction-btn").css("display", "none");
+        } else {
             $("#restart-btn").css("display", "none");
+            $("#instruction-btn").css("display", "inline-block");
         }
         GAME.controllers.css("display", "none");
     }
@@ -126,7 +133,7 @@ if (havePointerLock) {
     };
 
     $("#start-btn").click(() => {
-        if(!GAME.hasStarted) {
+        if (!GAME.hasStarted) {
             $("#start-btn").text("Resume");
             GAME.hasStarted = true;
         }
@@ -139,13 +146,22 @@ if (havePointerLock) {
     });
 
     $("#exit-btn").click(() => {
-        if(GAME.hasStarted) {
+        if (GAME.hasStarted) {
             $("#exit-dialog").css("display", "block");
             GAME.menu.css("display", "none");
+        } else {
+            window.location.href = "index.html"
         }
-        else {
-            window.location.href = history.back();
-        }
+    });
+
+    $("#instruction-btn").click(() => {
+        GAME.menu.css("display", "none");
+        $("#key-instruction").css("display",  "block");
+    });
+
+    $("#instruction-close").click(() => {
+        $("#key-instruction").css("display", "none");
+        GAME.menu.css("display", "block");
     });
 
     // instructions.addEventListener('click', function (event) {
@@ -182,16 +198,15 @@ if (havePointerLock) {
     instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
 }
 
-if(!WORLD.loaded) {
+if (!WORLD.loaded) {
     $("#blocker").css("display", "none");
     $("#loading").css("display", "block");
-}
-else {
+} else {
     $("#blocker").css("display", "block");
     $("#loading").css("display", "none");
 }
 
-WORLD.initCannon = function () {
+WORLD.initCannon = () => {
     // Setup our world
     WORLD.world = new CANNON.World();
     WORLD.world.quatNormalizeSkip = 0;
@@ -218,36 +233,41 @@ WORLD.initCannon = function () {
     var physicsContactMaterial = new CANNON.ContactMaterial(physicsMaterial,
         physicsMaterial,
         0.0, // friction coefficient
-        0.3  // restitution
+        0.3 // restitution
     );
     // We must add the contact materials to the world
     WORLD.world.addContactMaterial(physicsContactMaterial);
 
     // Create a sphere
-    var mass = 5, radius = 1.3;
+    var mass = 5,
+        radius = 1.3;
     sphereShape = new CANNON.Sphere(radius);
-    sphereBody = new CANNON.Body({ mass: mass });
+    sphereBody = new CANNON.Body({
+        mass: mass
+    });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(46, 1.3 , 55);
+    sphereBody.position.set(46, 1.3, 55);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
     // Create a plane
     var groundShape = new CANNON.Plane();
-    var groundBody = new CANNON.Body({ mass: 0 });
+    var groundBody = new CANNON.Body({
+        mass: 0
+    });
     groundBody.addShape(groundShape);
     groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
     WORLD.world.add(groundBody);
 }
 
-WORLD.init = function () {
+WORLD.init = () => {
 
     WORLD.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 10000);
     // WORLD.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
 
     WORLD.scene = new THREE.Scene();
     // WORLD.scene.background = new THREE.Color(0xcce0ff);
-	var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
+    var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
     WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
 
@@ -257,11 +277,12 @@ WORLD.init = function () {
     light = new THREE.SpotLight(0xffffff);
     light.position.set(10, 30, 20);
     light.target.position.set(0, 0, 0);
+
     if (true) {
         light.castShadow = true;
 
         light.shadow.camera.near = 20;
-        light.shadow.camera.far = 50;//camera.far;
+        light.shadow.camera.far = 50; //camera.far;
         light.shadow.camera.fov = 40;
 
         light.shadowMapBias = 0.1;
@@ -276,13 +297,15 @@ WORLD.init = function () {
     WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(46, 1.3 , 55);
+    WORLD.player.position.set(46, 1.3, 55);
 
     WORLD.scene.updateMatrixWorld(true);
-    
+
     WORLD.loadMap();
 
-    WORLD.renderer = new THREE.WebGLRenderer({ antialias: true });
+    WORLD.renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
     WORLD.renderer.gammaFactor = 2.2;
     WORLD.renderer.gammaOutput = true;
     WORLD.renderer.shadowMap.enabled = true;
@@ -304,36 +327,53 @@ function onWindowResize() {
 var dt = 1 / 60;
 WORLD.animate = function () {
     WORLD.warningFlag = false;
+    var playX = WORLD.player.position.x;
+    var playY = WORLD.player.position.y;
+    var playZ = WORLD.player.position.z;
+    if (WORLD.player.position.x > WORLD.mapSize) {
+        playX = WORLD.player.position.x - WORLD.mapSize;
+    } else if (WORLD.player.position.x < 0) {
+        playX = WORLD.player.position.x + WORLD.mapSize;
+    }
+
+    if (WORLD.player.position.z > WORLD.mapSize) {
+        playZ = WORLD.player.position.z - WORLD.mapSize;
+    } else if (WORLD.player.position.z < 0) {
+        playZ = WORLD.player.position.z + WORLD.mapSize;
+    }
+    WORLD.player.position.set(playX, playY, playZ);
+    sphereBody.position.set(playX, playY, playZ);
+
     requestAnimationFrame(WORLD.animate);
     if (WORLD.controls.enabled) {
 
         WORLD.world.step(dt);
 
-        if(WORLD.vehicleControls.length > 0) {
-            WORLD.vehicleControls.forEach(function(control) {
+        if (WORLD.vehicleControls.length > 0) {
+            WORLD.vehicleControls.forEach(function (control) {
                 // moving vehicles
                 control.update(Date.now() - time);
             });
         }
 
-        if(WORLD.trafficLightList.length > 0) {
-            WORLD.trafficLightList.forEach(function(light) {
+        if (WORLD.trafficLightList.length > 0) {
+            WORLD.trafficLightList.forEach(function (light) {
                 // moving vehicles
                 updateSkinnedAnimation(light);
             });
         }
 
-            
+
     }
 
     PLAYER.pin = $("#player-pin");
-    PLAYER.pin.css( "left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10 );
-    PLAYER.pin.css( "top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10 );
+    PLAYER.pin.css("left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+    PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
 
     WORLD.controls.update(Date.now() - time);
-    
+
     checkViolation();
-    if(!WORLD.warningFlag) {
+    if (!WORLD.warningFlag) {
         $("#message").css("display", "none");
     }
 
@@ -347,10 +387,10 @@ WORLD.animate = function () {
 WORLD.detectCollision = () => {
     var flag = 0;
     WORLD.collidableObjects.forEach((object) => {
-        if(object instanceof THREE.Sphere || object instanceof THREE.Box3) {
+        if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
             if (object.containsPoint(WORLD.player.position)) {
                 toastr.error("Collided!");
-                flag ++;
+                flag++;
             }
         }
     });
@@ -372,24 +412,21 @@ function addSunlight(scene) {
     sunlight.shadow.camera.bottom = -200;
 
     scene.add(sunlight);
-  }
+}
 
-var trafficLightViolation = false;
-var isInIntersectArea = false;
-var isViolating = false;
 function checkViolation() {
 
     WORLD.regulatorySignList.forEach((sign) => {
-        
+
         if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
 
             var v = new THREE.Vector3();
             var playerVector = WORLD.player.getWorldDirection(v);
             var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
-            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
             var angleDelta = signAngle - playerAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+            if (!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
                 //$("#infoBox").find("img").attr("src", sign.infoImg);
                 // $("#infoBox").dialog("open");
 
@@ -397,112 +434,154 @@ function checkViolation() {
                 // $("#signDetail").css("display", "block")
             }
 
-        } 
+        }
 
     });
 
     WORLD.warningSignList.forEach((sign) => {
-        
+
         if (sign.object.position.distanceTo(WORLD.player.position) < 10) {
 
             var v = new THREE.Vector3();
             var playerVector = WORLD.player.getWorldDirection(v);
             var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
-            var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+            var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+            var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
             var angleDelta = signAngle - playerAngle;
-            if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
+            if (!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
                 // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
-                if(sign.info) {
+                if (sign.info) {
                     $("#message").text(sign.info);
                     $("#message").css("display", "block");
                 }
                 WORLD.warningFlag = true;
             }
-        } 
+        }
     });
 
     checkTrafficLightViolation();
-
-    if(WORLD.one_ways) {
-        WORLD.one_ways.forEach(function(child) {
-            if (child.bbox.containsPoint(WORLD.player.position)) {
-                var v = new THREE.Vector3();
-                var playerVector = WORLD.player.getWorldDirection(v);
-                var zoneVector = new THREE.Vector3(child.direction.x, child.direction.y, child.direction.z);
-                var playerAngle  = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-                var zoneAngle  = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
-                var angleDelta = zoneAngle - playerAngle;
-                
-                if(!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-                    // violation === true
-                    if(!violationFlag) {
-                        console.log("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
-                        violationFlag = true;
-                    }
-                    toastr.error("You made a wrong turn and have entered a one way road!");
-                    // $("infoImg").attr("src", child.infoImg);
-                    // console.log("Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
-                    $("#message").text("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
-                }
-                else {
-                    if(violationFlag) {
-                        violationFlag === false;
-                    }
-                    // $("#infoBox").dialog("close");
-                }
-                
-            }
-        });
+    if (WORLD.one_ways) {
+        checkOneWayViolation();
     }
 }
 
+
+var trafficLightViolation = false;
+var isInIntersectArea = false;
+var isViolating = false;
 const checkTrafficLightViolation = () => {
     /** 
      * check Red Light violation
      */
     var length = WORLD.trafficLightList.length;
-    for(var i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
         var light = WORLD.trafficLightList[i];
-        if ( light.object.position.distanceTo(WORLD.player.position) < 10 && !trafficLightViolation ) {
+        if (light.object.position.distanceTo(WORLD.player.position) < 10 && !trafficLightViolation) {
             /** kiểm tra trạng thái trước đó, 
              * nếu trafficLightViolation === false 
              * =>> vừa đi vào vùng intersect */
-            
-            var angleDelta = calculateAngleToPlayer(new THREE.Vector3(  light.direction.x, 
-                                                                        light.direction.y, 
-                                                                        light.direction.z));
-            
+
+            var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
+                light.direction.y,
+                light.direction.z));
+
             /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-            if( ( (Math.abs(minifyAngle(angleDelta)) > 90) ) 
-            /** kiểm tra trạng thái của đèn */
-                && light.currentStatus === "REDLIGHT" ) {
+            if (((Math.abs(minifyAngle(angleDelta)) > 90))
+                /** kiểm tra trạng thái của đèn */
+                &&
+                light.currentStatus === "REDLIGHT") {
                 trafficLightViolation = true;
             }
-        } 
+        }
     }
 
     /** kiểm tra xe player có đang ở trong vùng intersect nào không */
-    isInIntersectArea = (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(WORLD.player.position)) !== -1) 
-    
+    isInIntersectArea = (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(WORLD.player.position)) !== -1)
+
     /** _flag = true nếu đang ở trong vùng intersect */
-    if(isInIntersectArea && trafficLightViolation && !isViolating) {
+    if (isInIntersectArea && trafficLightViolation && !isViolating) {
         var date = new Date();
         console.log("Violation at " + date)
 
         toastr.error("You have just blown through a red light!!");
         $("#floating-info").addClass("shown");
-        $('#floating-info').animateCss('fadeOutUp', function() {
+        $("#floating-info").append("<span>-100000VNĐ</span>");
+        $('#floating-info').animateCss('fadeOutUp', function () {
             // hide after animation
             var oldNum = Number($($(".money-number")[0]).text());
             var newNum = -100000;
-            $($(".money-number")[0]).text(oldNum + newNum)
+            $($(".money-number")[0]).text(oldNum + newNum);
+            $("#floating-info").empty();
             $("#floating-info").removeClass("shown");
         });
         isViolating = true;
     }
-    if(!isInIntersectArea && trafficLightViolation && isViolating) {
+    if (!isInIntersectArea && trafficLightViolation && isViolating) {
         trafficLightViolation = false;
         isViolating = false;
     }
+}
+
+var violationFlag = false;
+var oneWayIndex = -1;
+const checkOneWayViolation = () => {
+
+    var oldWay = oneWayIndex;
+    /** kiểm tra xe player có đang ở trong vùng one way nào không */
+    oneWayIndex = WORLD.one_ways.findIndex((child) => child.bbox.containsPoint(WORLD.player.position));
+
+    if(oldWay !== oneWayIndex) {
+        /** đi vào đường khác */
+        violationFlag = false;
+    }
+
+    if ( oneWayIndex === -1 ) {
+        /** Không đi vào đường ngược chiều nào nên không cần xét */
+        violationFlag = false;
+    }
+    else {
+        var thisRoad = WORLD.one_ways[oneWayIndex];
+        var angleDelta = calculateAngleToPlayer(new THREE.Vector3(
+            thisRoad.direction.x, 
+            thisRoad.direction.y, 
+            thisRoad.direction.z));
+
+        if (!violationFlag && (Math.abs(minifyAngle(angleDelta)) > 90)) {
+            toastr.error("You made a wrong turn and have entered a one way road!");
+            $("#floating-info").addClass("shown");
+            $("#floating-info").append("<span>-300000VNĐ</span>");
+            $('#floating-info').animateCss('fadeOutUp', function () {
+                // hide after animation
+                var oldNum = Number($($(".money-number")[0]).text());
+                var newNum = -300000;
+                $($(".money-number")[0]).text(oldNum + newNum);
+                $("#floating-info").empty();
+                $("#floating-info").removeClass("shown");
+            });
+            violationFlag = true;
+        }
+    }
+
+    // WORLD.one_ways.forEach(function (child) {
+    //     var angleDelta = calculateAngleToPlayer(new THREE.Vector3(
+    //                                                 child.direction.x, 
+    //                                                 child.direction.y, 
+    //                                                 child.direction.z));
+    //     if (!violationFlag && child.bbox.containsPoint(WORLD.player.position) && (Math.abs(minifyAngle(angleDelta)) > 90)) {
+    //         // var v = new THREE.Vector3();
+    //         // var playerVector = WORLD.player.getWorldDirection(v);
+    //         // var zoneVector = new THREE.Vector3(child.direction.x, child.direction.y, child.direction.z);
+    //         // var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+    //         // var zoneAngle = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
+    //         // var angleDelta = zoneAngle - playerAngle;
+    //         console.log("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
+    //         violationFlag = true;
+    //         toastr.error("You made a wrong turn and have entered a one way road!");
+    //     }
+    //     else {
+    //         // if (violationFlag) {
+    //         //     violationFlag === false;
+    //         // }
+    //     }
+    // });
 }

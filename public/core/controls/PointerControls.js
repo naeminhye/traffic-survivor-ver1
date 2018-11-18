@@ -147,6 +147,7 @@ var PointerControls = function (camera, cannonBody) {
             case keys.KEY_SHIFT:
                 if(!speedup) {
                     speedup = true;
+                    velocityFactor += 0.1;
                 }
                 break;
         }
@@ -204,9 +205,9 @@ var PointerControls = function (camera, cannonBody) {
         var rotateAngle = Math.PI / 2 * 0.01;
 
         inputVelocity.set(0, 0, 0);
-        if(speedup) {
-            velocityFactor += 0.1;
-        }
+        // if(speedup) {
+        //     velocityFactor += 0.1;
+        // }
 
         if(WORLD.detectCollision() !== 0){
             // TODO: Handle collision event

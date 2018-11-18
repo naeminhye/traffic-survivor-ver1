@@ -56,6 +56,7 @@ var environmentInit = function (file) {
         GAME.mapContext = canvas.getContext("2d");
         GAME.mapContext.canvas.width  = CANVAS_UNIT * roadMap.length;
         GAME.mapContext.canvas.height = CANVAS_UNIT * roadMap.length;
+        WORLD.mapSize = UNIT_SIZE * roadMap.length;
 
         loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
@@ -88,7 +89,7 @@ var environmentInit = function (file) {
             color: "grey"
         });
         loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
         loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"

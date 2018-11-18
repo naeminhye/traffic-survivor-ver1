@@ -538,11 +538,11 @@ hr {
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-  .health-number, .money-number {
     font-size: 25px;
     font-family: 'Press Start 2P', cursive;
     font-weight: 600;
+  }
+  .health-number, .money-number {
     margin: 0 20px;
   }
 
@@ -586,4 +586,39 @@ hr {
 
 #restart-btn {
     display: none;   
+}
+
+.key-instruction-container {
+    position: absolute;
+    width: 50vw;
+    height: 50vh;
+    min-height: fit-content;
+    min-height: -moz-fit-content;
+}
+.key-instruction-container table {
+    width: 100%;
+    border: 6px black solid;
+    background-color: white;
+}
+
+.key-instruction-container td {
+    padding: 5px 10px; 
+    font-family: 'Press Start 2P', cursive;
+}
+
+.key-instruction-container td.key-name {
+    text-align: center;
+    color: tomato;
+    font-size: 24px;
+}
+
+.key-instruction-container td.key-definition {
+    text-align: left;
+}
+
+.key-instruction-container .key-instruction-btn {
+    text-align: center;
+}
+.key-instruction-container .key-instruction-btn a {
+    font-size: 16px;
 }
