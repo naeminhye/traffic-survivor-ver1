@@ -177,7 +177,7 @@ var environmentInit = function (file) {
                 });
             });
         }
-        if(mapInfo.simple_loading) {
+        if(mapInfo.simple_loading && mapInfo.signs) {
             Object.keys(mapInfo.signs).forEach((type) => {
                 mapInfo.signs[type].forEach((sign) => {
                     loadModelToWorld(mappingSigns(sign, UNIT_SIZE));
