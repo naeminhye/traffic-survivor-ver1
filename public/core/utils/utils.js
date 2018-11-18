@@ -470,11 +470,11 @@ const jsonToThreeObject = (json) => {
  */
 const mappingSigns = (sign, UNIT_SIZE) => {
     var data = {
-      loader_type: "object",
       castShadow: true,
       receiveShadow: true
     };
 	
+    data.loader_type = sign.loader_type;
     data.object_type = sign.object_type;
 	data.sign_id = sign.sign_id;
     data.name = sign.name + "-" + sign.x + "-" + sign.z;

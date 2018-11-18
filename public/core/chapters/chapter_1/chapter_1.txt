@@ -4,8 +4,8 @@ P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	P	P	P	P	P
-P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	I2	I2	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	1	1	0	P	P	P	P	P
-P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	I2	I2	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	1	1	0	P	P	P	P	P
+P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	I2	I2	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	I3	I3	0	P	P	P	P	P
+P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	I2	I2	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	I3	I3	0	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZB	ZB	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZB	ZB	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P
@@ -14,7 +14,7 @@ P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P
 P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	1	1	0	P	P	P	P	P
-P	P	P	P	P	P	P	P	P	P	P	ß	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	P	P	P	P	P
+P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	P	P	P	P	P	P	P	P	P	P	P	P	P	P	0	ZT	ZT	0	P	P	P	P	P
 0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	ZT	ZT	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	ZT	ZT	0	0	0	0	0	0
 -1	-1	ZL	ZL	I3	I3	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	ZL	ZL	I5	I5	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	ZL	ZL	I1	I1	ZR	ZR	-1	-1	-1	-1
 -1	-1	ZL	ZL	I3	I3	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	ZL	ZL	I5	I5	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	ZL	ZL	I1	I1	ZR	ZR	-1	-1	-1	-1

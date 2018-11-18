@@ -10,6 +10,234 @@
         "rotateY": -1.5707963267948966
     },
     "simple_loading": false,
+    "signs": {
+        "regulatory_signs": [],
+        "warning_signs": [],
+        "guide_signs": [
+            {	
+                "sign_id": "445a",
+                "name": "duongtron-6-46",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/big-square-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/duongtron-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {
+                    "x": 30,
+                    "y": 0,
+                    "z": 230
+                },
+                "scale": {
+                    "x": 0.3,
+                    "y": 0.3,
+                    "z": 0.3
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 1.5707963267948966,
+                    "z": 0,
+                    "order": "XYZ"
+                },
+                "direction": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -1
+                }
+            },
+            {
+                "sign_id": "306",
+                "name": "tocdotoithieu-10-36",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/round-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/tocdotoithieu-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {
+                    "x": 50,
+                    "y": 0,
+                    "z": 180
+                },
+                "scale": {
+                    "x": 0.3,
+                    "y": 0.3,
+                    "z": 0.3
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "order": "XYZ"
+                },
+                "direction": {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            {
+                "sign_id": "307",
+                "name": "hettoithieu-29-36",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/round-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/hettoithieu-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {
+                    "x": 145,
+                    "y": 0,
+                    "z": 180
+                },
+                "scale": {
+                    "x": 0.3,
+                    "y": 0.3,
+                    "z": 0.3
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "order": "XYZ"
+                },
+                "direction": {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            {
+                "sign_id": "309",
+                "name": "ancoi-34-21",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/round-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/ancoi-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {"x": 170, "y": 0, "z": 105},
+                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+                "rotation": { "x": 0, "y": 1.5707963267948966, "z": 0, "order": "XYZ"},
+                "direction": { "x": 0, "y": 0, "z": -1 }
+            },
+            {	
+                "sign_id": "445g",
+                "name": "haytainan-34-14",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/big-square-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/haytainan-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {
+                    "x": 170,
+                    "y": 0,
+                    "z": 70
+                },
+                "scale": {
+                    "x": 0.3,
+                    "y": 0.3,
+                    "z": 0.3
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 1.5707963267948966,
+                    "z": 0,
+                    "order": "XYZ"
+                },
+                "direction": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -1
+                }
+            },
+            {
+                "sign_id": "P.127",
+                "name": "tocdotoida-29-7",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/round-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/tocdotoida-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {"x": 145, "y": 0, "z": 35},
+                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+                "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
+                "direction": { "x": -1, "y": 0, "z": 0 }
+            },
+            {
+                "sign_id": "P.134",
+                "name": "hettoida-2-9",
+                "loader_type": "object",
+                "object_type": "guide_signs",
+                "url": "./models/signs/round-info-sign.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/hettoida-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                },
+                "position": {"x": 10, "y": 0, "z": 45},
+                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
+                "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
+                "direction": { "x": -1, "y": 0, "z": 0 }
+            }
+        ]
+    },
     "models": {
         "vehicles": [
             {
@@ -398,232 +626,6 @@
                 "direction": { "x": 1, "y": 0, "z": 0 },
                 "castShadow": true,
                 "receiveShadow": true
-            }
-        ],
-        "regulatory_signs": [],
-        "warning_signs": [],
-        "guide_signs": [
-            {	
-                "sign_id": "445a",
-                "name": "duongtron-6-46",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/big-square-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/duongtron-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {
-                    "x": 30,
-                    "y": 0,
-                    "z": 230
-                },
-                "scale": {
-                    "x": 0.3,
-                    "y": 0.3,
-                    "z": 0.3
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "direction": {
-                    "x": 0,
-                    "y": 0,
-                    "z": -1
-                }
-            },
-            {
-                "sign_id": "306",
-                "name": "tocdotoithieu-10-36",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/round-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/tocdotoithieu-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {
-                    "x": 50,
-                    "y": 0,
-                    "z": 180
-                },
-                "scale": {
-                    "x": 0.3,
-                    "y": 0.3,
-                    "z": 0.3
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "direction": {
-                    "x": 1,
-                    "y": 0,
-                    "z": 0
-                }
-            },
-            {
-                "sign_id": "307",
-                "name": "hettoithieu-29-36",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/round-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/hettoithieu-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {
-                    "x": 145,
-                    "y": 0,
-                    "z": 180
-                },
-                "scale": {
-                    "x": 0.3,
-                    "y": 0.3,
-                    "z": 0.3
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "direction": {
-                    "x": 1,
-                    "y": 0,
-                    "z": 0
-                }
-            },
-            {
-                "sign_id": "309",
-                "name": "ancoi-34-21",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/round-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/ancoi-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {"x": 170, "y": 0, "z": 105},
-                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
-                "rotation": { "x": 0, "y": 1.5707963267948966, "z": 0, "order": "XYZ"},
-                "direction": { "x": 0, "y": 0, "z": -1 }
-            },
-            {	
-                "sign_id": "445g",
-                "name": "haytainan-34-14",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/big-square-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/haytainan-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {
-                    "x": 170,
-                    "y": 0,
-                    "z": 70
-                },
-                "scale": {
-                    "x": 0.3,
-                    "y": 0.3,
-                    "z": 0.3
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "direction": {
-                    "x": 0,
-                    "y": 0,
-                    "z": -1
-                }
-            },
-            {
-                "sign_id": "P.127",
-                "name": "tocdotoida-29-7",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/round-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/tocdotoida-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {"x": 145, "y": 0, "z": 35},
-                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
-                "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
-                "direction": { "x": -1, "y": 0, "z": 0 }
-            },
-            {
-                "sign_id": "P.134",
-                "name": "hettoida-2-9",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/round-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/hettoida-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {"x": 10, "y": 0, "z": 45},
-                "scale": {"x": 0.3, "y": 0.3, "z": 0.3},
-                "rotation": { "x": 0, "y": 3.141592653589793, "z": 0, "order": "XYZ"},
-                "direction": { "x": -1, "y": 0, "z": 0 }
             }
         ]
     },

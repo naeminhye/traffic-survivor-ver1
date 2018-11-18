@@ -6,7 +6,8 @@ var OFFICE_BUILDING_ID = "3";
 var GRASS_ID = "4";
 var START_POS_Z = "S";
 var START_POS_X = "-S";
-var END = "E";
+var END_POS_Z = "E";
+var END_POS_X = "-E";
 var BLOCKED_POS_Z = "X";
 var BLOCKED_POS_X = "-X";
 var PAVEMENT_HEIGHT = 0.1;
@@ -64,11 +65,17 @@ var environmentInit = function (file) {
         loadTextureToGround(START_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
+        loadTextureToGround(END_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
+            color: "blue"
+        });
         loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
         });
         loadTextureToGround(START_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
+        });
+        loadTextureToGround(END_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
+            color: "blue"
         });
         loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
@@ -164,16 +171,26 @@ var environmentInit = function (file) {
 
         /** load models */
         if(mapInfo.models) {
-            if(mapInfo.simple_loading) {
-                Object.keys(mapInfo.models).forEach((type) => {
-                    mapInfo.models[type].forEach(md => loadModelToWorld(mappingSigns(md, UNIT_SIZE)));
+            Object.keys(mapInfo.models).forEach((type) => {
+                mapInfo.models[type].forEach((md) => {
+                    loadModelToWorld(md);
                 });
-            }
-            else {
-                Object.keys(mapInfo.models).forEach((type) => {
-                    mapInfo.models[type].forEach(md => loadModelToWorld(md));
+            });
+        }
+        if(mapInfo.simple_loading) {
+            Object.keys(mapInfo.signs).forEach((type) => {
+                mapInfo.signs[type].forEach((sign) => {
+                    loadModelToWorld(mappingSigns(sign, UNIT_SIZE));
+                    // console.log(mappingSigns(md, UNIT_SIZE))
                 });
-            }
+            });
+        }
+        else {
+            Object.keys(mapInfo.signs).forEach((type) => {
+                mapInfo.signs[type].forEach((sign) => {
+                    loadModelToWorld(sign)
+                });
+            });
         }
         
         /** load intersect areas */

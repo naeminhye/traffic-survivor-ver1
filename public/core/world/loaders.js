@@ -263,18 +263,12 @@ const loadModelToWorld = (model) => {
 
                         if (textureUrl) {
                             var texture = new THREE.TextureLoader().load(textureUrl);
-                            // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
-                            // if (loader_type === "tds" || loader_type === "3ds") {
-                            //     child.material.map = texture;
-                            // }
-                            // else {
-                                var material = new THREE.MeshBasicMaterial({
-                                    map: texture,
-                                    side: THREE.DoubleSide
-                                });  
-                                material.map.minFilter = THREE.LinearFilter;
-                                child.material = material;
-                            // }
+                            var material = new THREE.MeshBasicMaterial({
+                                map: texture,
+                                side: THREE.DoubleSide
+                            });  
+                            material.map.minFilter = THREE.LinearFilter;
+                            child.material = material;
                         }
                         if(children) {
                             if(children.hasOwnProperty(child.name)) {
