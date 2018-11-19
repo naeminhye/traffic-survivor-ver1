@@ -880,7 +880,7 @@ function loadModels() {
         {
             name: "bien-bao-duong-khong-uu-tien",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "warning_signs",
             url: "./models/signs/warning-sign.json",
             animate: false,
             castShadow: true,
@@ -902,7 +902,7 @@ function loadModels() {
         {
             name: "bien-bao-duong-uu-tien",
             loader_type: "object",
-            object_type: "warning-sign",
+            object_type: "warning_signs",
             url: "./models/signs/priority-warning-sign.json",
             animate: false,
             castShadow: true,

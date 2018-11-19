@@ -359,7 +359,7 @@ WORLD.animate = function () {
         if (WORLD.trafficLightList.length > 0) {
             WORLD.trafficLightList.forEach(function (light) {
                 // moving vehicles
-                updateSkinnedAnimation(light);
+                light = updateSkinnedAnimation(light);
             });
         }
 
@@ -459,23 +459,25 @@ function checkViolation() {
         }
     });
 
-    checkTrafficLightViolation();
+    updateTrafficLights();
     if (WORLD.one_ways) {
         checkOneWayViolation();
     }
 }
 
-
 var trafficLightViolation = false;
 var isInIntersectArea = false;
 var isViolating = false;
-const checkTrafficLightViolation = () => {
+const updateTrafficLights = () => {
     /** 
      * check Red Light violation
      */
     var length = WORLD.trafficLightList.length;
     for (var i = 0; i < length; i++) {
+        trafficLightViolation = false;
+
         var light = WORLD.trafficLightList[i];
+        //light = updateSkinnedAnimation(light);
         if (light.object.position.distanceTo(WORLD.player.position) < 10 && !trafficLightViolation) {
             /** kiểm tra trạng thái trước đó, 
              * nếu trafficLightViolation === false 
@@ -486,11 +488,12 @@ const checkTrafficLightViolation = () => {
                 light.direction.z));
 
             /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-            if (((Math.abs(minifyAngle(angleDelta)) > 90))
+            if ((Math.abs(minifyAngle(angleDelta)) > 90)
                 /** kiểm tra trạng thái của đèn */
                 &&
                 light.currentStatus === "REDLIGHT") {
                 trafficLightViolation = true;
+                console.log("light:",light.object.name, " ---- ", angleDelta, "-------", light.currentStatus, "-------", light.direction)
             }
         }
     }

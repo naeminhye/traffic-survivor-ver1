@@ -498,14 +498,33 @@ const mappingSigns = (sign, UNIT_SIZE) => {
 			data.direction = new THREE.Vector3(-1, 0, 0);
             data.rotation = new THREE.Euler(0, Math.PI, 0, "XYZ");
 			break;
-	}
-	
-	data.scale = new THREE.Vector3(0.3, 0.3, 0.3);
-    data.position = new THREE.Vector3(sign.x * UNIT_SIZE, 0, sign.z * UNIT_SIZE);    
-	
+    }
 	if(sign.children) {
 		data.children = sign.children;
 	}
+    if (sign.name === "hieulenhthang") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, -Math.PI/2, "XYZ");
+
+    }
+    else if (sign.name === "huongphaiditheo-phai") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // rotation.y = ROTATIONY - MathPI/2 = 0
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, Math.PI, "XYZ");
+    }
+    else if (sign.name === "huongphaiditheo-trai") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, 0, "XYZ");
+    }
+	
+	data.scale = new THREE.Vector3(0.3, 0.3, 0.3);
+    data.position = new THREE.Vector3(sign.x * UNIT_SIZE, 0, sign.z * UNIT_SIZE);    
 	
 	return data;
 }

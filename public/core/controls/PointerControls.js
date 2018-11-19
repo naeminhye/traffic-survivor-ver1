@@ -209,10 +209,10 @@ var PointerControls = function (camera, cannonBody) {
         //     velocityFactor += 0.1;
         // }
 
-        if(WORLD.detectCollision() !== 0){
-            // TODO: Handle collision event
-            console.log("collision")
-        }
+        // if(WORLD.detectCollision() !== 0){
+        //     // TODO: Handle collision event
+        //     console.log("collision")
+        // }
 
         if(leftSignal) {
             $("#left-led").addClass("active");

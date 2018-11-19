@@ -859,7 +859,7 @@
 //         {
 //             "name": "camretrai-20-11",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -880,7 +880,7 @@
 //         {
 //             "name": "camretrai-31-44",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -901,7 +901,7 @@
 //         {
 //             "name": "camretrai-45-44",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -922,7 +922,7 @@
 //         {
 //             "name": "camrephai-34-49",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -943,7 +943,7 @@
 //         {
 //             "name": "camrephai-7-51",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -964,7 +964,7 @@
 //         {
 //             "name": "camrephai-7-61",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -985,7 +985,7 @@
 //         {
 //             "name": "nguocchieu-30-7",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -1006,7 +1006,7 @@
 //         {
 //             "name": "camquaydau-30-10",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
@@ -1027,7 +1027,7 @@
 //         {
 //             "name": "camquaydau-31-32",
 //             "loader_type": "object",
-//             "object_type": "regulatory-sign",
+//             "object_type": "regulatory_signs",
 //             "url": "./models/signs/regulatory-sign.json",
 //             "castShadow": true,
 //             "receiveShadow": true,
