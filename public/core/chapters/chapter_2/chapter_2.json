@@ -2,15 +2,123 @@
 	"map_url": "./core/chapters/chapter_2/chapter_2.txt",
     "size": 5,
     "player": {
-        "position": {"x": 65, "y": 1.3, "z": 45},
-        "rotateY": -1.5707963267948966
+        "position": {"x": 85, "y": 1.3, "z": 225}
     },
     "simple_loading": true,
     "models": [],
     "signs": {
         "regulatory_signs": [],
-        "warning_signs": [],
-        "guide_signs": []
+        "warning_signs": [
+            {
+                "x": 18,
+                "z": 36,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207c",
+                "name": "khonguutien-trai",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-trai-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 13,
+                "z": 34,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 18,
+                "z": 26,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207a",
+                "name": "khonguutien",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 13,
+                "z": 24,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 20,
+                "z": 21,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "right",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 33,
+                "z": 10,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            }
+        ],
+        "guidance_signs": []
     },
     "intersects": [
         {

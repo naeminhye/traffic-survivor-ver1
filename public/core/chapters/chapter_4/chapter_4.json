@@ -13,51 +13,12 @@
     "signs": {
         "regulatory_signs": [],
         "warning_signs": [],
-        "guide_signs": [
-            {	
-                "sign_id": "445a",
-                "name": "duongtron-6-46",
-                "loader_type": "object",
-                "object_type": "guide_signs",
-                "url": "./models/signs/big-square-info-sign.json",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/duongtron-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                },
-                "position": {
-                    "x": 30,
-                    "y": 0,
-                    "z": 230
-                },
-                "scale": {
-                    "x": 0.3,
-                    "y": 0.3,
-                    "z": 0.3
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "direction": {
-                    "x": 0,
-                    "y": 0,
-                    "z": -1
-                }
-            },
+        "guidance_signs": [
             {
                 "sign_id": "306",
                 "name": "tocdotoithieu-10-36",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -96,7 +57,7 @@
                 "sign_id": "307",
                 "name": "hettoithieu-29-36",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -135,7 +96,7 @@
                 "sign_id": "309",
                 "name": "ancoi-34-21",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -157,7 +118,7 @@
                 "sign_id": "445g",
                 "name": "haytainan-34-14",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/big-square-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -196,7 +157,7 @@
                 "sign_id": "P.127",
                 "name": "tocdotoida-29-7",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,
@@ -218,7 +179,7 @@
                 "sign_id": "P.134",
                 "name": "hettoida-2-9",
                 "loader_type": "object",
-                "object_type": "guide_signs",
+                "object_type": "guidance_signs",
                 "url": "./models/signs/round-info-sign.json",
                 "animate": false,
                 "castShadow": true,

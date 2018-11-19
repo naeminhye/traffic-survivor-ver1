@@ -178,7 +178,7 @@ const loadModelToWorld = (model) => {
                     }
                     WORLD.warningSignList.push(storeObj);
                 }
-                else if(object_type === "guide_signs") {
+                else if(object_type === "guidance_signs") {
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "violet";
                         GAME.mapContext.beginPath(); //Start path

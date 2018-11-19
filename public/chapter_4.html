@@ -14,10 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 </head>
 <body>
-    <div id="infoButton"></div>
-    <div id="infoBox" title="Instruction">
-        <!-- <img src="./images/info2.png" width="100%"/> -->
-    </div>
     <div class="sign-detail-container">
         <div id="signDetail" class="sign-detail">
             <img src="./images/info2.png" width="100%"/>
@@ -29,7 +25,7 @@
             <div class="menu-item">
                 <a id="start-btn" class="eightbit-btn">Start</a>
                 <a id="restart-btn" class="eightbit-btn eightbit-btn--proceed">Restart</a>
-                <a id="instruction-btn" href="instruction.html" class="eightbit-btn eightbit-btn--proceed">Instruction</a>
+                <a id="instruction-btn" class="eightbit-btn eightbit-btn--proceed">Instruction</a>
                 <a class="eightbit-btn eightbit-btn--reset" id="exit-btn" data-target="#exit-dialog">Exit</a>
             </div>
         </div>
@@ -43,6 +39,36 @@
                     <a href="index.html" class="eightbit-btn eightbit-btn--reset">Yes</a>
                 </div>
             </div>
+        </div>
+        <div id="key-instruction" class="key-instruction-container center-div dialog">
+            <table>
+                <tr>
+                    <td class="key-name"><span>W/Up</span></td>
+                    <td class="key-definition"><span>Move Forward</span></td>
+                </tr> 
+                <tr>
+                    <td class="key-name"><span>A/Left</span></td>
+                    <td class="key-definition"><span>Rotate Left</span></td>
+                <tr>
+                    <td class="key-name"><span>D/Right</span></td>
+                    <td class="key-definition"><span>Rotate Right</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Z</span></td>
+                    <td class="key-definition"><span>Keep Moving Forward</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>X</span></td>
+                    <td class="key-definition"><span>Stop Moving</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Shift</span></td>
+                    <td class="key-definition"><span>Accelerate</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="key-instruction-btn"><a id="instruction-close" class="eightbit-btn eightbit-btn--primary">Close</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 
