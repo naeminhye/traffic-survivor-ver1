@@ -70,7 +70,72 @@
         ]
     },
     "models": {
-        "vehicles": []
+        "vehicles": [
+            {
+                "name": "simple-car-0-23",
+                "loader_type": "fbx",
+                "object_type": "vehicle",
+                "position": {"x":0,"y":1.3,"z":115},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+					{"x":0,"y":1.3,"z":115},
+					{"x":245,"y":1.3,"z":115}
+                ],
+                "velocity": 0.025
+            },
+            {
+                "name": "simple-car-22-49",
+                "loader_type": "fbx",
+                "object_type": "vehicle",
+                "position": {"x":245,"y":1.3,"z":110},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+					{"x":245,"y":1.3,"z":110},
+					{"x":0,"y":1.3,"z":110}
+                ],
+                "velocity": 0.03
+            },
+            {
+                "name": "simple-car-36-0",
+                "loader_type": "fbx",
+                "object_type": "vehicle",
+                "position": {"x":180,"y":1.3,"z":0},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+					{"x":180,"y":1.3,"z":0},
+					{"x":180,"y":1.3,"z":245}
+                ],
+                "velocity": 0.03
+            },
+            {
+                "name": "simple-car-0-9",
+                "loader_type": "fbx",
+                "object_type": "vehicle",
+                "position": {"x":0,"y":1.3,"z":45},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+					{"x":0,"y":1.3,"z":45},
+					{"x":245,"y":1.3,"z":45}
+                ],
+                "velocity": 0.02
+            }
+        ]
     },
     "intersects": [
         {
