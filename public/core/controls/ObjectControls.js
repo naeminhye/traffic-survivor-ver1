@@ -34,12 +34,32 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 
 	// if(!flag) {
 	// 	if(this._object.position.distanceTo(WORLD.player.position) > 10) {
-			this._pos += (this._factor * delta);
-			if (this._pos > 1) { this._pos = 0; };
-			this._object.lookAt(this.path.getPointAt(this._pos));
+		// this._pos += (this._factor * delta);
+		// if (this._pos > 1) { this._pos = 0; };
+		// this._object.lookAt(this.path.getPointAt(this._pos));
 			// this._object.rotateY(-Math.PI / 2)
 	// 	}
 	// }
+
+	var canGo = (WORLD.trafficLightList.findIndex((light) => {
+		var v = new THREE.Vector3();
+        var angleDelta = calculateAngle(this._object.getWorldDirection(v), new THREE.Vector3(light.direction.x,
+            light.direction.y,
+			light.direction.z));
+			if(((light.object.position.distanceTo(this._object.position) < 10)
+			&& light.currentStatus === "REDLIGHT")) {
+				console.log(Math.abs(minifyAngle(angleDelta)))
+
+			}
+        return ((light.object.position.distanceTo(this._object.position) < 10)
+        && (Math.abs(minifyAngle(angleDelta)) <= 1)
+        && light.currentStatus === "REDLIGHT");
+	}) === -1);
+	if (canGo) {
+		this._pos += (this._factor * delta);
+		if (this._pos > 1) { this._pos = 0; };
+		this._object.lookAt(this.path.getPointAt(this._pos));
+	}
 
 }
 

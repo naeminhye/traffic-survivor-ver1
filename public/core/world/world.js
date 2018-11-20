@@ -302,6 +302,20 @@ WORLD.init = () => {
     WORLD.scene.updateMatrixWorld(true);
 
     WORLD.loadMap();
+    
+    smokeTexture = WORLD.textureLoader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/Smoke-Element.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0x00dddd, map: smokeTexture, transparent: true});
+    smokeGeo = new THREE.PlaneGeometry(300,300);
+    smokeParticles = [];
+
+
+    for (p = 0; p < 150; p++) {
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(Math.random()*500-250,Math.random()*500-250,Math.random()*1000-100);
+        particle.rotation.z = Math.random() * 360;
+        // WORLD.scene.add(particle);
+        // smokeParticles.push(particle);
+    }
 
     WORLD.renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -316,6 +330,13 @@ WORLD.init = () => {
     document.body.appendChild(WORLD.renderer.domElement);
 
     window.addEventListener('resize', onWindowResize, false);
+}
+ 
+function evolveSmoke(delta) {
+    var sp = smokeParticles.length;
+    while(sp--) {
+        smokeParticles[sp].rotation.z += (delta * 0.2);
+    }
 }
 
 function onWindowResize() {
@@ -379,6 +400,7 @@ WORLD.animate = function () {
 
     $("#speed").text(PLAYER.status.speed);
     // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
+    //evolveSmoke(Date.now() - time);
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
     time = Date.now();
 
@@ -458,8 +480,9 @@ function checkViolation() {
             }
         }
     });
-
-    updateTrafficLights();
+    if (WORLD.trafficLightList) {
+        updateTrafficLights();
+    }
     if (WORLD.one_ways) {
         checkOneWayViolation();
     }
@@ -472,8 +495,6 @@ const updateTrafficLights = () => {
     /** 
      * check Red Light violation
      */
-    var length = WORLD.trafficLightList.length;
-    // trafficLightViolation = false;
 
     trafficLightViolation = (WORLD.trafficLightList.findIndex((light) => {
         var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
