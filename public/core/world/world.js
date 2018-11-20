@@ -473,30 +473,37 @@ const updateTrafficLights = () => {
      * check Red Light violation
      */
     var length = WORLD.trafficLightList.length;
-    for (var i = 0; i < length; i++) {
-        trafficLightViolation = false;
+    // trafficLightViolation = false;
 
-        var light = WORLD.trafficLightList[i];
-        //light = updateSkinnedAnimation(light);
-        if (light.object.position.distanceTo(WORLD.player.position) < 10 && !trafficLightViolation) {
-            /** kiểm tra trạng thái trước đó, 
-             * nếu trafficLightViolation === false 
-             * =>> vừa đi vào vùng intersect */
+    trafficLightViolation = (WORLD.trafficLightList.findIndex((light) => {
+        var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
+            light.direction.y,
+            light.direction.z));
+        return ((light.object.position.distanceTo(WORLD.player.position) < 10) 
+        && (trafficLightViolation === false) 
+        && (Math.abs(minifyAngle(angleDelta)) > 120)
+        && light.currentStatus === "REDLIGHT");
+    }) !== -1);
 
-            var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
-                light.direction.y,
-                light.direction.z));
+    // for (var i = 0; i < length; i++) {
+    //     var light = WORLD.trafficLightList[i];
+    //     var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
+    //         light.direction.y,
+    //         light.direction.z));
+    //     /** kiểm tra trạng thái trước đó, 
+    //      * nếu trafficLightViolation === false 
+    //      * =>> vừa đi vào vùng intersect */
 
-            /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-            if ((Math.abs(minifyAngle(angleDelta)) > 90)
-                /** kiểm tra trạng thái của đèn */
-                &&
-                light.currentStatus === "REDLIGHT") {
-                trafficLightViolation = true;
-                console.log("light:",light.object.name, " ---- ", angleDelta, "-------", light.currentStatus, "-------", light.direction)
-            }
-        }
-    }
+    //     /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
+    //     if ((light.object.position.distanceTo(WORLD.player.position) < 10) 
+    //         && (trafficLightViolation === false) 
+    //         && (Math.abs(minifyAngle(angleDelta)) > 90)
+    //         && light.currentStatus === "REDLIGHT") {
+    //             /** kiểm tra trạng thái của đèn */
+    //             trafficLightViolation = true;
+    //             console.log("light:",light.object.name, " ---- ", angleDelta, "-------", light.currentStatus, "-------", light.direction)
+    //     }
+    // }
 
     /** kiểm tra xe player có đang ở trong vùng intersect nào không */
     isInIntersectArea = (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(WORLD.player.position)) !== -1)
@@ -519,7 +526,7 @@ const updateTrafficLights = () => {
         });
         isViolating = true;
     }
-    if (!isInIntersectArea && trafficLightViolation && isViolating) {
+    if (!isInIntersectArea && isViolating) {
         trafficLightViolation = false;
         isViolating = false;
     }
