@@ -379,39 +379,42 @@ WORLD.animate = function () {
     sphereBody.position.set(playX, playY, playZ);
 
     requestAnimationFrame(WORLD.animate);
-    if (WORLD.controls.enabled) {
 
-        WORLD.world.step(dt);
+    if(GAME.status === "PLAYING") {
+        if (WORLD.controls.enabled) {
 
-        if (WORLD.vehicleControls.length > 0) {
-            WORLD.vehicleControls.forEach(function (control) {
-                // moving vehicles
-                control.update(Date.now() - time);
-            });
+            WORLD.world.step(dt);
+
+            if (WORLD.vehicleControls.length > 0) {
+                WORLD.vehicleControls.forEach(function (control) {
+                    // moving vehicles
+                    control.update(Date.now() - time);
+                });
+            }
+
+            if (WORLD.trafficLightList.length > 0) {
+                WORLD.trafficLightList.forEach(function (light) {
+                    // moving vehicles
+                    light = updateSkinnedAnimation(light);
+                });
+            }
+
+
         }
 
-        if (WORLD.trafficLightList.length > 0) {
-            WORLD.trafficLightList.forEach(function (light) {
-                // moving vehicles
-                light = updateSkinnedAnimation(light);
-            });
+        PLAYER.pin = $("#player-pin");
+        PLAYER.pin.css("left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+        PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+
+        WORLD.controls.update(Date.now() - time);
+        checkViolation();
+        if (!WORLD.warningFlag) {
+            $("#message").css("display", "none");
         }
 
-
+        $("#speed").text(PLAYER.status.speed);
     }
 
-    PLAYER.pin = $("#player-pin");
-    PLAYER.pin.css("left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10);
-    PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
-
-    WORLD.controls.update(Date.now() - time);
-
-    checkViolation();
-    if (!WORLD.warningFlag) {
-        $("#message").css("display", "none");
-    }
-
-    $("#speed").text(PLAYER.status.speed);
     // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
     //evolveSmoke(Date.now() - time);
     WORLD.renderer.render(WORLD.scene, WORLD.camera);
@@ -454,27 +457,6 @@ function checkViolation() {
     signViolation(WORLD.warningSignList);
     signViolation(WORLD.regulatorySignList);
     signViolation(WORLD.guidanceSignList);
-
-    // WORLD.warningSignList.forEach((sign) => {
-
-    //     if (sign.object.position.distanceTo(WORLD.player.position) < 10) {
-
-    //         var v = new THREE.Vector3();
-    //         var playerVector = WORLD.player.getWorldDirection(v);
-    //         var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
-    //         var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-    //         var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-    //         var angleDelta = signAngle - playerAngle;
-    //         if (!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
-    //             // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
-    //             if (sign.info) {
-    //                 $("#message").text(sign.info);
-    //                 $("#message").css("display", "block");
-    //             }
-    //             WORLD.warningFlag = true;
-    //         }
-    //     }
-    // });
     if (WORLD.trafficLightList) {
         updateTrafficLights();
     }
@@ -494,10 +476,10 @@ const signViolation = (list) => {
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
             console.log("violdate", sign.object.name)
-            GAME.status = "PAUSED";
+            //GAME.status = "PAUSED";
 
             //todo: show info 
-            GAME.mapContext.strokeStyle = "red";
+            GAME.mapContext.strokeStyle = "green";
             GAME.mapContext.beginPath(); //Start path
             GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
             GAME.mapContext.stroke();
@@ -515,7 +497,6 @@ const updateTrafficLights = () => {
     /** 
      * check Red Light violation
      */
-
     trafficLightViolation = (WORLD.trafficLightList.findIndex((light) => {
         var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
             light.direction.y,
@@ -525,26 +506,6 @@ const updateTrafficLights = () => {
         && (Math.abs(minifyAngle(angleDelta)) > 120)
         && light.currentStatus === "REDLIGHT");
     }) !== -1);
-
-    // for (var i = 0; i < length; i++) {
-    //     var light = WORLD.trafficLightList[i];
-    //     var angleDelta = calculateAngleToPlayer(new THREE.Vector3(light.direction.x,
-    //         light.direction.y,
-    //         light.direction.z));
-    //     /** kiểm tra trạng thái trước đó, 
-    //      * nếu trafficLightViolation === false 
-    //      * =>> vừa đi vào vùng intersect */
-
-    //     /** kiểm tra xe hướng đi của player có ngược lại với hướng của đèn không */
-    //     if ((light.object.position.distanceTo(WORLD.player.position) < 10) 
-    //         && (trafficLightViolation === false) 
-    //         && (Math.abs(minifyAngle(angleDelta)) > 90)
-    //         && light.currentStatus === "REDLIGHT") {
-    //             /** kiểm tra trạng thái của đèn */
-    //             trafficLightViolation = true;
-    //             console.log("light:",light.object.name, " ---- ", angleDelta, "-------", light.currentStatus, "-------", light.direction)
-    //     }
-    // }
 
     /** kiểm tra xe player có đang ở trong vùng intersect nào không */
     isInIntersectArea = (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(WORLD.player.position)) !== -1)

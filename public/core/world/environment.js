@@ -498,9 +498,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 6, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * 3, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
