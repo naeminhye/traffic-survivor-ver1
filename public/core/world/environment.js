@@ -74,6 +74,7 @@ const loadModelToWorld = (model) => {
         info = null,
         path = null,
         velocity,
+        sign_id
     } = model;
     
     let loader;
@@ -167,6 +168,7 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.fill();
                     }
                     storeObj.hasPassed = false;
+                    storeObj.sign_id = sign_id;
                     WORLD.regulatorySignList.push(storeObj);
                 }
                 else if(object_type === "warning_signs") {
@@ -178,6 +180,7 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.fill();
                     }
                     storeObj.hasPassed = false;
+                    storeObj.sign_id = sign_id;
                     WORLD.warningSignList.push(storeObj);
                 }
                 else if(object_type === "guidance_signs") {
@@ -188,6 +191,7 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.fill();
                     }
                     storeObj.hasPassed = false;
+                    storeObj.sign_id = sign_id;
                     WORLD.guidanceSignList.push(storeObj);
                 }
                 else if(object_type === "vehicles") {

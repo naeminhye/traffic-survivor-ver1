@@ -476,9 +476,21 @@ const signViolation = (list) => {
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
             console.log("violdate", sign.object.name)
-            //GAME.status = "PAUSED";
+            GAME.status = "PAUSED";
 
             //todo: show info 
+            $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
+            $("#signDetail").show();
+            document.addEventListener('keydown', (event) => {
+                let keyName = event.code;
+                if (keyName === 'Space') {
+                    GAME.status = "PLAYING";
+                    $("#signDetail").hide();
+                  return;
+                }
+            }, false);
+
+
             GAME.mapContext.strokeStyle = "green";
             GAME.mapContext.beginPath(); //Start path
             GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.

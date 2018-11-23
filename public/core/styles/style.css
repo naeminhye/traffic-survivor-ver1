@@ -251,9 +251,16 @@ hr {
     height: 100%;
 }
 .sign-detail {
-    width: 50%;
     margin: auto;
-    display: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.sign-detail span {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
 }
 .turn-signals {
     display: flex;

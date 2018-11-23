@@ -154,7 +154,7 @@
                 }
             },
             {
-                "sign_id": "P.127",
+                "sign_id": "127",
                 "name": "tocdotoida-29-7",
                 "loader_type": "object",
                 "object_type": "guidance_signs",
@@ -176,7 +176,7 @@
                 "direction": { "x": -1, "y": 0, "z": 0 }
             },
             {
-                "sign_id": "P.134",
+                "sign_id": "134",
                 "name": "hettoida-2-9",
                 "loader_type": "object",
                 "object_type": "guidance_signs",
