@@ -493,7 +493,7 @@ var environmentInit = function (file) {
                 map: texture
             });
             buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            buildingMaterial.map.repeat.set(UNIT_SIZE, UNIT_SIZE);
+            buildingMaterial.map.repeat.set(1, 1);
 
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 

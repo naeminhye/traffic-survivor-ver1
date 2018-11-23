@@ -19,6 +19,8 @@ const keys = {
     KEY_Z: 90,
     KEY_Q: 81,
     KEY_E: 69,
+    KEY_G: 71,
+    KEY_H: 72,
 };
 
 var PointerControls = function (camera, cannonBody) {
@@ -43,7 +45,9 @@ var PointerControls = function (camera, cannonBody) {
     var moveLeft = false;
     var moveRight = false;
     var rotateLeft = false;
+    var rotateLeftFast = false;
     var rotateRight = false;
+    var rotateRightFast = false;
     var speedup = false;
     var leftSignal = false;
     var rightSignal = false;
@@ -143,6 +147,12 @@ var PointerControls = function (camera, cannonBody) {
                     rightSignal = true;
                 }
             break;
+            case keys.KEY_G:
+                rotateLeftFast = true;
+                break;
+            case keys.KEY_H:
+                rotateRightFast = true;
+                break;
             /** accelerate */
             case keys.KEY_SHIFT:
                 if(!speedup) {
@@ -269,6 +279,14 @@ var PointerControls = function (camera, cannonBody) {
         }
         else if(rotateRight) {
             yawObject.rotation.y -= rotateAngle;
+        }
+        else if(rotateLeftFast){
+            yawObject.rotation.y += Math.PI/2;
+            rotateLeftFast = false;
+        }
+        else if(rotateRightFast){
+            yawObject.rotation.y -= Math.PI/2;
+            rotateRightFast = false;
         }
 
         // position the bike in front of the camera
