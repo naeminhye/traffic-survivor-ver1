@@ -35,13 +35,14 @@ var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
 WORLD.regulatorySignList = [];
 WORLD.warningSignList = [];
+WORLD.guidanceSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
 var initialPosition;
 var infoBoxToggle = false;
 WORLD.loaded = false;
 WORLD.warningFlag = false;
-GAME.hasStarted = false;
+GAME.status = "READY";
 WORLD.mapSize = 0;
 
 // Flag to determine if the player lost the game
@@ -67,13 +68,12 @@ if (havePointerLock) {
             blocker.style.display = 'box';
             // instructions.style.display = '';
             GAME.menu.css("display", "block");
-            if (GAME.hasStarted) {
-                $("#restart-btn").css("display", "inline-block");
-                $("#instruction-btn").css("display", "none");
-                
-            } else {
+            if (GAME.status === "READY") {
                 $("#restart-btn").css("display", "none");
                 $("#instruction-btn").css("display", "inline-block");
+            } else {
+                $("#restart-btn").css("display", "inline-block");
+                $("#instruction-btn").css("display", "none");
             }
             GAME.controllers.css("display", "none");
         }
@@ -82,12 +82,12 @@ if (havePointerLock) {
     var pointerlockerror = (event) => {
         // instructions.style.display = '';
         GAME.menu.css("display", "block");
-        if (GAME.hasStarted) {
-            $("#restart-btn").css("display", "inline-block");
-            $("#instruction-btn").css("display", "none");
-        } else {
+        if (GAME.status === "READY") {
             $("#restart-btn").css("display", "none");
             $("#instruction-btn").css("display", "inline-block");
+        } else {
+            $("#restart-btn").css("display", "inline-block");
+            $("#instruction-btn").css("display", "none");
         }
         GAME.controllers.css("display", "none");
     }
@@ -133,9 +133,9 @@ if (havePointerLock) {
     };
 
     $("#start-btn").click(() => {
-        if (!GAME.hasStarted) {
+        if (GAME.status === "READY") {
             $("#start-btn").text("Resume");
-            GAME.hasStarted = true;
+            GAME.status = "PLAYING";
         }
         resumeGame();
     });
@@ -146,7 +146,8 @@ if (havePointerLock) {
     });
 
     $("#exit-btn").click(() => {
-        if (GAME.hasStarted) {
+        if (GAME.status !== "READY") {
+            
             $("#exit-dialog").css("display", "block");
             GAME.menu.css("display", "none");
         } else {
@@ -240,13 +241,13 @@ WORLD.initCannon = () => {
 
     // Create a sphere
     var mass = 5,
-        radius = 1.3;
+        radius = 1.8;
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({
         mass: mass
     });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(46, 1.3, 55);
+    sphereBody.position.set(46, 1.8, 55);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
@@ -302,20 +303,32 @@ WORLD.init = () => {
     WORLD.scene.updateMatrixWorld(true);
 
     WORLD.loadMap();
-    
-    smokeTexture = WORLD.textureLoader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/Smoke-Element.png');
-    smokeMaterial = new THREE.MeshLambertMaterial({color: 0x00dddd, map: smokeTexture, transparent: true});
-    smokeGeo = new THREE.PlaneGeometry(300,300);
-    smokeParticles = [];
 
+    // bike model
+    WORLD.bike = WORLD.objectLoader.load("./models/fbx/bike/bike.json", ( obj ) => {
+        obj.position.x = WORLD.player.position.x;
+        obj.position.y = WORLD.player.position.y - 6;
+        obj.position.z = WORLD.player.position.z;
+        //obj.rotation.y = Math.PI;
+        obj.lookAt(WORLD.player.getWorldDirection())
+        obj.name = "xe"
+        obj.traverse((child) => {
 
-    for (p = 0; p < 150; p++) {
-        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
-        particle.position.set(Math.random()*500-250,Math.random()*500-250,Math.random()*1000-100);
-        particle.rotation.z = Math.random() * 360;
-        // WORLD.scene.add(particle);
-        // smokeParticles.push(particle);
-    }
+            if (child instanceof THREE.Mesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+                var texture = new THREE.TextureLoader().load("./models/fbx/bike/bike-uvmap.png");
+                var material = new THREE.MeshBasicMaterial({
+                    map: texture,
+                    side: THREE.DoubleSide
+                });  
+                material.map.minFilter = THREE.LinearFilter;
+                child.material = material;
+            }
+        });
+        WORLD.bike = obj;
+        WORLD.scene.add(WORLD.bike);
+    });
 
     WORLD.renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -438,54 +451,61 @@ function addSunlight(scene) {
 
 function checkViolation() {
 
-    WORLD.regulatorySignList.forEach((sign) => {
+    signViolation(WORLD.warningSignList);
+    signViolation(WORLD.regulatorySignList);
+    signViolation(WORLD.guidanceSignList);
 
-        if (sign.object.position.distanceTo(WORLD.player.position) < 5) {
+    // WORLD.warningSignList.forEach((sign) => {
 
-            var v = new THREE.Vector3();
-            var playerVector = WORLD.player.getWorldDirection(v);
-            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
-            var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-            var angleDelta = signAngle - playerAngle;
-            if (!(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-                //$("#infoBox").find("img").attr("src", sign.infoImg);
-                // $("#infoBox").dialog("open");
+    //     if (sign.object.position.distanceTo(WORLD.player.position) < 10) {
 
-                // $("#signDetail").find("img").attr("src", sign.infoImg);
-                // $("#signDetail").css("display", "block")
-            }
-
-        }
-
-    });
-
-    WORLD.warningSignList.forEach((sign) => {
-
-        if (sign.object.position.distanceTo(WORLD.player.position) < 10) {
-
-            var v = new THREE.Vector3();
-            var playerVector = WORLD.player.getWorldDirection(v);
-            var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
-            var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-            var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-            var angleDelta = signAngle - playerAngle;
-            if (!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
-                // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
-                if (sign.info) {
-                    $("#message").text(sign.info);
-                    $("#message").css("display", "block");
-                }
-                WORLD.warningFlag = true;
-            }
-        }
-    });
+    //         var v = new THREE.Vector3();
+    //         var playerVector = WORLD.player.getWorldDirection(v);
+    //         var signVector = new THREE.Vector3(sign.direction.x, sign.direction.y, sign.direction.z);
+    //         var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
+    //         var signAngle = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
+    //         var angleDelta = signAngle - playerAngle;
+    //         if (!(Math.abs(minifyAngle(angleDelta)) <= 90) && !WORLD.warningFlag) {
+    //             // kiểm tra trạng thái trước đó, nếu WORLD.warningFlag === false =>> vừa đi vào vùng warning 
+    //             if (sign.info) {
+    //                 $("#message").text(sign.info);
+    //                 $("#message").css("display", "block");
+    //             }
+    //             WORLD.warningFlag = true;
+    //         }
+    //     }
+    // });
     if (WORLD.trafficLightList) {
         updateTrafficLights();
     }
     if (WORLD.one_ways) {
         checkOneWayViolation();
     }
+}
+
+const signViolation = (list) => {
+
+    var newList = list.filter((sign) => !sign.hasPassed);
+    newList.forEach((sign) => {
+            var angleDelta = calculateAngleToPlayer(new THREE.Vector3(
+                sign.direction.x, 
+                sign.direction.y, 
+                sign.direction.z));
+
+        if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
+            console.log("violdate", sign.object.name)
+            GAME.status = "PAUSED";
+
+            //todo: show info 
+            GAME.mapContext.strokeStyle = "red";
+            GAME.mapContext.beginPath(); //Start path
+            GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
+            GAME.mapContext.stroke();
+            sign.hasPassed = true;
+
+        }
+
+    });
 }
 
 var trafficLightViolation = false;

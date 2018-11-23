@@ -166,6 +166,7 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
                     }
+                    storeObj.hasPassed = false;
                     WORLD.regulatorySignList.push(storeObj);
                 }
                 else if(object_type === "warning_signs") {
@@ -176,6 +177,7 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
                     }
+                    storeObj.hasPassed = false;
                     WORLD.warningSignList.push(storeObj);
                 }
                 else if(object_type === "guidance_signs") {
@@ -185,9 +187,10 @@ const loadModelToWorld = (model) => {
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
                     }
-                    WORLD.warningSignList.push(storeObj);
+                    storeObj.hasPassed = false;
+                    WORLD.guidanceSignList.push(storeObj);
                 }
-                else if(object_type === "vehicle") {
+                else if(object_type === "vehicles") {
                     WORLD.vehicle.push(storeObj);
                     if(path) {
                         var control = new CONTROLS.PathControls(obj, new THREE.CatmullRomCurve3(jsonToThreeObject(path)), {"velocity": velocity || 0.02});
@@ -389,7 +392,8 @@ const updateSkinnedAnimation = (_object) => {
  * @param {*} file the link to the JSON file
  */
 var environmentInit = function (file) {
-    var residentTexture = WORLD.textureLoader.load("/images/residential.jpg");
+    var squareHouseTexture = WORLD.textureLoader.load("/images/h2.jpg");
+    var smallHouseTexture = WORLD.textureLoader.load("/images/h2.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
     readMapInfoFromJson(file, (result) => {
@@ -480,12 +484,12 @@ var environmentInit = function (file) {
 
         findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
             /** residental buildings */
-            var texture = residentTexture;
+            var texture = squareHouseTexture;
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
             buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            buildingMaterial.map.repeat.set(UNIT_SIZE, 1);
+            buildingMaterial.map.repeat.set(UNIT_SIZE, UNIT_SIZE);
 
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
@@ -494,9 +498,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 6, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE * 3, buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
@@ -762,4 +766,78 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             WORLD.world.add(createBoxBody(plane, callback));
         }
     });
+}
+
+/**
+ * 
+ * @param {*} sign 
+ * sign:
+ * x
+ * z
+ * object_type
+ * sign_id
+ * name
+ * url
+ * directionToMap
+ * children
+ */
+const mappingSigns = (sign, UNIT_SIZE) => {
+    var data = {
+      castShadow: true,
+      receiveShadow: true
+    };
+	
+    data.loader_type = sign.loader_type;
+    data.object_type = sign.object_type;
+	data.sign_id = sign.sign_id;
+    data.name = sign.name + "-" + sign.x + "-" + sign.z;
+    data.url = sign.url;
+    data.info = sign.info;
+	
+	switch(sign.directionToMap) {
+		case "up":
+			data.direction = new THREE.Vector3(0, 0, 1);
+            data.rotation = new THREE.Euler(0, -Math.PI/2, 0, "XYZ");
+			break;
+		case "down":
+			data.direction = new THREE.Vector3(0, 0, -1);
+            data.rotation = new THREE.Euler(0, Math.PI/2, 0, "XYZ");
+			break;
+		case "left":
+			data.direction = new THREE.Vector3(1, 0, 0);
+            data.rotation = new THREE.Euler(0, 0, 0, "XYZ");
+			break;
+		case "right":
+			data.direction = new THREE.Vector3(-1, 0, 0);
+            data.rotation = new THREE.Euler(0, Math.PI, 0, "XYZ");
+			break;
+    }
+	if(sign.children) {
+		data.children = sign.children;
+	}
+    if (sign.name === "hieulenhthang") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, -Math.PI/2, "XYZ");
+
+    }
+    else if (sign.name === "huongphaiditheo-phai") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // rotation.y = ROTATIONY - MathPI/2 = 0
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, Math.PI, "XYZ");
+    }
+    else if (sign.name === "huongphaiditheo-trai") {
+        var rotationY= data.rotation.y - Math.PI/2;
+        data.rotation = new THREE.Euler(0, rotationY, 0, "XYZ");
+        // children rotation.z = Math.PI
+        data.children.sign.rotation = new THREE.Euler(0, 0, 0, "XYZ");
+    }
+	
+	data.scale = new THREE.Vector3(0.3, 0.3, 0.3);
+    data.position = new THREE.Vector3(sign.x * UNIT_SIZE, 0, sign.z * UNIT_SIZE);    
+	
+	return data;
 }

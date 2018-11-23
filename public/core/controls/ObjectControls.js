@@ -46,11 +46,6 @@ CONTROLS.PathControls.prototype.update = function (delta) {
         var angleDelta = calculateAngle(this._object.getWorldDirection(v), new THREE.Vector3(light.direction.x,
             light.direction.y,
 			light.direction.z));
-			if(((light.object.position.distanceTo(this._object.position) < 10)
-			&& light.currentStatus === "REDLIGHT")) {
-				console.log(Math.abs(minifyAngle(angleDelta)))
-
-			}
         return ((light.object.position.distanceTo(this._object.position) < 10)
         && (Math.abs(minifyAngle(angleDelta)) <= 1)
         && light.currentStatus === "REDLIGHT");

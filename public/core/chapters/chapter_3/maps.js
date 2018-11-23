@@ -5,7 +5,7 @@
 //         {
 //             "name": "simple-car",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 32 * 5, "y": 1.3, "z": 0 * 5},//new THREE.Vector3(32 * 5, 1.3, 0 * 5),
 //             "rotation": {"x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ"},//new THREE.Euler(0, - Math.PI / 2, 0, "XYZ"),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
@@ -22,7 +22,7 @@
 //         {
 //             "name": "simple-car",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 32 * 5, "y": 1.3, "z": 0 * 5},
 //             "rotation": {"x": 0, "y": -1.5707963267948966, "z": 0, "order": "XYZ"},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
@@ -39,7 +39,7 @@
 //         {
 //             "name": "simple-car2",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 60 * 5, "y": 1.3, "z": 8 * 5},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -51,7 +51,7 @@
 //         {
 //             "name": "simple-car2",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 60 * 5, "y": 1.3, "z": 8 * 5},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -63,7 +63,7 @@
 //         {
 //             "name": "simple-car3",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 65 * 5, "y": 1.3, "z": 8 * 5},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -87,7 +87,7 @@
 //         {
 //             "name": "simple-car4",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 1 * 5, "y": 1.3, "z": 35 * 5},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -111,7 +111,7 @@
 //         {
 //             "name": "simple-car5",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 5, "y": 1.3, "z": 35 * 5},
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -135,7 +135,7 @@
 //         {
 //             "name": "simple-car6",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 0 * 5, "y": 1.3, "z": 9 * 5},//new THREE.Vector3(0 * 5, 1.3, 9 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -153,7 +153,7 @@
 //         {
 //             "name": "simple-car7",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 7 * 5, "y": 1.3, "z": 9 * 5},//new THREE.Vector3(7 * 5, 1.3, 9 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -171,7 +171,7 @@
 //         {
 //             "name": "simple-car8",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 0 * 5, "y": 1.3, "z": 35 * 5},//new THREE.Vector3(0 * 5, 1.3, 35 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -186,7 +186,7 @@
 //         {
 //             "name": "simple-car-13-35",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 13 * 5, "y": 1.3, "z": 35 * 5},//new THREE.Vector3(13 * 5, 1.3, 35 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -201,7 +201,7 @@
 //         {
 //             "name": "simple-car9",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 33 * 5, "y": 1.3, "z": 64 * 5},//new THREE.Vector3(33 * 5, 1.3, 64 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
@@ -228,7 +228,7 @@
 //         {
 //             "name": "simple-car10",
 //             "loader_type": "fbx",
-//             "object_type": "vehicle",
+//             "object_type": "vehicles",
 //             "position": {"x": 65 * 5, "y": 1.3, "z": 34 * 5},//new THREE.Vector3(65 * 5, 1.3, 34 * 5),
 //             "url": "./models/fbx/simple-car/simple-car.fbx",
 //             "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
