@@ -357,7 +357,7 @@ var map = [
     [1, 1, 1, 2, 2]
 ];
 
-function findSubMap(mat, target) {
+function findSquareSubMap(mat, target) {
 	var results = [];
     var n = mat.length;
   
@@ -409,6 +409,58 @@ function findSubMap(mat, target) {
         k--;
     }
   return results;
+}
+
+function findSquareSubMapWithSize(mat, target, size) {
+
+	var results = [];
+    var n = mat.length;
+  
+    var flagMat = [];
+    for(var temp = 0; temp < mat.length; temp++){
+      flagMat[temp] = new Array(mat.length); 
+      flagMat[temp].fill(0);
+    }
+    k = size;
+
+    // row number of first cell in current sub-square of size k x k 
+    for (var i = 0; i < n - k + 1; i++) {
+        // column of first cell in current sub-square of size k x k 
+        for (var j = 0; j < n - k + 1; j++) {
+            if (flagMat[i][j] != 1) {
+                // Current sub-square 
+                var submat = [];
+                var existed = false;
+
+                for (var p = i; p < k + i; p++) {
+                    submat[p - i] = [];
+                    for (var q = j; q < k + j; q++) {
+                        submat[p - i][q - j] = mat[p][q];
+                        if(flagMat[p][q] === 1) {
+                            existed = true;
+                        }
+                    }
+                }
+                if (allEqual2D(submat, target) && existed === false) {
+                    var info = {
+                        z: i,
+                        x: j,
+                        size: k
+                    }
+                    
+                    results.push(info)
+
+                    for (var p2 = i; p2 < k + i; p2++) {
+                        for (var q2 = j; q2 < k + j; q2++) {
+                            flagMat[p2][q2] = 1;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    return results;
 }
 
 function startSignal(counter, dir){

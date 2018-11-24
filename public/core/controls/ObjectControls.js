@@ -46,9 +46,13 @@ CONTROLS.PathControls.prototype.update = function (delta) {
         var angleDelta = calculateAngle(this._object.getWorldDirection(v), new THREE.Vector3(light.direction.x,
             light.direction.y,
 			light.direction.z));
-        return ((light.object.position.distanceTo(this._object.position) < 10)
+		var angleToPlayerDelta = calculateAngleToPlayer(this._object.getWorldDirection(v));
+
+        return (((light.object.position.distanceTo(this._object.position) < 10)
         && (Math.abs(minifyAngle(angleDelta)) <= 1)
-        && light.currentStatus === "REDLIGHT");
+		&& light.currentStatus === "REDLIGHT")
+		|| (this._object.position.distanceTo(WORLD.player.position) < 10));
+		// && (Math.abs(minifyAngle(angleToPlayerDelta)) > 120))
 	}) === -1);
 	if (canGo) {
 		this._pos += (this._factor * delta);

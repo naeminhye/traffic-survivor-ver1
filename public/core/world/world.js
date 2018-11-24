@@ -333,8 +333,8 @@ WORLD.init = () => {
     WORLD.renderer = new THREE.WebGLRenderer({
         antialias: true
     });
-    WORLD.renderer.gammaFactor = 2.2;
-    WORLD.renderer.gammaOutput = true;
+    // WORLD.renderer.gammaFactor = 2.2;
+    // WORLD.renderer.gammaOutput = true;
     WORLD.renderer.shadowMap.enabled = true;
     WORLD.renderer.shadowMapSoft = true;
     WORLD.renderer.setSize(window.innerWidth, window.innerHeight);

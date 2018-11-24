@@ -92,7 +92,7 @@
 //         });
 
 
-//         findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
+//         findSquareSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
 //             /** residental buildings */
 //             var texture = residentTexture;
 //             var buildingMaterial = new THREE.MeshBasicMaterial({
@@ -119,7 +119,7 @@
 //             // }));
 //         });
 
-//         findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function (tile) {
+//         findSquareSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function (tile) {
 //             /** residental buildings */
 //             var texture = glassTexture;
 //             var buildingMaterial = new THREE.MeshBasicMaterial({
@@ -175,7 +175,7 @@
 //  * @param {*} map 
 //  */
 // const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
-//     findSubMap(map, id).forEach(function (tile) {
+//     findSquareSubMap(map, id).forEach(function (tile) {
 
 //         if(minimap) {
 //             var color = minimap.color;

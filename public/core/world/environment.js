@@ -396,8 +396,8 @@ const updateSkinnedAnimation = (_object) => {
  * @param {*} file the link to the JSON file
  */
 var environmentInit = function (file) {
-    var squareHouseTexture = WORLD.textureLoader.load("/images/h2.jpg");
-    var smallHouseTexture = WORLD.textureLoader.load("/images/h2.jpg");
+    var h2_houseTexture = WORLD.textureLoader.load("/images/h2.jpg");
+    var newHouseTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
     readMapInfoFromJson(file, (result) => {
@@ -479,16 +479,32 @@ var environmentInit = function (file) {
         loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
             color: "green"
         });
-        loadTextureToGround(PARKING_LOT, './images/textures/paving-cobblestones.jpg', roadMap, UNIT_SIZE, true, {
+        loadTextureToGround(PARKING_LOT, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+            color: "grey"
+        });
+        loadTextureToGround(RESIDENTAL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
             color: "grey"
         });
         loadTextureToGround(ROUNDABOUT, './images/textures/roundabout.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
 
-        findSubMap(roadMap, RESIDENTAL_BUILDING_ID).forEach(function (tile) {
+        findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 4).forEach(function (tile) {
             /** residental buildings */
-            var texture = squareHouseTexture;
+            var randomHouse = Math.round((Math.random()) * 10);
+            var texture;
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+
+            if(randomHouse % 2 === 0) {
+                texture = h2_houseTexture;
+                buildingXWidth += 1;
+            }
+            else {
+                texture = newHouseTexture;
+                buildingZWidth += 1;
+            }
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
@@ -497,35 +513,9 @@ var environmentInit = function (file) {
 
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
-            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+            /** Vẽ trên map */
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 2, tile.size * UNIT_SIZE), buildingMaterial);
-            // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE, buildingZWidth);
-            // Add the cube
-            WORLD.scene.add(cube);
-            // WORLD.world.add(createBoxBody(cube, function (object) {
-            //     if (object.body.id == 0)
-            //         console.log("Player collided with walls.");
-            // }));
-        });
-
-        findSubMap(roadMap, OFFICE_BUILDING_ID).forEach(function (tile) {
-            /** residental buildings */
-            var texture = glassTexture;
-            var buildingMaterial = new THREE.MeshBasicMaterial({
-                map: texture
-            });
-            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            buildingMaterial.map.repeat.set(UNIT_SIZE, 1);
-
-            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
@@ -736,7 +726,7 @@ var environmentInit = function (file) {
  * @param {*} callback 
  */
 const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
-    findSubMap(map, id).forEach(function (tile) {
+    findSquareSubMap(map, id).forEach(function (tile) {
 
         if(minimap) {
             var color = minimap.color;
