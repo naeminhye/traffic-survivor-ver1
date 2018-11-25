@@ -270,10 +270,10 @@ WORLD.init = () => {
     // WORLD.scene.background = new THREE.Color(0xcce0ff);
     var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
-    WORLD.scene.fog = new THREE.Fog(0x000000, 0, 500);
+    WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
 
     var ambient = new THREE.AmbientLight(0x111111);
-    // WORLD.scene.add(ambient);
+    WORLD.scene.add(ambient);
 
     light = new THREE.SpotLight(0xffffff);
     light.position.set(10, 30, 20);
@@ -338,7 +338,7 @@ WORLD.init = () => {
     WORLD.renderer.shadowMap.enabled = true;
     WORLD.renderer.shadowMapSoft = true;
     WORLD.renderer.setSize(window.innerWidth, window.innerHeight);
-    WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
+    // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
 

@@ -2,7 +2,9 @@ var PAVEMENT_ID = "0";
 var ROAD_POS_Z = "1";
 var ROAD_POS_X = "-1";
 var RESIDENTAL_BUILDING_ID = "2";
-var OFFICE_BUILDING_ID = "3";
+var SMALL_BUILDING_ID = "3";
+var NEW_BUILDING_ID = "5";
+var OFFICE_BUILDING_ID = "6";
 var GRASS_ID = "4";
 var START_POS_Z = "S";
 var START_POS_X = "-S";
@@ -398,6 +400,7 @@ const updateSkinnedAnimation = (_object) => {
 var environmentInit = function (file) {
     var h2_houseTexture = WORLD.textureLoader.load("/images/h2.jpg");
     var newHouseTexture = WORLD.textureLoader.load("/images/residential.jpg");
+    var smallHouseTexture = WORLD.textureLoader.load("/images/small-house.jpg");
     var glassTexture = WORLD.textureLoader.load("/images/glass.jpg");
 
     readMapInfoFromJson(file, (result) => {
@@ -491,20 +494,13 @@ var environmentInit = function (file) {
 
         findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 4).forEach(function (tile) {
             /** residental buildings */
-            var randomHouse = Math.round((Math.random()) * 10);
             var texture;
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            if(randomHouse % 2 === 0) {
-                texture = h2_houseTexture;
-                buildingXWidth += 1;
-            }
-            else {
-                texture = newHouseTexture;
-                buildingZWidth += 1;
-            }
+            texture = h2_houseTexture;
+            buildingXWidth += 1;
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
@@ -520,6 +516,104 @@ var environmentInit = function (file) {
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
             cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+
+            // Add the cube
+            WORLD.scene.add(cube);
+            // WORLD.world.add(createBoxBody(cube, function (object) {
+            //     if (object.body.id == 0)
+            //         console.log("Player collided with walls.");
+            // }));
+        });
+
+        findSquareSubMapWithSize(roadMap, NEW_BUILDING_ID, 4).forEach(function (tile) {
+            /** residental buildings */
+            var texture;
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+
+            texture = newHouseTexture;
+            buildingXWidth += 1;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set(1, 1);
+
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+            /** Vẽ trên map */
+            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
+
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+
+            // Add the cube
+            WORLD.scene.add(cube);
+            // WORLD.world.add(createBoxBody(cube, function (object) {
+            //     if (object.body.id == 0)
+            //         console.log("Player collided with walls.");
+            // }));
+        });
+
+        findSquareSubMapWithSize(roadMap, OFFICE_BUILDING_ID, 4).forEach(function (tile) {
+            /** residental buildings */
+            var texture;
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+
+            texture = glassTexture;
+            buildingXWidth += 1;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set(1, 1);
+
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+            /** Vẽ trên map */
+            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
+
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+
+            // Add the cube
+            WORLD.scene.add(cube);
+            // WORLD.world.add(createBoxBody(cube, function (object) {
+            //     if (object.body.id == 0)
+            //         console.log("Player collided with walls.");
+            // }));
+        });
+
+        findSquareSubMapWithSize(roadMap, SMALL_BUILDING_ID, 2).forEach(function (tile) {
+            /** residental buildings */
+            var texture;
+
+            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+
+            texture = smallHouseTexture;
+            var buildingMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
+            buildingMaterial.map.repeat.set(2, 1);
+            buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+
+            /** Vẽ trên map */
+            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
+
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
+            // Set the cube position
+            cube.position.set(buildingXWidth, UNIT_SIZE / 2, buildingZWidth);
+
             // Add the cube
             WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
