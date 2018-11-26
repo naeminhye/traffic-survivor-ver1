@@ -488,6 +488,15 @@ var environmentInit = function (file) {
         loadTextureToGround(RESIDENTAL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
             color: "grey"
         });
+        loadTextureToGround(OFFICE_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+            color: "grey"
+        });
+        loadTextureToGround(SMALL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+            color: "grey"
+        });
+        loadTextureToGround(NEW_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+            color: "grey"
+        });
         loadTextureToGround(ROUNDABOUT, './images/textures/roundabout.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
@@ -500,7 +509,6 @@ var environmentInit = function (file) {
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
             texture = h2_houseTexture;
-            buildingXWidth += 1;
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
@@ -533,7 +541,6 @@ var environmentInit = function (file) {
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
             texture = newHouseTexture;
-            buildingXWidth += 1;
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
@@ -566,12 +573,11 @@ var environmentInit = function (file) {
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
             texture = glassTexture;
-            buildingXWidth += 1;
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: texture
             });
             buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            buildingMaterial.map.repeat.set(1, 1);
+            buildingMaterial.map.repeat.set(1, 2);
 
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
@@ -579,9 +585,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size * 2, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE * tile.size, buildingZWidth);
 
             // Add the cube
             WORLD.scene.add(cube);
@@ -610,9 +616,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - 0.25, UNIT_SIZE - 0.5, tile.size * UNIT_SIZE - 0.25), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE / 2, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE / 2 - 0.25, buildingZWidth);
 
             // Add the cube
             WORLD.scene.add(cube);
