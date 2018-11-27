@@ -12,7 +12,6 @@ var END_POS_Z = "E";
 var END_POS_X = "-E";
 var BLOCKED_POS_Z = "X";
 var BLOCKED_POS_X = "-X";
-var PAVEMENT_HEIGHT = 0.1;
 var INTERSECT_1 = "I1";
 var INTERSECT_2 = "I2";
 var INTERSECT_3 = "I3";
@@ -22,7 +21,7 @@ var ZEBRA_CROSSING_TOP = "ZT";
 var ZEBRA_CROSSING_BOTTOM = "ZB";
 var ZEBRA_CROSSING_LEFT = "ZL";
 var ZEBRA_CROSSING_RIGHT = "ZR";
-var PARKING_LOT = "P";
+var NORMAL_LAND = "P";
 var ROUNDABOUT = "R";
 
 const manager = new THREE.LoadingManager();
@@ -482,7 +481,7 @@ var environmentInit = function (file) {
         loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
             color: "green"
         });
-        loadTextureToGround(PARKING_LOT, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+        loadTextureToGround(NORMAL_LAND, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
             color: "grey"
         });
         loadTextureToGround(RESIDENTAL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
@@ -504,6 +503,8 @@ var environmentInit = function (file) {
         findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 4).forEach(function (tile) {
             /** residental buildings */
             var texture;
+            var randomHeight = Math.floor((Math.random()) * 3) + 1; 
+            console.log("randomHeight", randomHeight)
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
@@ -513,7 +514,7 @@ var environmentInit = function (file) {
                 map: texture
             });
             buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            buildingMaterial.map.repeat.set(1, 1);
+            buildingMaterial.map.repeat.set(1, randomHeight);
 
             buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
@@ -521,9 +522,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size * randomHeight, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) * randomHeight, buildingZWidth);
 
             // Add the cube
             WORLD.scene.add(cube);
@@ -553,9 +554,9 @@ var environmentInit = function (file) {
             GAME.mapContext.fillStyle = "blue";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * 4, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * 2, buildingZWidth);
+            cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2), buildingZWidth);
 
             // Add the cube
             WORLD.scene.add(cube);

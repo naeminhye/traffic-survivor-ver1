@@ -310,7 +310,8 @@ WORLD.init = () => {
         obj.position.y = WORLD.player.position.y - 6;
         obj.position.z = WORLD.player.position.z;
         //obj.rotation.y = Math.PI;
-        obj.lookAt(WORLD.player.getWorldDirection())
+        var v = new THREE.Vector3();
+        obj.lookAt(WORLD.player.getWorldDirection(v));
         obj.name = "xe"
         obj.traverse((child) => {
 
