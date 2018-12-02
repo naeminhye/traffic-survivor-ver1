@@ -342,6 +342,8 @@ WORLD.init = () => {
     // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
+    document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
+    WORLD.renderer.vr.enabled = true;
 
     window.addEventListener('resize', onWindowResize, false);
 }
@@ -360,7 +362,7 @@ function onWindowResize() {
 }
 
 var dt = 1 / 60;
-WORLD.animate = function () {
+WORLD.animate = () => {
     WORLD.warningFlag = false;
     var playX = WORLD.player.position.x;
     var playY = WORLD.player.position.y;

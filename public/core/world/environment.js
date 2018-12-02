@@ -504,7 +504,6 @@ var environmentInit = function (file) {
             /** residental buildings */
             var texture;
             var randomHeight = Math.floor((Math.random()) * 3) + 1; 
-            console.log("randomHeight", randomHeight)
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
