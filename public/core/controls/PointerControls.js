@@ -289,17 +289,19 @@ var PointerControls = function (camera, cannonBody) {
             rotateRightFast = false;
         }
 
-        // position the bike in front of the camera
-        WORLD.bike.position.set(
-            WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
-            WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
-            WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
-        );
-        WORLD.bike.rotation.set(
-            WORLD.player.rotation.x,
-            WORLD.player.rotation.y - Math.PI,
-            WORLD.player.rotation.z
-        );
+        if(WORLD.bike) {
+            // position the bike in front of the camera
+            WORLD.bike.position.set(
+                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
+                WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+            );
+            WORLD.bike.rotation.set(
+                WORLD.player.rotation.x,
+                WORLD.player.rotation.y - Math.PI,
+                WORLD.player.rotation.z
+            );
+        }
     };
 };
 

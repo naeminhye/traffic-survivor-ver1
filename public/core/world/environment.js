@@ -504,7 +504,6 @@ var environmentInit = function (file) {
             /** residental buildings */
             var texture;
             var randomHeight = Math.floor((Math.random()) * 3) + 1; 
-            console.log("randomHeight", randomHeight)
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
@@ -813,6 +812,33 @@ var environmentInit = function (file) {
                 WORLD.one_ways.push({ box: area, bbox: areaBBox, direction: child.direction, infoImg: "./images/info.png"});
             });
         }
+
+        // bike model
+        WORLD.objectLoader.load("./models/fbx/bike/bike.json", ( obj ) => {
+            obj.position.x = WORLD.player.position.x;
+            obj.position.y = WORLD.player.position.y - 6;
+            obj.position.z = WORLD.player.position.z;
+            //obj.rotation.y = Math.PI;
+            var v = new THREE.Vector3();
+            obj.lookAt(WORLD.player.getWorldDirection(v));
+            obj.name = "xe"
+            obj.traverse((child) => {
+
+                if (child instanceof THREE.Mesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                    var texture = new THREE.TextureLoader().load("./models/fbx/bike/bike-uvmap.png");
+                    var material = new THREE.MeshBasicMaterial({
+                        map: texture,
+                        side: THREE.DoubleSide
+                    });  
+                    material.map.minFilter = THREE.LinearFilter;
+                    child.material = material;
+                }
+            });
+            WORLD.bike = obj;
+            WORLD.scene.add(WORLD.bike);
+        });
     });
 }
 

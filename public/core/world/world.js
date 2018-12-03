@@ -304,33 +304,6 @@ WORLD.init = () => {
 
     WORLD.loadMap();
 
-    // bike model
-    WORLD.bike = WORLD.objectLoader.load("./models/fbx/bike/bike.json", ( obj ) => {
-        obj.position.x = WORLD.player.position.x;
-        obj.position.y = WORLD.player.position.y - 6;
-        obj.position.z = WORLD.player.position.z;
-        //obj.rotation.y = Math.PI;
-        var v = new THREE.Vector3();
-        obj.lookAt(WORLD.player.getWorldDirection(v));
-        obj.name = "xe"
-        obj.traverse((child) => {
-
-            if (child instanceof THREE.Mesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
-                var texture = new THREE.TextureLoader().load("./models/fbx/bike/bike-uvmap.png");
-                var material = new THREE.MeshBasicMaterial({
-                    map: texture,
-                    side: THREE.DoubleSide
-                });  
-                material.map.minFilter = THREE.LinearFilter;
-                child.material = material;
-            }
-        });
-        WORLD.bike = obj;
-        WORLD.scene.add(WORLD.bike);
-    });
-
     WORLD.renderer = new THREE.WebGLRenderer({
         antialias: true
     });
@@ -342,6 +315,8 @@ WORLD.init = () => {
     // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
+    document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
+    WORLD.renderer.vr.enabled = true;
 
     window.addEventListener('resize', onWindowResize, false);
 }
@@ -360,7 +335,7 @@ function onWindowResize() {
 }
 
 var dt = 1 / 60;
-WORLD.animate = function () {
+WORLD.animate = () => {
     WORLD.warningFlag = false;
     var playX = WORLD.player.position.x;
     var playY = WORLD.player.position.y;
