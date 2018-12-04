@@ -51,8 +51,8 @@ CONTROLS.PathControls.prototype.update = function (delta) {
         return (((light.object.position.distanceTo(this._object.position) < 10)
         && (Math.abs(minifyAngle(angleDelta)) <= 1)
 		&& light.currentStatus === "REDLIGHT")
-		|| (this._object.position.distanceTo(WORLD.player.position) < 10));
-		// && (Math.abs(minifyAngle(angleToPlayerDelta)) > 120))
+		|| (this._object.position.distanceTo(WORLD.player.position) < 10)//);
+		&& (Math.abs(minifyAngle(angleToPlayerDelta)) > 120))
 	}) === -1);
 	if (canGo) {
 		this._pos += (this._factor * delta);

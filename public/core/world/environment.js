@@ -392,6 +392,11 @@ const updateSkinnedAnimation = (_object) => {
     return storedObject;
 }
 
+WORLD.loadMap = () => {
+    var link = window.location.pathname.split(".")[0];
+    environmentInit("./core/chapters" + link + link + ".json");
+}
+
 /**
  * 
  * @param {*} file the link to the JSON file
