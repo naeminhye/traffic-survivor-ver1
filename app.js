@@ -1,19 +1,35 @@
 var express = require('express');
 var app = express();
 var http = require('http');
+const path = require("path")
+const routes = require('./public/core/routes')
 // var io = require('socket.io')(http);
 // var mongoose = require('mongoose');
 
+app.set('views', path.join(__dirname, '/public/core/views'))
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+ 
+app.use('/', routes)
+
 app.use(express.static(__dirname + '/public'));
 
-var firebase = require("firebase-admin");
+// app.get('/', function(req, res) {
+//   res.render('core/views/pages/index');
+// });
 
-var serviceAccount = require("./serviceAccountKey.json");
+// app.get('/levels', function(req, res) {
+//   res.render('core/views/pages/levels');
+// });
 
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
-  databaseURL: "https://traffic-survivor.firebaseio.com"
-});
+// var firebase = require("firebase-admin");
+
+// var serviceAccount = require("./serviceAccountKey.json");
+
+// firebase.initializeApp({
+//   credential: firebase.credential.cert(serviceAccount),
+//   databaseURL: "https://traffic-survivor.firebaseio.com"
+// });
 
 // var db = firebase.database();
 // var ref = db.ref("restricted_access/secret_document");

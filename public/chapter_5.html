@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Chapter 5</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link rel=stylesheet href="core/libs/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="core/libs/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="core/libs/toastr.js/toastr.min.css">
+    <link rel="stylesheet" href="core/styles/info.css">
+    <link rel="stylesheet" href="core/styles/style.css">
+    <link rel="stylesheet" href="core/libs/animate/animate.min.css">
+</head>
+<body>
+    <div id="signDetail" class="sign-detail-container center-div dialog">
+        <div class="sign-detail">
+            <img id="signImg" src="" width="100%"/>
+            <div style="padding: 5px; margin: 5px 0; border: 6px black solid; background-color: white;">
+                <span>Press SPACE to Close</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="blocker">
+        <div class="center-div" id="game-menu">
+            <div class="menu-item">
+                <a id="start-btn" class="eightbit-btn">Start</a>
+                <a id="restart-btn" class="eightbit-btn eightbit-btn--proceed">Restart</a>
+                <a id="instruction-btn" class="eightbit-btn eightbit-btn--proceed">Instruction</a>
+                <a class="eightbit-btn eightbit-btn--reset" id="exit-btn" data-target="#exit-dialog">Exit</a>
+            </div>
+        </div>
+        <div id="exit-dialog" class="center-div dialog">
+            <div class="dialog-content">
+                <div class="question">
+                    <span>Do you want to exit without completing the lesson?</span>
+                </div>
+                <div style="display: flex; justify-content: space-evenly; width: 100%;">
+                    <a id="cancel-exit" class="eightbit-btn">No</a>
+                    <a href="index.html" class="eightbit-btn eightbit-btn--reset">Yes</a>
+                </div>
+            </div>
+        </div>
+        <div id="key-instruction" class="key-instruction-container center-div dialog">
+            <table>
+                <tr>
+                    <td class="key-name"><span>W/Up</span></td>
+                    <td class="key-definition"><span>Move Forward</span></td>
+                </tr> 
+                <tr>
+                    <td class="key-name"><span>A/Left</span></td>
+                    <td class="key-definition"><span>Rotate Left</span></td>
+                <tr>
+                    <td class="key-name"><span>D/Right</span></td>
+                    <td class="key-definition"><span>Rotate Right</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Z</span></td>
+                    <td class="key-definition"><span>Keep Moving Forward</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>X</span></td>
+                    <td class="key-definition"><span>Stop Moving</span></td>
+                </tr>
+                <tr>
+                    <td class="key-name"><span>Shift</span></td>
+                    <td class="key-definition"><span>Accelerate</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="key-instruction-btn"><a id="instruction-close" class="eightbit-btn eightbit-btn--primary">Close</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="controllers">
+        <div class="score">
+            <div class="health">
+                <img src="images/heart.png" width="50" height="50"/>
+                <span class="health-number">100</span>
+            </div>
+            <div class="money">
+                <img src="images/money.gif" width="50" height="50"/>
+                <span class="money-number">0</span><span>VNĐ</span>
+            </div>
+        </div>
+        <div id="floating-info" class="floating-info delay-2s"></div>
+        <div class="turn-signals">
+            <div class="left-signal">
+                <div class="led" id="left-led">
+                    <div class="hilight"></div>
+                </div>
+                <span>Turn Left (Q)</span>
+            </div>
+            <div class="headlight">
+                <div class="led yellow" id="headlight-led">
+                    <div class="hilight"></div>
+                </div>
+                <span>Headlight (F)</span>
+            </div>
+            <div class="speed-container">
+                <div class="speed">
+                    <span>Speed:</span>
+                    <span id="speed">0</span>
+                    <span> km/h</span>
+                </div>
+            </div>
+            <div class="horn">
+                <div class="led yellow" id="horn-led">
+                    <div class="hilight"></div>
+                </div>
+                <span>Horn (G)</span>
+            </div>
+            <div class="right-signal">
+                <div class="led" id="right-led">
+                    <div class="hilight"></div>
+                </div>
+                <span>Turn Right (E)</span>
+            </div>
+        </div>
+        <div class="mini-map">
+            <canvas id="miniMap"></canvas>
+            <div id="player-pin" class="pin-holder">
+                <span class="map-pin blue"></span>
+                <div class="pin-pulse"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading">
+        <div id="instructions">
+            <div class="loading-text">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Code to display an information button and box when clicked. -->
+    <script src="core/libs/jquery/jquery.min.js"></script>
+    <script src="core/libs/jquery-ui/jquery-ui.js"></script>
+    <script src="core/libs/toastr.js/toastr.min.js"></script>
+    <script src="js/info.js"></script>
+    
+    <script type="text/javascript" src='core/libs/three.js/92/three.min.js'></script>
+    <script type="text/javascript" src='core/libs/cannon/cannon.min.js'></script>
+    <script type="text/javascript" src='core/libs/Projector.js'></script>
+    <script type="text/javascript" src='core/libs/Detector.js'></script>
+    <script type="text/javascript" src='core/libs/Reflector.js'></script>
+    <script type="text/javascript" src='core/libs/Cloth.js'></script>
+    <script type="text/javascript" src='core/libs/inflate.min.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/DDSLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/MTLLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/OBJLoader.js'></script>
+    <script type="text/javascript" src='core/libs/loaders/FBXLoader.js'></script>
+    <!-- <script type="text/javascript" src="core/libs/loaders/GLTFLoader.js"></script> -->
+    <script type="text/javascript" src="core/libs/GLTFLoader.js"></script>
+    <!-- <script type="text/javascript" src="core/libs/loaders/GLTF2Loader.js"></script> -->
+    <script type="text/javascript" src="core/libs/loaders/TDSLoader.js"></script>
+    <script type="text/javascript" src="core/libs/WebVR.js"></script>
+    <script type="x-shader/x-fragment" id="fragmentShaderDepth">
+
+        uniform sampler2D texture;
+        varying vec2 vUV;
+
+        vec4 pack_depth( const in float depth ) {
+
+            const vec4 bit_shift = vec4( 256.0 * 256.0 * 256.0, 256.0 * 256.0, 256.0, 1.0 );
+            const vec4 bit_mask  = vec4( 0.0, 1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0 );
+            vec4 res = fract( depth * bit_shift );
+            res -= res.xxyz * bit_mask;
+            return res;
+
+        }
+
+        void main() {
+
+            vec4 pixel = texture2D( texture, vUV );
+
+            if ( pixel.a < 0.5 ) discard;
+
+            gl_FragData[ 0 ] = pack_depth( gl_FragCoord.z );
+
+        }
+    </script>
+
+    <script type="x-shader/x-vertex" id="vertexShaderDepth">
+
+        varying vec2 vUV;
+
+        void main() {
+
+            vUV = 0.75 * uv;
+
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+            gl_Position = projectionMatrix * mvPosition;
+
+        }
+
+    </script>
+    <script>
+        $.fn.extend({
+            animateCss: function(animationName, callback) {
+                var animationEnd = (function(el) {
+                var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                };
+
+                for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                    return animations[t];
+                    }
+                }
+                })(document.createElement('div'));
+
+                this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+
+                if (typeof callback === 'function') callback();
+                });
+
+                return this;
+            },
+        });
+    </script>
+    <script src="core/controls/PointerControls.js" defer="defer"></script>
+    <script src="core/controls/ObjectControls.js" defer="defer"></script>
+    <script src="core/utils/utils.js" defer="defer"></script>
+    <script src="core/world/world.js" defer="defer"></script>
+    <script src="core/world/environment.js" defer="defer"></script>
+    <script src="core/controls/run.js" defer="defer"></script>
+</body>
+</html>

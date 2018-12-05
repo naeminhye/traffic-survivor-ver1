@@ -1,0 +1,53 @@
+<div id="controllers">
+    <div class="score">
+        <div class="health">
+            <img src="images/heart.png" width="50" height="50"/>
+            <span class="health-number">100</span>
+        </div>
+        <div class="money">
+            <img src="images/money.gif" width="50" height="50"/>
+            <span class="money-number">0</span><span>VNĐ</span>
+        </div>
+    </div>
+    <div id="floating-info" class="floating-info delay-2s"></div>
+    <div class="turn-signals">
+        <div class="left-signal">
+            <div class="led" id="left-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Turn Left (Q)</span>
+        </div>
+        <div class="headlight">
+            <div class="led yellow" id="headlight-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Headlight (F)</span>
+        </div>
+        <div class="speed-container">
+            <div class="speed">
+                <span>Speed:</span>
+                <span id="speed">0</span>
+                <span> km/h</span>
+            </div>
+        </div>
+        <div class="horn">
+            <div class="led yellow" id="horn-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Horn (G)</span>
+        </div>
+        <div class="right-signal">
+            <div class="led" id="right-led">
+                <div class="hilight"></div>
+            </div>
+            <span>Turn Right (E)</span>
+        </div>
+    </div>
+    <div class="mini-map">
+        <canvas id="miniMap"></canvas>
+        <div id="player-pin" class="pin-holder">
+            <span class="map-pin blue"></span>
+            <div class="pin-pulse"></div>
+        </div>
+    </div>
+</div>
