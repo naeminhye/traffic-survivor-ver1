@@ -11,4 +11,8 @@ router.get('/levels', (req, res) => {
     res.render('pages/levels');
 });
 
+router.get('/game', function(req, res, next) {
+    res.render('pages/game', {chapter : req.query.chapter});
+});
+
 module.exports = router;

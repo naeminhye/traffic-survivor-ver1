@@ -393,8 +393,8 @@ const updateSkinnedAnimation = (_object) => {
 }
 
 WORLD.loadMap = () => {
-    var link = window.location.pathname.split(".")[0];
-    environmentInit("./core/chapters" + link + link + ".json");
+    var link = window.location.search.split("=")[1];
+    environmentInit("./core/chapters/chapter_" + link + "/chapter_" + link + ".json");
 }
 
 /**
