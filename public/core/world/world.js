@@ -151,7 +151,7 @@ if (havePointerLock) {
             $("#exit-dialog").css("display", "block");
             GAME.menu.css("display", "none");
         } else {
-            window.location.href = "/index"
+            window.location.href = "/"
         }
     });
 
