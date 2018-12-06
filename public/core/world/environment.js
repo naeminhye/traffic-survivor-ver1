@@ -393,15 +393,15 @@ const updateSkinnedAnimation = (_object) => {
 }
 
 WORLD.loadMap = () => {
-    var link = window.location.search.split("=")[1];
-    environmentInit("./core/chapters/chapter_" + link + "/chapter_" + link + ".json");
+    var chapterNumber = window.location.search.split("=")[1];
+    environmentInit("./core/chapters/chapter_" + chapterNumber + "/chapter_" + chapterNumber + ".json");
 }
 
 /**
  * 
  * @param {*} file the link to the JSON file
  */
-var environmentInit = function (file) {
+const environmentInit = function (file) {
     var h2_houseTexture = WORLD.textureLoader.load("/images/h2.jpg");
     var newHouseTexture = WORLD.textureLoader.load("/images/residential.jpg");
     var smallHouseTexture = WORLD.textureLoader.load("/images/small-house.jpg");

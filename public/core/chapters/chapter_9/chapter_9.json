@@ -1,0 +1,21 @@
+{
+    "map_url": "./core/chapters/chapter_9/chapter_9.txt",
+    "size": 5,
+    "player": {
+        "position": {
+            "x": 85, 
+            "y": 1.8,
+            "z": 225
+        }
+    },
+    "simple_loading": true,
+    "signs": {
+        "regulatory_signs": [],
+        "warning_signs": [],
+        "guidance_signs": []
+    },
+    "models": {
+        "vehicles": []
+    },
+    "intersects": []
+}

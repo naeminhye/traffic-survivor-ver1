@@ -451,7 +451,7 @@ const signViolation = (list) => {
                 sign.direction.z));
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-            console.log("violdate", sign.object.name)
+            console.log("---" + new Date() + " --- " + sign.object.name + "---")
             GAME.status = "PAUSED";
 
             //todo: show info 
