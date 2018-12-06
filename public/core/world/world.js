@@ -45,11 +45,8 @@ WORLD.warningFlag = false;
 GAME.status = "READY";
 WORLD.mapSize = 0;
 
-// Flag to determine if the player lost the game
-var gameOver = false;
-
-var blocker = document.getElementById('blocker');
-var instructions = document.getElementById('instructions');
+var blocker = $('#blocker');
+var instructions = $('#instructions');
 GAME.menu = $("#game-menu");
 GAME.controllers = $("#controllers");
 
@@ -60,14 +57,16 @@ if (havePointerLock) {
     var pointerlockchange = function (event) {
         if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
             WORLD.controls.enabled = true;
-            blocker.style.display = 'none';
+            blocker.css("display", "none");
         } else {
             WORLD.controls.enabled = false;
-            blocker.style.display = '-webkit-box';
-            blocker.style.display = '-moz-box';
-            blocker.style.display = 'box';
-            // instructions.style.display = '';
-            GAME.menu.css("display", "block");
+            if (GAME.status !== "END") {
+                blocker.css("display", "-webkit-box");
+                blocker.css("display", "-moz-box");
+                blocker.css("display", "box");
+                // instructions.style.display = '';
+                GAME.menu.css("display", "block");
+            }
             if (GAME.status === "READY") {
                 $("#restart-btn").css("display", "none");
                 $("#instruction-btn").css("display", "inline-block");
@@ -451,9 +450,8 @@ const signViolation = (list) => {
                 sign.direction.z));
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-            console.log("---" + new Date() + " --- " + sign.object.name + "---")
+            console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---")
             GAME.status = "PAUSED";
-
             //todo: show info 
             $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
             $("#signDetail").show();
@@ -465,7 +463,6 @@ const signViolation = (list) => {
                   return;
                 }
             }, false);
-
 
             GAME.mapContext.strokeStyle = "green";
             GAME.mapContext.beginPath(); //Start path
@@ -584,4 +581,13 @@ const checkOneWayViolation = () => {
     //         // }
     //     }
     // });
+}
+
+const endGame = () => {
+    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
+    // Attempt to unlock
+    document.exitPointerLock();
+    GAME.status = "END"; 
+    $(".screen-element").css("display", "none");
+    $("#gameBoard").css("display", "block");
 }
