@@ -906,6 +906,7 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             material.map.repeat.set(1, 1);
         }
         material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+        material.map.minFilter = THREE.LinearFilter;
         var plane = new THREE.Mesh(
             new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
             material

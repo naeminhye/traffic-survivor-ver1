@@ -156,5 +156,18 @@
             "x_width": 2, 
             "z_width": 2
 		}
+    ],
+    "speed_restriction": [
+        {
+            "min_speed": 30,
+            "max_speed": null,
+            "position": {
+                "x": 11,
+                "z": 34,
+                "x_width": 17, 
+                "z_width": 2
+            },
+			"direction": {"x": -1, "y": 0, "z": 0}
+        }
     ]
 }
