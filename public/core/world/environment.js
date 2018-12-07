@@ -663,20 +663,22 @@ const environmentInit = function (file) {
             mapInfo.intersects.forEach(function(child) {
                 var pos = child;
 
-                var area, areaBBox;
-                area = new THREE.Mesh(
-                    new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                    new THREE.MeshBasicMaterial({
-                        color: 0xff0000,
-                        wireframe: true
-                    })
-                );
-                var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                area.position.set(XWidth, 0, ZWidth);
-                area.geometry.computeBoundingBox();
-                areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-                WORLD.intersects.push({ box: area, bbox: areaBBox });
+                var box = createBBox(pos, UNIT_SIZE);
+
+                // var area, areaBBox;
+                // area = new THREE.Mesh(
+                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                //     new THREE.MeshBasicMaterial({
+                //         color: 0xff0000,
+                //         wireframe: true
+                //     })
+                // );
+                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // area.position.set(XWidth, 0, ZWidth);
+                // area.geometry.computeBoundingBox();
+                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                WORLD.intersects.push({ box: box.area, bbox: box.areaBBox });
 
                 var x1 = pos.x - 1; var z1 = pos.z - 1;
                 var x2 = pos.x + pos.x_width; var z2 = pos.z - 1;
@@ -798,23 +800,48 @@ const environmentInit = function (file) {
         if(mapInfo.one_ways) {
             mapInfo.one_ways.forEach(function(child) {
                 var pos = child.position;
+                var box = createBBox(pos, UNIT_SIZE);
+                // var area, areaBBox;
+                // area = new THREE.Mesh(
+                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                //     new THREE.MeshBasicMaterial({
+                //         color: 0xff0000,
+                //         wireframe: true
+                //     })
+                // );
+                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
+                // area.position.set(XWidth, 0, ZWidth);
+                // area.geometry.computeBoundingBox();
+                // // WORLD.scene.add(area);
+                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                WORLD.one_ways.push({ box: box.area, bbox: box.areaBBox, direction: child.direction, infoImg: "./images/info.png"});
+            });
+        }
+        
+        /** load one way areas */
+        if(mapInfo.speed_restriction) {
+            mapInfo.speed_restriction.forEach(function(child) {
+                var pos = child.position;
 
-                var area, areaBBox;
-                area = new THREE.Mesh(
-                    new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                    new THREE.MeshBasicMaterial({
-                        color: 0xff0000,
-                        wireframe: true
-                    })
-                );
-                var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
-                area.position.set(XWidth, 0, ZWidth);
-                area.geometry.computeBoundingBox();
-                // WORLD.scene.add(area);
-                areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-                WORLD.one_ways.push({ box: area, bbox: areaBBox, direction: child.direction, infoImg: "./images/info.png"});
+                // var area, areaBBox;
+                // area = new THREE.Mesh(
+                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                //     new THREE.MeshBasicMaterial({
+                //         color: 0xff0000,
+                //         wireframe: true
+                //     })
+                // );
+                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
+                // area.position.set(XWidth, 0, ZWidth);
+                // area.geometry.computeBoundingBox();
+                // // WORLD.scene.add(area);
+                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                var box = createBBox(pos, UNIT_SIZE);
+                WORLD.speed_restriction_ways.push({ box: box.area, bbox: box.areaBBox, min_speed: child.min_speed, max_speed: child.max_speed, direction: child.direction});
             });
         }
 
@@ -848,7 +875,6 @@ const environmentInit = function (file) {
 }
 
 /**
- * 
  * @param {*} id 
  * @param {*} url 
  * @param {*} map 

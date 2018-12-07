@@ -48,10 +48,12 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 			light.direction.z));
 		var angleToPlayerDelta = calculateAngleToPlayer(this._object.getWorldDirection(v));
 
-        return (((light.object.position.distanceTo(this._object.position) < 10)
+        return (
+		((light.object.position.distanceTo(this._object.position) < 10)
         && (Math.abs(minifyAngle(angleDelta)) <= 1)
 		&& light.currentStatus === "REDLIGHT")
 		|| (this._object.position.distanceTo(WORLD.player.position) < 10)//);
+		&& (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(this._object.position)) === -1) // --> 
 		&& (Math.abs(minifyAngle(angleToPlayerDelta)) > 120))
 	}) === -1);
 	if (canGo) {

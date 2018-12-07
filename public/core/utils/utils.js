@@ -149,7 +149,7 @@ const objectToBody = (object) => {
 	return boxBody;
 }
 
-var createLoader = (function () {
+const createLoader = (function () {
 
     var container = null;
     var progress = null;
@@ -246,7 +246,7 @@ var createLoader = (function () {
 
 })();
 
-var readMapFromFile = (file) => {
+const readMapFromFile = (file) => {
     var map = [];
 
     var rawFile = new XMLHttpRequest();
@@ -286,7 +286,7 @@ const readMapInfoFromJson = (path, callback) => {
     xhr.send();
 }
 
-function createBoxBody(object, callback) {
+const createBoxBody = (object, callback) => {
     WORLD.scene.add(object);
     // Used later for collision detection
     var bbox = new THREE.Box3().setFromObject(object);
@@ -505,4 +505,25 @@ const jsonToThreeObject = (json) => {
         temp.push(new THREE.Vector3(obj.x, obj.y, obj.z));        
     });
     return temp;
+}
+
+const createBBox = (pos, UNIT_SIZE) => {
+    var area, areaBBox;
+    area = new THREE.Mesh(
+        new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+        new THREE.MeshBasicMaterial({
+            color: 0xff0000,
+            wireframe: true
+        })
+    );
+    var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+    var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+    // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
+    area.position.set(XWidth, 0, ZWidth);
+    area.geometry.computeBoundingBox();
+    areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+    return {
+        area: area,
+        areaBBox: areaBBox
+    }
 }

@@ -30,6 +30,7 @@ var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
 WORLD.one_ways = [];
 WORLD.intersects = [];
+WORLD.speed_restriction_ways = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
@@ -438,6 +439,9 @@ function checkViolation() {
     if (WORLD.one_ways) {
         checkOneWayViolation();
     }
+    if (WORLD.speed_restriction_ways) {
+        checkSpeedViolation();
+    }
 }
 
 const signViolation = (list) => {
@@ -497,25 +501,43 @@ const updateTrafficLights = () => {
 
     /** _flag = true nếu đang ở trong vùng intersect */
     if (isInIntersectArea && trafficLightViolation && !isViolating) {
-        var date = new Date();
-        console.log("Violation at " + date)
-
-        toastr.error("You have just blown through a red light!!");
-        $("#floating-info").addClass("shown");
-        $("#floating-info").append("<span>-100000VNĐ</span>");
-        $('#floating-info').animateCss('fadeOutUp', function () {
-            // hide after animation
-            var oldNum = Number($($(".money-number")[0]).text());
-            var newNum = -100000;
-            $($(".money-number")[0]).text(oldNum + newNum);
-            $("#floating-info").empty();
-            $("#floating-info").removeClass("shown");
-        });
+        GAME.handleFining("You have just blown through a red light!!", 100000);
         isViolating = true;
     }
     if (!isInIntersectArea && isViolating) {
         trafficLightViolation = false;
         isViolating = false;
+    }
+}
+
+var speedViolating = false;
+var speedRestrictionIndex = -1;
+const checkSpeedViolation = () => {
+    var newIndex = WORLD.speed_restriction_ways.findIndex((child) => child.bbox.containsPoint(WORLD.player.position));
+    if(speedRestrictionIndex !== newIndex && newIndex !== -1 && !speedViolating) {
+        var thisRoad = WORLD.speed_restriction_ways[newIndex];
+        var message = null;
+        if(thisRoad.max_speed !== null && PLAYER.status.speed > thisRoad.max_speed) {
+            speedViolating = true;
+            speedRestrictionIndex = newIndex;
+
+            message = "Vuot qua toc do toi da " + thisRoad.max_speed
+        }
+        if(thisRoad.min_speed !== null && PLAYER.status.speed < thisRoad.min_speed) {
+            speedViolating = true;
+            speedRestrictionIndex = newIndex
+
+            message = "Cham hon toc do toi thieu " + thisRoad.min_speed;
+        }
+        if (message) {
+            GAME.handleFining(message, 100000);
+        }
+
+    }
+    /** khi đi ra khỏi vùng cần xét tốc độ */
+    else if (newIndex === -1 && speedViolating) {
+        speedViolating = false;
+        speedRestrictionIndex = newIndex;
     }
 }
 
@@ -583,11 +605,28 @@ const checkOneWayViolation = () => {
     // });
 }
 
-const endGame = () => {
+GAME.endGame = () => {
     document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
     // Attempt to unlock
     document.exitPointerLock();
     GAME.status = "END"; 
     $(".screen-element").css("display", "none");
     $("#gameBoard").css("display", "block");
+}
+
+GAME.handleFining = (message, money, callback) => {
+
+    //var date = new Date();
+
+    toastr.error(message);
+    $("#floating-info").addClass("shown");
+    $("#floating-info").append("<span>-" + money + "VNĐ</span>");
+    $('#floating-info').animateCss('fadeOutUp', function () {
+        // hide after animation
+        var oldNum = Number($($(".money-number")[0]).text());
+        var newNum = -money;
+        $($(".money-number")[0]).text(oldNum + newNum);
+        $("#floating-info").empty();
+        $("#floating-info").removeClass("shown");
+    });
 }
