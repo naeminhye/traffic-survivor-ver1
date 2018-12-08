@@ -270,7 +270,7 @@ WORLD.init = () => {
     // WORLD.scene.background = new THREE.Color(0xcce0ff);
     var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
-    WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
+    // WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
 
     var ambient = new THREE.AmbientLight(0x111111);
     WORLD.scene.add(ambient);
@@ -516,14 +516,21 @@ const checkSpeedViolation = () => {
     var newIndex = WORLD.speed_restriction_ways.findIndex((child) => child.bbox.containsPoint(WORLD.player.position));
     if(speedRestrictionIndex !== newIndex && newIndex !== -1 && !speedViolating) {
         var thisRoad = WORLD.speed_restriction_ways[newIndex];
+        var angleDelta = calculateAngleToPlayer(new THREE.Vector3(thisRoad.direction.x,
+            thisRoad.direction.y,
+            thisRoad.direction.z));
         var message = null;
-        if(thisRoad.max_speed !== null && PLAYER.status.speed > thisRoad.max_speed) {
+        if((Math.abs(minifyAngle(angleDelta)) < 20)
+        && thisRoad.max_speed !== null 
+        && PLAYER.status.speed > thisRoad.max_speed) {
             speedViolating = true;
             speedRestrictionIndex = newIndex;
 
             message = "Vuot qua toc do toi da " + thisRoad.max_speed
         }
-        if(thisRoad.min_speed !== null && PLAYER.status.speed < thisRoad.min_speed) {
+        if((Math.abs(minifyAngle(angleDelta)) < 20)
+        && thisRoad.min_speed !== null 
+        && PLAYER.status.speed < thisRoad.min_speed) {
             speedViolating = true;
             speedRestrictionIndex = newIndex
 

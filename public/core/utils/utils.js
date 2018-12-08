@@ -357,6 +357,10 @@ var map = [
     [1, 1, 1, 2, 2]
 ];
 
+/**
+ * @param {*} mat Ma trận của map 
+ * @param {*} target ID của object 
+ */
 function findSquareSubMap(mat, target) {
 	var results = [];
     var n = mat.length;
@@ -411,6 +415,11 @@ function findSquareSubMap(mat, target) {
   return results;
 }
 
+/**
+ * @param {*} mat Ma trận của map 
+ * @param {*} target ID của object 
+ * @param {*} size kích thước khối vuông
+ */
 function findSquareSubMapWithSize(mat, target, size) {
 
 	var results = [];

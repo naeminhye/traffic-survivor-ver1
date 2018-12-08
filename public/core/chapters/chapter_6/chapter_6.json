@@ -3,12 +3,12 @@
     "size": 5,
     "player": {
         "position": {
-            "x": 85, 
+            "x": 20, 
             "y": 1.8,
-            "z": 225
-        }
+            "z": 25
+        },
+        "rotateY": -1.5707963267948966
     },
-    "simple_loading": true,
     "signs": {
         "regulatory_signs": [],
         "warning_signs": [],
@@ -17,5 +17,30 @@
     "models": {
         "vehicles": []
     },
-    "intersects": []
+    "intersects": [
+        {
+            "x": 18,
+            "z": 24,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 40,
+            "z": 24,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 18,
+            "z": 40,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 40,
+            "z": 40,
+            "x_width": 2, 
+            "z_width": 2
+        }
+    ]
 }
