@@ -21,87 +21,6 @@
                     {"x":245,"y":1.3,"z":45}
                 ],
                 "velocity": 0.02
-            },
-            {
-                "name": "simple-car-36-0",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":180,"y":1.3,"z":0},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":180,"y":1.3,"z":0},
-                    {"x":180,"y":1.3,"z":245}
-                ],
-                "velocity": 0.03
-            },
-            {
-                "name": "simple-car-1-9",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":5,"y":1.3,"z":45},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":5,"y":1.3,"z":45},
-                    {"x":70,"y":1.3,"z":45},
-                    {"x":80,"y":1.3,"z":45},
-                    {"x":80,"y":1.3,"z":60},
-                    {"x":80,"y":1.3,"z":150},
-                    {"x":80,"y":1.3,"z":165},
-                    {"x":0,"y":1.3,"z":165}
-                ],
-                "velocity": 0.02
-            },
-            {
-                "name": "simple-car-11-23",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":55,"y":1.3,"z":115},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":55,"y":1.3,"z":115},
-                    {"x":170,"y":1.3,"z":115},
-                    {"x":185,"y":1.3,"z":115},
-                    {"x":185,"y":1.3,"z":125},
-                    {"x":185,"y":1.3,"z":245}
-                ],
-                "velocity": 0.03
-            },
-            {
-                "name": "simple-car-36-16",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":180,"y":1.3,"z":80},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":180,"y":1.3,"z":80},
-                    {"x":180,"y":1.3,"z":100},
-                    {"x":180,"y":1.3,"z":115},
-                    {"x":170,"y":1.3,"z":115},
-                    {"x":30,"y":1.3,"z":115},
-                    {"x":20,"y":1.3,"z":115},
-                    {"x":20,"y":1.3,"z":105},
-                    {"x":20,"y":1.3,"z":55},
-                    {"x":20,"y":1.3,"z":45},
-                    {"x":10,"y":1.3,"z":45},
-                    {"x":0,"y":1.3,"z":45}
-                ],
-                "velocity": 0.03
             }
         ]
     },
@@ -110,70 +29,16 @@
         "warning_signs": [
             {
                 "x": 18,
-                "z": 36,
+                "z": 38,
                 "loader_type": "object",
                 "object_type": "warning_signs",
-                "sign_id": "207c",
-                "name": "khonguutien-trai",
+                "sign_id": "207b",
+                "name": "khonguutien-phai",
                 "url": "./models/signs/warning-sign.json",
                 "directionToMap": "down",
                 "children": {
                     "sign": {
-                        "textureUrl": "./models/signs/khonguutien-trai-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                }
-            },
-            {
-                "x": 13,
-                "z": 34,
-                "loader_type": "object",
-                "object_type": "warning_signs",
-                "sign_id": "208",
-                "name": "uutien",
-                "url": "./models/signs/priority-warning-sign.json",
-                "directionToMap": "left",
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/uutien-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                }
-            },
-            {
-                "x": 18,
-                "z": 26,
-                "loader_type": "object",
-                "object_type": "warning_signs",
-                "sign_id": "207a",
-                "name": "khonguutien",
-                "url": "./models/signs/warning-sign.json",
-                "directionToMap": "down",
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/khonguutien-uvmap.png"
-                    },
-                    "pole": {
-                        "textureUrl": "./models/signs/pole-uvmap.png"
-                    }
-                }
-            },
-            {
-                "x": 13,
-                "z": 24,
-                "loader_type": "object",
-                "object_type": "warning_signs",
-                "sign_id": "208",
-                "name": "uutien",
-                "url": "./models/signs/priority-warning-sign.json",
-                "directionToMap": "left",
-                "children": {
-                    "sign": {
-                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                        "textureUrl": "./models/signs/khonguutien-phai-uvmap.png"
                     },
                     "pole": {
                         "textureUrl": "./models/signs/pole-uvmap.png"
@@ -182,7 +47,7 @@
             },
             {
                 "x": 20,
-                "z": 21,
+                "z": 33,
                 "loader_type": "object",
                 "object_type": "warning_signs",
                 "sign_id": "208",
@@ -199,8 +64,62 @@
                 }
             },
             {
-                "x": 33,
-                "z": 10,
+                "x": 18,
+                "z": 28,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207a",
+                "name": "khonguutien",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 15,
+                "z": 21,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207a",
+                "name": "khonguutien",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "up",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 20,
+                "z": 23,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "right",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 13,
+                "z": 26,
                 "loader_type": "object",
                 "object_type": "warning_signs",
                 "sign_id": "208",
@@ -215,20 +134,84 @@
                         "textureUrl": "./models/signs/pole-uvmap.png"
                     }
                 }
+            },
+            {
+                "x": 33,
+                "z": 12,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 38,
+                "z": 14,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207c",
+                "name": "khonguutien-trai",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-trai-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+				"x": 11,
+				"z": 33,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
             }
         ],
         "guidance_signs": []
     },
+    "end_zone": [
+        {
+			"position": {
+				"x": 44,
+				"z": 10,
+				"x_width": 2, 
+				"z_width": 2
+			}
+		}
+    ],
     "intersects": [
         {
             "x": 16,
-            "z": 22,
+            "z": 24,
             "x_width": 2, 
             "z_width": 2
         },
         {
             "x": 36,
-            "z": 8,
+            "z": 10,
             "x_width": 2, 
             "z_width": 2
         }
