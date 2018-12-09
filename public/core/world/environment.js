@@ -163,7 +163,7 @@ const loadModelToWorld = (model) => {
 
                 if(object_type === "regulatory_signs") {
                     if(GAME.mapContext) {
-                        GAME.mapContext.fillStyle = "yellow";
+                        GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
@@ -171,11 +171,12 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.regulatorySignList.push(storeObj);
+                    GAME.numOfSign++;
                 }
                 else if(object_type === "warning_signs") {
 
                     if(GAME.mapContext) {
-                        GAME.mapContext.fillStyle = "orange";
+                        GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
@@ -183,10 +184,11 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.warningSignList.push(storeObj);
+                    GAME.numOfSign++;
                 }
                 else if(object_type === "guidance_signs") {
                     if(GAME.mapContext) {
-                        GAME.mapContext.fillStyle = "violet";
+                        GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
                         GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
                         GAME.mapContext.fill();
@@ -194,6 +196,7 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.guidanceSignList.push(storeObj);
+                    GAME.numOfSign++;
                 }
                 else if(object_type === "vehicles") {
                     WORLD.vehicle.push(storeObj);
@@ -205,12 +208,12 @@ const loadModelToWorld = (model) => {
                 }
                 else if(object_type === "traffic_light") {
 
-                    if(GAME.mapContext) {
-                        GAME.mapContext.fillStyle = "green";
-                        GAME.mapContext.beginPath(); //Start path
-                        GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
-                        GAME.mapContext.fill();
-                    }
+                    // if(GAME.mapContext) {
+                    //     GAME.mapContext.fillStyle = "green";
+                    //     GAME.mapContext.beginPath(); //Start path
+                    //     GAME.mapContext.arc((obj.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (obj.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 3, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
+                    //     GAME.mapContext.fill();
+                    // }
                     storeObj.animation = {
                         type: "skinned",
                         status: [
@@ -702,6 +705,7 @@ var glassTexture =      "/images/glass.jpg";
             });
         }
 
+        GAME.numOfSign = 0;
         /** load các biển báo */
         if(mapInfo.signs) {
             Object.keys(mapInfo.signs).forEach((type) => {
@@ -710,6 +714,7 @@ var glassTexture =      "/images/glass.jpg";
                 });
             });
         }
+        console.log("total:",GAME.numOfSign)
         // else {
         //     Object.keys(mapInfo.signs).forEach((type) => {
         //         mapInfo.signs[type].forEach((sign) => {

@@ -442,6 +442,7 @@ function checkViolation() {
     if (WORLD.speed_restriction_ways) {
         checkSpeedViolation();
     }
+
 }
 
 const signViolation = (list) => {
@@ -454,7 +455,7 @@ const signViolation = (list) => {
                 sign.direction.z));
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-            console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---")
+            console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
             GAME.status = "PAUSED";
             //todo: show info 
             $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
@@ -473,10 +474,18 @@ const signViolation = (list) => {
             GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
             GAME.mapContext.stroke();
             sign.hasPassed = true;
+            GAME.numOfSign --;
 
         }
 
     });
+
+    if(GAME.numOfSign === 0) {
+        setTimeout(function(){ 
+            GAME.endGame();
+            
+        }, 5000);
+    }
 }
 
 var trafficLightViolation = false;
