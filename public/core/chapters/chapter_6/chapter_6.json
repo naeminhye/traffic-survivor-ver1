@@ -10,9 +10,218 @@
         "rotateY": -1.5707963267948966
     },
     "signs": {
-        "regulatory_signs": [],
-        "warning_signs": [],
-        "guidance_signs": []
+        "regulatory_signs": [
+			{
+				"x": 20,
+				"z": 8,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+			{
+				"x": 34,
+				"z": 8,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+			{
+				"x": 56,
+				"z": 8,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+			{
+				"x": 53,
+				"z": 3,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "102",
+				"name": "nguocchieu",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/nguocchieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: One Way!!"
+            },
+            {
+				"x": 16,
+				"z": 6,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "124a",
+				"name": "camquaydau",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "left",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camquaydau-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No U Turn!!"
+            },
+            {
+				"x": 6,
+				"z": 18,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "101",
+				"name": "duongcam",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/duongcam-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Entry!!"
+			}
+        ],
+        "warning_signs": [
+        ],
+        "guidance_signs": [
+            {
+                "x": 31,
+                "z": 13,
+                "loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "309",
+                "name": "ancoi",
+                "url": "./models/signs/round-info-sign.json",
+                "directionToMap": "up",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/ancoi-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+				"x": 31,
+				"z": 9,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "445g",
+				"name": "haytainan",
+                "url": "./models/signs/big-square-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/haytainan-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 42,
+				"z": 19,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "445g",
+				"name": "haytainan",
+                "url": "./models/signs/big-square-info-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/haytainan-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 52,
+				"z": 6,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301d",
+				"name": "hieulenhphai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "left",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhphai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Turn Right!!"
+			},
+            {
+				"x": 29,
+				"z": 6,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301f",
+				"name": "hieulenhthangphai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "left",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhthangphai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Go straight ahead!!"
+			}
+        ]
     },
     "models": {
         "vehicles": []
@@ -42,5 +251,34 @@
             "x_width": 2, 
             "z_width": 2
         }
+    ],
+    "one_ways": [
+        {
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 6,
+				"z": 4,
+				"x_width": 10, 
+				"z_width": 2
+			}
+		},
+        {
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 22,
+				"z": 4,
+				"x_width": 8, 
+				"z_width": 2
+			}
+		},
+        {
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 36,
+				"z": 4,
+				"x_width": 18, 
+				"z_width": 2
+			}
+		}
     ]
 }

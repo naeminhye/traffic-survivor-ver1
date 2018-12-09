@@ -573,7 +573,7 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
             /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "darkgray";
+            GAME.mapContext.fillStyle = "gray";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) * randomHeight, tile.size * UNIT_SIZE), buildingMaterial);
@@ -610,7 +610,7 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
             /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillStyle = "gray";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size, tile.size * UNIT_SIZE), buildingMaterial);
@@ -646,7 +646,7 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
             /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillStyle = "gray";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size * 2, tile.size * UNIT_SIZE), buildingMaterial);
@@ -681,7 +681,7 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
 
             /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "blue";
+            GAME.mapContext.fillStyle = "gray";
             GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
             var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - 0.25, UNIT_SIZE - 0.5, tile.size * UNIT_SIZE - 0.25), buildingMaterial);
