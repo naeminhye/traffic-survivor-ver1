@@ -482,7 +482,7 @@ const signViolation = (list) => {
 
     if(GAME.numOfSign === 0) {
         setTimeout(function(){ 
-            GAME.endGame();
+            // /GAME.endGame();
             
         }, 5000);
     }
