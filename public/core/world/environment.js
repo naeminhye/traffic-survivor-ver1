@@ -1,6 +1,8 @@
 var PAVEMENT_ID = "0";
 var ROAD_POS_Z = "1"; // VERTICAL
 var ROAD_POS_X = "-1";
+var DOUBLE_ROAD_POS_Z = "11"; // VERTICAL
+var DOUBLE_ROAD_POS_X = "-11";
 var RESIDENTAL_BUILDING_ID = "2";
 var SMALL_BUILDING_ID = "3";
 var NEW_BUILDING_ID = "5";
@@ -171,7 +173,7 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.regulatorySignList.push(storeObj);
-                    GAME.numOfSign++;
+                    GAME.totalNumOfSign++;
                 }
                 else if(object_type === "warning_signs") {
 
@@ -184,7 +186,7 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.warningSignList.push(storeObj);
-                    GAME.numOfSign++;
+                    GAME.totalNumOfSign++;
                 }
                 else if(object_type === "guidance_signs") {
                     if(GAME.mapContext) {
@@ -196,7 +198,7 @@ const loadModelToWorld = (model) => {
                     storeObj.hasPassed = false;
                     storeObj.sign_id = sign_id;
                     WORLD.guidanceSignList.push(storeObj);
-                    GAME.numOfSign++;
+                    GAME.totalNumOfSign++;
                 }
                 else if(object_type === "vehicles") {
                     WORLD.vehicle.push(storeObj);
@@ -449,20 +451,26 @@ var glassTexture =      "/images/glass.jpg";
         loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
         });
+        loadTextureToGround(DOUBLE_ROAD_POS_Z, './images/textures/roadposz_2.jpg', roadMap, UNIT_SIZE, false, {
+            color: "orange"
+        });
         loadTextureToGround(START_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
         loadTextureToGround(END_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "blue"
+            color: "red"
         });
         loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
+            color: "orange"
+        });
+        loadTextureToGround(DOUBLE_ROAD_POS_X, './images/textures/roadposx_2.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
         });
         loadTextureToGround(START_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "red"
         });
         loadTextureToGround(END_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "blue"
+            color: "red"
         });
         loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
@@ -706,6 +714,7 @@ var glassTexture =      "/images/glass.jpg";
         }
 
         GAME.numOfSign = 0;
+        GAME.totalNumOfSign = 0;
         /** load các biển báo */
         if(mapInfo.signs) {
             Object.keys(mapInfo.signs).forEach((type) => {
@@ -714,7 +723,6 @@ var glassTexture =      "/images/glass.jpg";
                 });
             });
         }
-        console.log("total:",GAME.numOfSign)
         // else {
         //     Object.keys(mapInfo.signs).forEach((type) => {
         //         mapInfo.signs[type].forEach((sign) => {
@@ -885,7 +893,7 @@ var glassTexture =      "/images/glass.jpg";
             });
         }
         
-        /** load one way areas */
+        /** load speed restricted way areas */
         if(mapInfo.speed_restriction) {
             mapInfo.speed_restriction.forEach(function(child) {
                 var pos = child.position;
@@ -907,6 +915,15 @@ var glassTexture =      "/images/glass.jpg";
                 // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
                 var box = createBBox(pos, UNIT_SIZE);
                 WORLD.speed_restriction_ways.push({ box: box.area, bbox: box.areaBBox, min_speed: child.min_speed, max_speed: child.max_speed, direction: child.direction});
+            });
+        }
+        
+        /** load end zone */
+        if(mapInfo.end_zone) {
+            mapInfo.end_zone.forEach(function(child) {
+                var pos = child.position;
+                var box = createBBox(pos, UNIT_SIZE);
+                WORLD.endZone.push({ box: box.area, bbox: box.areaBBox });
             });
         }
 

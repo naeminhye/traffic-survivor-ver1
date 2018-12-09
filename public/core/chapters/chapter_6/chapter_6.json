@@ -220,6 +220,44 @@
 					}
 				},
 				"info": "Guide Sign: Go straight ahead!!"
+			},
+            {
+				"x": 17,
+				"z": 45,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301e",
+				"name": "hieulenhtrai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhtrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Turn Left!!"
+            },
+            {
+				"x": 17,
+				"z": 50,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301c",
+				"name": "huongphaiditheo-trai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhthang-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Turn Left!!"
 			}
         ]
     },

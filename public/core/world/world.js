@@ -31,6 +31,7 @@ var dangerZoneGeometry = null;
 WORLD.one_ways = [];
 WORLD.intersects = [];
 WORLD.speed_restriction_ways = [];
+WORLD.endZone = [];
 const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
@@ -443,6 +444,16 @@ function checkViolation() {
         checkSpeedViolation();
     }
 
+    if (WORLD.endZone) {
+        WORLD.endZone.forEach((zone) => {
+            if(zone.bbox.containsPoint(WORLD.player.position) /**  && GAME.numOfSign === 0 */) {
+                setTimeout(function(){ 
+                    GAME.endGame();
+                }, 2000);
+            }
+        });
+    }
+
 }
 
 const signViolation = (list) => {
@@ -474,18 +485,11 @@ const signViolation = (list) => {
             GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
             GAME.mapContext.stroke();
             sign.hasPassed = true;
-            GAME.numOfSign --;
+            GAME.numOfSign ++;
 
         }
 
     });
-
-    if(GAME.numOfSign === 0) {
-        setTimeout(function(){ 
-            // /GAME.endGame();
-            
-        }, 5000);
-    }
 }
 
 var trafficLightViolation = false;
@@ -626,6 +630,11 @@ GAME.endGame = () => {
     // Attempt to unlock
     document.exitPointerLock();
     GAME.status = "END"; 
+
+    var passedSigns = GAME.numOfSign + "/" + GAME.totalNumOfSign;
+    $("#passedSigns").text(passedSigns);
+    $("#lostMoney").text($("#floating-info span").text());
+
     $(".screen-element").css("display", "none");
     $("#gameBoard").css("display", "block");
 }

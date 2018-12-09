@@ -3,10 +3,11 @@
     "size": 5,
     "player": {
         "position": {
-            "x": 85, 
+            "x": 20, 
             "y": 1.8,
-            "z": 225
-        }
+            "z": 25
+        },
+        "rotateY": -1.5707963267948966
     },
     "signs": {
         "regulatory_signs": [],

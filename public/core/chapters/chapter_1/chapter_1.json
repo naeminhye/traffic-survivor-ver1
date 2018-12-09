@@ -3,45 +3,37 @@
 	"size": 5,
     "player": {
         "position": {
-            "x": 18, 
+            "x": 220, 
             "y": 1.8,
-            "z": 160
+            "z": 120
         }
     },
+    "end_zone": [
+        {
+			"position": {
+				"x": 44,
+				"z": 24,
+				"x_width": 2, 
+				"z_width": 2
+			}
+		}
+    ],
 	"one_ways": [
 		{
-			"direction": {"x": 0, "y": 0, "z": -1},
-			"position": {
-				"x": 24,
-				"z": 0,
-				"x_width": 2, 
-				"z_width": 17
-			}
-		},
-		{
 			"direction": {"x": -1, "y": 0, "z": 0},
 			"position": {
-				"x": 0,
-				"z": 18,
-				"x_width": 4, 
-				"z_width": 2
-			}
-		},
-		{
-			"direction": {"x": -1, "y": 0, "z": 0},
-			"position": {
-				"x": 6,
-				"z": 18,
-				"x_width": 18, 
-				"z_width": 2
-			}
-		},
-		{
-			"direction": {"x": -1, "y": 0, "z": 0},
-			"position": {
-				"x": 26,
+				"x": 8,
 				"z": 18,
 				"x_width": 14, 
+				"z_width": 2
+			}
+		},
+		{
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 28,
+				"z": 18,
+				"x_width": 12, 
 				"z_width": 2
 			}
 		}
@@ -55,72 +47,34 @@
 		},
         {
             "x": 24,
-            "z": 38,
+            "z": 32,
             "x_width": 2, 
             "z_width": 2
 		}
 	],
 	"signs": {
 		"regulatory_signs": [
-			{
-				"x": 6,
-				"z": 21,
+            {
+				"x": 21,
+				"z": 43,
 				"loader_type": "object",
 				"object_type": "regulatory_signs",
-				"sign_id": "123a",
-				"name": "camretrai",
-				"url": "./models/signs/regulatory-sign.json",
-				"directionToMap": "down",
-				"children": {
-					"sign": {
-						"textureUrl": "./models/signs/camretrai-uvmap.png"
-					},
-					"pole": {
-						"textureUrl": "./models/signs/pole-uvmap.png"
-					}
-				},
-				"info": "Regulatory Sign: No Left Turn!!"
-			},
-			{
-				"x": 28,
-				"z": 5,
-				"loader_type": "object",
-				"object_type": "regulatory_signs",
-				"sign_id": "123b",
-				"name": "camrephai",
+				"sign_id": "101",
+				"name": "duongcam",
 				"url": "./models/signs/regulatory-sign.json",
 				"directionToMap": "right",
 				"children": {
 					"sign": {
-						"textureUrl": "./models/signs/camrephai-uvmap.png"
+						"textureUrl": "./models/signs/duongcam-uvmap.png"
 					},
 					"pole": {
 						"textureUrl": "./models/signs/pole-uvmap.png"
 					}
 				},
-				"info": "Regulatory Sign: No Right Turn!!"
-			},
-			{
-				"x": 26,
-				"z": 16,
-				"loader_type": "object",
-				"object_type": "regulatory_signs",
-				"sign_id": "102",
-				"name": "nguocchieu",
-				"url": "./models/signs/regulatory-sign.json",
-				"directionToMap": "down",
-				"children": {
-					"sign": {
-						"textureUrl": "./models/signs/nguocchieu-uvmap.png"
-					},
-					"pole": {
-						"textureUrl": "./models/signs/pole-uvmap.png"
-					}
-				},
-				"info": "Regulatory Sign: One Way!!"
-			},
-			{
-				"x": 40,
+				"info": "Regulatory Sign: No Entry!!"
+            },
+            {
+				"x": 22,
 				"z": 17,
 				"loader_type": "object",
 				"object_type": "regulatory_signs",
@@ -139,7 +93,83 @@
 				"info": "Regulatory Sign: One Way!!"
 			},
 			{
-				"x": 22,
+				"x": 23,
+				"z": 41,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 23,
+				"z": 15,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 41,
+				"z": 15,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 26,
+				"z": 22,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+			{
+				"x": 21,
 				"z": 20,
 				"loader_type": "object",
 				"object_type": "regulatory_signs",
@@ -158,24 +188,24 @@
 				"info": "Regulatory Sign: No U Turn!!"
 			},
 			{
-				"x": 22,
-				"z": 27,
+				"x": 39,
+				"z": 20,
 				"loader_type": "object",
 				"object_type": "regulatory_signs",
-				"sign_id": "101",
-				"name": "duongcam",
+				"sign_id": "124a",
+				"name": "camquaydau",
 				"url": "./models/signs/regulatory-sign.json",
 				"directionToMap": "left",
 				"children": {
 					"sign": {
-						"textureUrl": "./models/signs/duongcam-uvmap.png"
+						"textureUrl": "./models/signs/camquaydau-uvmap.png"
 					},
 					"pole": {
 						"textureUrl": "./models/signs/pole-uvmap.png"
 					}
 				},
-				"info": "Regulatory Sign: No Entry!!"
-			}
+				"info": "Regulatory Sign: No U Turn!!"
+            }
 		]
 	},
 	"models": {
@@ -195,256 +225,7 @@
                     {"x":245,"y":1.3,"z":95}
                 ],
                 "velocity": 0.02
-            },
-            {
-                "name": "simple-car-25-49",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":125,"y":1.3,"z":245},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":125,"y":1.3,"z":245},
-                    {"x":125,"y":1.3,"z":0}
-                ],
-                "velocity": 0.03
-            },
-            {
-                "name": "simple-car-24-0",
-                "loader_type": "fbx",
-                "object_type": "vehicles",
-                "position": {"x":120,"y":1.3,"z":0},
-                "url": "./models/fbx/simple-car/simple-car.fbx",
-                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
-                "animate": false,
-                "castShadow": true,
-                "receiveShadow": true,
-                "path": [
-                    {"x":120,"y":1.3,"z":0},
-                    {"x":120,"y":1.3,"z":25},
-                    {"x":120,"y":1.3,"z":35},
-                    {"x":200,"y":1.3,"z":35},
-                    {"x":210,"y":1.3,"z":45},
-                    {"x":210,"y":1.3,"z":80},
-                    {"x":210,"y":1.3,"z":95},
-                    {"x":225,"y":1.3,"z":95},
-                    {"x":245,"y":1.3,"z":95}
-                ],
-                "velocity": 0.02
             }
-        ],
-		"traffic_lights": [
-            {
-                "name": "traffic-light-23-17",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
-                "position": {
-                    "x": 115,
-                    "y": 0,
-                    "z": 85
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 0, "y": 0, "z": 1 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-26-17",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
-                "position": {
-                    "x": 130,
-                    "y": 0,
-                    "z": 85
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": -1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": -1, "y": 0, "z": 0 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-26-20",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
-                "position": {
-                    "x": 130,
-                    "y": 0,
-                    "z": 100
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 3.141592653589793,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 0, "y": 0, "z": -1 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-23-20",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
-                "position": {
-                    "x": 115,
-                    "y": 0,
-                    "z": 100
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 1, "y": 0, "z": 0 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-23-37",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
-                "position": {
-                    "x": 115,
-                    "y": 0,
-                    "z": 185
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 0, "y": 0, "z": 1 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-26-37",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
-                "position": {
-                    "x": 130,
-                    "y": 0,
-                    "z": 185
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": -1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": -1, "y": 0, "z": 0 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-26-40",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
-                "position": {
-                    "x": 130,
-                    "y": 0,
-                    "z": 200
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 3.141592653589793,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 0, "y": 0, "z": -1 },
-                "castShadow": true,
-                "receiveShadow": true
-            },
-            {
-                "name": "traffic-light-23-40",
-                "loader_type": "fbx",
-                "object_type": "traffic_light",
-                "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
-                "position": {
-                    "x": 115,
-                    "y": 0,
-                    "z": 200
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 1.5707963267948966,
-                    "z": 0,
-                    "order": "XYZ"
-                },
-                "scale": {
-                    "x": 0.4,
-                    "y": 0.4,
-                    "z": 0.4
-                },
-                "direction": { "x": 1, "y": 0, "z": 0 },
-                "castShadow": true,
-                "receiveShadow": true
-            }
-		]
+        ]
 	}
 }
