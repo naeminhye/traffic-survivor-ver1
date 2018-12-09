@@ -869,6 +869,116 @@ var glassTexture =      "/images/glass.jpg";
             });
         }
         
+        /** load roundabout areas */
+        if(mapInfo.roundabouts) {
+            mapInfo.roundabouts.forEach(function(child) {
+                var pos = child;
+
+                var box = createBBox(pos, UNIT_SIZE);
+
+                // var area, areaBBox;
+                // area = new THREE.Mesh(
+                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
+                //     new THREE.MeshBasicMaterial({
+                //         color: 0xff0000,
+                //         wireframe: true
+                //     })
+                // );
+                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // area.position.set(XWidth, 0, ZWidth);
+                // area.geometry.computeBoundingBox();
+                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
+                WORLD.intersects.push({ box: box.area, bbox: box.areaBBox });
+
+                var x1 = pos.x - 1; var z1 = pos.z - 1;
+                var x2 = pos.x + pos.x_width; var z2 = pos.z + 1;
+                var x3 = pos.x + pos.x_width - 2; var z3 = pos.z + pos.z_width;
+                var x4 = pos.x - 1; var z4 = pos.z + pos.z_width - 2;
+
+                var roundabout_signs = [];
+                roundabout_signs.push({
+                    "x": x1,
+                    "z": z1,
+                    "loader_type": "object",
+                    "object_type": "guidance_signs",
+                    "sign_id": "303",
+                    "name": "vongxuyen",
+                    "url": "./models/signs/round-info-sign.json",
+                    "directionToMap": "up",
+                    "children": {
+                        "sign": {
+                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                        },
+                        "pole": {
+                            "textureUrl": "./models/signs/pole-uvmap.png"
+                        }
+                    },
+                    "info": "Guide Sign: You are going to meet a roundabout!!"
+                });
+                roundabout_signs.push({
+                    "x": x2,
+                    "z": z2,
+                    "loader_type": "object",
+                    "object_type": "guidance_signs",
+                    "sign_id": "303",
+                    "name": "vongxuyen",
+                    "url": "./models/signs/round-info-sign.json",
+                    "directionToMap": "right",
+                    "children": {
+                        "sign": {
+                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                        },
+                        "pole": {
+                            "textureUrl": "./models/signs/pole-uvmap.png"
+                        }
+                    },
+                    "info": "Guide Sign: You are going to meet a roundabout!!"
+                });
+                roundabout_signs.push({
+                    "x": x3,
+                    "z": z3,
+                    "loader_type": "object",
+                    "object_type": "guidance_signs",
+                    "sign_id": "303",
+                    "name": "vongxuyen",
+                    "url": "./models/signs/round-info-sign.json",
+                    "directionToMap": "down",
+                    "children": {
+                        "sign": {
+                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                        },
+                        "pole": {
+                            "textureUrl": "./models/signs/pole-uvmap.png"
+                        }
+                    },
+                    "info": "Guide Sign: You are going to meet a roundabout!!"
+                });
+                roundabout_signs.push({
+                    "x": x4,
+                    "z": z4,
+                    "loader_type": "object",
+                    "object_type": "guidance_signs",
+                    "sign_id": "303",
+                    "name": "vongxuyen",
+                    "url": "./models/signs/round-info-sign.json",
+                    "directionToMap": "left",
+                    "children": {
+                        "sign": {
+                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                        },
+                        "pole": {
+                            "textureUrl": "./models/signs/pole-uvmap.png"
+                        }
+                    },
+                    "info": "Guide Sign: You are going to meet a roundabout!!"
+                });
+
+                roundabout_signs.forEach((sign) => loadModelToWorld(mappingSigns(sign, UNIT_SIZE)));
+                
+            });
+        }
+        
         /** load one way areas */
         if(mapInfo.one_ways) {
             mapInfo.one_ways.forEach(function(child) {
