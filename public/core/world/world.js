@@ -50,6 +50,8 @@ var instructions = $('#instructions');
 GAME.menu = $("#game-menu");
 GAME.controllers = $("#controllers");
 
+GAME.hornSound = new Audio('/audio/horn/horn.mp3');
+
 var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
 if (havePointerLock) {
@@ -270,6 +272,17 @@ WORLD.init = () => {
     var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
     // WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
+
+    // audio
+    var audioLoader = new THREE.AudioLoader();
+    var listener = new THREE.AudioListener();
+    WORLD.camera.add( listener );
+    WORLD.bgSound = new THREE.PositionalAudio( listener );
+    audioLoader.load( '/audio/horn/horn.mp3', function ( buffer ) {
+                bgSound.setBuffer( buffer );
+                bgSound.setRefDistance( 20 );
+                bgSound.play();
+            } );
 
     var ambient = new THREE.AmbientLight(0x111111);
     WORLD.scene.add(ambient);

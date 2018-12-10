@@ -2,7 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  * @author schteppe / https://github.com/schteppe
  */
- 
+
 /** GLOBAL keysS */
 const keys = {
     KEY_SHIFT: 16,
@@ -148,10 +148,12 @@ var PointerControls = function (camera, cannonBody) {
                 }
             break;
             case keys.KEY_G:
-                rotateLeftFast = true;
+                // rotateLeftFast = true;
+                GAME.hornSound.play();
+                $("#horn-led").addClass("active");
                 break;
             case keys.KEY_H:
-                rotateRightFast = true;
+                // rotateRightFast = true;
                 break;
             /** accelerate */
             case keys.KEY_SHIFT:
@@ -186,6 +188,10 @@ var PointerControls = function (camera, cannonBody) {
                 speedup = false;
                 velocityFactor = INITIAL_SPEED;
                 break;
+            case keys.KEY_G:
+                $("#horn-led").removeClass("active");
+                break;
+            case keys.KEY_H:
         }
     };
     

@@ -10,6 +10,8 @@ CONTROLS.PathControls = function (object, path, prop) {
 		this.velocity = prop.velocity;
 	}
 	this._factor = this.velocity / this.path.getLength();
+	this._object.add( WORLD.bgSound )
+
 };
 
 CONTROLS.PathControls.prototype.update = function (delta) {
