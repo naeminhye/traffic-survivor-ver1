@@ -5,7 +5,7 @@
         "position": {
             "x": 25, 
             "y": 1.8,
-            "z": 245
+            "z": 275
         }
     },
     "signs": {
@@ -16,9 +16,25 @@
     "models": {
         "vehicles": []
     },
+    "end_zone": [
+        {
+			"position": {
+				"x": 38,
+				"z": 54,
+				"x_width": 2, 
+				"z_width": 2
+			}
+		}
+    ],
     "intersects": [
         {
-            "x": 42,
+            "x": 18,
+            "z": 22,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 38,
             "z": 34,
             "x_width": 2, 
             "z_width": 2

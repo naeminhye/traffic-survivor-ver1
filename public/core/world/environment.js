@@ -521,7 +521,7 @@ var glassTexture =      "/images/glass.jpg";
             color: "grey"
         });
         loadTextureToGround(ROUNDABOUT, './images/textures/roundabout.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
+            color: "orange"
         });
 
         // findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 4).forEach(function (tile) {

@@ -3,9 +3,9 @@
     "size": 5,
     "player": {
         "position": {
-            "x": 85, 
+            "x": 90, 
             "y": 1.8,
-            "z": 225
+            "z": 245
         }
     },
     "signs": {
@@ -16,5 +16,34 @@
     "models": {
         "vehicles": []
     },
-    "intersects": []
+    "end_zone": [
+        {
+			"position": {
+				"x": 55,
+				"z": 54,
+				"x_width": 2, 
+				"z_width": 2
+			}
+		}
+    ],
+    "intersects": [
+        {
+            "x": 17,
+            "z": 24,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 17,
+            "z": 40,
+            "x_width": 2, 
+            "z_width": 2
+        },
+        {
+            "x": 39,
+            "z": 40,
+            "x_width": 2, 
+            "z_width": 2
+        }
+    ]
 }

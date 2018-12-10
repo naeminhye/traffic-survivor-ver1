@@ -17,6 +17,16 @@
     "models": {
         "vehicles": []
     },
+    "end_zone": [
+        {
+			"position": {
+				"x": 55,
+				"z": 24,
+				"x_width": 2, 
+				"z_width": 2
+			}
+		}
+    ],
     "intersects": [
         {
             "x": 17,
