@@ -124,7 +124,25 @@
 					}
 				},
 				"info": "Regulatory Sign: No Entry!!"
-			}
+			},
+			{
+				"x": 17,
+				"z": 44,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            }
         ],
         "warning_signs": [
         ],
@@ -243,6 +261,44 @@
             {
 				"x": 17,
 				"z": 50,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301c",
+				"name": "huongphaiditheo-trai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhthang-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Turn Left!!"
+			},
+            {
+				"x": 3,
+				"z": 37,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301e",
+				"name": "hieulenhtrai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhtrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Turn Left!!"
+            },
+            {
+				"x": 3,
+				"z": 42,
 				"loader_type": "object",
 				"object_type": "guidance_signs",
 				"sign_id": "301c",
