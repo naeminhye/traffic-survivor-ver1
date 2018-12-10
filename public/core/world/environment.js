@@ -891,7 +891,7 @@ var glassTexture =      "/images/glass.jpg";
                 // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
                 WORLD.intersects.push({ box: box.area, bbox: box.areaBBox });
 
-                var x1 = pos.x - 1; var z1 = pos.z - 1;
+                var x1 = pos.x + 1; var z1 = pos.z - 1;
                 var x2 = pos.x + pos.x_width; var z2 = pos.z + 1;
                 var x3 = pos.x + pos.x_width - 2; var z3 = pos.z + pos.z_width;
                 var x4 = pos.x - 1; var z4 = pos.z + pos.z_width - 2;

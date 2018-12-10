@@ -17,5 +17,12 @@
     "models": {
         "vehicles": []
     },
-    "intersects": []
+    "intersects": [
+        {
+            "x": 17,
+            "z": 24,
+            "x_width": 2, 
+            "z_width": 2
+        }
+    ]
 }

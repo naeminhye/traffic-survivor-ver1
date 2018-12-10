@@ -533,7 +533,7 @@ const checkSpeedViolation = () => {
             thisRoad.direction.y,
             thisRoad.direction.z));
         var message = null;
-        if((Math.abs(minifyAngle(angleDelta)) < 20)
+        if(((Math.abs(minifyAngle(angleDelta)) < 20) || (Math.abs(minifyAngle(angleDelta)) > 150))
         && thisRoad.max_speed !== null 
         && PLAYER.status.speed > thisRoad.max_speed) {
             speedViolating = true;
@@ -541,7 +541,7 @@ const checkSpeedViolation = () => {
 
             message = "Vuot qua toc do toi da " + thisRoad.max_speed
         }
-        if((Math.abs(minifyAngle(angleDelta)) < 20)
+        if(((Math.abs(minifyAngle(angleDelta)) < 20) || (Math.abs(minifyAngle(angleDelta)) > 150))
         && thisRoad.min_speed !== null 
         && PLAYER.status.speed < thisRoad.min_speed) {
             speedViolating = true;
