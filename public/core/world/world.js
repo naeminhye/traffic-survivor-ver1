@@ -1,5 +1,4 @@
 var WORLD = WORLD || {};
-var GAME = GAME || {};
 var PLAYER = PLAYER || {
     status: {
         moving: false,
@@ -44,7 +43,6 @@ var initialPosition;
 var infoBoxToggle = false;
 WORLD.loaded = false;
 WORLD.warningFlag = false;
-GAME.status = "READY";
 WORLD.mapSize = 0;
 
 var blocker = $('#blocker');
@@ -337,66 +335,67 @@ function onWindowResize() {
 
 var dt = 1 / 60;
 WORLD.animate = () => {
-    WORLD.warningFlag = false;
-    var playX = WORLD.player.position.x;
-    var playY = WORLD.player.position.y;
-    var playZ = WORLD.player.position.z;
-    if (WORLD.player.position.x > WORLD.mapSize) {
-        playX = WORLD.player.position.x - WORLD.mapSize;
-    } else if (WORLD.player.position.x < 0) {
-        playX = WORLD.player.position.x + WORLD.mapSize;
-    }
-
-    if (WORLD.player.position.z > WORLD.mapSize) {
-        playZ = WORLD.player.position.z - WORLD.mapSize;
-    } else if (WORLD.player.position.z < 0) {
-        playZ = WORLD.player.position.z + WORLD.mapSize;
-    }
-    WORLD.player.position.set(playX, playY, playZ);
-    sphereBody.position.set(playX, playY, playZ);
-
-    requestAnimationFrame(WORLD.animate);
-
-    if(GAME.status === "PLAYING") {
-        if (WORLD.controls.enabled) {
-
-            WORLD.world.step(dt);
-
-            if (WORLD.vehicleControls.length > 0) {
-                WORLD.vehicleControls.forEach(function (control) {
-                    // moving vehicles
-                    control.update(Date.now() - time);
-                });
-            }
-
-            if (WORLD.trafficLightList.length > 0) {
-                WORLD.trafficLightList.forEach(function (light) {
-                    // moving vehicles
-                    light = updateSkinnedAnimation(light);
-                });
-            }
-
-
+    if(GAME.status !== "END") {
+        WORLD.warningFlag = false;
+        var playX = WORLD.player.position.x;
+        var playY = WORLD.player.position.y;
+        var playZ = WORLD.player.position.z;
+        if (WORLD.player.position.x > WORLD.mapSize) {
+            playX = WORLD.player.position.x - WORLD.mapSize;
+        } else if (WORLD.player.position.x < 0) {
+            playX = WORLD.player.position.x + WORLD.mapSize;
         }
 
-        PLAYER.pin = $("#player-pin");
-        PLAYER.pin.css("left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10);
-        PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+        if (WORLD.player.position.z > WORLD.mapSize) {
+            playZ = WORLD.player.position.z - WORLD.mapSize;
+        } else if (WORLD.player.position.z < 0) {
+            playZ = WORLD.player.position.z + WORLD.mapSize;
+        }
+        WORLD.player.position.set(playX, playY, playZ);
+        sphereBody.position.set(playX, playY, playZ);
 
-        WORLD.controls.update(Date.now() - time);
-        checkViolation();
-        if (!WORLD.warningFlag) {
-            $("#message").css("display", "none");
+        requestAnimationFrame(WORLD.animate);
+
+        if(GAME.status === "PLAYING") {
+            if (WORLD.controls.enabled) {
+
+                WORLD.world.step(dt);
+
+                if (WORLD.vehicleControls.length > 0) {
+                    WORLD.vehicleControls.forEach(function (control) {
+                        // moving vehicles
+                        control.update(Date.now() - time);
+                    });
+                }
+
+                if (WORLD.trafficLightList.length > 0) {
+                    WORLD.trafficLightList.forEach(function (light) {
+                        // moving vehicles
+                        light = updateSkinnedAnimation(light);
+                    });
+                }
+
+
+            }
+
+            PLAYER.pin = $("#player-pin");
+            PLAYER.pin.css("left", (WORLD.player.position.x / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+            PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
+
+            WORLD.controls.update(Date.now() - time);
+            checkViolation();
+            if (!WORLD.warningFlag) {
+                $("#message").css("display", "none");
+            }
+
+            $("#speed").text(PLAYER.status.speed);
         }
 
-        $("#speed").text(PLAYER.status.speed);
+        // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
+        //evolveSmoke(Date.now() - time);
+        WORLD.renderer.render(WORLD.scene, WORLD.camera);
+        time = Date.now();
     }
-
-    // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
-    //evolveSmoke(Date.now() - time);
-    WORLD.renderer.render(WORLD.scene, WORLD.camera);
-    time = Date.now();
-
 }
 
 WORLD.detectCollision = () => {
@@ -470,6 +469,8 @@ const signViolation = (list) => {
             GAME.status = "PAUSED";
             //todo: show info 
             $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
+            GAME.passedSignList.push({sign: sign, time: new Date()});
+
             $("#signDetail").show();
             document.addEventListener('keydown', (event) => {
                 let keyName = event.code;
@@ -623,35 +624,4 @@ const checkOneWayViolation = () => {
     //         // }
     //     }
     // });
-}
-
-GAME.endGame = () => {
-    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
-    // Attempt to unlock
-    document.exitPointerLock();
-    GAME.status = "END"; 
-
-    var passedSigns = GAME.numOfSign + "/" + GAME.totalNumOfSign;
-    $("#passedSigns").text(passedSigns);
-    $("#lostMoney").text($("#floating-info span").text());
-
-    $(".screen-element").css("display", "none");
-    $("#gameBoard").css("display", "block");
-}
-
-GAME.handleFining = (message, money, callback) => {
-
-    //var date = new Date();
-
-    toastr.error(message);
-    $("#floating-info").addClass("shown");
-    $("#floating-info").append("<span>-" + money + "VNĐ</span>");
-    $('#floating-info').animateCss('fadeOutUp', function () {
-        // hide after animation
-        var oldNum = Number($($(".money-number")[0]).text());
-        var newNum = -money;
-        $($(".money-number")[0]).text(oldNum + newNum);
-        $("#floating-info").empty();
-        $("#floating-info").removeClass("shown");
-    });
 }

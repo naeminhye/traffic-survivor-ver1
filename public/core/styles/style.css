@@ -633,3 +633,7 @@ hr {
 .key-instruction-container .key-instruction-btn a {
     font-size: 16px;
 }
+
+#gameBoard {
+    /* overflow-y: auto; */
+}
