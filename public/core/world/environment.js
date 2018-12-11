@@ -3,6 +3,7 @@ var ROAD_POS_Z = "1"; // VERTICAL
 var ROAD_POS_X = "-1";
 var DOUBLE_ROAD_POS_Z = "11"; // VERTICAL
 var DOUBLE_ROAD_POS_X = "-11";
+var HOUSES_ID = "H";
 var RESIDENTAL_BUILDING_ID = "2";
 var SMALL_BUILDING_ID = "3";
 var NEW_BUILDING_ID = "5";
@@ -23,7 +24,7 @@ var ZEBRA_CROSSING_TOP = "ZT";
 var ZEBRA_CROSSING_BOTTOM = "ZB";
 var ZEBRA_CROSSING_LEFT = "ZL";
 var ZEBRA_CROSSING_RIGHT = "ZR";
-var NORMAL_LAND = "P";
+var NORMAL_LAND = "L";
 var ROUNDABOUT = "R";
 
 const manager = new THREE.LoadingManager();
@@ -508,9 +509,9 @@ var glassTexture =      "/images/glass.jpg";
         loadTextureToGround(NORMAL_LAND, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
             color: "grey"
         });
-        loadTextureToGround(RESIDENTAL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-            color: "grey"
-        });
+        // loadTextureToGround(HOUSES_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
+        //     color: "grey"
+        // });
         loadTextureToGround(OFFICE_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
             color: "grey"
         });
@@ -557,7 +558,12 @@ var glassTexture =      "/images/glass.jpg";
         //     // }));
         // });
 
-        findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 2).forEach(function (tile) {
+        findSquareSubMapWithSize(roadMap, HOUSES_ID, 2).forEach(function (tile) {
+            
+            /** Vẽ trên map */
+            GAME.mapContext.fillStyle = "gray";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
+
             /** residental buildings */
             var houseTexture;
             var randomHeight = Math.floor((Math.random()) * 5) + 1; 
@@ -569,7 +575,7 @@ var glassTexture =      "/images/glass.jpg";
             houseTexture = WORLD.textureLoader.load(houseList[randomHouse], function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
-                texture.repeat.set( 1, randomHeight );
+                texture.repeat.set( 1, 1 );
                 texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
             });
 
@@ -579,17 +585,14 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
             // buildingMaterial.map.repeat.set(1, randomHeight);
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+            for(var i = 0; i < randomHeight; i++) {
+                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size, tile.size * UNIT_SIZE), buildingMaterial);
+                // Set the cube position
+                cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) + (UNIT_SIZE * tile.size * i), buildingZWidth);
+                // Add the cube
+                WORLD.scene.add(cube);
+            }
 
-            /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "gray";
-            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) * randomHeight, tile.size * UNIT_SIZE), buildingMaterial);
-            // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) * randomHeight, buildingZWidth);
-
-            // Add the cube
-            WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");

@@ -274,15 +274,16 @@ WORLD.init = () => {
     // WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
 
     // audio
-    var audioLoader = new THREE.AudioLoader();
-    var listener = new THREE.AudioListener();
-    WORLD.camera.add( listener );
-    WORLD.bgSound = new THREE.PositionalAudio( listener );
-    audioLoader.load( '/audio/horn/horn.mp3', function ( buffer ) {
-                bgSound.setBuffer( buffer );
-                bgSound.setRefDistance( 20 );
-                bgSound.play();
-            } );
+    // var audioLoader = new THREE.AudioLoader();
+    // var listener = new THREE.AudioListener();
+    // WORLD.camera.add( listener );
+    // WORLD.bgSound = new THREE.PositionalAudio( listener );
+    // audioLoader.load( '/audio/motorcycle/motorcycleSound.mp3', function ( buffer ) {
+    //         WORLD.bgSound.setBuffer( buffer );
+    //         WORLD.bgSound.setRefDistance( 20 );
+    //         WORLD.bgSound.setLoop( true );
+    //         WORLD.bgSound.play();
+    //     } );
 
     var ambient = new THREE.AmbientLight(0x111111);
     WORLD.scene.add(ambient);
