@@ -51,6 +51,7 @@ var PointerControls = function (camera, cannonBody) {
     var speedup = false;
     var leftSignal = false;
     var rightSignal = false;
+    var lightOn = false;
 
     var canJump = false;
 
@@ -154,6 +155,13 @@ var PointerControls = function (camera, cannonBody) {
                 break;
             case keys.KEY_H:
                 // rotateRightFast = true;
+                lightOn = !lightOn;
+                if(lightOn) {
+                    $("#headlight-led").addClass("active");
+                }
+                else {
+                    $("#headlight-led").removeClass("active");
+                }
                 break;
             /** accelerate */
             case keys.KEY_SHIFT:
@@ -308,6 +316,56 @@ var PointerControls = function (camera, cannonBody) {
                 WORLD.player.rotation.z
             );
         }
+
+        // if(PLAYER.cubeCamera) {
+        // PLAYER.cubeCamera.object3d.position.set(
+        //         WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
+        //         WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+        //         WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+        //     );
+        //     PLAYER.cubeCamera.object3d.rotation.set(
+        //         WORLD.player.rotation.x,
+        //         WORLD.player.rotation.y,
+        //         WORLD.player.rotation.z
+        //     );
+        // }
+
+        // if(lightOn) {
+        //     if(!PLAYER.headLight) {
+        //         PLAYER.headLight = new THREE.SpotLight( 0xffffff , 4, 40);
+        //         PLAYER.headLight.position.set(
+        //             WORLD.player.position.x,
+        //             WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+        //             WORLD.player.position.z
+        //         );
+        //         PLAYER.headLight.rotation.set(
+        //             WORLD.player.rotation.x,
+        //             WORLD.player.rotation.y,
+        //             WORLD.player.rotation.z
+        //         );
+        //         WORLD.camera.add(PLAYER.headLight);
+        //         PLAYER.headLight.target = WORLD.camera;
+    
+        //         PLAYER.headLight.castShadow = true;
+    
+        //         PLAYER.headLight.shadow.mapSize.width = 100;
+        //         PLAYER.headLight.shadow.mapSize.height = 100;
+    
+        //         PLAYER.headLight.shadow.camera.near = 500;
+        //         PLAYER.headLight.shadow.camera.far = 4000;
+        //         PLAYER.headLight.shadow.camera.fov = 30;
+        //         PLAYER.headLight.name = "headlight";
+    
+        //         WORLD.scene.add( PLAYER.headLight );
+        //     }
+        // }
+        // else {
+        //     var headlight = WORLD.scene.getObjectByName("headlight");
+        //     if(headlight) {
+        //         WORLD.scene.remove( headlight );
+        //         PLAYER.headLight = null
+        //     }
+        // }
     };
 };
 

@@ -505,6 +505,7 @@ function loadCubemap(path, format) {
     loader.setCrossOrigin('');
     var cubeMap = loader.load(urls);
     cubeMap.format = THREE.RGBFormat;
+    WORLD.textureCube = THREE.TextureLoader.load(urls, new THREE.CubeReflectionMapping());
     return cubeMap;
 }
 
@@ -535,4 +536,11 @@ const createBBox = (pos, UNIT_SIZE) => {
         area: area,
         areaBBox: areaBBox
     }
+}
+
+const createBSphere = (pos, UNIT_SIZE) => {
+    center = new THREE.Vector3((pos.x + pos.x_width / 2) * UNIT_SIZE, 0, (pos.z + pos.z_width / 2) * UNIT_SIZE)
+    radius = (pos.x_width / 4) * UNIT_SIZE;
+
+    return new THREE.Sphere(center, radius);
 }

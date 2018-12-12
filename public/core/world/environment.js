@@ -122,7 +122,7 @@ const loadModelToWorld = (model) => {
             mesh.receiveShadow = receiveShadow;
             mesh.position.set(0, 3, 0);
             mesh.material.side = THREE.DoubleSide;
-            WORLD.scene.add(mesh);
+            // WORLD.scene.add(mesh);
         }, onProgress, onError);
     }
     else {
@@ -256,7 +256,7 @@ const loadModelToWorld = (model) => {
                     WORLD.trafficLightList.push(storeObj);
                 }
 
-                WORLD.scene.add( obj );
+                // WORLD.scene.add( obj );
 
                 var helper = new THREE.BoxHelper(obj, 0xff0000);
                 helper.update();
@@ -590,7 +590,7 @@ var glassTexture =      "/images/glass.jpg";
                 // Set the cube position
                 cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) + (UNIT_SIZE * tile.size * i), buildingZWidth);
                 // Add the cube
-                WORLD.scene.add(cube);
+                // WORLD.scene.add(cube);
             }
 
             // WORLD.world.add(createBoxBody(cube, function (object) {
@@ -629,7 +629,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2), buildingZWidth);
 
             // Add the cube
-            WORLD.scene.add(cube);
+            // WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -665,7 +665,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE * tile.size, buildingZWidth);
 
             // Add the cube
-            WORLD.scene.add(cube);
+            // WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -700,7 +700,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE / 2 - 0.25, buildingZWidth);
 
             // Add the cube
-            WORLD.scene.add(cube);
+            // WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -877,22 +877,9 @@ var glassTexture =      "/images/glass.jpg";
             mapInfo.roundabouts.forEach(function(child) {
                 var pos = child;
 
-                var box = createBBox(pos, UNIT_SIZE);
-
-                // var area, areaBBox;
-                // area = new THREE.Mesh(
-                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                //     new THREE.MeshBasicMaterial({
-                //         color: 0xff0000,
-                //         wireframe: true
-                //     })
-                // );
-                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                // area.position.set(XWidth, 0, ZWidth);
-                // area.geometry.computeBoundingBox();
-                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
-                WORLD.intersects.push({ box: box.area, bbox: box.areaBBox });
+                var sphere = createBSphere(pos, UNIT_SIZE);
+        
+                WORLD.roundabouts.push(sphere);
 
                 var x1 = pos.x + 1; var z1 = pos.z - 1;
                 var x2 = pos.x + pos.x_width; var z2 = pos.z + 1;
@@ -1064,7 +1051,7 @@ var glassTexture =      "/images/glass.jpg";
                 }
             });
             WORLD.bike = obj;
-            WORLD.scene.add(WORLD.bike);
+            // WORLD.scene.add(WORLD.bike);
         });
     });
 }

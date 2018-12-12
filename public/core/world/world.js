@@ -5,7 +5,8 @@ var PLAYER = PLAYER || {
         health: 100,
         violation: 0,
         speed: 0
-    }
+    }, 
+    headLight: null
 };
 var UNITWIDTH = 9; // Width of a cubes in the maze
 var UNITHEIGHT = 9; // Height of the cubes in the maze
@@ -29,6 +30,7 @@ var dangerZoneMesh = null;
 var dangerZoneGeometry = null;
 WORLD.one_ways = [];
 WORLD.intersects = [];
+WORLD.roundabouts = [];
 WORLD.speed_restriction_ways = [];
 WORLD.endZone = [];
 const objs = [];
@@ -316,6 +318,7 @@ WORLD.init = () => {
     WORLD.scene.updateMatrixWorld(true);
 
     WORLD.loadMap();
+    // addMirror();
 
     WORLD.renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -330,6 +333,8 @@ WORLD.init = () => {
     document.body.appendChild(WORLD.renderer.domElement);
     document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
     WORLD.renderer.vr.enabled = true;
+
+    // $("#music").play();
 
     window.addEventListener('resize', onWindowResize, false);
 }
@@ -404,12 +409,36 @@ WORLD.animate = () => {
 
             $("#speed").text(PLAYER.status.speed);
         }
+        if(PLAYER.cubeCamera) {
+            PLAYER.cubeCamera.update(WORLD.renderer, WORLD.scene);
+
+            // position the camera in front of the camera
+            
+        }
 
         // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
         //evolveSmoke(Date.now() - time);
         WORLD.renderer.render(WORLD.scene, WORLD.camera);
         time = Date.now();
     }
+}
+
+const addMirror = () => {
+    var geometry    = new THREE.SphereGeometry(0.5, 32, 16)
+    var material    = new THREE.MeshPhongMaterial({
+        color   : 'gold'
+    })
+    var mesh    = new THREE.Mesh(geometry, material)
+    WORLD.scene.add( mesh )
+
+    PLAYER.cubeCamera = new THREEx.CubeCamera(mesh)
+    PLAYER.cubeCamera.object3d.position.set(
+        25,
+        1.7995464019372356,
+        165
+    );
+    WORLD.scene.add(PLAYER.cubeCamera.object3d);
+    material.envMap	= PLAYER.cubeCamera.textureCube
 }
 
 WORLD.detectCollision = () => {
@@ -447,6 +476,7 @@ function checkViolation() {
     signViolation(WORLD.warningSignList);
     signViolation(WORLD.regulatorySignList);
     signViolation(WORLD.guidanceSignList);
+
     if (WORLD.trafficLightList) {
         updateTrafficLights();
     }
@@ -465,6 +495,10 @@ function checkViolation() {
                 }, 2000);
             }
         });
+    }
+
+    if(WORLD.roundabouts) {
+        checkRoundaboutViolation();
     }
 
 }
@@ -573,6 +607,30 @@ const checkSpeedViolation = () => {
     else if (newIndex === -1 && speedViolating) {
         speedViolating = false;
         speedRestrictionIndex = newIndex;
+    }
+}
+
+var roundaboutViolationFlag = false;
+var roundaboutIndex = -1;
+const checkRoundaboutViolation = () => {
+
+    var oldIndex = roundaboutIndex;
+    roundaboutIndex = WORLD.roundabouts.findIndex((sphere) => sphere.containsPoint(WORLD.player.position));
+
+    if(oldIndex !== roundaboutIndex) {
+        /** đi vào đường khác */
+        roundaboutViolationFlag = false;
+    }
+
+    if ( roundaboutIndex === -1 ) {
+        /** Không đi vào vòng xoay nào nên không cần xét */
+        roundaboutViolationFlag = false;
+    }
+    else {
+        if (!roundaboutViolationFlag) {
+            GAME.handleFining("Riding violations performed within the roundabout!", 100000);
+            roundaboutViolationFlag = true;
+        }
     }
 }
 

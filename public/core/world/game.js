@@ -29,13 +29,14 @@ GAME.handleFining = (message, money, callback) => {
 
     //var date = new Date();
 
+    var oldNum = Number($($(".money-number")[0]).text());
+    var newNum = -money;
+    
     toastr.error(message);
     $("#floating-info").addClass("shown");
     $("#floating-info").append("<span>-" + money + "VNĐ</span>");
     $('#floating-info').animateCss('fadeOutUp', function () {
         // hide after animation
-        var oldNum = Number($($(".money-number")[0]).text());
-        var newNum = -money;
         $($(".money-number")[0]).text(oldNum + newNum);
         $("#floating-info").empty();
         $("#floating-info").removeClass("shown");
