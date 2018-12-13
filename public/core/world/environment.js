@@ -8,7 +8,8 @@ var RESIDENTAL_BUILDING_ID = "2";
 var SMALL_BUILDING_ID = "3";
 var NEW_BUILDING_ID = "5";
 var OFFICE_BUILDING_ID = "6";
-var GRASS_ID = "4";
+var GRASS_ID = "G";
+var COBBLESTONE_ID = "CS"; //cobblestones.jpg
 var START_POS_Z = "S";
 var START_POS_X = "-S";
 var END_POS_Z = "E";
@@ -409,15 +410,58 @@ WORLD.loadMap = () => {
  */
 const environmentInit = function (file) {
 
-    var h2_houseTexture = "/images/h2.jpg";
-    var newHouseTexture =   "/images/residential.jpg";
-    var smallHouseTexture = "/images/small-house.jpg";
-var glassTexture =      "/images/glass.jpg";
+    var house1 = "/images/textures/houses/house1.jpg";
+    var house2 = "/images/textures/houses/house2.jpg";
+    var house3 = "/images/textures/houses/house3.jpg";
+    var house4 = "/images/textures/houses/house4.jpg";
+    var house5 = "/images/textures/houses/house5.jpg";
+    var house6 = "/images/textures/houses/house6.jpg";
+    var house7 = "/images/textures/houses/house7.jpg";
+    var house8 = "/images/textures/houses/house8.jpg";
+    var officeBuildingTexture = "/images/glass.jpg";
 
     var houseList = [
-        h2_houseTexture,
-        newHouseTexture,
-        smallHouseTexture
+        {
+            url: house1,
+            width: 512,
+            height: 512
+        },
+        {
+            url: house2,
+            width: 512,
+            height: 512
+        },
+        {
+            url: house3,
+            width: 512,
+            height: 218
+        },
+        {
+            url: house4,
+            width: 512,
+            height: 512
+        },
+        {
+            url: house5,
+            width: 860,
+            height: 565
+        },
+        {
+            url: house6,
+            width: 1300,
+            height: 866
+        },
+        {
+            url: house7,
+            width: 296,
+            height: 400
+        },
+        {
+            url: house8,
+            width: 428,
+            height: 382
+        }
+        
     ]
 
     readMapInfoFromJson(file, (result) => {
@@ -448,67 +492,260 @@ var glassTexture =      "/images/glass.jpg";
         GAME.mapContext.canvas.height = CANVAS_UNIT * roadMap.length;
         WORLD.mapSize = UNIT_SIZE * roadMap.length;
 
+        const groundTextures = [
+            {
+                id: ROAD_POS_X,
+                url: './images/textures/roadposx_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: ROAD_POS_Z, 
+                url: './images/textures/roadposz_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: DOUBLE_ROAD_POS_Z, 
+                url: './images/textures/roadposz_2.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: START_POS_Z, 
+                url: './images/textures/roadposz_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "red"
+                },
+                callback: null
+            },
+            {
+                id: END_POS_Z, 
+                url: './images/textures/roadposz_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "red"
+                },
+                callback: null
+            },
+            {
+                id: ROAD_POS_X, 
+                url: './images/textures/roadposx_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: DOUBLE_ROAD_POS_X, 
+                url: './images/textures/roadposx_2.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: START_POS_X, 
+                url: './images/textures/roadposx_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "red"
+                },
+                callback: null
+            },
+            {
+                id: END_POS_X, 
+                url: './images/textures/roadposx_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "red"
+                },
+                callback: null
+            },
+            {
+                id: INTERSECT_1, 
+                url: './images/textures/intersect_1.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: INTERSECT_2, 
+                url: './images/textures/intersect_2.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: INTERSECT_3, 
+                url: './images/textures/intersect_3.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE,
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: INTERSECT_4, 
+                url: './images/textures/intersect_4.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: INTERSECT_5, 
+                url: './images/textures/intersect_5.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: PAVEMENT_ID, 
+                url: './images/textures/pavement.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "grey"
+                },
+                callback: null
+            },
+            {
+                id: ZEBRA_CROSSING_TOP, 
+                url: './images/textures/zebra_crossing_top.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: ZEBRA_CROSSING_BOTTOM, 
+                url: './images/textures/zebra_crossing_bottom.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: ZEBRA_CROSSING_LEFT, 
+                url: './images/textures/zebra_crossing_left.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                },
+                callback: null
+            },
+            {
+                id: ZEBRA_CROSSING_RIGHT, 
+                url: './images/textures/zebra_crossing_right.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                }
+            },
+            {
+                id: GRASS_ID, 
+                url: './images/grassdark.jpg', 
+                map: roadMap,
+                unit_size: UNIT_SIZE, 
+                isMultiple: true, 
+                minimap: {
+                    color: "green"
+                }
+            },
+            {
+                id: COBBLESTONE_ID, 
+                url: './images/textures/cobblestones.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "grey"
+                }
+            },
+            {
+                id: NORMAL_LAND, 
+                url: './images/textures/street.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: true, 
+                minimap: {
+                    color: "grey"
+                }
+            }
+        ]
+
         /** VẼ TEXTURE LÊN MẶT ĐẤT LÀM ĐƯỜNG, VỈA HÈ ... */
-        loadTextureToGround(ROAD_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(DOUBLE_ROAD_POS_Z, './images/textures/roadposz_2.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(START_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
-        });
-        loadTextureToGround(END_POS_Z, './images/textures/roadposz_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
-        });
-        loadTextureToGround(ROAD_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(DOUBLE_ROAD_POS_X, './images/textures/roadposx_2.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(START_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
-        });
-        loadTextureToGround(END_POS_X, './images/textures/roadposx_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "red"
-        });
-        loadTextureToGround(INTERSECT_1, './images/textures/intersect_1.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(INTERSECT_2, './images/textures/intersect_2.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(INTERSECT_3, './images/textures/intersect_3.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(INTERSECT_4, './images/textures/intersect_4.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(INTERSECT_5, './images/textures/intersect_5.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(PAVEMENT_ID, './images/textures/pavement.jpg', roadMap, UNIT_SIZE, false, {
-            color: "grey"
-        });
-        loadTextureToGround(ZEBRA_CROSSING_TOP, './images/textures/zebra_crossing_top.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(ZEBRA_CROSSING_BOTTOM, './images/textures/zebra_crossing_bottom.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(ZEBRA_CROSSING_LEFT, './images/textures/zebra_crossing_left.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(ZEBRA_CROSSING_RIGHT, './images/textures/zebra_crossing_right.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
-        loadTextureToGround(GRASS_ID, './images/grass.jpg', roadMap, UNIT_SIZE, true, {
-            color: "green"
-        });
-        loadTextureToGround(NORMAL_LAND, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-            color: "grey"
-        });
+        if (groundTextures) {
+            groundTextures.forEach((texture) => {
+                loadTextureToGround(texture.id, 
+                                    texture.url, 
+                                    texture.map, 
+                                    texture.unit_size, 
+                                    texture.isMultiple, 
+                                    texture.minimap, 
+                                    texture.callback);
+            });
+        }
+        
         // loadTextureToGround(HOUSES_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
         //     color: "grey"
         // });
@@ -533,7 +770,7 @@ var glassTexture =      "/images/glass.jpg";
         //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
         //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-        //     texture = h2_houseTexture;
+        //     texture = house1;
         //     var buildingMaterial = new THREE.MeshBasicMaterial({
         //         map: texture
         //     });
@@ -567,17 +804,18 @@ var glassTexture =      "/images/glass.jpg";
             /** residental buildings */
             var houseTexture;
             var randomHeight = Math.floor((Math.random()) * 5) + 1; 
-            var randomHouse = Math.floor((Math.random()) * 3) + 0; 
+            var randomHouse = Math.floor((Math.random()) * houseList.length) + 0; 
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(houseList[randomHouse], function ( texture ) {
+            houseTexture = WORLD.textureLoader.load(houseList[randomHouse].url, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 1, 1 );
                 texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
             });
+            var ratio = houseList[randomHouse].width / houseList[randomHouse].height;
 
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: houseTexture
@@ -586,9 +824,9 @@ var glassTexture =      "/images/glass.jpg";
             // buildingMaterial.map.repeat.set(1, randomHeight);
             // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
             for(var i = 0; i < randomHeight; i++) {
-                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size, tile.size * UNIT_SIZE), buildingMaterial);
+                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
                 // Set the cube position
-                cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) + (UNIT_SIZE * tile.size * i), buildingZWidth);
+                cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                 // Add the cube
                 WORLD.scene.add(cube);
             }
@@ -606,7 +844,7 @@ var glassTexture =      "/images/glass.jpg";
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(newHouseTexture, function ( texture ) {
+            houseTexture = WORLD.textureLoader.load(house2, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 1, 1 );
@@ -643,7 +881,7 @@ var glassTexture =      "/images/glass.jpg";
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(glassTexture, function ( texture ) {
+            houseTexture = WORLD.textureLoader.load(officeBuildingTexture, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 1, 2 );
@@ -678,7 +916,7 @@ var glassTexture =      "/images/glass.jpg";
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(smallHouseTexture, function ( texture ) {
+            houseTexture = WORLD.textureLoader.load(house3, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 2, 1 );

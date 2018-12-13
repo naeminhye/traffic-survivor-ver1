@@ -404,7 +404,66 @@
         ]
     },
     "models": {
-        "vehicles": []
+		"vehicles": [
+			{
+                "name": "simple-car-56-54",
+                "loader_type": "fbx",
+                "object_type": "vehicles",
+                "position": {"x":280,"y":1.3,"z":270},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+                    {"x":280,"y":1.3,"z":270},
+                    {"x":30,"y":1.3,"z":270},
+                    {"x":20,"y":1.3,"z":270},
+                    {"x":20,"y":1.3,"z":260},
+                    {"x":20,"y":1.3,"z":215},
+                    {"x":20,"y":1.3,"z":205},
+                    {"x":30,"y":1.3,"z":205},
+                    {"x":185,"y":1.3,"z":205},
+                    {"x":195,"y":1.3,"z":205},
+                    {"x":195,"y":1.3,"z":215},
+                    {"x":195,"y":1.3,"z":260},
+                    {"x":195,"y":1.3,"z":270},
+                    {"x":200,"y":1.3,"z":275},
+                    {"x":210,"y":1.3,"z":275},
+                    {"x":280,"y":1.3,"z":275}
+                ],
+                "velocity": 0.03
+            },
+			{
+                "name": "simple-car-4-41",
+                "loader_type": "fbx",
+                "object_type": "vehicles",
+                "position": {"x":20,"y":1.3,"z":205},
+                "url": "./models/fbx/simple-car/simple-car.fbx",
+                "textureUrl": "./models/fbx/simple-car/simplecar-uvmap.png",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+					{"x":20,"y":1.3,"z":205},
+                    {"x":30,"y":1.3,"z":205},
+                    {"x":185,"y":1.3,"z":205},
+                    {"x":195,"y":1.3,"z":205},
+                    {"x":195,"y":1.3,"z":215},
+                    {"x":195,"y":1.3,"z":260},
+                    {"x":195,"y":1.3,"z":270},
+                    {"x":200,"y":1.3,"z":275},
+                    {"x":210,"y":1.3,"z":275},
+                    {"x":280,"y":1.3,"z":275},
+                    {"x":280,"y":1.3,"z":270},
+                    {"x":30,"y":1.3,"z":270},
+                    {"x":20,"y":1.3,"z":270},
+                    {"x":20,"y":1.3,"z":260},
+                    {"x":20,"y":1.3,"z":215}
+                ],
+                "velocity": 0.03
+            }
+		]
     },
     "end_zone": [
         {

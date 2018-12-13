@@ -637,3 +637,13 @@ hr {
 #gameBoard {
     /* overflow-y: auto; */
 }
+
+#showSignList {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    border: none;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+}

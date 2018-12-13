@@ -3,8 +3,10 @@
         <span>Level <%= level %> - Chapter <%= chapter %></span>
     </div>
     <div style="padding: 5px; margin: 15px 0; border: 6px black solid; background-color: white; font-family: 'Press Start 2P', cursive;">
-        <div><p>Number of signs you passed: <span id="passedSigns"></span></p></div>
-        <button id="showSignList"></button>
+        <div style="position: relative;">
+            <p>Number of signs you passed: <span id="passedSigns"></span></p>
+            <button id="showSignList"><i class="fa fa-caret-down"></i></button>
+        </div>
         <div id="signListContainer" style="display: none;"></div>
         <div><p>Money you lost: <span id="lostMoney"></span></p></div>
         <div><p>Result: </p></div>

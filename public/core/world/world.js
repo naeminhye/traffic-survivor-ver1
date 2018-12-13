@@ -518,9 +518,6 @@ const signViolation = (list) => {
             if (level === "easy") {
                 console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
                 GAME.status = "PAUSED";
-                //todo: show info 
-                $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
-                GAME.passedSignList.push({sign: sign, time: new Date()});
 
                 $("#signDetail").show();
                 document.addEventListener('keydown', (event) => {
@@ -532,6 +529,9 @@ const signViolation = (list) => {
                     }
                 }, false);
             }
+            //todo: show info 
+            // $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
+            // GAME.passedSignList.push({sign: sign, time: new Date()});
 
             GAME.mapContext.fillStyle = "lightgreen";
             GAME.mapContext.beginPath(); //Start path
