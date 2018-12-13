@@ -86,6 +86,42 @@
         "warning_signs": [],
         "guidance_signs": [
             {
+				"x": 2,
+				"z": 36,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "134",
+				"name": "hettoida",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/hettoida-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 5,
+				"z": 12,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "134",
+				"name": "hettoida",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/hettoida-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
 				"x": 31,
 				"z": 13,
 				"loader_type": "object",

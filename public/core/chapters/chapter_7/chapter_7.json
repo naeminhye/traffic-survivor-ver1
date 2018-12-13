@@ -9,7 +9,44 @@
         }
     },
     "signs": {
-        "regulatory_signs": [],
+        "regulatory_signs": [
+            {
+				"x": 14,
+				"z": 23,
+				"loader_type": "object",
+                "object_type": "regulatory_signs",
+                "sign_id": "127",
+				"name": "tocdotoida",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/tocdotoida-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 35,
+				"z": 23,
+				"loader_type": "object",
+                "object_type": "regulatory_signs",
+                "sign_id": "127",
+				"name": "tocdotoida",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/tocdotoida-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            }
+        ],
         "warning_signs": [
             {
                 "x": 19,
@@ -87,6 +124,52 @@
             "z": 24,
             "x_width": 2, 
             "z_width": 2
+        }
+    ],
+    "speed_restriction": [
+        {
+            "min_speed": null,
+            "max_speed": 40,
+            "position": {
+                "x": 7,
+                "z": 24,
+                "x_width": 8, 
+                "z_width": 2
+            },
+			"direction": {"x": -1, "y": 0, "z": 0}
+        },
+        {
+            "min_speed": null,
+            "max_speed": 40,
+            "position": {
+                "x": 21,
+                "z": 24,
+                "x_width": 14, 
+                "z_width": 2
+            },
+			"direction": {"x": -1, "y": 0, "z": 0}
+        },
+        {
+            "min_speed": null,
+            "max_speed": 40,
+            "position": {
+                "x": 3,
+                "z": 13,
+                "x_width": 2, 
+                "z_width": 9
+            },
+			"direction": {"x": 0, "y": 0, "z": -1}
+        },
+        {
+            "min_speed": null,
+            "max_speed": 40,
+            "position": {
+                "x": 3,
+                "z": 28,
+                "x_width": 2, 
+                "z_width": 9
+            },
+			"direction": {"x": 0, "y": 0, "z": -1}
         }
     ]
 }
