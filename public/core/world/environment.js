@@ -122,7 +122,7 @@ const loadModelToWorld = (model) => {
             mesh.receiveShadow = receiveShadow;
             mesh.position.set(0, 3, 0);
             mesh.material.side = THREE.DoubleSide;
-            // WORLD.scene.add(mesh);
+            WORLD.scene.add(mesh);
         }, onProgress, onError);
     }
     else {
@@ -256,7 +256,7 @@ const loadModelToWorld = (model) => {
                     WORLD.trafficLightList.push(storeObj);
                 }
 
-                // WORLD.scene.add( obj );
+                WORLD.scene.add( obj );
 
                 var helper = new THREE.BoxHelper(obj, 0xff0000);
                 helper.update();
@@ -399,7 +399,7 @@ const updateSkinnedAnimation = (_object) => {
 }
 
 WORLD.loadMap = () => {
-    var chapterNumber = window.location.search.split("=")[1];
+    var chapterNumber = getUrlParameter('chapter');
     environmentInit("./core/chapters/chapter_" + chapterNumber + "/chapter_" + chapterNumber + ".json");
 }
 
@@ -590,7 +590,7 @@ var glassTexture =      "/images/glass.jpg";
                 // Set the cube position
                 cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) + (UNIT_SIZE * tile.size * i), buildingZWidth);
                 // Add the cube
-                // WORLD.scene.add(cube);
+                WORLD.scene.add(cube);
             }
 
             // WORLD.world.add(createBoxBody(cube, function (object) {
@@ -629,7 +629,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2), buildingZWidth);
 
             // Add the cube
-            // WORLD.scene.add(cube);
+            WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -665,7 +665,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE * tile.size, buildingZWidth);
 
             // Add the cube
-            // WORLD.scene.add(cube);
+            WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -700,7 +700,7 @@ var glassTexture =      "/images/glass.jpg";
             cube.position.set(buildingXWidth, UNIT_SIZE / 2 - 0.25, buildingZWidth);
 
             // Add the cube
-            // WORLD.scene.add(cube);
+            WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
             //     if (object.body.id == 0)
             //         console.log("Player collided with walls.");
@@ -1051,7 +1051,7 @@ var glassTexture =      "/images/glass.jpg";
                 }
             });
             WORLD.bike = obj;
-            // WORLD.scene.add(WORLD.bike);
+            WORLD.scene.add(WORLD.bike);
         });
     });
 }

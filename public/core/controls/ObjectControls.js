@@ -18,31 +18,6 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 	var flag = false;
 	this._object.position.copy(this.path.getPointAt(this._pos));
 
-	// WORLD.trafficLightList.forEach((light) => {
-        
-    //     if (light.object.position.distanceTo(WORLD.player.position) < 10) {
-
-    //         var v = new THREE.Vector3();
-    //         var objectVector = this._object.getWorldDirection(v);
-    //         var signVector = new THREE.Vector3(light.direction.x, light.direction.y, light.direction.z);
-    //         var objectAngle  = THREE.Math.radToDeg(Math.atan2(objectVector.x, objectVector.z));
-    //         var signAngle  = THREE.Math.radToDeg(Math.atan2(signVector.x, signVector.z));
-    //         var angleDelta = signAngle - objectAngle;
-    //         if(!(Math.abs(minifyAngle(angleDelta)) <= 90) && light.currentStatus === "REDLIGHT") {
-	// 			flag = true;
-	// 		}
-    //     } 
-    // });
-
-	// if(!flag) {
-	// 	if(this._object.position.distanceTo(WORLD.player.position) > 10) {
-		// this._pos += (this._factor * delta);
-		// if (this._pos > 1) { this._pos = 0; };
-		// this._object.lookAt(this.path.getPointAt(this._pos));
-			// this._object.rotateY(-Math.PI / 2)
-	// 	}
-	// }
-
 	var canGo = (WORLD.trafficLightList.findIndex((light) => {
 		var v = new THREE.Vector3();
         var angleDelta = calculateAngle(this._object.getWorldDirection(v), new THREE.Vector3(light.direction.x,
@@ -54,8 +29,8 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 		((light.object.position.distanceTo(this._object.position) < 10)
         && (Math.abs(minifyAngle(angleDelta)) <= 1)
 		&& light.currentStatus === "REDLIGHT")
-		|| (this._object.position.distanceTo(WORLD.player.position) < 10)//);
-		//&& (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(this._object.position)) === -1) // --> 
+		// || (this._object.position.distanceTo(WORLD.player.position) < 10)
+		// && (WORLD.intersects.findIndex((child) => child.bbox.containsPoint(this._object.position)) === -1) // --> 
 		&& (Math.abs(minifyAngle(angleToPlayerDelta)) > 120))
 	}) === -1);
 	if (canGo) {

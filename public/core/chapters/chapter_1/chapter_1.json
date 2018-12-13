@@ -195,7 +195,8 @@
 					}
 				},
 				"info": "Regulatory Sign: No Left Turn!!"
-            },{
+			},
+			{
 				"x": 26,
 				"z": 29,
 				"loader_type": "object",

@@ -512,27 +512,31 @@ const signViolation = (list) => {
                 sign.direction.y, 
                 sign.direction.z));
 
+        var level = getUrlParameter('level');
+
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
-            console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
-            GAME.status = "PAUSED";
-            //todo: show info 
-            $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
-            GAME.passedSignList.push({sign: sign, time: new Date()});
+            if (level === "easy") {
+                console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
+                GAME.status = "PAUSED";
+                //todo: show info 
+                $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
+                GAME.passedSignList.push({sign: sign, time: new Date()});
 
-            $("#signDetail").show();
-            document.addEventListener('keydown', (event) => {
-                let keyName = event.code;
-                if (keyName === 'Space') {
-                    GAME.status = "PLAYING";
-                    $("#signDetail").hide();
-                  return;
-                }
-            }, false);
+                $("#signDetail").show();
+                document.addEventListener('keydown', (event) => {
+                    let keyName = event.code;
+                    if (keyName === 'Space') {
+                        GAME.status = "PLAYING";
+                        $("#signDetail").hide();
+                    return;
+                    }
+                }, false);
+            }
 
-            GAME.mapContext.strokeStyle = "green";
+            GAME.mapContext.fillStyle = "lightgreen";
             GAME.mapContext.beginPath(); //Start path
             GAME.mapContext.arc((sign.object.position.x / GAME.realMapUnit) * GAME.miniMapUnit, (sign.object.position.z / GAME.realMapUnit) * GAME.miniMapUnit, 4, 0, Math.PI * 2, true); // Draw a point using the arc function of the canvas with a point structure.
-            GAME.mapContext.stroke();
+            GAME.mapContext.fill();
             sign.hasPassed = true;
             GAME.numOfSign ++;
 

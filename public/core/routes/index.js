@@ -18,7 +18,7 @@ router.get('/instruction', (req, res) => {
 
 router.get('/game', function(req, res, next) {
     console.log('Request to pages/game')
-    res.render('pages/game', { chapter : req.query.chapter });
+    res.render('pages/game', { level : req.query.level, chapter : req.query.chapter });
 });
 
 module.exports = router;

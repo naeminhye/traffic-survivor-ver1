@@ -505,7 +505,7 @@ function loadCubemap(path, format) {
     loader.setCrossOrigin('');
     var cubeMap = loader.load(urls);
     cubeMap.format = THREE.RGBFormat;
-    WORLD.textureCube = THREE.TextureLoader.load(urls, new THREE.CubeReflectionMapping());
+    //WORLD.textureCube = THREE.TextureLoader.load(urls, new THREE.CubeReflectionMapping());
     return cubeMap;
 }
 
@@ -544,3 +544,18 @@ const createBSphere = (pos, UNIT_SIZE) => {
 
     return new THREE.Sphere(center, radius);
 }
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};

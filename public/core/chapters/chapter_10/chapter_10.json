@@ -9,9 +9,399 @@
         }
     },
     "signs": {
-        "regulatory_signs": [],
-        "warning_signs": [],
-        "guidance_signs": []
+        "regulatory_signs": [
+            {
+				"x": 19,
+				"z": 44,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+            {
+				"x": 41,
+				"z": 44,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123a",
+				"name": "camretrai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camretrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Left Turn!!"
+            },
+			{
+				"x": 54,
+				"z": 37,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 38,
+				"z": 37,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 16,
+				"z": 37,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "123b",
+				"name": "camrephai",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/camrephai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: No Right Turn!!"
+			},
+			{
+				"x": 52,
+				"z": 39,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "102",
+				"name": "nguocchieu",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/nguocchieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: One Way!!"
+			},
+			{
+				"x": 36,
+				"z": 39,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "102",
+				"name": "nguocchieu",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/nguocchieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: One Way!!"
+			},
+			{
+				"x": 14,
+				"z": 39,
+				"loader_type": "object",
+				"object_type": "regulatory_signs",
+				"sign_id": "102",
+				"name": "nguocchieu",
+				"url": "./models/signs/regulatory-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/nguocchieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Regulatory Sign: One Way!!"
+			},
+			{
+				"x": 5,
+				"z": 13,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+			{
+				"x": 19,
+				"z": 13,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+			{
+				"x": 41,
+				"z": 13,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+			{
+				"x": 57,
+				"z": 13,
+				"loader_type": "object",
+				"object_type": "warning_signs",
+				"sign_id": "245",
+				"name": "dicham",
+				"url": "./models/signs/warning-sign.json",
+				"directionToMap": "down",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/dicham-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            }
+        ],
+        "warning_signs": [
+            {
+                "x": 19,
+                "z": 10,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 41,
+                "z": 10,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 14,
+                "z": 8,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207c",
+                "name": "khonguutien-trai",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-trai-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 36,
+                "z": 8,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "207c",
+                "name": "khonguutien-trai",
+                "url": "./models/signs/warning-sign.json",
+                "directionToMap": "left",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/khonguutien-trai-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            }
+        ],
+        "guidance_signs": [
+            {
+				"x": 7,
+				"z": 8,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "306",
+				"name": "tocdotoithieu",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "left",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/tocdotoithieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 52,
+				"z": 3,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "306",
+				"name": "tocdotoithieu",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/tocdotoithieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 51,
+				"z": 8,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "307",
+				"name": "hettoithieu",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "left",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/hettoithieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+            {
+				"x": 8,
+				"z": 3,
+				"loader_type": "object",
+                "object_type": "guidance_signs",
+                "sign_id": "307",
+				"name": "hettoithieu",
+                "url": "./models/signs/round-info-sign.json",
+				"directionToMap": "right",
+				"children": {
+					"sign": {
+                        "textureUrl": "./models/signs/hettoithieu-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				}
+            },
+			{
+				"x": 16,
+				"z": 21,
+				"loader_type": "object",
+				"object_type": "guidance_signs",
+				"sign_id": "301f",
+				"name": "hieulenhthangtrai",
+				"url": "./models/signs/round-info-sign.json",
+				"directionToMap": "up",
+				"children": {
+					"sign": {
+						"textureUrl": "./models/signs/hieulenhthangtrai-uvmap.png"
+					},
+					"pole": {
+						"textureUrl": "./models/signs/pole-uvmap.png"
+					}
+				},
+				"info": "Guide Sign: Go straight ahead or turn right!!"
+			}
+        ]
     },
     "models": {
         "vehicles": []
@@ -44,6 +434,48 @@
             "z": 40,
             "x_width": 2, 
             "z_width": 2
+        }
+    ],
+    "one_ways": [
+		{
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 7,
+				"z": 40,
+				"x_width": 8, 
+				"z_width": 2
+			}
+        },
+		{
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 21,
+				"z": 40,
+				"x_width": 16, 
+				"z_width": 2
+			}
+        },
+		{
+			"direction": {"x": -1, "y": 0, "z": 0},
+			"position": {
+				"x": 43,
+				"z": 40,
+				"x_width": 10, 
+				"z_width": 2
+			}
+        }
+    ],
+    "speed_restriction": [
+        {
+            "min_speed": 30,
+            "max_speed": null,
+            "position": {
+                "x": 8,
+                "z": 4,
+                "x_width": 44, 
+                "z_width": 4
+            },
+			"direction": {"x": -1, "y": 0, "z": 0}
         }
     ]
 }

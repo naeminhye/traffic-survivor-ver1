@@ -26,7 +26,7 @@ const keys = {
 var PointerControls = function (camera, cannonBody) {
 
     var eyeYPos = 2; // eyes are 2 meters above the ground
-    const INITIAL_SPEED = 0.1;
+    const INITIAL_SPEED = 0.3;
     var velocityFactor = INITIAL_SPEED;
     var jumpVelocity = 20;
     var scope = this;

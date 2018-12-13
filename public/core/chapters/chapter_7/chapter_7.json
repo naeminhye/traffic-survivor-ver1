@@ -3,15 +3,69 @@
     "size": 5,
     "player": {
         "position": {
-            "x": 20, 
+            "x": 90, 
             "y": 1.8,
-            "z": 25
-        },
-        "rotateY": -1.5707963267948966
+            "z": 245
+        }
     },
     "signs": {
         "regulatory_signs": [],
-        "warning_signs": [],
+        "warning_signs": [
+            {
+                "x": 19,
+                "z": 44,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 19,
+                "z": 10,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "down",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            },
+            {
+                "x": 16,
+                "z": 35,
+                "loader_type": "object",
+                "object_type": "warning_signs",
+                "sign_id": "208",
+                "name": "uutien",
+                "url": "./models/signs/priority-warning-sign.json",
+                "directionToMap": "up",
+                "children": {
+                    "sign": {
+                        "textureUrl": "./models/signs/uutien-uvmap.png"
+                    },
+                    "pole": {
+                        "textureUrl": "./models/signs/pole-uvmap.png"
+                    }
+                }
+            }
+        ],
         "guidance_signs": []
     },
     "models": {
