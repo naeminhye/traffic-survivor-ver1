@@ -4,6 +4,7 @@ var ROAD_POS_X = "-1";
 var DOUBLE_ROAD_POS_Z = "11"; // VERTICAL
 var DOUBLE_ROAD_POS_X = "-11";
 var HOUSES_ID = "H";
+var VILLA_ID = "V";
 var RESIDENTAL_BUILDING_ID = "2";
 var SMALL_BUILDING_ID = "3";
 var NEW_BUILDING_ID = "5";
@@ -410,58 +411,112 @@ WORLD.loadMap = () => {
  */
 const environmentInit = function (file) {
 
-    var house1 = "/images/textures/houses/house1.jpg";
-    var house2 = "/images/textures/houses/house2.jpg";
-    var house3 = "/images/textures/houses/house3.jpg";
-    var house4 = "/images/textures/houses/house4.jpg";
-    var house5 = "/images/textures/houses/house5.jpg";
-    var house6 = "/images/textures/houses/house6.jpg";
-    var house7 = "/images/textures/houses/house7.jpg";
-    var house8 = "/images/textures/houses/house8.jpg";
-    var officeBuildingTexture = "/images/glass.jpg";
-
-    var houseList = [
+    const attachedHouseList = [
         {
-            url: house1,
-            width: 512,
-            height: 512
+            name: "attached_01",
+            url: "/images/textures/houses/attached/attached_01.jpg",
+            width: 1024 ,
+            height:  1024
         },
         {
-            url: house2,
-            width: 512,
-            height: 512
+            name: "attached_02",
+            url: "/images/textures/houses/attached/attached_02.jpg",
+            width: 256 ,
+            height: 128
         },
         {
-            url: house3,
-            width: 512,
-            height: 218
+            name: "attached_03",
+            url: "/images/textures/houses/attached/attached_03.jpg",
+            width: 512 ,
+            height: 512 
         },
         {
-            url: house4,
-            width: 512,
-            height: 512
+            name: "attached_04",
+            url: "/images/textures/houses/attached/attached_04.jpg",
+            width: 512 ,
+            height: 512 
         },
         {
-            url: house5,
-            width: 860,
-            height: 565
-        },
-        {
-            url: house6,
-            width: 1300,
-            height: 866
-        },
-        {
-            url: house7,
-            width: 296,
+            name: "attached_05",
+            url: "/images/textures/houses/attached/attached_05.jpg",
+            width: 296 ,
             height: 400
         },
         {
-            url: house8,
-            width: 428,
-            height: 382
+            name: "attached_06",
+            url: "/images/textures/houses/attached/attached_06.jpg",
+            width: 256,
+            height: 256
+        },
+        {
+            name: "attached_07",
+            url: "/images/textures/houses/attached/attached_07.jpg",
+            width: 451 ,
+            height:  383
+        },
+        {
+            name: "attached_08",
+            url: "/images/textures/houses/attached/attached_08.jpg",
+            width: 542 ,
+            height:  418
+        },
+        {
+            name: "attached_09",
+            url: "/images/textures/houses/attached/attached_09.jpg",
+            width: 453 ,
+            height:  418
+        },
+        {
+            name: "attached_10",
+            url: "/images/textures/houses/attached/attached_10.jpg",
+            width: 434 ,
+            height:  540
+        },
+        {
+            name: "attached_11",
+            url: "/images/textures/houses/attached/attached_11.jpg",
+            width: 1250,
+            height: 1250
+        },
+        {
+            name: "attached_12",
+            url: "/images/textures/houses/attached/attached_12.jpg",
+            width: 388 ,
+            height: 355
+        },
+        {
+            name: "attached_13",
+            url: "/images/textures/houses/attached/attached_13.jpg",
+            width: 774,
+            height:  506
+        },
+        {
+            name: "attached_14",
+            url: "/images/textures/houses/attached/attached_14.jpg",
+            width: 563 ,
+            height:  324
         }
-        
+    ]
+
+    const terraceHouseList = [
+        {
+            name: "terrace_01",
+            url: "/images/textures/houses/terrace/terrace_01.jpg",
+            width: 1024,
+            height: 512 
+        },
+        {
+            name: "terrace_02",
+            url: "/images/textures/houses/terrace/terrace_02.jpg",
+            width: 2279,
+            height: 1350 
+        },
+        {
+            name: "terrace_03",
+            url: "/images/textures/houses/terrace/terrace_03.jpg",
+            width: 530 ,
+            height: 400
+        }
     ]
 
     readMapInfoFromJson(file, (result) => {
@@ -762,39 +817,6 @@ const environmentInit = function (file) {
             color: "orange"
         });
 
-        // findSquareSubMapWithSize(roadMap, RESIDENTAL_BUILDING_ID, 4).forEach(function (tile) {
-        //     /** residental buildings */
-        //     var texture;
-        //     var randomHeight = Math.floor((Math.random()) * 3) + 1; 
-
-        //     var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-        //     var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-        //     texture = house1;
-        //     var buildingMaterial = new THREE.MeshBasicMaterial({
-        //         map: texture
-        //     });
-        //     buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-        //     buildingMaterial.map.repeat.set(1, randomHeight);
-
-        //     buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-        //     /** Vẽ trên map */
-        //     GAME.mapContext.fillStyle = "blue";
-        //     GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-        //     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size * randomHeight, tile.size * UNIT_SIZE), buildingMaterial);
-        //     // Set the cube position
-        //     cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2) * randomHeight, buildingZWidth);
-
-        //     // Add the cube
-        //     WORLD.scene.add(cube);
-        //     // WORLD.world.add(createBoxBody(cube, function (object) {
-        //     //     if (object.body.id == 0)
-        //     //         console.log("Player collided with walls.");
-        //     // }));
-        // });
-
         findSquareSubMapWithSize(roadMap, HOUSES_ID, 2).forEach(function (tile) {
             
             /** Vẽ trên map */
@@ -804,25 +826,23 @@ const environmentInit = function (file) {
             /** residental buildings */
             var houseTexture;
             var randomHeight = Math.floor((Math.random()) * 5) + 1; 
-            var randomHouse = Math.floor((Math.random()) * houseList.length) + 0; 
+            var randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(houseList[randomHouse].url, function ( texture ) {
+            houseTexture = WORLD.textureLoader.load(attachedHouseList[randomHouse].url, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 1, 1 );
                 texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
             });
-            var ratio = houseList[randomHouse].width / houseList[randomHouse].height;
+            var ratio = attachedHouseList[randomHouse].width / attachedHouseList[randomHouse].height;
 
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: houseTexture
             });
-            // buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            // buildingMaterial.map.repeat.set(1, randomHeight);
-            // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+            
             for(var i = 0; i < randomHeight; i++) {
                 var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
                 // Set the cube position
@@ -837,106 +857,37 @@ const environmentInit = function (file) {
             // }));
         });
 
-        findSquareSubMapWithSize(roadMap, NEW_BUILDING_ID, 4).forEach(function (tile) {
+        findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
+
+            /** Vẽ trên map */
+            GAME.mapContext.fillStyle = "gray";
+            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
+
+            /** residental buildings */
+            var houseTexture;
+            var randomHouse = Math.floor((Math.random()) * terraceHouseList.length) + 0; 
             /** residental buildings */
             var houseTexture;
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
             var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-            houseTexture = WORLD.textureLoader.load(house2, function ( texture ) {
+            
+            houseTexture = WORLD.textureLoader.load(terraceHouseList[randomHouse].url, function ( texture ) {
                 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 texture.offset.set( 0, 0 );
                 texture.repeat.set( 1, 1 );
                 texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
             });
+            var ratio = terraceHouseList[randomHouse].width / terraceHouseList[randomHouse].height;
+
             var buildingMaterial = new THREE.MeshBasicMaterial({
                 map: houseTexture
             });
-            // buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            // buildingMaterial.map.repeat.set(1, 1);
-
-            // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-            /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "gray";
-            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size, tile.size * UNIT_SIZE), buildingMaterial);
-            // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * (tile.size / 2), buildingZWidth);
-
-            // Add the cube
-            WORLD.scene.add(cube);
-            // WORLD.world.add(createBoxBody(cube, function (object) {
-            //     if (object.body.id == 0)
-            //         console.log("Player collided with walls.");
-            // }));
-        });
-
-        findSquareSubMapWithSize(roadMap, OFFICE_BUILDING_ID, 4).forEach(function (tile) {
             
-            var houseTexture;
-
-            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            houseTexture = WORLD.textureLoader.load(officeBuildingTexture, function ( texture ) {
-                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-                texture.offset.set( 0, 0 );
-                texture.repeat.set( 1, 2 );
-            });
-            var buildingMaterial = new THREE.MeshBasicMaterial({
-                map: houseTexture
-            });
-
-            // buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            // buildingMaterial.map.repeat.set(1, 2);
-            // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-            /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "gray";
-            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, UNIT_SIZE * tile.size * 2, tile.size * UNIT_SIZE), buildingMaterial);
+            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
             // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE * tile.size, buildingZWidth);
-
-            // Add the cube
-            WORLD.scene.add(cube);
-            // WORLD.world.add(createBoxBody(cube, function (object) {
-            //     if (object.body.id == 0)
-            //         console.log("Player collided with walls.");
-            // }));
-        });
-
-        findSquareSubMapWithSize(roadMap, SMALL_BUILDING_ID, 2).forEach(function (tile) {
-            var houseTexture;
-
-            var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-            var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
-
-            houseTexture = WORLD.textureLoader.load(house3, function ( texture ) {
-                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-                texture.offset.set( 0, 0 );
-                texture.repeat.set( 2, 1 );
-            });
-            var buildingMaterial = new THREE.MeshBasicMaterial({
-                map: houseTexture
-            });
-
-            // buildingMaterial.map.wrapS = buildingMaterial.map.wrapT = THREE.RepeatWrapping;
-            // buildingMaterial.map.repeat.set(1, 2);
-            // buildingMaterial.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-
-            /** Vẽ trên map */
-            GAME.mapContext.fillStyle = "gray";
-            GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
-
-            var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - 0.25, UNIT_SIZE - 0.5, tile.size * UNIT_SIZE - 0.25), buildingMaterial);
-            // Set the cube position
-            cube.position.set(buildingXWidth, UNIT_SIZE / 2 - 0.25, buildingZWidth);
-
+            cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
             // Add the cube
             WORLD.scene.add(cube);
             // WORLD.world.add(createBoxBody(cube, function (object) {
