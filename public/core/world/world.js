@@ -519,19 +519,21 @@ const signViolation = (list) => {
                 console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
                 GAME.status = "PAUSED";
 
+                //todo: show info 
+                $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
                 $("#signDetail").show();
+                $("#controllers").hide();
                 document.addEventListener('keydown', (event) => {
                     let keyName = event.code;
                     if (keyName === 'Space') {
                         GAME.status = "PLAYING";
                         $("#signDetail").hide();
+                        $("#controllers").show();
                     return;
                     }
                 }, false);
             }
-            //todo: show info 
-            // $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
-            // GAME.passedSignList.push({sign: sign, time: new Date()});
+            GAME.passedSignList.push({sign: sign, time: new Date()});
 
             GAME.mapContext.fillStyle = "lightgreen";
             GAME.mapContext.beginPath(); //Start path
