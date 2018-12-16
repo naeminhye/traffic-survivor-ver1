@@ -50,12 +50,121 @@ const onProgress = (xhr) => {
 const onError = (xhr) => {
     console.log(xhr);
 };
+
 WORLD.fbxLoader = new THREE.FBXLoader(manager);
 WORLD.gltfLoader = new THREE.GLTFLoader(manager);
 WORLD.objectLoader = new THREE.ObjectLoader(manager);
 WORLD.jsonLoader = new THREE.JSONLoader(manager);
 WORLD.textureLoader = new THREE.TextureLoader(manager);
 WORLD.tdsLoader = new THREE.TDSLoader(manager);
+
+const attachedHouseList = [
+    {
+        name: "attached_01",
+        url: "/images/textures/houses/attached/attached_01.jpg",
+        width: 1024 ,
+        height:  1024
+    },
+    {
+        name: "attached_02",
+        url: "/images/textures/houses/attached/attached_02.jpg",
+        width: 256 ,
+        height: 128
+    },
+    {
+        name: "attached_03",
+        url: "/images/textures/houses/attached/attached_03.jpg",
+        width: 512 ,
+        height: 512 
+    },
+    {
+        name: "attached_04",
+        url: "/images/textures/houses/attached/attached_04.jpg",
+        width: 512 ,
+        height: 512 
+    },
+    {
+        name: "attached_05",
+        url: "/images/textures/houses/attached/attached_05.jpg",
+        width: 296 ,
+        height: 400
+    },
+    {
+        name: "attached_06",
+        url: "/images/textures/houses/attached/attached_06.jpg",
+        width: 256,
+        height: 256
+    },
+    {
+        name: "attached_07",
+        url: "/images/textures/houses/attached/attached_07.jpg",
+        width: 451 ,
+        height:  383
+    },
+    {
+        name: "attached_08",
+        url: "/images/textures/houses/attached/attached_08.jpg",
+        width: 542 ,
+        height:  418
+    },
+    {
+        name: "attached_09",
+        url: "/images/textures/houses/attached/attached_09.jpg",
+        width: 453 ,
+        height:  418
+    },
+    {
+        name: "attached_10",
+        url: "/images/textures/houses/attached/attached_10.jpg",
+        width: 434 ,
+        height:  540
+    },
+    {
+        name: "attached_11",
+        url: "/images/textures/houses/attached/attached_11.jpg",
+        width: 1250,
+        height: 1250
+    },
+    {
+        name: "attached_12",
+        url: "/images/textures/houses/attached/attached_12.jpg",
+        width: 388 ,
+        height: 355
+    },
+    {
+        name: "attached_13",
+        url: "/images/textures/houses/attached/attached_13.jpg",
+        width: 774,
+        height:  506
+    },
+    {
+        name: "attached_14",
+        url: "/images/textures/houses/attached/attached_14.jpg",
+        width: 563 ,
+        height:  324
+    }
+]
+
+const terraceHouseList = [
+    {
+        name: "terrace_01",
+        url: "/images/textures/houses/terrace/terrace_01.jpg",
+        width: 1024,
+        height: 512 
+    },
+    {
+        name: "terrace_02",
+        url: "/images/textures/houses/terrace/terrace_02.jpg",
+        width: 2279,
+        height: 1350 
+    },
+    {
+        name: "terrace_03",
+        url: "/images/textures/houses/terrace/terrace_03.jpg",
+        width: 530 ,
+        height: 400
+    }
+]
 
 /**
  * 
@@ -411,114 +520,6 @@ WORLD.loadMap = () => {
  */
 const environmentInit = function (file) {
 
-    const attachedHouseList = [
-        {
-            name: "attached_01",
-            url: "/images/textures/houses/attached/attached_01.jpg",
-            width: 1024 ,
-            height:  1024
-        },
-        {
-            name: "attached_02",
-            url: "/images/textures/houses/attached/attached_02.jpg",
-            width: 256 ,
-            height: 128
-        },
-        {
-            name: "attached_03",
-            url: "/images/textures/houses/attached/attached_03.jpg",
-            width: 512 ,
-            height: 512 
-        },
-        {
-            name: "attached_04",
-            url: "/images/textures/houses/attached/attached_04.jpg",
-            width: 512 ,
-            height: 512 
-        },
-        {
-            name: "attached_05",
-            url: "/images/textures/houses/attached/attached_05.jpg",
-            width: 296 ,
-            height: 400
-        },
-        {
-            name: "attached_06",
-            url: "/images/textures/houses/attached/attached_06.jpg",
-            width: 256,
-            height: 256
-        },
-        {
-            name: "attached_07",
-            url: "/images/textures/houses/attached/attached_07.jpg",
-            width: 451 ,
-            height:  383
-        },
-        {
-            name: "attached_08",
-            url: "/images/textures/houses/attached/attached_08.jpg",
-            width: 542 ,
-            height:  418
-        },
-        {
-            name: "attached_09",
-            url: "/images/textures/houses/attached/attached_09.jpg",
-            width: 453 ,
-            height:  418
-        },
-        {
-            name: "attached_10",
-            url: "/images/textures/houses/attached/attached_10.jpg",
-            width: 434 ,
-            height:  540
-        },
-        {
-            name: "attached_11",
-            url: "/images/textures/houses/attached/attached_11.jpg",
-            width: 1250,
-            height: 1250
-        },
-        {
-            name: "attached_12",
-            url: "/images/textures/houses/attached/attached_12.jpg",
-            width: 388 ,
-            height: 355
-        },
-        {
-            name: "attached_13",
-            url: "/images/textures/houses/attached/attached_13.jpg",
-            width: 774,
-            height:  506
-        },
-        {
-            name: "attached_14",
-            url: "/images/textures/houses/attached/attached_14.jpg",
-            width: 563 ,
-            height:  324
-        }
-    ]
-
-    const terraceHouseList = [
-        {
-            name: "terrace_01",
-            url: "/images/textures/houses/terrace/terrace_01.jpg",
-            width: 1024,
-            height: 512 
-        },
-        {
-            name: "terrace_02",
-            url: "/images/textures/houses/terrace/terrace_02.jpg",
-            width: 2279,
-            height: 1350 
-        },
-        {
-            name: "terrace_03",
-            url: "/images/textures/houses/terrace/terrace_03.jpg",
-            width: 530 ,
-            height: 400
-        }
-    ]
-
     readMapInfoFromJson(file, (result) => {
         var mapInfo = JSON.parse(result);
         var UNIT_SIZE = mapInfo.size;
@@ -804,15 +805,7 @@ const environmentInit = function (file) {
         // loadTextureToGround(HOUSES_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
         //     color: "grey"
         // });
-        loadTextureToGround(OFFICE_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-            color: "grey"
-        });
-        loadTextureToGround(SMALL_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-            color: "grey"
-        });
-        loadTextureToGround(NEW_BUILDING_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-            color: "grey"
-        });
+        
         loadTextureToGround(ROUNDABOUT, './images/textures/roundabout.jpg', roadMap, UNIT_SIZE, false, {
             color: "orange"
         });
@@ -825,7 +818,8 @@ const environmentInit = function (file) {
 
             /** residental buildings */
             var houseTexture;
-            var randomHeight = Math.floor((Math.random()) * 5) + 1; 
+            var randomSize = 0;//= Math.random();
+            var randomHeight = Math.floor((Math.random()) * 6) + 2; 
             var randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
@@ -844,7 +838,7 @@ const environmentInit = function (file) {
             });
             
             for(var i = 0; i < randomHeight; i++) {
-                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
+                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                 // Add the cube
