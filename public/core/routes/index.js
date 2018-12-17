@@ -16,6 +16,11 @@ router.get('/instruction', (req, res) => {
     res.render('pages/instruction');
 });
 
+router.get('/options', (req, res) => {
+    console.log('Request to pages/options')
+    res.render('pages/options');
+});
+
 router.get('/game', function(req, res, next) {
     console.log('Request to pages/game')
     res.render('pages/game', { level : req.query.level, chapter : req.query.chapter });

@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-    <link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel=stylesheet href="core/libs/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="core/libs/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="core/libs/animate/animate.min.css">
+    <link rel="stylesheet" href="core/libs/toastr.js/toastr.min.css">
+    <link rel="stylesheet" href="core/libs/nes_css/nes.min.css">
     <link rel="stylesheet" href="core/styles/style.css">
 </head>
 
@@ -17,8 +19,8 @@
         <div id="game-menu" class="content flex-column-center">
             <!-- <a class="item" href="sceneone.html">City Scene</a> -->
             <button id="start-btn" style="margin-bottom: 20px;" class="eightbit-btn eightbit-btn--reset">Start</button>
-            <div style="margin-bottom: 20px;" class="eightbit-btn">Options</div>
-            <a href="/instruction" class="eightbit-btn eightbit-btn--proceed">How to play</a>
+            <button onclick="location.href = '/options'" style="margin-bottom: 20px;" class="eightbit-btn">Options</button>
+            <button onclick="location.href = '/instruction'" class="eightbit-btn eightbit-btn--proceed">How to play</button>
             <!-- <div class="eightbit-btn eightbit-btn--reset">Exit</div> -->
         </div>
         <div id="login-dialog" class="center-div dialog">

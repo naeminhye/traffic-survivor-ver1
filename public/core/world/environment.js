@@ -786,6 +786,16 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 }
+            },
+            {
+                id: ROUNDABOUT, 
+                url: './images/textures/roundabout.jpg', 
+                map: roadMap, 
+                unit_size: UNIT_SIZE, 
+                isMultiple: false, 
+                minimap: {
+                    color: "orange"
+                }
             }
         ]
 
@@ -801,14 +811,6 @@ const environmentInit = function (file) {
                                     texture.callback);
             });
         }
-        
-        // loadTextureToGround(HOUSES_ID, './images/textures/street.jpg', roadMap, UNIT_SIZE, true, {
-        //     color: "grey"
-        // });
-        
-        loadTextureToGround(ROUNDABOUT, './images/textures/roundabout.jpg', roadMap, UNIT_SIZE, false, {
-            color: "orange"
-        });
 
         findSquareSubMapWithSize(roadMap, HOUSES_ID, 2).forEach(function (tile) {
             
@@ -819,7 +821,7 @@ const environmentInit = function (file) {
             /** residental buildings */
             var houseTexture;
             var randomSize = 0;//= Math.random();
-            var randomHeight = Math.floor((Math.random()) * 6) + 2; 
+            var randomHeight = Math.floor((Math.random()) * 5) + 1; 
             var randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
 
             var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;

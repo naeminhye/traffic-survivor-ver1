@@ -345,7 +345,7 @@ hr {
 
 #game-menu {
   width: 50vw;
-  height: 50vh;
+  height: auto;
   background-color: cornflowerblue;
   padding: 20px;
   text-decoration: none;
