@@ -18,18 +18,31 @@
 <body>
 
     <div class="content-container">
-        <div class="content flex-column-center">
-            <div id="options">
-                <section class="container with-title">
-                    <h2 class="title">Checkboxes</h2>
-                    <label>
-                        <input type="checkbox" class="checkbox" checked="">
-                        <span>Enable</span>
-                    </label>
+            <div id="options" style="postion: relative;">
+                <section class="container with-title is-rounded" style="border: 6px black solid; background-color: white; padding: 20px;">
+                    <h2 class="title" style="border: 6px black solid;">Options</h2>
+                    <div class="containers">
+                        <div class="container is-rounded" style="display: flex; flex-direction: column;">
+                            <label>
+                                <input type="checkbox" class="checkbox">
+                                <span style="font-family: 'Press Start 2P', cursive; font-size: 14px;">Full Screen</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="checkbox">
+                                <span style="font-family: 'Press Start 2P', cursive; font-size: 14px;">SFX</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="checkbox">
+                                <span style="font-family: 'Press Start 2P', cursive; font-size: 14px;">Music</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="bottom: -30px;width: 100%;position: absolute;left: 0;display: flex;justify-content: space-evenly;">
+                        <button type="button" class="btn is-primary" onclick="location.href = '/'">Save</button>
+                        <button style="" type="button" class="btn is-error" onclick="location.href = '/'">Back</button>
+                    </div>
                 </section>
             </div>
-            <button class="eightbit-btn eightbit-btn--primary" onclick="javascript:history.back()">Back</button>
-        </div>
     </div>
 
     <% include ../partials/libs %>

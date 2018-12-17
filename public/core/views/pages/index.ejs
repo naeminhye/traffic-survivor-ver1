@@ -16,13 +16,17 @@
 <body>
 
     <div class="content-container">
-        <div id="game-menu" class="content flex-column-center">
-            <!-- <a class="item" href="sceneone.html">City Scene</a> -->
-            <button id="start-btn" style="margin-bottom: 20px;" class="eightbit-btn eightbit-btn--reset">Start</button>
-            <button onclick="location.href = '/options'" style="margin-bottom: 20px;" class="eightbit-btn">Options</button>
-            <button onclick="location.href = '/instruction'" class="eightbit-btn eightbit-btn--proceed">How to play</button>
-            <!-- <div class="eightbit-btn eightbit-btn--reset">Exit</div> -->
-        </div>
+        <section id="game-menu" class="container with-title" style="display: flex; flex-direction: column; text-align: center;">
+            <div>
+                <button id="start-btn" style="margin-bottom: 20px;" class="eightbit-btn eightbit-btn--reset">Start</button>
+            </div>
+            <div>
+                <button onclick="location.href = '/options'" style="margin-bottom: 20px;" class="eightbit-btn">Options</button>
+            </div>
+            <div>
+                <button onclick="location.href = '/instruction'" class="eightbit-btn eightbit-btn--proceed">How to play</button>
+            </div>
+        <section>
         <div id="login-dialog" class="center-div dialog">
             <div class="dialog-content">
                 <div class="input-box">

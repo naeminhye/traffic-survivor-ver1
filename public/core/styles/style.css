@@ -64,6 +64,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: bisque;
 }
 .content-container .content {
     margin: 1em;
@@ -347,6 +348,7 @@ hr {
   width: 50vw;
   height: auto;
   max-height: 60vh;
+  min-height: 50vh;
   background-color: cornflowerblue;
   padding: 20px;
   text-decoration: none;
@@ -656,4 +658,15 @@ hr {
     padding: 0;
     font-size: 20px;
     cursor: pointer;
+}
+
+.container.with-title>.title {
+
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.btn {
+    font-family: 'Press Start 2P', cursive;
+
 }
