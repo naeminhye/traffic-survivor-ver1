@@ -346,6 +346,7 @@ hr {
 #game-menu {
   width: 50vw;
   height: auto;
+  max-height: 60vh;
   background-color: cornflowerblue;
   padding: 20px;
   text-decoration: none;
@@ -536,6 +537,15 @@ hr {
       -webkit-transform: scale(1.5, 1.5);
       opacity: 0;
     }
+  }
+
+  .level-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 25px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 600;
   }
   .score {
       position: absolute;
