@@ -348,7 +348,7 @@ hr {
   width: 50vw;
   height: auto;
   max-height: 60vh;
-  min-height: 50vh;
+  /* min-height: 50vh; */
   background-color: cornflowerblue;
   padding: 20px;
   text-decoration: none;

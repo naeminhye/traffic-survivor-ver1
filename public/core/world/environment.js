@@ -1209,6 +1209,15 @@ const environmentInit = function (file) {
                 var pos = child.position;
                 var box = createBBox(pos, UNIT_SIZE);
                 WORLD.endZone.push({ box: box.area, bbox: box.areaBBox });
+
+                var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
+                var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
+                // translucent blue sphere with additive blending for "glow" effect
+                
+                var mat = new THREE.MeshBasicMaterial( { color: 0x3498db, transparent: true, opacity: 0.5, shading: THREE.FlatShading } );
+                var square = new THREE.Mesh(new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), mat );
+                square.position.set(XWidth, 0, ZWidth);
+                WORLD.scene.add( square );
             });
         }
 
