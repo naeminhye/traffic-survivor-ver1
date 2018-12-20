@@ -120,7 +120,6 @@ var PointerControls = function (camera, cannonBody) {
                 break;
             /** stop */
             case keys.KEY_X:
-            // TODO: inertia
                 if ( moveForward === true )
                     moveForward = false;
                 break;

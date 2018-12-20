@@ -12,9 +12,9 @@ GAME.updateStatusChange = () => {
             blocker.css("display", "-webkit-box");
             blocker.css("display", "-moz-box");
             blocker.css("display", "box");
-            if (GAME.status !== "STOP") {
-                GAME.menu.css("display", "block");
-            }
+        }
+        if (GAME.status === "STOP") {
+            GAME.menu.css("display", "none");
         }
 
         if (GAME.status === "READY") {

@@ -25,12 +25,10 @@ Things you need before going on with this repo:
 - [ ] Hiển thị hướng đi, tốc độ trên màn hình
 - [x] Vẽ đường giao thông cơ bản
 - [x] Tạo map cho đường giao thông đó
-- [ ] Tạo map cho toàn game
-- [ ] Tạo các scheme Database
-- [ ] Chia loại model object: Street Signs, Building, ...
-- [ ] Sửa lại xử lý điều khiển chuột: bỏ lock control
+- [x] Chia loại model object: Street Signs, Building, ...
+- [x] Sửa lại xử lý điều khiển chuột: bỏ lock control
 - [ ] Thêm Option/Setting, Exit... hiển thị bên góc màn hình.
-- [ ] Model Animation
+- [x] Model Animation
 
 ## Deployment
 Here's the [Deploy version](https://traffic-survivor-ver1.herokuapp.com/) on Heroku.

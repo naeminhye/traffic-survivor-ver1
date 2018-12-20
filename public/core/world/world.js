@@ -419,7 +419,7 @@ const signViolation = (list) => {
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
             if (level === "easy") {
                 console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
-                GAME.status = "PAUSED";
+                GAME.status = "STOP";
 
                 //todo: show info 
                 $("#signImg").attr("src", "./images/sign_info/" + sign.sign_id + ".png")
