@@ -531,7 +531,7 @@ const environmentInit = function (file) {
         // load player's initial position
         WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
-        
+
         if(mapInfo.player.rotateY) {
             WORLD.player.rotateY(mapInfo.player.rotateY);
         }
@@ -1245,6 +1245,20 @@ const environmentInit = function (file) {
                 }
             });
             WORLD.bike = obj;
+
+            if(WORLD.bike) {
+                // position the bike in front of the camera
+                WORLD.bike.position.set(
+                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
+                    WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+                );
+                WORLD.bike.rotation.set(
+                    WORLD.player.rotation.x,
+                    WORLD.player.rotation.y - Math.PI,
+                    WORLD.player.rotation.z
+                );
+            }
             WORLD.scene.add(WORLD.bike);
         });
     });

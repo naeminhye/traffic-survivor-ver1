@@ -54,153 +54,43 @@ GAME.controllers = $("#controllers");
 
 GAME.hornSound = new Audio('/audio/horn/horn.mp3');
 
-var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+const resumeGame = (event) => {
+    GAME.menu.css("display", "none");
+    GAME.controllers.css("display", "block");
+};
 
-if (havePointerLock) {
-    var element = document.body;
-    var pointerlockchange = function (event) {
-        if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
-            WORLD.controls.enabled = true;
-            blocker.css("display", "none");
-        } else {
-            WORLD.controls.enabled = false;
-            if (GAME.status !== "END") {
-                blocker.css("display", "-webkit-box");
-                blocker.css("display", "-moz-box");
-                blocker.css("display", "box");
-                // instructions.style.display = '';
-                GAME.menu.css("display", "block");
-            }
-            if (GAME.status === "READY") {
-                $("#restart-btn").css("display", "none");
-                $("#instruction-btn").css("display", "inline-block");
-            } else {
-                $("#restart-btn").css("display", "inline-block");
-                $("#instruction-btn").css("display", "none");
-            }
-            GAME.controllers.css("display", "none");
-        }
+$("#start-btn").click(() => {
+    if (GAME.status === "READY") {
+        $("#start-btn").text("Resume");
     }
+    GAME.status = "PLAYING";
+    resumeGame();
+});
 
-    var pointerlockerror = (event) => {
-        // instructions.style.display = '';
-        GAME.menu.css("display", "block");
-        if (GAME.status === "READY") {
-            $("#restart-btn").css("display", "none");
-            $("#instruction-btn").css("display", "inline-block");
-        } else {
-            $("#restart-btn").css("display", "inline-block");
-            $("#instruction-btn").css("display", "none");
-        }
-        GAME.controllers.css("display", "none");
+$("#cancel-exit").click(() => {
+    GAME.menu.css("display", "block");
+    $("#exit-dialog").css("display", "none");
+});
+
+$("#exit-btn").click(() => {
+    if (GAME.status !== "READY") {
+        
+        $("#exit-dialog").css("display", "block");
+        GAME.menu.css("display", "none");
+    } else {
+        window.location.href = "/"
     }
+});
 
-    // Hook pointer lock state change events
-    document.addEventListener('pointerlockchange', pointerlockchange, false);
-    document.addEventListener('mozpointerlockchange', pointerlockchange, false);
-    document.addEventListener('webkitpointerlockchange', pointerlockchange, false);
+$("#instruction-btn").click(() => {
+    GAME.menu.css("display", "none");
+    $("#key-instruction").css("display",  "block");
+});
 
-    document.addEventListener('pointerlockerror', pointerlockerror, false);
-    document.addEventListener('mozpointerlockerror', pointerlockerror, false);
-    document.addEventListener('webkitpointerlockerror', pointerlockerror, false);
-
-    var resumeGame = (event) => {
-        GAME.menu.css("display", "none");
-        GAME.controllers.css("display", "block");
-        // Ask the browser to lock the pointer
-        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-
-        if (/Firefox/i.test(navigator.userAgent)) {
-
-            var fullscreenchange = function (event) {
-
-                if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
-
-                    document.removeEventListener('fullscreenchange', fullscreenchange);
-                    document.removeEventListener('mozfullscreenchange', fullscreenchange);
-
-                    element.requestPointerLock();
-                }
-
-            }
-
-            document.addEventListener('fullscreenchange', fullscreenchange, false);
-            document.addEventListener('mozfullscreenchange', fullscreenchange, false);
-
-            element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-
-            element.requestFullscreen();
-        } else {
-            element.requestPointerLock();
-        }
-    };
-
-    $("#start-btn").click(() => {
-        if (GAME.status === "READY") {
-            $("#start-btn").text("Resume");
-            GAME.status = "PLAYING";
-        }
-        resumeGame();
-    });
-
-    $("#cancel-exit").click(() => {
-        GAME.menu.css("display", "block");
-        $("#exit-dialog").css("display", "none");
-    });
-
-    $("#exit-btn").click(() => {
-        if (GAME.status !== "READY") {
-            
-            $("#exit-dialog").css("display", "block");
-            GAME.menu.css("display", "none");
-        } else {
-            window.location.href = "/"
-        }
-    });
-
-    $("#instruction-btn").click(() => {
-        GAME.menu.css("display", "none");
-        $("#key-instruction").css("display",  "block");
-    });
-
-    $("#instruction-close").click(() => {
-        $("#key-instruction").css("display", "none");
-        GAME.menu.css("display", "block");
-    });
-
-    // instructions.addEventListener('click', function (event) {
-    //     instructions.style.display = 'none';
-
-    //     // Ask the browser to lock the pointer
-    //     element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-
-    //     if (/Firefox/i.test(navigator.userAgent)) {
-
-    //         var fullscreenchange = function (event) {
-
-    //             if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
-
-    //                 document.removeEventListener('fullscreenchange', fullscreenchange);
-    //                 document.removeEventListener('mozfullscreenchange', fullscreenchange);
-
-    //                 element.requestPointerLock();
-    //             }
-
-    //         }
-
-    //         document.addEventListener('fullscreenchange', fullscreenchange, false);
-    //         document.addEventListener('mozfullscreenchange', fullscreenchange, false);
-
-    //         element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-
-    //         element.requestFullscreen();
-    //     } else {
-    //         element.requestPointerLock();
-    //     }
-    // }, false);
-} else {
-    instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-}
+$("#instruction-close").click(() => {
+    $("#key-instruction").css("display", "none");
+    GAME.menu.css("display", "block");
+});
 
 if (!WORLD.loaded) {
     $("#blocker").css("display", "none");
@@ -337,6 +227,15 @@ WORLD.init = () => {
     // $("#music").play();
 
     window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener('vrdisplayactivate', () => {
+        WORLD.renderer.vr.getDevice().requestPresent( [ { source: WORLD.renderer.domElement } ] );
+    }, false);
+
+    document.addEventListener('keydown', ( event ) => {
+        if(event.keyCode === 27) { // ESC
+            GAME.status = "PAUSED";
+        }
+    }, false);
 }
  
 function evolveSmoke(delta) {
@@ -354,7 +253,10 @@ function onWindowResize() {
 
 var dt = 1 / 60;
 WORLD.animate = () => {
+    GAME.updateStatusChange();
+
     if(GAME.status !== "END") {
+
         WORLD.warningFlag = false;
         var playX = WORLD.player.position.x;
         var playY = WORLD.player.position.y;

@@ -2,11 +2,34 @@ var GAME = GAME || {};
 GAME.status = "READY";
 GAME.passedSignList = [];
 
+GAME.updateStatusChange = () => {
+    if (GAME.status === "PLAYING") {
+        WORLD.controls.enabled = true;
+        blocker.css("display", "none");
+    } else {
+        WORLD.controls.enabled = false;
+        if (GAME.status !== "END") {
+            blocker.css("display", "-webkit-box");
+            blocker.css("display", "-moz-box");
+            blocker.css("display", "box");
+            if (GAME.status !== "STOP") {
+                GAME.menu.css("display", "block");
+            }
+        }
+
+        if (GAME.status === "READY") {
+            $("#restart-btn").css("display", "none");
+            $("#instruction-btn").css("display", "inline-block");
+        } else {
+            $("#restart-btn").css("display", "inline-block");
+            $("#instruction-btn").css("display", "none");
+        }
+        GAME.controllers.css("display", "none");
+    }
+}
+
 GAME.endGame = () => {
-    document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
-    // Attempt to unlock
-    document.exitPointerLock();
-    GAME.status = "END"; 
+    GAME.status = "END";
 
     var _ol = "<ol>"
     if(GAME.passedSignList.length > 0) {

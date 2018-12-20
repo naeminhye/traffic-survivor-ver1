@@ -102,6 +102,7 @@ var PointerControls = function (camera, cannonBody) {
             case keys.KEY_A:
                 // moveLeft = true; 
                 rotateLeft = true;
+                rotateRight = false;
                 break;
             case keys.KEY_DOWN: // down
             case keys.KEY_S: // s
@@ -111,6 +112,7 @@ var PointerControls = function (camera, cannonBody) {
             case keys.KEY_D: // d
                 // moveRight = true;
                 rotateRight = true;
+                rotateLeft = false;
                 break;
             /** keep moving forward without holding key W or arrow up */
             case keys.KEY_Z:
@@ -286,22 +288,6 @@ var PointerControls = function (camera, cannonBody) {
 
         yawObject.position.copy(cannonBody.position);
 
-        /** Rotation */
-        if(rotateLeft) {
-            yawObject.rotation.y += rotateAngle;
-        }
-        else if(rotateRight) {
-            yawObject.rotation.y -= rotateAngle;
-        }
-        else if(rotateLeftFast){
-            yawObject.rotation.y += Math.PI/2;
-            rotateLeftFast = false;
-        }
-        else if(rotateRightFast){
-            yawObject.rotation.y -= Math.PI/2;
-            rotateRightFast = false;
-        }
-
         if(WORLD.bike) {
             // position the bike in front of the camera
             WORLD.bike.position.set(
@@ -309,12 +295,46 @@ var PointerControls = function (camera, cannonBody) {
                 WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
                 WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
             );
-            WORLD.bike.rotation.set(
-                WORLD.player.rotation.x,
-                WORLD.player.rotation.y - Math.PI,
-                WORLD.player.rotation.z
-            );
         }
+
+        /** Rotation */
+        if(rotateLeft) {
+            yawObject.rotation.y += rotateAngle;
+            if(WORLD.bike) {
+                var v = new THREE.Vector3();
+                var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
+                if(Math.abs(angleToPlayerDelta) > 160) {
+                    WORLD.bike.rotation.y += rotateAngle * 1.5;
+                }
+            }
+        }
+        else if(rotateRight) {
+            yawObject.rotation.y -= rotateAngle;
+            if(WORLD.bike) {
+                var v = new THREE.Vector3();
+                var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
+                if(Math.abs(angleToPlayerDelta) > 160) {
+                    WORLD.bike.rotation.y -= rotateAngle * 1.5;
+                }
+            }
+        }
+        else {
+            if(WORLD.bike) {
+                WORLD.bike.rotation.set(
+                    WORLD.player.rotation.x,
+                    WORLD.player.rotation.y - Math.PI,
+                    WORLD.player.rotation.z
+                );
+            }
+        }
+        // else if(rotateLeftFast){
+        //     yawObject.rotation.y += Math.PI/2;
+        //     rotateLeftFast = false;
+        // }
+        // else if(rotateRightFast){
+        //     yawObject.rotation.y -= Math.PI/2;
+        //     rotateRightFast = false;
+        // }
 
         // if(PLAYER.cubeCamera) {
         // PLAYER.cubeCamera.object3d.position.set(
