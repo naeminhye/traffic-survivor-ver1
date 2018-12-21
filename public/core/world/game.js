@@ -5,13 +5,14 @@ GAME.passedSignList = [];
 GAME.updateStatusChange = () => {
     if (GAME.status === "PLAYING") {
         WORLD.controls.enabled = true;
-        blocker.css("display", "none");
+        GAME.blocker.css("display", "none");
     } else {
         WORLD.controls.enabled = false;
         if (GAME.status !== "END") {
-            blocker.css("display", "-webkit-box");
-            blocker.css("display", "-moz-box");
-            blocker.css("display", "box");
+            GAME.blocker.css("display", "-webkit-box");
+            GAME.blocker.css("display", "-moz-box");
+            GAME.blocker.css("display", "box");
+            GAME.menu.css("display", "block");
         }
         if (GAME.status === "STOP") {
             GAME.menu.css("display", "none");

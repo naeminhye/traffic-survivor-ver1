@@ -21,25 +21,19 @@
         <div class="content flex-column-center">
             <div class="lesson-item top">
                 <div class="lesson-container">
-                    <div class="lesson-list">
-                        <% for (var i = 1; i <= 5; i++) { %>
-                            <a href='/game?level=easy&chapter=<%= i %>'>Lesson <%= i %></a>
-                        <% } %>
+                    <div class="lesson-list" id="level-easy">
                     </div>
                 </div>
-                <button style="top: -30px; position: absolute;" class="btn is-warning level-button">Easy</button>
+                <button style="top: -30px; position: absolute;" class="btn is-warning level-button">Cấp độ dễ</button>
             </div>
             <div class="lesson-item">
                 <div class="lesson-container">
-                    <div class="lesson-list">
-                        <% for (var i = 6; i <= 10; i++) { %>
-                            <a href='/game?level=medium&chapter=<%= i %>'>Lesson <%= i %></a>
-                        <% } %>
+                    <div class="lesson-list" id="level-medium">
                     </div>
                 </div>
-                <button style="top: -30px; position: absolute;" class="btn is-error level-button">Medium</button>
+                <button style="top: -30px; position: absolute;" class="btn is-error level-button">Cấp độ trung bình</button>
             </div>
-            <button class="btn" onclick="javascript:history.back()">Back</button>
+            <button class="btn" onclick="javascript:history.back()">Trở về</button>
         </div>
     </div>
 
@@ -59,6 +53,30 @@
                 $target.css("height", 0);
             }
         });
+        const levels = [
+            "Biển báo cấm.",
+            "Biển báo nguy hiểm",
+            "Biển hiệu lệnh",
+            "Điều chỉnh tốc độ phần 1",
+            "Điều chỉnh tốc độ phần 2",
+            "Tổng hợp mức độ cơ bản",
+            "Đi đúng làn đường",
+            "Vòng xuyến",
+            "Thứ tự đi khi đến ngã tư",
+            "Tổng hợp mức độ trung bình"
+        ];
+
+        var element1 = "";
+        for (var i = 1; i <= 5; i++) { 
+            element1 += "<a href='/game?level=easy&chapter=" + i + "'>Bài " + i + ": " + levels[i - 1] + "</a>"
+        } 
+        $("#level-easy").append($(element1));
+        var element2 = "";
+        for (var j = 6; j <= 10; j++) { 
+            element2 += "<a href='/game?level=easy&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + "</a>"
+        }
+        $("#level-medium").append($(element2));
+
     </script>
 </body>
 

@@ -18,6 +18,23 @@
     <% include ../partials/game-libs %>
     <!-- File that includes Game core -->
     <% include ../partials/game-core %>
+
+    <script>
+        const levels = [
+            "Biển báo cấm.",
+            "Biển báo nguy hiểm",
+            "Biển hiệu lệnh",
+            "Điều chỉnh tốc độ phần 1",
+            "Điều chỉnh tốc độ phần 2",
+            "Tổng hợp mức độ cơ bản",
+            "Đi đúng làn đường",
+            "Vòng xuyến",
+            "Thứ tự đi khi đến ngã tư",
+            "Tổng hợp mức độ trung bình"
+        ];
+        let name = '<span>' + levels[<%= chapter %> - 1] + '</span>';
+        $(".level-info").append($(name));
+    </script>
     
 </body>
 </html>

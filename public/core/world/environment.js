@@ -35,7 +35,7 @@ manager.onProgress = (item, loaded, total) => {
     if(Math.round(percentComplete, 2) == 100) {
         WORLD.loaded = true;
         $("#loading").css("display", "none");
-        $("#blocker").css("display", "block");
+        GAME.blocker.css("display", "block");
     }
 };
 const onProgress = (xhr) => {

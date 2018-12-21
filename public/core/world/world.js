@@ -47,8 +47,8 @@ WORLD.loaded = false;
 WORLD.warningFlag = false;
 WORLD.mapSize = 0;
 
-var blocker = $('#blocker');
-var instructions = $('#instructions');
+GAME.blocker = $('#blocker');
+GAME.instructions = $('#instructions');
 GAME.menu = $("#game-menu");
 GAME.controllers = $("#controllers");
 
@@ -61,7 +61,7 @@ const resumeGame = (event) => {
 
 $("#start-btn").click(() => {
     if (GAME.status === "READY") {
-        $("#start-btn").text("Resume");
+        $("#start-btn").text("Tiếp tục");
     }
     GAME.status = "PLAYING";
     resumeGame();
@@ -93,10 +93,10 @@ $("#instruction-close").click(() => {
 });
 
 if (!WORLD.loaded) {
-    $("#blocker").css("display", "none");
+    GAME.blocker.css("display", "none");
     $("#loading").css("display", "block");
 } else {
-    $("#blocker").css("display", "block");
+    GAME.blocker.css("display", "block");
     $("#loading").css("display", "none");
 }
 
