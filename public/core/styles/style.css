@@ -671,6 +671,22 @@ hr {
     /* overflow-y: auto; */
 }
 
+.game-board-detail {
+    font-family: 'Fernando', Arial, sans-serif;
+    padding: 5px; 
+    margin: 15px 0; 
+    border: 4px black solid; 
+    background-color: white; 
+}
+
+.game-board-header {
+    padding: 5px; border: 4px black solid; background-color: white;  text-align: center;
+}
+
+.game-board-button-container {
+    display: flex; justify-content: space-around;
+}
+
 #showSignList {
     position: absolute;
     right: 10px;
@@ -679,6 +695,7 @@ hr {
     padding: 0;
     font-size: 20px;
     cursor: pointer;
+    background-color: white;
 }
 
 .container.with-title>.title {

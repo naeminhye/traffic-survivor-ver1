@@ -40,6 +40,7 @@ WORLD.mapSize = 0;
 $("#start-btn").click(() => {
     if (GAME.status === "READY") {
         $("#start-btn").text("Tiếp tục");
+        GAME.startTime = new Date();
     }
     GAME.resumeGame();
 });
@@ -51,9 +52,8 @@ $("#cancel-exit").click(() => {
 
 $("#exit-btn").click(() => {
     if (GAME.status !== "READY") {
-        
-        $("#exit-dialog").css("display", "block");
         GAME.menu.css("display", "none");
+        $("#exit-dialog").css("display", "block");
     } else {
         window.location.href = "/"
     }
@@ -209,7 +209,7 @@ WORLD.init = () => {
     }, false);
 
     document.addEventListener('keydown', ( event ) => {
-        if(event.keyCode === 27) { // ESC
+        if(event.keyCode === 27 && GAME.status === "PLAYING") { // ESC
             GAME.status = "PAUSED";
         }
     }, false);
@@ -352,9 +352,9 @@ function addSunlight(scene) {
 
 const checkViolation = () => {
 
-    signViolation(WORLD.warningSignList);
-    signViolation(WORLD.regulatorySignList);
-    signViolation(WORLD.guidanceSignList);
+    handleSignPassing(WORLD.warningSignList);
+    handleSignPassing(WORLD.regulatorySignList);
+    handleSignPassing(WORLD.guidanceSignList);
 
     if (WORLD.trafficLightList) {
         updateTrafficLights();
@@ -382,7 +382,7 @@ const checkViolation = () => {
 
 }
 
-const signViolation = (list) => {
+const handleSignPassing = (list) => {
 
     var newList = list.filter((sign) => !sign.hasPassed);
     newList.forEach((sign) => {
@@ -395,6 +395,7 @@ const signViolation = (list) => {
 
         if (sign.object.position.distanceTo(WORLD.player.position) < 10 && !(Math.abs(minifyAngle(angleDelta)) <= 90)) {
             if (level === "easy") {
+
                 console.log("--- " + new Date() + " --- Passed " + sign.object.name + "---");
                 GAME.status = "STOP";
 

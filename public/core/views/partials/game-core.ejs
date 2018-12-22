@@ -27,7 +27,17 @@
     });
 
     $("#showSignList").click(() => {
-        $("#signListContainer").show();
+        let $list = $("#signListContainer");
+        if($list.is(':visible')) {
+            $list.hide();
+            $(this).find("i").removeClass("fa-caret-up");
+            $(this).find("i").addClass("fa-caret-down");
+        }
+        else {
+            $list.show();
+            $(this).find("i").removeClass("fa-caret-down");
+            $(this).find("i").addClass("fa-caret-up");
+        }
     });
 </script>
 <script src="core/controls/PointerControls.js" defer="defer"></script>

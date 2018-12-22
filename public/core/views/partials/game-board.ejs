@@ -1,17 +1,17 @@
 <div id="gameBoard" class="sign-detail-container center-div dialog screen-element">
-    <div style="padding: 5px; border: 4px black solid; background-color: white;  text-align: center;">
-        <span>Level <%= level %> - Chapter <%= chapter %></span>
+    <div class="game-board-header">
+        <span>Cấp độ <%= level %> - Bài <%= chapter %></span>
     </div>
-    <div style="padding: 5px; margin: 15px 0; border: 4px black solid; background-color: white; cursive;">
+    <div class="game-board-detail">
         <div style="position: relative;">
-            <p>Number of signs you passed: <span id="passedSigns"></span></p>
+            <p>Số biển báo đã đi qua: <span id="passedSigns"></span></p>
             <button id="showSignList"><i class="fa fa-caret-down"></i></button>
         </div>
-        <!-- <div id="signListContainer" style="display: none;"></div> -->
-        <div><p>Money you lost: <span id="lostMoney"></span></p></div>
-        <div><p>Result: </p></div>
+        <div id="signListContainer" style="display: none;"></div> 
+        <div><p>Tổng tiền đã bị phạt: <span id="lostMoney"></span></p></div>
+        <div><p>Thời gian:  <span id="timeDiff"></span></p></div>
     </div>
-    <div style="display: flex; justify-content: space-around;">
+    <div class="game-board-button-container">
         <button onclick="javascript:history.go(0)" class="btn is-warning">Chơi lại</button>
         <button onclick="location.href = '/'" class="btn is-error">Thoát</button>
     </div>

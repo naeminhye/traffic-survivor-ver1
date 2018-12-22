@@ -1,6 +1,8 @@
 var GAME = GAME || {};
 GAME.status = "READY";
 GAME.passedSignList = [];
+GAME.startTime;
+GAME.endTime;
 
 GAME.blocker = $('#blocker');
 GAME.instructions = $('#instructions');
@@ -8,6 +10,12 @@ GAME.menu = $("#game-menu");
 GAME.controllers = $("#controllers");
 
 GAME.hornSound = new Audio('/audio/horn/horn.mp3');
+
+// GAME.results = {
+//     signList: [],
+//     lostMoney: 0,
+//     violations: []
+// }
 
 GAME.resumeGame = () => {
 
@@ -45,15 +53,25 @@ GAME.updateStatusChange = () => {
 
 GAME.endGame = () => {
     GAME.status = "END";
+    GAME.endTime = new Date();;
+    let timeDiff = GAME.endTime - GAME.startTime; //in ms
+    // strip the ms
+    timeDiff /= 1000;
+  
+    // get seconds 
+    var _seconds = Math.round(timeDiff);
+    $("#timeDiff").text(_seconds + " seconds");
 
-    var _ol = "<ol>"
-    if(GAME.passedSignList.length > 0) {
-        GAME.passedSignList.forEach((info) => {
-            _ol += ("<li>Sign's ID " + info.sign.sign_id + " at " + info.time.toLocaleDateString("en-US") + "</li>")
-        });
-    };
-    _ol += "</ol>";
-    $("#signListContainer").append(_ol);
+    if($("#signListContainer").children().length === 0) {
+        var _ol = "<ol>"
+        if(GAME.passedSignList.length > 0) {
+            GAME.passedSignList.forEach((info) => {
+                _ol += ("<li>Sign's ID " + info.sign.sign_id + " at " + info.time.toLocaleDateString("en-US") + "</li>")
+            });
+        };
+        _ol += "</ol>";
+        $("#signListContainer").append(_ol);
+    }
 
     var passedSigns = GAME.numOfSign + "/" + GAME.totalNumOfSign;
     $("#passedSigns").text(passedSigns);
@@ -61,6 +79,14 @@ GAME.endGame = () => {
 
     $(".screen-element").css("display", "none");
     $("#gameBoard").css("display", "block");
+
+    // save passed lesson
+    var passedLessons = localStorage.getObject("passedLessons") ? localStorage.getObject("passedLessons") : [];
+    if(!passedLessons.includes(currentChapter)){
+        passedLessons.push(currentChapter)
+        localStorage.setObject("passedLessons", passedLessons);
+    }
+
 }
 
 GAME.handleFining = (message, money, callback) => {
