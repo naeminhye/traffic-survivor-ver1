@@ -1,9 +1,9 @@
 H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H
 H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H	H
-H	H	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	H	H
-H	H	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	L	0	0	0	0	L	L	L	L	L	L	L	L	L	L	L	L	L	H	H
-H	H	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	L	0	1	1	0	L	H	H	H	H	H	H	H	H	H	H	L	L	H	H
-H	H	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	V	L	0	1	1	0	L	H	H	H	H	H	H	H	H	H	H	L	L	H	H
+H	H	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	H	H
+H	H	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	L	0	0	0	0	L	L	L	L	L	L	L	L	L	L	L	L	L	H	H
+H	H	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	L	0	1	1	0	L	H	H	H	H	H	H	H	H	H	H	L	L	H	H
+H	H	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	G	L	0	1	1	0	L	H	H	H	H	H	H	H	H	H	H	L	L	H	H
 H	H	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	L	0	ZT	ZT	0	L	L	L	L	L	L	L	L	L	L	L	L	L	H	H
 H	H	L	0	0	0	0	L	L	L	L	L	L	L	L	L	L	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	ZT	ZT	0	0	0	0	0	0	0	0	0	0	0	0	0	L	H	H
 H	H	L	0	S	S	0	L	H	H	H	H	H	H	H	H	L	0	I3	I3	ZR	ZR	-1	-1	-1	-1	-1	-1	-1	-1	ZL	ZL	I5	I5	ZR	ZR	-1	-1	-1	-1	-1	-1	ZL	ZL	I3	I3	0	L	H	H

@@ -10,30 +10,22 @@ var PLAYER = PLAYER || {
 };
 var UNITWIDTH = 9; // Width of a cubes in the maze
 var UNITHEIGHT = 9; // Height of the cubes in the maze
-var sphereShape, sphereBody, physicsMaterial, walls = [],
-    balls = [],
-    ballMeshes = [],
-    boxes = [],
-    boxMeshes = [];
+var sphereShape, sphereBody, physicsMaterial, walls = [];
 WORLD.world = null;
 WORLD.camera = null;
 WORLD.scene = null;
 WORLD.renderer = null;
 WORLD.player = null;
 var target = new THREE.Vector3(20, 0, -50);
-var isDangerous = false;
 var geometry, material, mesh;
 var time = Date.now();
 WORLD.controls = null;
 WORLD.vehicleControls = [];
-var dangerZoneMesh = null;
-var dangerZoneGeometry = null;
 WORLD.one_ways = [];
 WORLD.intersects = [];
 WORLD.roundabouts = [];
 WORLD.speed_restriction_ways = [];
 WORLD.endZone = [];
-const objs = [];
 var clock = new THREE.Clock();
 WORLD.collidableObjects = [];
 WORLD.regulatorySignList = [];
@@ -41,30 +33,15 @@ WORLD.warningSignList = [];
 WORLD.guidanceSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
-var initialPosition;
-var infoBoxToggle = false;
 WORLD.loaded = false;
 WORLD.warningFlag = false;
 WORLD.mapSize = 0;
-
-GAME.blocker = $('#blocker');
-GAME.instructions = $('#instructions');
-GAME.menu = $("#game-menu");
-GAME.controllers = $("#controllers");
-
-GAME.hornSound = new Audio('/audio/horn/horn.mp3');
-
-const resumeGame = (event) => {
-    GAME.menu.css("display", "none");
-    GAME.controllers.css("display", "block");
-};
 
 $("#start-btn").click(() => {
     if (GAME.status === "READY") {
         $("#start-btn").text("Tiếp tục");
     }
-    GAME.status = "PLAYING";
-    resumeGame();
+    GAME.resumeGame();
 });
 
 $("#cancel-exit").click(() => {
@@ -238,14 +215,14 @@ WORLD.init = () => {
     }, false);
 }
  
-function evolveSmoke(delta) {
+const evolveSmoke = (delta) => {
     var sp = smokeParticles.length;
     while(sp--) {
         smokeParticles[sp].rotation.z += (delta * 0.2);
     }
 }
 
-function onWindowResize() {
+const onWindowResize = () => {
     WORLD.camera.aspect = window.innerWidth / window.innerHeight;
     WORLD.camera.updateProjectionMatrix();
     WORLD.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -373,7 +350,7 @@ function addSunlight(scene) {
     scene.add(sunlight);
 }
 
-function checkViolation() {
+const checkViolation = () => {
 
     signViolation(WORLD.warningSignList);
     signViolation(WORLD.regulatorySignList);

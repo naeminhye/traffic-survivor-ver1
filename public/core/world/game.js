@@ -2,6 +2,20 @@ var GAME = GAME || {};
 GAME.status = "READY";
 GAME.passedSignList = [];
 
+GAME.blocker = $('#blocker');
+GAME.instructions = $('#instructions');
+GAME.menu = $("#game-menu");
+GAME.controllers = $("#controllers");
+
+GAME.hornSound = new Audio('/audio/horn/horn.mp3');
+
+GAME.resumeGame = () => {
+
+    GAME.status = "PLAYING";
+    GAME.menu.css("display", "none");
+    GAME.controllers.css("display", "block");
+};
+
 GAME.updateStatusChange = () => {
     if (GAME.status === "PLAYING") {
         WORLD.controls.enabled = true;

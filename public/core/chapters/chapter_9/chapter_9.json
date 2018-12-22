@@ -747,5 +747,19 @@
             "z_width": 2
         }
     ],
-    "one_ways": []
+    "one_ways": [],
+    "parks": [
+		{
+            "x": 44,
+            "z": 8,
+            "x_width": 8, 
+            "z_width": 14
+        },
+		{
+            "x": 9,
+            "z": 45,
+            "x_width": 6, 
+            "z_width": 6
+        }
+    ]
 }

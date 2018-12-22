@@ -504,5 +504,19 @@
 		}
     ],
     "speed_restriction": [
+    ],
+    "parks": [
+		{
+            "x": 2,
+            "z": 2,
+            "x_width": 28, 
+            "z_width": 4
+        },
+		{
+            "x": 14,
+            "z": 38,
+            "x_width": 16, 
+            "z_width": 4
+        }
     ]
 }

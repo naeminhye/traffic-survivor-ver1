@@ -551,5 +551,25 @@
             "x_width": 6, 
             "z_width": 6
 		}
+	],
+	"parks": [
+		{
+            "x": 3,
+            "z": 3,
+            "x_width": 12, 
+            "z_width": 4
+		},
+		{
+            "x": 8,
+            "z": 26,
+            "x_width": 8, 
+            "z_width": 6
+		},
+		{
+            "x": 40,
+            "z": 26,
+            "x_width": 2, 
+            "z_width": 6
+		}
 	]
 }

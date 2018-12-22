@@ -174,7 +174,7 @@ const terraceHouseList = [
 const loadModelToWorld = (model) => {
     let { 
         loader_type, // type of loader
-        url = "object", 
+        url, 
         position = new THREE.Vector3(0, 0, 0), 
         rotation = new THREE.Euler(0, 0, 0, 'XYZ' ), 
         scale = new THREE.Vector3(1, 1, 1), 
@@ -1214,10 +1214,34 @@ const environmentInit = function (file) {
                 var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
                 // translucent blue sphere with additive blending for "glow" effect
                 
-                var mat = new THREE.MeshBasicMaterial( { color: 0x3498db, transparent: true, opacity: 0.5, shading: THREE.FlatShading } );
+                var mat = new THREE.MeshBasicMaterial( { color: 0x3498db, transparent: true, opacity: 0.5, flatShading: THREE.FlatShading } );
                 var square = new THREE.Mesh(new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), mat );
                 square.position.set(XWidth, 0, ZWidth);
                 WORLD.scene.add( square );
+            });
+        }
+
+        /** load parks */
+        if(mapInfo.parks) {
+            mapInfo.parks.forEach((child) => {
+
+                for( let i = child.x + 2; i < child.x + child.x_width; i += 2 ) {
+                    for( let j = child.z + 2; j < child.z + child.z_width; j += 2 ) {
+                    
+                        let data = { 
+                            "loader_type": "object", 
+                            "url": "./models/trees/tree/tree.json", 
+                            "name": "tree-" + i + "-" + j, 
+                            "object_type": "trees",
+                            "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},
+                            "scale": {"x": 3,"y": 3,"z": 3}
+                        };
+    
+                        loadModelToWorld(data);
+
+                    }   
+                }
+
             });
         }
 
