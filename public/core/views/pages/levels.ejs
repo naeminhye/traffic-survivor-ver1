@@ -5,7 +5,6 @@
     <title>Levels</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel=stylesheet href="core/libs/jquery-ui/jquery-ui.min.css" />
     <link rel="stylesheet" href="core/libs/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="core/libs/animate/animate.min.css">
@@ -77,7 +76,7 @@
         var element2 = "";
         for (var j = 6; j <= 10; j++) { 
             let isPassed = passedLessons.includes(j);
-            element2 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=easy&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: red;'>✔</span>" : "") + "</a>"
+            element2 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=medium&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: red;'>✔</span>" : "") + "</a>"
         }
         $("#level-medium").append($(element2));
 

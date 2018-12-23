@@ -226,7 +226,7 @@ var PointerControls = function (camera, cannonBody) {
         if (scope.enabled === false) return;
 
         delta *= 0.15;
-        var rotateAngle = Math.PI / 2 * 0.01;
+        var rotateAngle = Math.PI / 2 * 0.02;
 
         inputVelocity.set(0, 0, 0);
         // if(speedup) {
