@@ -53,7 +53,7 @@ GAME.updateStatusChange = () => {
 
 GAME.endGame = () => {
     GAME.status = "END";
-    GAME.endTime = new Date();;
+    GAME.endTime = new Date();
     let timeDiff = GAME.endTime - GAME.startTime; //in ms
     // strip the ms
     timeDiff /= 1000;

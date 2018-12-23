@@ -67,16 +67,17 @@
 
         var passedLessons = localStorage.getObject("passedLessons") ? localStorage.getObject("passedLessons") : [];
 
+        //✘
         var element1 = "";
         for (var i = 1; i <= 5; i++) { 
             let isPassed = passedLessons.includes(i);
-            element1 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=easy&chapter=" + i + "'>Bài " + i + ": " + levels[i - 1] + (isPassed ? "<span style='font-size: 30px; color: red;'>✔</span>" : "") + "</a>"
+            element1 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=easy&chapter=" + i + "'>Bài " + i + ": " + levels[i - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</a>"
         } 
         $("#level-easy").append($(element1));
         var element2 = "";
         for (var j = 6; j <= 10; j++) { 
             let isPassed = passedLessons.includes(j);
-            element2 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=medium&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: red;'>✔</span>" : "") + "</a>"
+            element2 += "<a " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=medium&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</a>"
         }
         $("#level-medium").append($(element2));
 

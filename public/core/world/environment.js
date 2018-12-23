@@ -57,6 +57,7 @@ WORLD.objectLoader = new THREE.ObjectLoader(manager);
 WORLD.jsonLoader = new THREE.JSONLoader(manager);
 WORLD.textureLoader = new THREE.TextureLoader(manager);
 WORLD.tdsLoader = new THREE.TDSLoader(manager);
+WORLD.objLoader = new THREE.OBJLoader(manager);
 
 const attachedHouseList = [
     {
@@ -207,6 +208,9 @@ const loadModelToWorld = (model) => {
         case "tds":
         case "3ds":
             loader = WORLD.tdsLoader;
+            break;
+        case "obj":
+            loader = WORLD.objLoader;
             break;
         case "object":
         default:
@@ -844,22 +848,35 @@ const environmentInit = function (file) {
                 var buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
-                houseMaterials.push(buildingMaterial);
+                // houseMaterials.push(buildingMaterial);
                 
                 for(var i = 0; i < randomHeight; i++) {
                     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
                     // Set the cube position
                     cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                     // Add the cube
-                    houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                    WORLD.scene.add(cube);
+                    // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                 }
-                materialIndex ++;
+                // materialIndex ++;
 
                 // WORLD.world.add(createBoxBody(cube, function (object) {
                 //     if (object.body.id == 0)
                 //         console.log("Player collided with walls.");
                 // }));
             });
+
+            // Geometry of the combined mesh
+            // var totalGeometry = new THREE.Geometry();
+            // for(var i = 0; i < houseMeshes.length; i++)
+            // {
+            //     houseMeshes[i].mesh.updateMatrix();
+            //     totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
+            // }
+            
+            // // Create the combined mesh
+            // var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
+            // WORLD.scene.add(combinedMesh);
 
             findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
 
@@ -888,31 +905,20 @@ const environmentInit = function (file) {
                 var buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
-                houseMaterials.push(buildingMaterial);
+                // houseMaterials.push(buildingMaterial);
                 
                 var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
                 // Add the cube
-                houseMeshes.push({mesh: cube, materialIndex: materialIndex});
-                materialIndex ++;
+                WORLD.scene.add(cube);
+                // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                // materialIndex ++;
                 // WORLD.world.add(createBoxBody(cube, function (object) {
                 //     if (object.body.id == 0)
                 //         console.log("Player collided with walls.");
                 // }));
             });
-
-            // Geometry of the combined mesh
-            var totalGeometry = new THREE.Geometry();
-            for(var i = 0; i < houseMeshes.length; i++)
-            {
-                houseMeshes[i].mesh.updateMatrix();
-            totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
-            }
-            
-            // Create the combined mesh
-            var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
-            WORLD.scene.add(combinedMesh);
 
     // ─────────────────────────────────────────────────────────────────
 
@@ -936,34 +942,12 @@ const environmentInit = function (file) {
                 });
             });
         }
-        // else {
-        //     Object.keys(mapInfo.signs).forEach((type) => {
-        //         mapInfo.signs[type].forEach((sign) => {
-        //             loadModelToWorld(sign)
-        //         });
-        //     });
-        // }
         
         /** load intersect areas */
         if(mapInfo.intersects) {
             mapInfo.intersects.forEach(function(child) {
                 var pos = child;
-
                 var box = createBBox(pos, UNIT_SIZE);
-
-                // var area, areaBBox;
-                // area = new THREE.Mesh(
-                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                //     new THREE.MeshBasicMaterial({
-                //         color: 0xff0000,
-                //         wireframe: true
-                //     })
-                // );
-                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                // area.position.set(XWidth, 0, ZWidth);
-                // area.geometry.computeBoundingBox();
-                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
                 WORLD.intersects.push({ box: box.area, bbox: box.areaBBox });
 
                 var x1 = pos.x - 1; var z1 = pos.z - 1;
@@ -1184,21 +1168,6 @@ const environmentInit = function (file) {
             mapInfo.one_ways.forEach(function(child) {
                 var pos = child.position;
                 var box = createBBox(pos, UNIT_SIZE);
-                // var area, areaBBox;
-                // area = new THREE.Mesh(
-                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                //     new THREE.MeshBasicMaterial({
-                //         color: 0xff0000,
-                //         wireframe: true
-                //     })
-                // );
-                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                // // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
-                // area.position.set(XWidth, 0, ZWidth);
-                // area.geometry.computeBoundingBox();
-                // // WORLD.scene.add(area);
-                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
                 WORLD.one_ways.push({ box: box.area, bbox: box.areaBBox, direction: child.direction, infoImg: "./images/info.png"});
             });
         }
@@ -1207,22 +1176,6 @@ const environmentInit = function (file) {
         if(mapInfo.speed_restriction) {
             mapInfo.speed_restriction.forEach(function(child) {
                 var pos = child.position;
-
-                // var area, areaBBox;
-                // area = new THREE.Mesh(
-                //     new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, 50, pos.z_width * UNIT_SIZE),
-                //     new THREE.MeshBasicMaterial({
-                //         color: 0xff0000,
-                //         wireframe: true
-                //     })
-                // );
-                // var XWidth = ((2 * pos.x + pos.x_width - 1) * UNIT_SIZE ) / 2;
-                // var ZWidth = ((2 * pos.z + pos.z_width - 1) * UNIT_SIZE) / 2
-                // // area.rotation = new THREE.Euler(0, Math.Pi / 2, Math.PI /2, 'XYZ')
-                // area.position.set(XWidth, 0, ZWidth);
-                // area.geometry.computeBoundingBox();
-                // // WORLD.scene.add(area);
-                // areaBBox = new THREE.Box3(area.geometry.boundingBox.min.add(area.position), area.geometry.boundingBox.max.add(area.position));
                 var box = createBBox(pos, UNIT_SIZE);
                 WORLD.speed_restriction_ways.push({ box: box.area, bbox: box.areaBBox, min_speed: child.min_speed, max_speed: child.max_speed, direction: child.direction});
             });
@@ -1242,7 +1195,7 @@ const environmentInit = function (file) {
                 var mat = new THREE.MeshBasicMaterial( { color: 0x3498db, transparent: true, opacity: 0.5, flatShading: THREE.FlatShading } );
                 var square = new THREE.Mesh(new THREE.BoxGeometry(pos.x_width * UNIT_SIZE, pos.x_width * UNIT_SIZE, pos.z_width * UNIT_SIZE), mat );
                 square.position.set(XWidth, 0, ZWidth);
-                WORLD.scene.add( square );
+                //WORLD.scene.add( square );
             });
         }
 
@@ -1259,7 +1212,7 @@ const environmentInit = function (file) {
                             "name": "tree-" + i + "-" + j, 
                             "object_type": "trees",
                             "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},
-                            "scale": {"x": 3,"y": 3,"z": 3}
+                            "scale": {"x": 2.5,"y": 2.5,"z": 2.5}
                         };
     
                         loadModelToWorld(data);
@@ -1313,15 +1266,6 @@ const environmentInit = function (file) {
     });
 }
 
-/**
- * @param {*} id 
- * @param {*} url 
- * @param {*} map 
- * @param {*} unit_size 
- * @param {*} isMultiple 
- * @param {*} minimap 
- * @param {*} callback 
- */
 const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
     findSquareSubMap(map, id).forEach(function (tile) {
 
@@ -1360,19 +1304,6 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
     });
 }
 
-/**
- * 
- * @param {*} sign 
- * sign:
- * x
- * z
- * object_type
- * sign_id
- * name
- * url
- * directionToMap
- * children
- */
 const mappingSigns = (sign, UNIT_SIZE) => {
     var data = {
       castShadow: true,

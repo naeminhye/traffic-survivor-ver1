@@ -421,7 +421,7 @@ const handleSignPassing = (list) => {
             GAME.mapContext.fill();
             sign.hasPassed = true;
             GAME.numOfSign ++;
-
+            $("#health-number").text(GAME.numOfSign + "/" + GAME.totalNumOfSign);
         }
 
     });

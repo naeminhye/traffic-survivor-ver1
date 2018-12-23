@@ -303,8 +303,11 @@ var PointerControls = function (camera, cannonBody) {
                 var v = new THREE.Vector3();
                 var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
                 if(Math.abs(angleToPlayerDelta) > 160) {
-                    WORLD.bike.rotation.y += rotateAngle * 1.5;
+                    WORLD.bike.rotation.y += rotateAngle * 1.2;
                 }
+                // if (Math.abs(angleToPlayerDelta) < 170 && !leftSignal) {
+                //     GAME.handleFining("Không bật si nhang!!", 100000);
+                // }
             }
         }
         else if(rotateRight) {
@@ -313,8 +316,11 @@ var PointerControls = function (camera, cannonBody) {
                 var v = new THREE.Vector3();
                 var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
                 if(Math.abs(angleToPlayerDelta) > 160) {
-                    WORLD.bike.rotation.y -= rotateAngle * 1.5;
+                    WORLD.bike.rotation.y -= rotateAngle * 1.2;
                 }
+                // if (Math.abs(angleToPlayerDelta) < 170 && !rightSignal) {
+                //     GAME.handleFining("Không bật si nhang!!", 100000);
+                // }
             }
         }
         else {
