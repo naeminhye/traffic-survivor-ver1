@@ -201,6 +201,10 @@ WORLD.init = () => {
     document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
     WORLD.renderer.vr.enabled = true;
 
+    GAME.stats = new Stats();
+    GAME.stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( GAME.stats.dom );
+
     // $("#music").play();
 
     window.addEventListener('resize', onWindowResize, false);
@@ -231,8 +235,8 @@ const onWindowResize = () => {
 var dt = 1 / 60;
 WORLD.animate = () => {
     GAME.updateStatusChange();
-
     if(GAME.status !== "END") {
+        GAME.stats.begin();
 
         WORLD.warningFlag = false;
         var playX = WORLD.player.position.x;
@@ -251,8 +255,6 @@ WORLD.animate = () => {
         }
         WORLD.player.position.set(playX, playY, playZ);
         sphereBody.position.set(playX, playY, playZ);
-
-        requestAnimationFrame(WORLD.animate);
 
         if(GAME.status === "PLAYING") {
             if (WORLD.controls.enabled) {
@@ -297,6 +299,8 @@ WORLD.animate = () => {
 
         // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
         //evolveSmoke(Date.now() - time);
+        GAME.stats.end();
+        requestAnimationFrame(WORLD.animate);
         WORLD.renderer.render(WORLD.scene, WORLD.camera);
         time = Date.now();
     }

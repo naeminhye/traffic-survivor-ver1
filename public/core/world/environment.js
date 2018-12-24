@@ -848,17 +848,17 @@ const environmentInit = function (file) {
                 var buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
-                // houseMaterials.push(buildingMaterial);
                 
                 for(var i = 0; i < randomHeight; i++) {
                     var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
                     // Set the cube position
                     cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                     // Add the cube
-                    WORLD.scene.add(cube);
-                    // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                    // WORLD.scene.add(cube);
+                    houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                    houseMaterials.push(buildingMaterial);
+                    materialIndex ++;
                 }
-                // materialIndex ++;
 
                 // WORLD.world.add(createBoxBody(cube, function (object) {
                 //     if (object.body.id == 0)
@@ -867,16 +867,16 @@ const environmentInit = function (file) {
             });
 
             // Geometry of the combined mesh
-            // var totalGeometry = new THREE.Geometry();
-            // for(var i = 0; i < houseMeshes.length; i++)
-            // {
-            //     houseMeshes[i].mesh.updateMatrix();
-            //     totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
-            // }
+            var totalGeometry = new THREE.Geometry();
+            for(var i = 0; i < houseMeshes.length; i++)
+            {
+                houseMeshes[i].mesh.updateMatrix();
+                totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
+            }
             
-            // // Create the combined mesh
-            // var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
-            // WORLD.scene.add(combinedMesh);
+            // Create the combined mesh
+            var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
+            WORLD.scene.add(combinedMesh);
 
             findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
 
