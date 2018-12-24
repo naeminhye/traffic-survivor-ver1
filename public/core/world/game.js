@@ -98,7 +98,7 @@ GAME.handleFining = (message, money, callback) => {
     
     toastr.error(message);
     $("#floating-info").addClass("shown");
-    $("#floating-info").append("<span>-" + money + "VNĐ</span>");
+    $("#floating-info").append("<span>-" + money + "K VNĐ</span>");
     $('#floating-info').animateCss('fadeOutUp', function () {
         // hide after animation
         $($(".money-number")[0]).text(oldNum + newNum);

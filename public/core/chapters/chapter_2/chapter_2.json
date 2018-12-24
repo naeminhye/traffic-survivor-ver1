@@ -276,24 +276,6 @@
                         "textureUrl": "./models/signs/pole-uvmap.png"
                     }
                 }
-            },
-            {
-				"x": 11,
-				"z": 33,
-				"loader_type": "object",
-				"object_type": "warning_signs",
-				"sign_id": "245",
-				"name": "dicham",
-				"url": "./models/signs/warning-sign.json",
-				"directionToMap": "right",
-				"children": {
-					"sign": {
-						"textureUrl": "./models/signs/dicham-uvmap.png"
-					},
-					"pole": {
-						"textureUrl": "./models/signs/pole-uvmap.png"
-					}
-				}
             }
         ],
         "guidance_signs": []

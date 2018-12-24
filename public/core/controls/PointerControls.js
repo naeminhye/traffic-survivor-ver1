@@ -283,7 +283,7 @@ var PointerControls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
 
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        PLAYER.status.speed = (3.6 * speed).toFixed(1); // convert mps to kph
+        PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
 
         yawObject.position.copy(cannonBody.position);
 
@@ -295,10 +295,18 @@ var PointerControls = function (camera, cannonBody) {
                 WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
             );
         }
+        // if(WORLD.verticalMirror) {
+        //     WORLD.verticalMirror.position.set(
+        //         WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
+        //         WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+        //         WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+        //     );
+        // }
 
         /** Rotation */
         if(rotateLeft) {
             yawObject.rotation.y += rotateAngle;
+            // WORLD.verticalMirror.rotation.y += rotateAngle;
             if(WORLD.bike) {
                 var v = new THREE.Vector3();
                 var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
@@ -312,6 +320,7 @@ var PointerControls = function (camera, cannonBody) {
         }
         else if(rotateRight) {
             yawObject.rotation.y -= rotateAngle;
+            // WORLD.verticalMirror.rotation.y -= rotateAngle;
             if(WORLD.bike) {
                 var v = new THREE.Vector3();
                 var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
@@ -332,27 +341,6 @@ var PointerControls = function (camera, cannonBody) {
                 );
             }
         }
-        // else if(rotateLeftFast){
-        //     yawObject.rotation.y += Math.PI/2;
-        //     rotateLeftFast = false;
-        // }
-        // else if(rotateRightFast){
-        //     yawObject.rotation.y -= Math.PI/2;
-        //     rotateRightFast = false;
-        // }
-
-        // if(PLAYER.cubeCamera) {
-        // PLAYER.cubeCamera.object3d.position.set(
-        //         WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
-        //         WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
-        //         WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
-        //     );
-        //     PLAYER.cubeCamera.object3d.rotation.set(
-        //         WORLD.player.rotation.x,
-        //         WORLD.player.rotation.y,
-        //         WORLD.player.rotation.z
-        //     );
-        // }
 
         // if(lightOn) {
         //     if(!PLAYER.headLight) {

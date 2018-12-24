@@ -202,7 +202,7 @@ WORLD.init = () => {
     WORLD.renderer.vr.enabled = true;
 
     GAME.stats = new Stats();
-    GAME.stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    GAME.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild( GAME.stats.dom );
 
     // $("#music").play();
@@ -290,12 +290,6 @@ WORLD.animate = () => {
 
             $("#speed").text(PLAYER.status.speed);
         }
-        if(PLAYER.cubeCamera) {
-            PLAYER.cubeCamera.update(WORLD.renderer, WORLD.scene);
-
-            // position the camera in front of the camera
-            
-        }
 
         // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
         //evolveSmoke(Date.now() - time);
@@ -307,21 +301,19 @@ WORLD.animate = () => {
 }
 
 const addMirror = () => {
-    var geometry    = new THREE.SphereGeometry(0.5, 32, 16)
-    var material    = new THREE.MeshPhongMaterial({
-        color   : 'gold'
-    })
-    var mesh    = new THREE.Mesh(geometry, material)
-    WORLD.scene.add( mesh )
+    // reflectors/mirrors
 
-    PLAYER.cubeCamera = new THREEx.CubeCamera(mesh)
-    PLAYER.cubeCamera.object3d.position.set(
-        25,
-        1.7995464019372356,
-        165
-    );
-    WORLD.scene.add(PLAYER.cubeCamera.object3d);
-    material.envMap	= PLAYER.cubeCamera.textureCube
+    var geometry = new THREE.PlaneBufferGeometry( 1, 0.5 );
+    WORLD.verticalMirror = new THREE.Reflector( geometry, {
+        clipBias: 0.003,
+        textureWidth: window.innerWidth * window.devicePixelRatio,
+        textureHeight: window.innerHeight * window.devicePixelRatio,
+        color: 0x889999,
+        recursion: 1
+    } );
+    WORLD.verticalMirror.position.y = 5;
+    WORLD.scene.add( WORLD.verticalMirror );
+
 }
 
 WORLD.detectCollision = () => {
@@ -453,7 +445,7 @@ const updateTrafficLights = () => {
 
     /** _flag = true nếu đang ở trong vùng intersect */
     if (isInIntersectArea && trafficLightViolation && !isViolating) {
-        GAME.handleFining("You have just blown through a red light!!", 100000);
+        GAME.handleFining("You have just blown through a red light!!", 100);
         isViolating = true;
     }
     if (!isInIntersectArea && isViolating) {
@@ -489,7 +481,7 @@ const checkSpeedViolation = () => {
             message = "Cham hon toc do toi thieu " + thisRoad.min_speed;
         }
         if (message) {
-            GAME.handleFining(message, 100000);
+            GAME.handleFining(message, 100);
         }
 
     }
@@ -549,41 +541,8 @@ const checkOneWayViolation = () => {
             thisRoad.direction.z));
 
         if (!violationFlag && (Math.abs(minifyAngle(angleDelta)) > 90)) {
-            toastr.error("You made a wrong turn and have entered a one way road!");
-            $("#floating-info").addClass("shown");
-            $("#floating-info").append("<span>-300000VNĐ</span>");
-            $('#floating-info').animateCss('fadeOutUp', function () {
-                // hide after animation
-                var oldNum = Number($($(".money-number")[0]).text());
-                var newNum = -300000;
-                $($(".money-number")[0]).text(oldNum + newNum);
-                $("#floating-info").empty();
-                $("#floating-info").removeClass("shown");
-            });
+            GAME.handleFining("You made a wrong turn and have entered a one way road!", 300);
             violationFlag = true;
         }
     }
-
-    // WORLD.one_ways.forEach(function (child) {
-    //     var angleDelta = calculateAngleToPlayer(new THREE.Vector3(
-    //                                                 child.direction.x, 
-    //                                                 child.direction.y, 
-    //                                                 child.direction.z));
-    //     if (!violationFlag && child.bbox.containsPoint(WORLD.player.position) && (Math.abs(minifyAngle(angleDelta)) > 90)) {
-    //         // var v = new THREE.Vector3();
-    //         // var playerVector = WORLD.player.getWorldDirection(v);
-    //         // var zoneVector = new THREE.Vector3(child.direction.x, child.direction.y, child.direction.z);
-    //         // var playerAngle = THREE.Math.radToDeg(Math.atan2(playerVector.x, playerVector.z));
-    //         // var zoneAngle = THREE.Math.radToDeg(Math.atan2(zoneVector.x, zoneVector.z));
-    //         // var angleDelta = zoneAngle - playerAngle;
-    //         console.log("Đi vào đường ngược chiều - Phạt tiền từ 300.000 đồng đến 400.000 đồng.");
-    //         violationFlag = true;
-    //         toastr.error("You made a wrong turn and have entered a one way road!");
-    //     }
-    //     else {
-    //         // if (violationFlag) {
-    //         //     violationFlag === false;
-    //         // }
-    //     }
-    // });
 }

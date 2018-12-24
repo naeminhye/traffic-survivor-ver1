@@ -231,7 +231,6 @@ const loadModelToWorld = (model) => {
             })
             : materials[0];
     
-            // material.map.minFilter = THREE.LinearFilter;
             var mesh = new THREE.Mesh(geometry, material);
             mesh.castShadow = castShadow;
             mesh.receiveShadow = receiveShadow;
@@ -280,6 +279,7 @@ const loadModelToWorld = (model) => {
                 };
 
                 if(object_type === "regulatory_signs") {
+                    obj.matrixAutoUpdate = false;
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -292,6 +292,7 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "warning_signs") {
+                    obj.matrixAutoUpdate = false;
 
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
@@ -305,6 +306,7 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "guidance_signs") {
+                    obj.matrixAutoUpdate = false;
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -421,7 +423,6 @@ const loadModelToWorld = (model) => {
                                 map: texture,
                                 side: THREE.DoubleSide
                             });  
-                            material.map.minFilter = THREE.LinearFilter;
                             child.material = material;
                         }
                         if(children) {
@@ -435,7 +436,6 @@ const loadModelToWorld = (model) => {
                                         map: texture,
                                         side: THREE.DoubleSide
                                     });  
-                                    material.map.minFilter = THREE.LinearFilter;
                                     child.material = material;
                                 }
 
@@ -876,6 +876,8 @@ const environmentInit = function (file) {
             
             // Create the combined mesh
             var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
+            combinedMesh.matrixAutoUpdate = false;
+            combinedMesh.updateMatrix();
             WORLD.scene.add(combinedMesh);
 
             findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
@@ -1242,7 +1244,6 @@ const environmentInit = function (file) {
                         map: texture,
                         side: THREE.DoubleSide
                     });  
-                    material.map.minFilter = THREE.LinearFilter;
                     child.material = material;
                 }
             });
@@ -1289,7 +1290,6 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             material.map.repeat.set(1, 1);
         }
         material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-        material.map.minFilter = THREE.LinearFilter;
         var plane = new THREE.Mesh(
             new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
             material
