@@ -274,11 +274,13 @@ hr {
     justify-content: center;
     height: 100%;
     align-items: center;
-    border: solid 4px orange;
+    border: solid 4px white;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-family: 'Fester-Bold', Arial, Helvetica, sans-serif;
 }
 .speed > span {
-    
-    color: orange;
+    color: white;
+    font-size: 20px;
 }
 .sign-detail-container {
     position: absolute;
@@ -315,9 +317,8 @@ hr {
 .turn-signals > .left-signal > span, 
 .turn-signals > .headlight > span,
 .turn-signals > .horn > span {
-    
-    color: orange;
-    font-size: 10px;
+    color: white;
+    font-size: 15px;
 }
 .left-signal, .right-signal, .headlight, .horn {
     margin: 5px;
@@ -403,6 +404,7 @@ hr {
 
 #controllers {
     display: none;
+    font-family: 'Gentona-Bold', Arial, Helvetica, sans-serif;
 }
 
 .dialog {

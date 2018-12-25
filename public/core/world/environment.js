@@ -1254,7 +1254,7 @@ const environmentInit = function (file) {
                 // position the bike in front of the camera
                 PLAYER.bike.position.set(
                     WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                    0, //WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                    0, 
                     WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
                 );
                 PLAYER.bike.rotation.set(

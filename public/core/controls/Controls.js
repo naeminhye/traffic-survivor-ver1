@@ -19,8 +19,9 @@ const keys = {
     KEY_Z: 90,
     KEY_Q: 81,
     KEY_E: 69,
+    KEY_F: 70,
     KEY_G: 71,
-    KEY_H: 72,
+    KEY_H: 72
 };
 
 var Controls = function (camera, cannonBody) {
@@ -153,15 +154,9 @@ var Controls = function (camera, cannonBody) {
                 GAME.hornSound.play();
                 $("#horn-led").addClass("active");
                 break;
-            case keys.KEY_H:
+            case keys.KEY_F:
                 // rotateRightFast = true;
                 lightOn = !lightOn;
-                if(lightOn) {
-                    $("#headlight-led").addClass("active");
-                }
-                else {
-                    $("#headlight-led").removeClass("active");
-                }
                 break;
             /** accelerate */
             case keys.KEY_SHIFT:
@@ -199,7 +194,8 @@ var Controls = function (camera, cannonBody) {
             case keys.KEY_G:
                 $("#horn-led").removeClass("active");
                 break;
-            case keys.KEY_H:
+            case keys.KEY_F:
+                break;
         }
     };
     
@@ -291,7 +287,7 @@ var Controls = function (camera, cannonBody) {
             // position the bike in front of the camera
             PLAYER.bike.position.set(
                 WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                0, //WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                0,
                 WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
             );
         }
@@ -342,6 +338,13 @@ var Controls = function (camera, cannonBody) {
             }
         }
 
+
+        if(lightOn) {
+            $("#headlight-led").addClass("active");
+        }
+        else {
+            $("#headlight-led").removeClass("active");
+        }
         // if(lightOn) {
         //     if(!PLAYER.headLight) {
         //         PLAYER.headLight = new THREE.SpotLight( 0xffffff , 4, 40);
