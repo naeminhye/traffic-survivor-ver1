@@ -23,7 +23,7 @@ const keys = {
     KEY_H: 72,
 };
 
-var PointerControls = function (camera, cannonBody) {
+var Controls = function (camera, cannonBody) {
 
     var eyeYPos = 2; // eyes are 2 meters above the ground
     const INITIAL_SPEED = 0.2;
@@ -287,12 +287,12 @@ var PointerControls = function (camera, cannonBody) {
 
         yawObject.position.copy(cannonBody.position);
 
-        if(WORLD.bike) {
+        if(PLAYER.bike) {
             // position the bike in front of the camera
-            WORLD.bike.position.set(
-                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
-                WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
-                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+            PLAYER.bike.position.set(
+                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
+                0, //WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
             );
         }
         // if(WORLD.verticalMirror) {
@@ -307,11 +307,11 @@ var PointerControls = function (camera, cannonBody) {
         if(rotateLeft) {
             yawObject.rotation.y += rotateAngle;
             // WORLD.verticalMirror.rotation.y += rotateAngle;
-            if(WORLD.bike) {
+            if(PLAYER.bike) {
                 var v = new THREE.Vector3();
-                var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
+                var angleToPlayerDelta = calculateAngleToPlayer(PLAYER.bike.getWorldDirection(v));
                 if(Math.abs(angleToPlayerDelta) > 160) {
-                    WORLD.bike.rotation.y += rotateAngle * 1.2;
+                    PLAYER.bike.rotation.y += rotateAngle * 1.2;
                 }
                 // if (Math.abs(angleToPlayerDelta) < 170 && !leftSignal) {
                 //     GAME.handleFining("Không bật si nhang!!", 100000);
@@ -321,11 +321,11 @@ var PointerControls = function (camera, cannonBody) {
         else if(rotateRight) {
             yawObject.rotation.y -= rotateAngle;
             // WORLD.verticalMirror.rotation.y -= rotateAngle;
-            if(WORLD.bike) {
+            if(PLAYER.bike) {
                 var v = new THREE.Vector3();
-                var angleToPlayerDelta = calculateAngleToPlayer(WORLD.bike.getWorldDirection(v));
+                var angleToPlayerDelta = calculateAngleToPlayer(PLAYER.bike.getWorldDirection(v));
                 if(Math.abs(angleToPlayerDelta) > 160) {
-                    WORLD.bike.rotation.y -= rotateAngle * 1.2;
+                    PLAYER.bike.rotation.y -= rotateAngle * 1.2;
                 }
                 // if (Math.abs(angleToPlayerDelta) < 170 && !rightSignal) {
                 //     GAME.handleFining("Không bật si nhang!!", 100000);
@@ -333,8 +333,8 @@ var PointerControls = function (camera, cannonBody) {
             }
         }
         else {
-            if(WORLD.bike) {
-                WORLD.bike.rotation.set(
+            if(PLAYER.bike) {
+                PLAYER.bike.rotation.set(
                     WORLD.player.rotation.x,
                     WORLD.player.rotation.y - Math.PI,
                     WORLD.player.rotation.z

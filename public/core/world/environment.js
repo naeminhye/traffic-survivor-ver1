@@ -1247,22 +1247,23 @@ const environmentInit = function (file) {
                     child.material = material;
                 }
             });
-            WORLD.bike = obj;
+            PLAYER.bike = obj;
 
-            if(WORLD.bike) {
+            if(PLAYER.bike) {
+                PLAYER.bike.scale.set(0.003, 0.003, 0.003);
                 // position the bike in front of the camera
-                WORLD.bike.position.set(
-                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
-                    WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
-                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+                PLAYER.bike.position.set(
+                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
+                    0, //WORLD.player.position.y - 6.1,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
                 );
-                WORLD.bike.rotation.set(
+                PLAYER.bike.rotation.set(
                     WORLD.player.rotation.x,
                     WORLD.player.rotation.y - Math.PI,
                     WORLD.player.rotation.z
                 );
             }
-            WORLD.scene.add(WORLD.bike);
+            WORLD.scene.add(PLAYER.bike);
         });
     });
 }

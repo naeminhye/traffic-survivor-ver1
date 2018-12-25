@@ -177,10 +177,10 @@ WORLD.init = () => {
     }
     addSunlight(WORLD.scene);
 
-    WORLD.controls = new PointerControls(WORLD.camera, sphereBody);
+    WORLD.controls = new Controls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
     WORLD.scene.add(WORLD.player);
-    WORLD.player.position.set(46, 1.3, 55);
+    //WORLD.player.position.set(46, 1.3, 55);
 
     WORLD.scene.updateMatrixWorld(true);
 
