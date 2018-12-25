@@ -155,7 +155,7 @@ WORLD.init = () => {
     //     } );
 
     var ambient = new THREE.AmbientLight(0x111111);
-    WORLD.scene.add(ambient);
+    // WORLD.scene.add(ambient);
 
     light = new THREE.SpotLight(0xffffff);
     light.position.set(10, 30, 20);
@@ -175,7 +175,7 @@ WORLD.init = () => {
 
         //light.shadowCameraVisible = true;
     }
-    addSunlight(WORLD.scene);
+    // addSunlight(WORLD.scene);
 
     WORLD.controls = new Controls(WORLD.camera, sphereBody);
     WORLD.player = WORLD.controls.getObject();
@@ -216,6 +216,11 @@ WORLD.init = () => {
             GAME.status = "PAUSED";
         }
     }, false);
+    window.onblur = function() { 
+        if(GAME.status === "PLAYING") {
+            GAME.status = "PAUSED"; 
+        }
+    }
 }
  
 const evolveSmoke = (delta) => {
