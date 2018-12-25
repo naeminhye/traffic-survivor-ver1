@@ -32,15 +32,13 @@ var ROUNDABOUT = "R";
 const manager = new THREE.LoadingManager();
 
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-
 	$("#loading-text").text( 'Quá trình tải sẽ mất mốt ít thời gian, đợi chút nha!' );
-
 };
 
 manager.onProgress = (item, loaded, total) => {
     var percentComplete = loaded / total * 100;
     if(Math.round(percentComplete, 2) === 100) {
-        $("#loading-text").text("Hoàn tất tải trong vài giây nữa...")
+        $("#loading-text").text("Hoàn tất thiết lập trong vài giây nữa...")
     }
     else {
         $("#loading-text").text("Đang tải " + Math.round(percentComplete, 2) + "%")
@@ -48,22 +46,15 @@ manager.onProgress = (item, loaded, total) => {
 };
 
 manager.onLoad = () => {
-	$("#loading-text").text( 'Bắt đầu thôi!' );
-    WORLD.loaded = true;
-    // $("#loading").css("display", "none");
-    $("#loading").fadeOut(5000);
-    GAME.blocker.css("display", "block");
+    $("#loading-text").text( 'Bắt đầu thôi!' );
+    setTimeout(() => {
+        $("#loading-text").fadeOut(500);
+        WORLD.loaded = true;
+        $("#loading").fadeOut(5000);
+        GAME.blocker.css("display", "block");
+    }, 1000)
 }
-const onProgress = (xhr) => {
-    // if (xhr.lengthComputable) {
-    //     var percentComplete = xhr.loaded / xhr.total * 100;
-        // console.log(Math.round(percentComplete, 2) + '% downloaded');
-        // if(Math.round(percentComplete, 2) == 100) {
-        //     WORLD.loaded = true;
-        // }
-    // }
-};
-const onError = (xhr) => {
+manager.onError = (xhr) => {
     console.log(xhr);
 };
 
@@ -253,7 +244,7 @@ const loadModelToWorld = (model) => {
             mesh.position.set(0, 3, 0);
             mesh.material.side = THREE.DoubleSide;
             WORLD.scene.add(mesh);
-        }, onProgress, onError);
+        });
     }
     else {
         loader.load(
@@ -482,7 +473,7 @@ const loadModelToWorld = (model) => {
                         }
                     }
                 });
-            }, onProgress, onError
+            }
         );
     }
 }
