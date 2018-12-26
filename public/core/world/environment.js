@@ -286,7 +286,7 @@ const loadModelToWorld = (model) => {
                 };
 
                 if(object_type === "regulatory_signs") {
-                    obj.matrixAutoUpdate = false;
+                    // obj.matrixAutoUpdate = false;
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -299,7 +299,7 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "warning_signs") {
-                    obj.matrixAutoUpdate = false;
+                    // obj.matrixAutoUpdate = false;
 
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
@@ -313,7 +313,7 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "guidance_signs") {
-                    obj.matrixAutoUpdate = false;
+                    // obj.matrixAutoUpdate = false;
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -1216,8 +1216,8 @@ const environmentInit = function (file) {
                     for( let j = child.z + 2; j < child.z + child.z_width; j += 2 ) {
                     
                         let data = { 
-                            "loader_type": "object", 
-                            "url": "./models/trees/tree/tree.json", 
+                            "loader_type": "obj", 
+                            "url": "./models/trees/tree/Tree.obj", 
                             "name": "tree-" + i + "-" + j, 
                             "object_type": "trees",
                             "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},

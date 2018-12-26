@@ -60,7 +60,7 @@ GAME.endGame = () => {
   
     // get seconds 
     var _seconds = Math.round(timeDiff);
-    $("#timeDiff").text(_seconds + " seconds");
+    $("#timeDiff").text(_seconds);
 
     if($("#signListContainer").children().length === 0) {
         var _ol = "<ol>"
