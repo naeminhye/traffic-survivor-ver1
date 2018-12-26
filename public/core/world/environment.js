@@ -65,6 +65,7 @@ WORLD.jsonLoader = new THREE.JSONLoader(manager);
 WORLD.textureLoader = new THREE.TextureLoader(manager);
 WORLD.tdsLoader = new THREE.TDSLoader(manager);
 WORLD.objLoader = new THREE.OBJLoader(manager);
+WORLD.mtlLoader = new THREE.MTLLoader(manager)
 
 const attachedHouseList = [
     {
@@ -192,6 +193,8 @@ const loadModelToWorld = (model) => {
         receiveShadow = false,
         children,
         object_type,
+        mtl,
+        texturePath,
         direction,  // hướng xoay mặt của model
         textureUrl, // link của texture
         info = null,
@@ -246,6 +249,29 @@ const loadModelToWorld = (model) => {
             WORLD.scene.add(mesh);
         });
     }
+    else if(loader_type === "obj" && mtl) {
+        var mtlLoader = WORLD.mtlLoader;
+        mtlLoader.setTexturePath(texturePath);
+        mtlLoader.load(mtl, function(materials){
+            materials.preload();
+            loader.setMaterials(materials);
+            loader.load(url, function(object) {
+                object.traverse(function(child){
+                    if( child instanceof THREE.Mesh ){
+                        child.castShadow = castShadow;
+                        child.receiveShadow = receiveShadow;
+                    }
+                });
+                WORLD.scene.add(object);
+                object.rotation.set(rotation.x, rotation.y, rotation.z);
+                object.position.set(position.x, position.y, position.z)
+                object.scale.x = scale.x;
+                object.scale.y = scale.y;
+                object.scale.z = scale.z;
+                object.name = name;
+            });
+        });
+    }
     else {
         loader.load(
             url,
@@ -286,7 +312,8 @@ const loadModelToWorld = (model) => {
                 };
 
                 if(object_type === "regulatory_signs") {
-                    // obj.matrixAutoUpdate = false;
+                    obj.matrixAutoUpdate = false;
+                    obj.updateMatrix();
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -299,8 +326,8 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "warning_signs") {
-                    // obj.matrixAutoUpdate = false;
-
+                    obj.matrixAutoUpdate = false;
+                    obj.updateMatrix();
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -313,7 +340,8 @@ const loadModelToWorld = (model) => {
                     GAME.totalNumOfSign++;
                 }
                 else if(object_type === "guidance_signs") {
-                    // obj.matrixAutoUpdate = false;
+                    obj.matrixAutoUpdate = false;
+                    obj.updateMatrix();
                     if(GAME.mapContext) {
                         GAME.mapContext.fillStyle = "red";
                         GAME.mapContext.beginPath(); //Start path
@@ -346,19 +374,19 @@ const loadModelToWorld = (model) => {
                         status: [
                             {
                                 status_name: "YELLOWLIGHT",
-                                texture: "./models/fbx/traffic-light-2/yellowlight-uvmap.png",
+                                texture: "/models/fbx/traffic-light-2/yellowlight-uvmap.png",
                                 duration: 150,
                                 action: "slowdown"
                             },
                             {
                                 status_name: "REDLIGHT",
-                                texture: "./models/fbx/traffic-light-2/redlight-uvmap.png",
+                                texture: "/models/fbx/traffic-light-2/redlight-uvmap.png",
                                 duration: 850,
                                 action: "stop"
                             },
                             {
                                 status_name: "GREENLIGHT",
-                                texture: "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+                                texture: "/models/fbx/traffic-light-2/greenlight-uvmap.png",
                                 duration: 700,
                                 action: "stop"
                             }
@@ -969,8 +997,8 @@ const environmentInit = function (file) {
                     "name": "traffic-light-" + x1 + "-" + z1,
                     "loader_type": "fbx",
                     "object_type": "traffic_light",
-                    "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                    "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+                    "url": "/models/fbx/traffic-light-2/trafficlight.fbx",
+                    "textureUrl": "/models/fbx/traffic-light-2/greenlight-uvmap.png",
                     "position": {
                         "x": x1 * UNIT_SIZE,
                         "y": 0,
@@ -995,8 +1023,8 @@ const environmentInit = function (file) {
                     "name": "traffic-light-" + x2 + "-" + z2,
                     "loader_type": "fbx",
                     "object_type": "traffic_light",
-                    "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                    "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
+                    "url": "/models/fbx/traffic-light-2/trafficlight.fbx",
+                    "textureUrl": "/models/fbx/traffic-light-2/redlight-uvmap.png",
                     "position": {
                         "x": x2 * UNIT_SIZE,
                         "y": 0,
@@ -1021,8 +1049,8 @@ const environmentInit = function (file) {
                     "name": "traffic-light-" + x3 + "-" + z3,
                     "loader_type": "fbx",
                     "object_type": "traffic_light",
-                    "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                    "textureUrl": "./models/fbx/traffic-light-2/greenlight-uvmap.png",
+                    "url": "/models/fbx/traffic-light-2/trafficlight.fbx",
+                    "textureUrl": "/models/fbx/traffic-light-2/greenlight-uvmap.png",
                     "position": {
                         "x": x3 * UNIT_SIZE,
                         "y": 0,
@@ -1047,8 +1075,8 @@ const environmentInit = function (file) {
                     "name": "traffic-light-" + x4 + "-" + z4,
                     "loader_type": "fbx",
                     "object_type": "traffic_light",
-                    "url": "./models/fbx/traffic-light-2/trafficlight.fbx",
-                    "textureUrl": "./models/fbx/traffic-light-2/redlight-uvmap.png",
+                    "url": "/models/fbx/traffic-light-2/trafficlight.fbx",
+                    "textureUrl": "/models/fbx/traffic-light-2/redlight-uvmap.png",
                     "position": {
                         "x": x4 * UNIT_SIZE,
                         "y": 0,
@@ -1097,14 +1125,14 @@ const environmentInit = function (file) {
                     "object_type": "guidance_signs",
                     "sign_id": "303",
                     "name": "vongxuyen",
-                    "url": "./models/signs/round-info-sign.json",
+                    "url": "/models/signs/round-info-sign.json",
                     "directionToMap": "up",
                     "children": {
                         "sign": {
-                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                            "textureUrl": "/models/signs/vongxuyen-uvmap.png"
                         },
                         "pole": {
-                            "textureUrl": "./models/signs/pole-uvmap.png"
+                            "textureUrl": "/models/signs/pole-uvmap.png"
                         }
                     },
                     "info": "Guide Sign: You are going to meet a roundabout!!"
@@ -1116,14 +1144,14 @@ const environmentInit = function (file) {
                     "object_type": "guidance_signs",
                     "sign_id": "303",
                     "name": "vongxuyen",
-                    "url": "./models/signs/round-info-sign.json",
+                    "url": "/models/signs/round-info-sign.json",
                     "directionToMap": "right",
                     "children": {
                         "sign": {
-                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                            "textureUrl": "/models/signs/vongxuyen-uvmap.png"
                         },
                         "pole": {
-                            "textureUrl": "./models/signs/pole-uvmap.png"
+                            "textureUrl": "/models/signs/pole-uvmap.png"
                         }
                     },
                     "info": "Guide Sign: You are going to meet a roundabout!!"
@@ -1135,14 +1163,14 @@ const environmentInit = function (file) {
                     "object_type": "guidance_signs",
                     "sign_id": "303",
                     "name": "vongxuyen",
-                    "url": "./models/signs/round-info-sign.json",
+                    "url": "/models/signs/round-info-sign.json",
                     "directionToMap": "down",
                     "children": {
                         "sign": {
-                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                            "textureUrl": "/models/signs/vongxuyen-uvmap.png"
                         },
                         "pole": {
-                            "textureUrl": "./models/signs/pole-uvmap.png"
+                            "textureUrl": "/models/signs/pole-uvmap.png"
                         }
                     },
                     "info": "Guide Sign: You are going to meet a roundabout!!"
@@ -1154,14 +1182,14 @@ const environmentInit = function (file) {
                     "object_type": "guidance_signs",
                     "sign_id": "303",
                     "name": "vongxuyen",
-                    "url": "./models/signs/round-info-sign.json",
+                    "url": "/models/signs/round-info-sign.json",
                     "directionToMap": "left",
                     "children": {
                         "sign": {
-                            "textureUrl": "./models/signs/vongxuyen-uvmap.png"
+                            "textureUrl": "/models/signs/vongxuyen-uvmap.png"
                         },
                         "pole": {
-                            "textureUrl": "./models/signs/pole-uvmap.png"
+                            "textureUrl": "/models/signs/pole-uvmap.png"
                         }
                     },
                     "info": "Guide Sign: You are going to meet a roundabout!!"
@@ -1217,11 +1245,13 @@ const environmentInit = function (file) {
                     
                         let data = { 
                             "loader_type": "obj", 
-                            "url": "./models/trees/tree/Tree.obj", 
+                            "url": "/models/trees/tree/Tree.obj", 
                             "name": "tree-" + i + "-" + j, 
+                            "mtl": "/models/trees/tree/Tree.mtl",
+                            "texturePath": "/models/trees/tree/",
                             "object_type": "trees",
                             "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},
-                            "scale": {"x": 2.5,"y": 2.5,"z": 2.5}
+                            "scale": {"x": 2,"y": 2,"z": 2}
                         };
     
                         loadModelToWorld(data);
@@ -1233,7 +1263,7 @@ const environmentInit = function (file) {
         }
 
         // bike model
-        WORLD.objectLoader.load("./models/fbx/bike/bike.json", ( obj ) => {
+        WORLD.objectLoader.load("/models/fbx/bike/bike.json", ( obj ) => {
             obj.position.x = WORLD.player.position.x;
             obj.position.y = WORLD.player.position.y - 6;
             obj.position.z = WORLD.player.position.z;
@@ -1246,7 +1276,7 @@ const environmentInit = function (file) {
                 if (child instanceof THREE.Mesh) {
                     child.castShadow = true;
                     child.receiveShadow = true;
-                    var texture = new THREE.TextureLoader().load("./models/fbx/bike/bike-uvmap.png");
+                    var texture = new THREE.TextureLoader().load("/models/fbx/bike/bike-uvmap.png");
                     var material = new THREE.MeshBasicMaterial({
                         map: texture,
                         side: THREE.DoubleSide
