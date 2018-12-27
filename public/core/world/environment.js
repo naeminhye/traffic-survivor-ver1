@@ -65,7 +65,7 @@ WORLD.jsonLoader = new THREE.JSONLoader(manager);
 WORLD.textureLoader = new THREE.TextureLoader(manager);
 WORLD.tdsLoader = new THREE.TDSLoader(manager);
 WORLD.objLoader = new THREE.OBJLoader(manager);
-WORLD.mtlLoader = new THREE.MTLLoader(manager)
+WORLD.mtlLoader = new THREE.MTLLoader(manager);
 
 const attachedHouseList = [
     {
@@ -265,9 +265,7 @@ const loadModelToWorld = (model) => {
                 WORLD.scene.add(object);
                 object.rotation.set(rotation.x, rotation.y, rotation.z);
                 object.position.set(position.x, position.y, position.z)
-                object.scale.x = scale.x;
-                object.scale.y = scale.y;
-                object.scale.z = scale.z;
+                object.scale.set(scale.x, scale.y, scale.z);
                 object.name = name;
             });
         });
@@ -444,7 +442,7 @@ const loadModelToWorld = (model) => {
                 // });
                 // boxBody.angularVelocity.set(0, 0, 3.5);
                 // boxBody.angularDamping = 0.1;
-                WORLD.world.add(boxBody);
+                // WORLD.world.add(boxBody);
 
                 obj.traverse((child) => {
 
