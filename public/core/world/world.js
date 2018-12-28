@@ -287,6 +287,7 @@ WORLD.animate = () => {
             PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
 
             WORLD.controls.update(Date.now() - time);
+            WORLD.controls.detectCollision()
             checkViolation();
             if (!WORLD.warningFlag) {
                 $("#message").css("display", "none");
@@ -320,18 +321,18 @@ const addMirror = () => {
 
 }
 
-WORLD.detectCollision = () => {
-    var flag = 0;
-    WORLD.collidableObjects.forEach((object) => {
-        if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
-            if (object.containsPoint(WORLD.player.position)) {
-                toastr.error("Collided!");
-                flag++;
-            }
-        }
-    });
-    return flag;
-}
+// WORLD.detectCollision = () => {
+//     var flag = 0;
+//     WORLD.collidableObjects.forEach((object) => {
+//         if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
+//             if (object.containsPoint(WORLD.player.position)) {
+//                 toastr.error("Collided!");
+//                 flag++;
+//             }
+//         }
+//     });
+//     return flag;
+// }
 
 function addSunlight(scene) {
     var sunlight = new THREE.DirectionalLight();

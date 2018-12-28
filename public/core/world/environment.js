@@ -414,7 +414,6 @@ const loadModelToWorld = (model) => {
                 // If you want a visible bounding box
                 // WORLD.scene.add(helper);
                 var bbox = new THREE.Box3().setFromObject(helper);
-                //WORLD.collidableObjects.push(bbox);
 
                 // WORLD.world.add(createBoxBody(helper, function(object) {
                 //     if(object.body.id == 0) 
@@ -888,6 +887,7 @@ const environmentInit = function (file) {
                     cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                     // Add the cube
                     // WORLD.scene.add(cube);
+                    WORLD.collidableObjects.push(cube);
                     houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                     houseMaterials.push(buildingMaterial);
                     materialIndex ++;
@@ -947,6 +947,7 @@ const environmentInit = function (file) {
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
                 // Add the cube
                 WORLD.scene.add(cube);
+                WORLD.collidableObjects.push(cube);
                 // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                 // materialIndex ++;
                 // WORLD.world.add(createBoxBody(cube, function (object) {

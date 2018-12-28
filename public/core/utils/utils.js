@@ -597,3 +597,14 @@ const closeFullscreen = () => {
         document.msExitFullscreen();
     }
 }
+
+// Converts degrees to radians
+function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+// Converts radians to degrees
+function radiansToDegrees(radians) {
+    return radians * 180 / Math.PI;
+}
+

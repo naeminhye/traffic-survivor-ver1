@@ -214,6 +214,25 @@ var Controls = function (camera, cannonBody) {
         quat.multiplyVector3(targetVec);
     }
 
+    // this.getDirection = function () {
+
+	// 	// assumes the camera itself is not rotated
+
+	// 	var direction = new THREE.Vector3( 0, 0, - 1 );
+	// 	var rotation = new THREE.Euler( 0, 0, 0, 'YXZ' );
+
+	// 	return function ( v ) {
+
+	// 		rotation.set( pitchObject.rotation.x, yawObject.rotation.y, 0 );
+
+	// 		v.copy( direction ).applyEuler( rotation );
+
+	// 		return v;
+
+	// 	};
+
+	// }();
+
     // Moves the camera to the Cannon.js object position and adds velocity to the object if the run key is down
     var inputVelocity = new THREE.Vector3();
     var euler = new THREE.Euler();
@@ -249,6 +268,7 @@ var Controls = function (camera, cannonBody) {
 
         // PLAYER.status.moving = false;
 
+        // if(!scope.detectCollision()) {
         if (moveForward) {
             inputVelocity.z = -velocityFactor * delta;
             // PLAYER.status.moving = true;
@@ -266,6 +286,8 @@ var Controls = function (camera, cannonBody) {
             inputVelocity.x = velocityFactor * delta;
             // PLAYER.status.moving = true;
         }
+        // }
+
 
         // Convert velocity to world coordinates
         euler.x = pitchObject.rotation.x;
@@ -277,12 +299,12 @@ var Controls = function (camera, cannonBody) {
         // Add to the object
         velocity.x += inputVelocity.x;
         velocity.z += inputVelocity.z;
-
+        
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
         PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
-
+    
         yawObject.position.copy(cannonBody.position);
-
+    
         if(PLAYER.bike) {
             // position the bike in front of the camera
             PLAYER.bike.position.set(
@@ -382,5 +404,85 @@ var Controls = function (camera, cannonBody) {
         //     }
         // }
     };
+
+    // this.detectCollision = () => {
+    //     // The rotation matrix to apply to our direction vector
+    //     // Undefined by default to indicate ray should coming from front
+    //     var rotationMatrix;
+    //     // Get direction of camera
+    //     var cameraDirection = scope.getObject().getWorldDirection(new THREE.Vector3(0, 0, 0)).clone();//scope.getDirection(new THREE.Vector3(0, 0, 0)).clone();
+    
+    //     // Check which direction we're moving (not looking)
+    //     // Flip matrix to that direction so that we can reposition the ray
+    //     if (moveBackward) {
+    //         rotationMatrix = new THREE.Matrix4();
+    //         rotationMatrix.makeRotationY(degreesToRadians(180));
+    //     }
+    //     // else if (moveLeft) {
+    //     //     rotationMatrix = new THREE.Matrix4();
+    //     //     rotationMatrix.makeRotationY(degreesToRadians(90));
+    //     // }
+    //     // else if (moveRight) {
+    //     //     rotationMatrix = new THREE.Matrix4();
+    //     //     rotationMatrix.makeRotationY(degreesToRadians(270));
+    //     // }
+    
+    //     // Player is moving forward, no rotation matrix needed
+    //     if (rotationMatrix !== undefined) {
+    //         cameraDirection.applyMatrix4(rotationMatrix);
+    //     }
+    
+    //     // Apply ray to player camera
+    //     var rayCaster = new THREE.Raycaster(scope.getObject().position, cameraDirection);
+    
+    //     // If our ray hit a collidable object, return true
+    //     if (rayIntersect(rayCaster, 20)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+
+    this.detectCollision = () => {
+        var flag = 0;
+        WORLD.collidableObjects.forEach((mesh) => {
+
+            var helper = new THREE.BoxHelper(mesh, 0xff0000);
+            helper.update();
+
+            // If you want a visible bounding box
+            // WORLD.scene.add(helper);
+            var object = new THREE.Box3().setFromObject(helper);
+
+            // if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
+            if (PLAYER.bike) {
+
+                if (object.containsPoint(PLAYER.bike.position)) {
+                    console.log("Collided ---", object);
+                    flag++;
+                }
+            }
+            else {
+                if (object.containsPoint(scope.getObject().position)) {
+                    console.log("Collided ---", object);
+                    flag++;
+                }
+            }
+            // }
+        });
+        return flag;
+    }
 };
 
+// Takes a ray and sees if it's colliding with anything from the list of collidable objects
+// Returns true if certain distance away from object
+const rayIntersect = (ray, distance) => {
+    var intersects = ray.intersectObjects(WORLD.collidableObjects);
+    for (var i = 0; i < intersects.length; i++) {
+        if (intersects[i].distance < distance) {
+            return true;
+        }
+    }
+    return false;
+}
