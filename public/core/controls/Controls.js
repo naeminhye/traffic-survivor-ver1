@@ -405,45 +405,6 @@ var Controls = function (camera, cannonBody) {
         // }
     };
 
-    // this.detectCollision = () => {
-    //     // The rotation matrix to apply to our direction vector
-    //     // Undefined by default to indicate ray should coming from front
-    //     var rotationMatrix;
-    //     // Get direction of camera
-    //     var cameraDirection = scope.getObject().getWorldDirection(new THREE.Vector3(0, 0, 0)).clone();//scope.getDirection(new THREE.Vector3(0, 0, 0)).clone();
-    
-    //     // Check which direction we're moving (not looking)
-    //     // Flip matrix to that direction so that we can reposition the ray
-    //     if (moveBackward) {
-    //         rotationMatrix = new THREE.Matrix4();
-    //         rotationMatrix.makeRotationY(degreesToRadians(180));
-    //     }
-    //     // else if (moveLeft) {
-    //     //     rotationMatrix = new THREE.Matrix4();
-    //     //     rotationMatrix.makeRotationY(degreesToRadians(90));
-    //     // }
-    //     // else if (moveRight) {
-    //     //     rotationMatrix = new THREE.Matrix4();
-    //     //     rotationMatrix.makeRotationY(degreesToRadians(270));
-    //     // }
-    
-    //     // Player is moving forward, no rotation matrix needed
-    //     if (rotationMatrix !== undefined) {
-    //         cameraDirection.applyMatrix4(rotationMatrix);
-    //     }
-    
-    //     // Apply ray to player camera
-    //     var rayCaster = new THREE.Raycaster(scope.getObject().position, cameraDirection);
-    
-    //     // If our ray hit a collidable object, return true
-    //     if (rayIntersect(rayCaster, 20)) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-
     this.detectCollision = () => {
         var flag = 0;
         WORLD.collidableObjects.forEach((mesh) => {

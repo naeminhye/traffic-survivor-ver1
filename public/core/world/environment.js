@@ -1243,15 +1243,21 @@ const environmentInit = function (file) {
                     for( let j = child.z + 2; j < child.z + child.z_width; j += 2 ) {
                     
                         let data = { 
-                            "loader_type": "obj", 
-                            "url": "/models/trees/tree/Tree.obj", 
+                            "loader_type": "object", 
+                            "url": "/models/trees/tree/tree.json", 
                             "name": "tree-" + i + "-" + j, 
-                            "mtl": "/models/trees/tree/Tree.mtl",
-                            "texturePath": "/models/trees/tree/",
                             "object_type": "trees",
                             "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},
-                            "scale": {"x": 2,"y": 2,"z": 2}
                         };
+                        // let data = { 
+                        //     "loader_type": "fbx", 
+                        //     "url": "/models/trees/tree/tree.fbx", 
+                        //     "name": "tree-" + i + "-" + j, 
+                        //     "textureUrl": "public/models/trees/tree/tree-uvmap.png",
+                        //     "object_type": "trees",
+                        //     "position": {"x": i * UNIT_SIZE,"y": 0,"z": j * UNIT_SIZE},
+                        //     "scale": {"x": 0.01,"y": 0.01,"z": 0.01}
+                        // };
     
                         loadModelToWorld(data);
 

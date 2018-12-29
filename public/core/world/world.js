@@ -321,19 +321,6 @@ const addMirror = () => {
 
 }
 
-// WORLD.detectCollision = () => {
-//     var flag = 0;
-//     WORLD.collidableObjects.forEach((object) => {
-//         if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
-//             if (object.containsPoint(WORLD.player.position)) {
-//                 toastr.error("Collided!");
-//                 flag++;
-//             }
-//         }
-//     });
-//     return flag;
-// }
-
 function addSunlight(scene) {
     var sunlight = new THREE.DirectionalLight();
     sunlight.position.set(250, 250, 250);
