@@ -189,7 +189,7 @@ var Controls = function (camera, cannonBody) {
                 break;
             case keys.KEY_SHIFT:
                 speedup = false;
-                velocityFactor = INITIAL_SPEED;
+                // velocityFactor = INITIAL_SPEED;
                 break;
             case keys.KEY_G:
                 $("#horn-led").removeClass("active");
@@ -240,13 +240,13 @@ var Controls = function (camera, cannonBody) {
 
         if (scope.enabled === false) return;
 
-        delta *= 0.15;
+        delta *= 0.5;
         var rotateAngle = Math.PI / 2 * 0.02;
 
         inputVelocity.set(0, 0, 0);
-        // if(speedup) {
-        //     velocityFactor += 0.1;
-        // }
+        if(speedup) {
+            // velocityFactor += 0.1;
+        }
 
         // if(WORLD.detectCollision() !== 0){
         //     // TODO: Handle collision event
@@ -301,7 +301,7 @@ var Controls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
         
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
+        PLAYER.status.speed = (3.6 * speed).toFixed(1); // convert mps to kph
     
         yawObject.position.copy(cannonBody.position);
     
