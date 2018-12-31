@@ -287,7 +287,7 @@ WORLD.animate = () => {
             PLAYER.pin.css("top", (WORLD.player.position.z / GAME.realMapUnit) * GAME.miniMapUnit - 10);
 
             WORLD.controls.update(Date.now() - time);
-            WORLD.controls.detectCollision()
+            // WORLD.controls.detectCollision()
             checkViolation();
             if (!WORLD.warningFlag) {
                 $("#message").css("display", "none");
