@@ -608,3 +608,46 @@ function radiansToDegrees(radians) {
     return radians * 180 / Math.PI;
 }
 
+const pathGenerator = (_xzArray, _y, UNIT_SIZE) => {
+    var path = [];
+    _xzArray.forEach(function(sub) {
+        var temp = sub.map(function(x) { return x * UNIT_SIZE; })
+        path.push({"x":temp[0],"y":_y,"z":temp[1]});
+    })
+    return path;
+}
+
+const vehicleGenerator = (data) => {
+    let {
+        velocity,
+        xzArray,
+        y,
+        unit_size,
+        url,
+        textureUrl,
+        name,
+        loader_type,
+        object_type = "vehicles",
+        animate = false,
+        castShadow = true,
+        receiveShadow = true
+    } = data;
+
+    let vehicleObject = {
+        name: name + "-" + xzArray[0][0] + "-" + xzArray[0][1],
+        loader_type,
+        position: { "x": xzArray[0][0] * unit_size, "y": y, "z": xzArray[0][1] * unit_size },
+        object_type: object_type,
+        path: pathGenerator(xzArray, y, unit_size),
+        velocity: velocity,
+        url: url,
+        animate: animate,
+        castShadow: castShadow,
+        receiveShadow: receiveShadow
+    }
+    if(textureUrl) {
+        vehicleObject.textureUrl = textureUrl;
+    }
+
+    return vehicleObject;
+}
