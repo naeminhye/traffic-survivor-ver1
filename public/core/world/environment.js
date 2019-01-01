@@ -52,7 +52,7 @@ manager.onLoad = () => {
         WORLD.loaded = true;
         $("#loading").fadeOut(5000);
         GAME.blocker.css("display", "block");
-    }, 1000)
+    }, 500)
 }
 manager.onError = (xhr) => {
     console.log(xhr);
@@ -887,6 +887,7 @@ const environmentInit = function (file) {
                     cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                     // Add the cube
                     // WORLD.scene.add(cube);
+                    cube.material.map.minFilter = THREE.LinearFilter;
                     WORLD.collidableObjects.push(cube);
                     houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                     houseMaterials.push(buildingMaterial);
@@ -943,6 +944,7 @@ const environmentInit = function (file) {
                 // houseMaterials.push(buildingMaterial);
                 
                 var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
+                cube.material.map.minFilter = THREE.LinearFilter;
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
                 // Add the cube
@@ -1337,7 +1339,7 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
             material
         );
-        plane.position.set(PLANE_X, 0, PLANE_Z)
+        plane.position.set(PLANE_X, 0, PLANE_Z);
         plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
         WORLD.scene.add(plane);
 

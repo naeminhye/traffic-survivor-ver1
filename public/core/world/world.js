@@ -76,6 +76,7 @@ if (!WORLD.loaded) {
     GAME.blocker.css("display", "block");
     $("#loading").css("display", "none");
 }
+  
 
 WORLD.initCannon = () => {
     // Setup our world
