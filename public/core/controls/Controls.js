@@ -151,7 +151,8 @@ var Controls = function (camera, cannonBody) {
             break;
             case keys.KEY_G:
                 // rotateLeftFast = true;
-                GAME.hornSound.play();
+	            GAME.audio.sfx.horn.play();
+                // GAME.hornSound.play();
                 $("#horn-led").addClass("active");
                 break;
             case keys.KEY_F:

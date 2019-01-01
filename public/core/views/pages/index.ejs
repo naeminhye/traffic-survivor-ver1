@@ -15,7 +15,7 @@
 <body>
 
     <div class="content-container">
-        <section id="game-menu" class="container with-title" style="display: flex; flex-direction: column; text-align: center; justify-content: center;">
+        <section id="main-menu" class="container with-title" style="display: flex; flex-direction: column; text-align: center; justify-content: center;">
             <div>
                 <button id="start-btn" style="margin-bottom: 20px; width: 100%;" class="btn is-error">Bắt đầu</button>
             </div>
@@ -52,12 +52,12 @@
             $("#start-btn").click(() => {
                 window.location.href = '/levels'; 
                 // $("#login-dialog").css("display", "block");
-                // $("#game-menu").css("display", "none");
+                // $("#main-menu").css("display", "none");
             });
 
             $("#cancel-btn").click(() => {
                 $("#login-dialog").css("display", "none");
-                $("#game-menu").css("display", "flex");
+                $("#main-menu").css("display", "flex");
             });
 
             $("#ok-btn").click(() => {

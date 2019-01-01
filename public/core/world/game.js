@@ -11,6 +11,14 @@ GAME.controllers = $("#controllers");
 
 GAME.hornSound = new Audio('/audio/horn/horn.mp3');
 
+//Audio tags
+GAME.audio = {
+    sfx: {
+        horn: new Audio('/audio/horn/horn.mp3'),//document.getElementById("sfx-horn"),
+        select: new Audio('/audio/menu-select/menu-select.wav')//	document.getElementById("sfx-select")
+    }
+};
+
 // GAME.results = {
 //     signList: [],
 //     lostMoney: 0,

@@ -393,6 +393,16 @@ hr {
   border: 4px black solid;
 }
 
+#main-menu {
+    width: 50vw;
+    height: auto;
+    max-height: 40vh;
+    /* min-height: 50vh; */
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+}
+
 .menu-item {
     display: flex;
     flex-direction: column;
