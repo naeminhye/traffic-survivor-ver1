@@ -130,7 +130,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: bisque;
+    background: #5171a5;
 }
 .content-container .content {
     margin: 1em;
@@ -337,6 +337,12 @@ hr {
   left: 0;
 }
 
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
 #game-menu {
   width: 50vw;
   height: auto;
@@ -358,6 +364,7 @@ hr {
     text-align: center; 
     justify-content: center;
     min-width: 200px;
+    width: 400px;
 }
 
 .menu-item {
@@ -366,7 +373,20 @@ hr {
     flex-wrap: wrap;
     justify-content: space-evenly;
     /* align-items: center; */
+    /* height: 100%; */
+}
+
+.level-details {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
+}
+
+button.menu-button {
+    margin: 10px 0; width: 100%;
 }
 
 #controllers {
@@ -720,3 +740,12 @@ hr {
     background-color: #ffce00;
   }
   
+#showroom {
+    background-color: transparent;
+}
+  
+.showroom-container {
+    position: relative;
+    width: 100%;
+    background-color: blue;
+}
