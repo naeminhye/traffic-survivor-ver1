@@ -32,6 +32,28 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'SVN-Neusa';
+    src:    url('./fonts/SVN-Neusa.eot'), /* IE9 Compat Modes */
+            url('./fonts/SVN-Neusa.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./fonts/SVN-Neusa.woff') format('woff'), /* Pretty Modern Browsers */
+            url('./fonts/SVN-Neusa.ttf')  format('truetype'), /* Safari, Android, iOS */
+            url('./fonts/SVN-Neusa.svg#SVN-Neusa') format('svg'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN-Neusa_Bold';
+    src:    url('./fonts/SVN-Neusa_Bold.eot'), /* IE9 Compat Modes */
+            url('./fonts/SVN-Neusa_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./fonts/SVN-Neusa_Bold.woff') format('woff'), /* Pretty Modern Browsers */
+            url('./fonts/SVN-Neusa_Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+            url('./fonts/SVN-Neusa_Bold.svg#SVN-Neusa_Bold') format('svg'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -41,7 +63,7 @@ body {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    font-family: 'Gentona-Bold', Arial, sans-serif;
+    font-family: 'SVN-Neusa', Arial, sans-serif;
 }
 
 *, *::before, *::after {
@@ -98,7 +120,7 @@ h2 {
     top: 0; 
     background-color: transparent;
     height: 100%;
-    right: 0;
+    right: 15%;
 }
 
 .content-container {
@@ -328,13 +350,14 @@ hr {
 }
 
 #main-menu {
-    width: 50vw;
-    height: auto;
-    max-height: 40vh;
-    /* min-height: 50vh; */
     padding: 20px;
     text-decoration: none;
     color: white;
+    display: flex; 
+    flex-direction: column; 
+    text-align: center; 
+    justify-content: center;
+    min-width: 200px;
 }
 
 .menu-item {
@@ -659,3 +682,41 @@ hr {
     font-size: 20px;
     
 }
+
+
+.clip {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-family: 'SVN-Neusa_Bold', Arial, sans-serif;
+    appearance: none;
+    position: relative;
+    display: inline-block;
+    min-width: 2.59815rem;
+    height: 3rem;
+    margin: auto;
+    padding: 0.5rem 1.299rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1rem;
+    vertical-align: middle;
+    color: #ffce00;
+    cursor: pointer;
+    border: none;
+    background-color: rgba(0, 0, 0, .25);
+    clip-path: polygon(0.866rem 0, calc(100% - 0.866rem) 0, 100% 50%, calc(100% - 0.866rem) 100%, 0.866rem 100%, 0 50%);
+  }
+  .clip::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    clip-path: polygon(0 50%, 2px 50%, calc(0.866rem + 1px) 2px, calc(100% - 0.866rem - 1px) 2px, calc(100% - 2px) 50%, calc(100% - 0.866rem - 1px) calc(100% - 2px), calc(0.866rem + 1px) calc(100% - 2px), 2px 50%, 0 50%, 0 100%, 100% 100%, 100% 50%, 100% 0, 0 0);
+  }
+  .clip:hover {
+    color: #123143;
+    background-color: #ffce00;
+  }
+  
