@@ -565,6 +565,11 @@ button.menu-button {
     }
   }
 
+  .level-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .level-info {
     position: absolute;
     top: 10px;

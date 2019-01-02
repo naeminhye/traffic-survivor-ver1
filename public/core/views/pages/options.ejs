@@ -18,7 +18,7 @@
 
     <div class="content-container">
         <div id="options" style="postion: relative;">
-            <section class="container with-title is-rounded" style="width: 40vw;">
+            <section style="width: 40vw;">
                 
             </section>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
@@ -26,32 +26,6 @@
     </div>
 
     <% include ../partials/libs %>
-    <script>
-
-    var options = localStorage.getObject("options") ? localStorage.getObject("options") : {};
-
-    $(".option-checkbox").change(function () {
-        let optionValue = $(this).prop("checked");
-        let optionKey = $(this).attr("id");
-        let temp = {};
-        temp[optionKey] = optionValue
-        Object.assign(options, temp);
-        localStorage.setObject("options", options);
-    });
-
-    if(options) {
-        if(options.hasOwnProperty("fullscreenChkbox") && options["fullscreenChkbox"]) {
-            $("#fullscreenChkbox").prop("checked", true);
-        }
-        if(options.hasOwnProperty("sfxChkbox") && options["sfxChkbox"]) {
-            $("#sfxChkbox").prop("checked", true);
-        }
-        if(options.hasOwnProperty("musicChkbox") && options["musicChkbox"]) {
-            $("#musicChkbox").prop("checked", true);
-        }
-    }
-
-    </script>
 </body>
 
 </html>
