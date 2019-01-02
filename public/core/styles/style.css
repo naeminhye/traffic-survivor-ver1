@@ -92,6 +92,15 @@ h2 {
     color: #294548;
     text-align: center;
 }
+
+.menu-container {
+    position: absolute; 
+    top: 0; 
+    background-color: transparent;
+    height: 100%;
+    right: 0;
+}
+
 .content-container {
     font-size: 1.3em;
     height: 100vh;
