@@ -1,10 +1,10 @@
 <div id="blocker" class="screen-element">
-    <div class="center-div" id="game-menu">
+    <div class="center-div dialog" id="game-menu">
         <div class="menu-item">
-            <button id="start-btn" class="btn is-success">Bắt đầu</button>
-            <button onclick="javascript:history.go(0)" id="restart-btn" class="btn is-warning">Chơi lại</button>
-            <button id="instruction-btn" class="btn is-warning">Hướng dẫn</button>
-            <button class="btn is-error" id="exit-btn" data-target="#exit-dialog">Thoát</button>
+            <button id="start-btn" class="clip menu-button">Bắt đầu</button>
+            <button onclick="javascript:history.go(0)" id="restart-btn" class="clip menu-button">Chơi lại</button>
+            <button id="instruction-btn" class="clip menu-button">Hướng dẫn</button>
+            <button class="clip menu-button" id="exit-btn" data-target="#exit-dialog">Thoát</button>
         </div>
     </div>
     <div id="exit-dialog" class="center-div dialog">
@@ -13,8 +13,8 @@
                 <span>Bạn muốn thoát khi chưa hoàn thành bài học?</span>
             </div>
             <div style="display: flex; align-items: center; justify-content: space-evenly; width: 100%;">
-                <button id="cancel-exit" class="btn">Không</button>
-                <button onclick="location.href = '/'" class="btn is-error">Có</button>
+                <button id="cancel-exit" class="clip menu-button">Không</button>
+                <button onclick="location.href = '/'" class="clip menu-button">Có</button>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
                 <td class="key-definition"><span>Accelerate</span></td>
             </tr>
             <tr>
-                <td colspan="2" class="key-instruction-btn"><a id="instruction-close" class="btn is-primary">Đóng</a></td>
+                <td colspan="2" class="key-instruction-btn"><a id="instruction-close" class="clip menu-button">Đóng</a></td>
             </tr>
         </table>
     </div>

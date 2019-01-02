@@ -17,7 +17,7 @@
 <body>
     
     <div class="content-container">
-        <div class="content flex-column-center level-detail-list">
+        <div class="content level-detail-list">
             <button data-target="#level-easy" class="clip menu-button level-button">Cấp độ dễ</button>
             <button data-target="#level-medium" class="clip menu-button level-button">Cấp độ trung bình</button>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
@@ -25,7 +25,7 @@
     </div>
     <div class="content-container level-details" id="level-easy">
         <div style="postion: relative;">
-            <div class="container level-container">
+            <div class="level-container">
                 
             </div>
             <button class="clip menu-button back-level">Trở về</button>
@@ -33,7 +33,7 @@
     </div>
     <div class="content-container level-details" id="level-medium">
         <div style="postion: relative;">
-            <div class="container level-container">
+            <div class="level-container">
                 
             </div>
             <button class="clip menu-button back-level">Trở về</button>
@@ -62,13 +62,15 @@
     var element1 = "";
     for (var i = 1; i <= 5; i++) { 
         let isPassed = passedLessons.includes(i);
-        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " "href='/game?level=easy&chapter=" + i + "'">Bài " + i + ": " + levels[i - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
+        let lhref = "location.href='/game?level=easy&chapter=" + i + "'";
+        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + i + ": " + levels[i - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
     } 
     $("#level-easy .level-container").append($(element1));
     var element2 = "";
     for (var j = 6; j <= 10; j++) { 
         let isPassed = passedLessons.includes(j);
-        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " href='/game?level=medium&chapter=" + j + "'>Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
+        let lhref = "location.href='/game?level=medium&chapter=" + j + "'";
+        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
     }
     $("#level-medium .level-container").append($(element2));
     
@@ -80,7 +82,7 @@
 
     $(".back-level").click((event) => {
         let id = $(event.target).closest(".level-details").hide();
-        $(".level-detail-list").css("display", "flex");
+        $(".level-detail-list").css("display", "block");
     });
 
     </script>
