@@ -414,15 +414,23 @@ button.menu-button {
     border: 4px black solid;
 }
 
-.dialog-content > .question {
+.confirmation-popup > .question {
     padding: 20px;
     margin-bottom: 20px;
 }
 
-.dialog-content > .question > span {
+.confirmation-popup > .question > span {
     font-size: 20px;
     
     color: #fff;
+}
+
+.confirmation-popup {
+    padding: 20px; background-color: cornflowerblue; text-align: center; text-decoration: none; border: 2px white solid;
+}
+
+.confirmation-popup .answers {
+    width: 100%;
 }
 
 .dialog-content > .input-box {

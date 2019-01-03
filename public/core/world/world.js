@@ -297,11 +297,13 @@ WORLD.animate = () => {
             $("#speed").text(PLAYER.status.speed);
         }
 
-        // THREE.GLTFLoader.Shaders.update(WORLD.scene, WORLD.camera);
-        //evolveSmoke(Date.now() - time);
         GAME.stats.end();
-        requestAnimationFrame(WORLD.animate);
         WORLD.renderer.render(WORLD.scene, WORLD.camera);
+        //setTimeout( function() {
+
+            requestAnimationFrame(WORLD.animate);
+    
+        //}, 1000 / 30 );
         time = Date.now();
     }
 }

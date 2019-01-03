@@ -233,7 +233,7 @@ const loadModelToWorld = (model) => {
         loader.load(url, function(geometry, materials) {
 
             var texture = new THREE.TextureLoader().load(textureUrl);
-            texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
+            // texture.anisotropy = WORLD.renderer.getMaxAnisotropy();
 
             var material = textureUrl ?  
             new THREE.MeshBasicMaterial({
@@ -873,7 +873,7 @@ const environmentInit = function (file) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.offset.set( 0, 0 );
                     texture.repeat.set( 1, 1 );
-                    texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+                    // texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
                 });
                 var ratio = attachedHouseList[randomHouse].width / attachedHouseList[randomHouse].height;
 
@@ -886,8 +886,8 @@ const environmentInit = function (file) {
                     // Set the cube position
                     cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
                     // Add the cube
-                    // WORLD.scene.add(cube);
-                    cube.material.map.minFilter = THREE.LinearFilter;
+                    WORLD.scene.add(cube);
+                    //cube.material.map.minFilter = THREE.LinearFilter;
                     WORLD.collidableObjects.push(cube);
                     houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                     houseMaterials.push(buildingMaterial);
@@ -912,7 +912,7 @@ const environmentInit = function (file) {
             var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
             combinedMesh.matrixAutoUpdate = false;
             combinedMesh.updateMatrix();
-            WORLD.scene.add(combinedMesh);
+            // WORLD.scene.add(combinedMesh);
 
             findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
 
@@ -934,7 +934,7 @@ const environmentInit = function (file) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.offset.set( 0, 0 );
                     texture.repeat.set( 1, 1 );
-                    texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+                    // texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
                 });
                 var ratio = terraceHouseList[randomHouse].width / terraceHouseList[randomHouse].height;
 
@@ -944,7 +944,7 @@ const environmentInit = function (file) {
                 // houseMaterials.push(buildingMaterial);
                 
                 var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
-                cube.material.map.minFilter = THREE.LinearFilter;
+                // cube.material.map.minFilter = THREE.LinearFilter;
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
                 // Add the cube
@@ -1334,7 +1334,7 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
         else {
             material.map.repeat.set(1, 1);
         }
-        material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
+        // material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
         var plane = new THREE.Mesh(
             new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
             material
