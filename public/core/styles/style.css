@@ -745,7 +745,7 @@ button.menu-button {
   .clip:hover {
     color: #123143;
     background-color: #ffce00;
-    transform: scale(1.1);
+    transform: scale(1.02);
   }
   
 #showroom {
