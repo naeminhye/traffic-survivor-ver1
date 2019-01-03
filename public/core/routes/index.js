@@ -21,6 +21,11 @@ router.get('/options', (req, res) => {
     res.render('pages/options');
 });
 
+router.get('/about', (req, res) => {
+    console.log('Request to pages/about')
+    res.render('pages/about');
+});
+
 router.get('/game', function(req, res, next) {
     console.log('Request to pages/game')
     res.render('pages/game', { level : req.query.level, chapter : req.query.chapter });
