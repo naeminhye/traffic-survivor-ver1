@@ -57,20 +57,37 @@
     ];
 
     var passedLessons = localStorage.getObject("passedLessons") ? localStorage.getObject("passedLessons") : [];
+    var learningLessons = localStorage.getObject("learningLessons") ? localStorage.getObject("learningLessons") : [];
 
-    //✘
     var element1 = "";
     for (var i = 1; i <= 5; i++) { 
+        let tick = "";
         let isPassed = passedLessons.includes(i);
+        let isLearning = learningLessons.includes(i);
+        if(isPassed) {
+            tick = "<span style='font-size: 20px; color: green; margin-left: 5px;'>✔</span>";
+        }
+        else if (isLearning) {
+            tick = "<span style='font-size: 20px; color: red; margin-left: 5px;'>✘</span>";
+        }
+
         let lhref = "location.href='/game?level=easy&chapter=" + i + "'";
-        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + i + ": " + levels[i - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
+        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + i + ": " + levels[i - 1] + tick + "</button>"
     } 
     $("#level-easy .level-container").append($(element1));
     var element2 = "";
     for (var j = 6; j <= 10; j++) { 
+        let tick = "";
         let isPassed = passedLessons.includes(j);
+        let isLearning = learningLessons.includes(j);
+        if(isPassed) {
+            tick = "<span style='font-size: 30px; color: green;'>✔</span>";
+        }
+        else if (isLearning){
+            tick = "<span style='font-size: 30px; color: red; margin-left: 5px;'>✘</span>";
+        }
         let lhref = "location.href='/game?level=medium&chapter=" + j + "'";
-        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + j + ": " + levels[j - 1] + (isPassed ? "<span style='font-size: 30px; color: green;'>✔</span>" : "") + "</button>"
+        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + j + ": " + levels[j - 1] + tick + "</button>"
     }
     $("#level-medium .level-container").append($(element2));
     

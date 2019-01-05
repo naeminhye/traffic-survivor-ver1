@@ -41,6 +41,14 @@ $("#start-btn").click(() => {
     if (GAME.status === "READY") {
         $("#start-btn").text("Tiếp tục");
         GAME.startTime = new Date();
+
+        // save passed lesson
+        var learningLessons = localStorage.getObject("learningLessons") ? localStorage.getObject("learningLessons") : [];
+        if(!learningLessons.includes(currentChapter)){
+            learningLessons.push(currentChapter)
+            localStorage.setObject("learningLessons", learningLessons);
+        }
+
     }
     GAME.resumeGame();
 });
@@ -141,19 +149,7 @@ WORLD.init = () => {
     // WORLD.scene.background = new THREE.Color(0xcce0ff);
     var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
-    // WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
-
-    // audio
-    // var audioLoader = new THREE.AudioLoader();
-    // var listener = new THREE.AudioListener();
-    // WORLD.camera.add( listener );
-    // WORLD.bgSound = new THREE.PositionalAudio( listener );
-    // audioLoader.load( '/audio/motorcycle/motorcycleSound.mp3', function ( buffer ) {
-    //         WORLD.bgSound.setBuffer( buffer );
-    //         WORLD.bgSound.setRefDistance( 20 );
-    //         WORLD.bgSound.setLoop( true );
-    //         WORLD.bgSound.play();
-    //     } );
+    WORLD.scene.fog = new THREE.Fog(0x000000, 0, 300);
 
     var ambient = new THREE.AmbientLight(0x111111);
     // WORLD.scene.add(ambient);
@@ -208,7 +204,7 @@ WORLD.init = () => {
 	GAME.rendererStats.domElement.style.position	= 'absolute'
 	GAME.rendererStats.domElement.style.left	= '0px'
 	GAME.rendererStats.domElement.style.bottom	= '0px'
-	document.body.appendChild( GAME.rendererStats.domElement )
+	// document.body.appendChild( GAME.rendererStats.domElement )
     
     GAME.stats = new Stats();
     GAME.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -232,13 +228,6 @@ WORLD.init = () => {
         }
     }
 }
- 
-const evolveSmoke = (delta) => {
-    var sp = smokeParticles.length;
-    while(sp--) {
-        smokeParticles[sp].rotation.z += (delta * 0.2);
-    }
-}
 
 const onWindowResize = () => {
     WORLD.camera.aspect = window.innerWidth / window.innerHeight;
@@ -248,27 +237,34 @@ const onWindowResize = () => {
 
 var dt = 1 / 60;
 WORLD.animate = () => {
+    
+    setTimeout( function() {
+        
+        requestAnimationFrame(WORLD.animate);
+
+    }, 1000 / 30 );
+
     GAME.updateStatusChange();
     if(GAME.status !== "END") {
         GAME.stats.begin();
 
         WORLD.warningFlag = false;
-        var playX = WORLD.player.position.x;
-        var playY = WORLD.player.position.y;
-        var playZ = WORLD.player.position.z;
+        var playerX = WORLD.player.position.x;
+        var playerY = WORLD.player.position.y;
+        var playerZ = WORLD.player.position.z;
         if (WORLD.player.position.x > WORLD.mapSize) {
-            playX = WORLD.player.position.x - WORLD.mapSize;
+            playerX = WORLD.player.position.x - WORLD.mapSize;
         } else if (WORLD.player.position.x < 0) {
-            playX = WORLD.player.position.x + WORLD.mapSize;
+            playerX = WORLD.player.position.x + WORLD.mapSize;
         }
 
         if (WORLD.player.position.z > WORLD.mapSize) {
-            playZ = WORLD.player.position.z - WORLD.mapSize;
+            playerZ = WORLD.player.position.z - WORLD.mapSize;
         } else if (WORLD.player.position.z < 0) {
-            playZ = WORLD.player.position.z + WORLD.mapSize;
+            playerZ = WORLD.player.position.z + WORLD.mapSize;
         }
-        WORLD.player.position.set(playX, playY, playZ);
-        sphereBody.position.set(playX, playY, playZ);
+        WORLD.player.position.set(playerX, playerY, playerZ);
+        sphereBody.position.set(playerX, playerY, playerZ);
 
         if(GAME.status === "PLAYING") {
             if (WORLD.controls.enabled) {
@@ -303,16 +299,14 @@ WORLD.animate = () => {
                 $("#message").css("display", "none");
             }
 
-            $("#speed").text(PLAYER.status.speed);
+            $("#speed").text((PLAYER.status.speed * GAME.stats.getFPS()).toFixed(1));
         }
 
         GAME.stats.end();
-        GAME.rendererStats.update(WORLD.renderer);
-        setTimeout( function() {
-            WORLD.renderer.render(WORLD.scene, WORLD.camera);
-            requestAnimationFrame(WORLD.animate);
-    
-        }, 1000 / 30 );
+        // GAME.rendererStats.update(WORLD.renderer);
+        WORLD.renderer.render(WORLD.scene, WORLD.camera);
+        // if(GAME.stats.getFPS() > 40)
+            // console.log("_fps ---", GAME.stats.getFPS())
         time = Date.now();
     }
 }

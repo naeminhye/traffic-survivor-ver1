@@ -62,19 +62,12 @@ GAME.updateStatusChange = () => {
 GAME.endGame = () => {
     GAME.status = "END";
     GAME.endTime = new Date();
-    let timeDiff = GAME.endTime - GAME.startTime; //in ms
-    // strip the ms
-    timeDiff /= 1000;
-  
-    // get seconds 
-    var _seconds = Math.round(timeDiff);
-    $("#timeDiff").text(_seconds);
 
     if($("#signListContainer").children().length === 0) {
         var _ol = "<ol>"
         if(GAME.passedSignList.length > 0) {
             GAME.passedSignList.forEach((info) => {
-                _ol += ("<li>Sign's ID " + info.sign.sign_id + " at " + info.time.toLocaleDateString("en-US") + "</li>")
+                _ol += ("<li>Biển báo " + info.sign.object.name + ", số hiệu " + info.sign.sign_id + ", thời gian: " + info.time.toLocaleString("en-US", { timeZone: 'UTC' }) + "</li>")
             });
         };
         _ol += "</ol>";
@@ -94,6 +87,13 @@ GAME.endGame = () => {
         passedLessons.push(currentChapter)
         localStorage.setObject("passedLessons", passedLessons);
     }
+  
+    let timeDiff = GAME.endTime - GAME.startTime; //in ms
+    // strip the ms
+    timeDiff /= 1000;
+    // get seconds 
+    var _seconds = Math.round(timeDiff);
+    $("#timeDiff").text(_seconds);
 
 }
 

@@ -32,7 +32,7 @@ var ROUNDABOUT = "R";
 const manager = new THREE.LoadingManager();
 
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-	$("#loading-text").text( 'Quá trình tải sẽ mất mốt ít thời gian, đợi chút nha!' );
+	$("#loading-text").text( 'Quá trình tải sẽ mất mốt ít thời gian...' );
 };
 
 manager.onProgress = (item, loaded, total) => {
@@ -800,7 +800,7 @@ const environmentInit = function (file) {
                 unit_size: UNIT_SIZE, 
                 isMultiple: true, 
                 minimap: {
-                    color: "green"
+                    color: "grey"
                 }
             },
             {
@@ -872,7 +872,7 @@ const environmentInit = function (file) {
                 houseTexture = WORLD.textureLoader.load(attachedHouseList[randomHouse].url, function ( texture ) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.offset.set( 0, 0 );
-                    texture.repeat.set( 1, 1 );
+                    texture.repeat.set( 1, randomHeight );
                     // texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
                 });
                 var ratio = attachedHouseList[randomHouse].width / attachedHouseList[randomHouse].height;
@@ -881,18 +881,18 @@ const environmentInit = function (file) {
                     map: houseTexture
                 });
                 
-                for(var i = 0; i < randomHeight; i++) {
-                    var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
+                // for(var i = 0; i < randomHeight; i++) {
+                    var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) * randomHeight / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
                     // Set the cube position
-                    cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * i) / ratio, buildingZWidth);
+                    cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * 0) / ratio, buildingZWidth);
                     // Add the cube
                     WORLD.scene.add(cube);
                     //cube.material.map.minFilter = THREE.LinearFilter;
-                    WORLD.collidableObjects.push(cube);
-                    houseMeshes.push({mesh: cube, materialIndex: materialIndex});
-                    houseMaterials.push(buildingMaterial);
-                    materialIndex ++;
-                }
+                    // WORLD.collidableObjects.push(cube);
+                    // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                    // houseMaterials.push(buildingMaterial);
+                    // materialIndex ++;
+                // }
 
                 // WORLD.world.add(createBoxBody(cube, function (object) {
                 //     if (object.body.id == 0)
@@ -901,18 +901,18 @@ const environmentInit = function (file) {
             });
 
             // Geometry of the combined mesh
-            var totalGeometry = new THREE.Geometry();
-            for(var i = 0; i < houseMeshes.length; i++)
-            {
-                houseMeshes[i].mesh.updateMatrix();
-                totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
-            }
+            // var totalGeometry = new THREE.Geometry();
+            // for(var i = 0; i < houseMeshes.length; i++)
+            // {
+            //     houseMeshes[i].mesh.updateMatrix();
+            //     totalGeometry.merge(houseMeshes[i].mesh.geometry, houseMeshes[i].mesh.matrix, houseMeshes[i].materialIndex);
+            // }
             
-            // Create the combined mesh
-            var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
-            combinedMesh.matrixAutoUpdate = false;
-            combinedMesh.updateMatrix();
-            // WORLD.scene.add(combinedMesh);
+            // // Create the combined mesh
+            // var combinedMesh = new THREE.Mesh(totalGeometry, houseMaterials);
+            // combinedMesh.matrixAutoUpdate = false;
+            // combinedMesh.updateMatrix();
+            // // WORLD.scene.add(combinedMesh);
 
             findSquareSubMapWithSize(roadMap, VILLA_ID, 4).forEach(function (tile) {
 

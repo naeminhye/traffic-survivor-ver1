@@ -700,6 +700,9 @@ button.menu-button {
     color: white;
     font-size: 20px;
     text-align: center;
+    font-weight: 600;
+    font-family: 'SVN-Neusa_Bold', Arial, sans-serif;
+    color: #ffce00;
 }
 
 #showSignList {

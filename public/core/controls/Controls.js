@@ -341,7 +341,7 @@ var Controls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
         
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
+        PLAYER.status.speed = (3.6 * (speed / 60)); // convert mps to kph
     
         yawObject.position.copy(cannonBody.position);
     
