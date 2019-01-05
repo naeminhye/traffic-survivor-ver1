@@ -198,9 +198,18 @@ WORLD.init = () => {
     // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
-    document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
-    WORLD.renderer.vr.enabled = true;
+    // document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
+    // WORLD.renderer.vr.enabled = true;
 
+    //////////////////////////////////////////////////////////////////////////////////
+	//		use THREEx.RendererStats					//
+	//////////////////////////////////////////////////////////////////////////////////
+	GAME.rendererStats	= new THREEx.RendererStats()
+	GAME.rendererStats.domElement.style.position	= 'absolute'
+	GAME.rendererStats.domElement.style.left	= '0px'
+	GAME.rendererStats.domElement.style.bottom	= '0px'
+	document.body.appendChild( GAME.rendererStats.domElement )
+    
     GAME.stats = new Stats();
     GAME.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild( GAME.stats.dom );
@@ -298,12 +307,12 @@ WORLD.animate = () => {
         }
 
         GAME.stats.end();
-        WORLD.renderer.render(WORLD.scene, WORLD.camera);
-        //setTimeout( function() {
-
+        GAME.rendererStats.update(WORLD.renderer);
+        setTimeout( function() {
+            WORLD.renderer.render(WORLD.scene, WORLD.camera);
             requestAnimationFrame(WORLD.animate);
     
-        //}, 1000 / 30 );
+        }, 1000 / 30 );
         time = Date.now();
     }
 }

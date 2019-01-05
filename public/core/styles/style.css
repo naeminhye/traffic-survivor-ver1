@@ -686,18 +686,20 @@ button.menu-button {
 
 .game-board-detail {
     font-family: 'AndesRoundedLight', Arial, sans-serif;
-    padding: 5px; 
-    margin: 15px 0; 
-    border: 4px black solid; 
-    background-color: white; 
+    padding: 5px;
+    margin: 15px 0;
+    border: 2px white solid;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
 }
 
 .game-board-header {
-    padding: 5px; border: 4px black solid; background-color: white;  text-align: center;
-}
-
-.game-board-button-container {
-    display: flex; justify-content: space-around;
+    padding: 5px; 
+    border: 2px white solid;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 20px;
+    text-align: center;
 }
 
 #showSignList {
@@ -708,7 +710,8 @@ button.menu-button {
     padding: 0;
     font-size: 20px;
     cursor: pointer;
-    background-color: white;
+    background-color: transparent;
+    color: white;
 }
 
 .container.with-title>.title {

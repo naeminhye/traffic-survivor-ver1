@@ -267,60 +267,7 @@ var Controls = function (camera, cannonBody) {
             $("#right-led").removeClass("active");
         }
 
-        // PLAYER.status.moving = false;
-
-        // if(!scope.detectCollision()) {
-        if (moveForward) {
-            inputVelocity.z = -velocityFactor * delta;
-            // PLAYER.status.moving = true;
-        }
-        if (moveBackward) {
-            inputVelocity.z = velocityFactor * delta;
-            // PLAYER.status.moving = true;
-        }
-
-        if (moveLeft) {
-            inputVelocity.x = -velocityFactor * delta;
-            // PLAYER.status.moving = true;
-        }
-        if (moveRight) {
-            inputVelocity.x = velocityFactor * delta;
-            // PLAYER.status.moving = true;
-        }
-        // }
-
-
-        // Convert velocity to world coordinates
-        euler.x = pitchObject.rotation.x;
-        euler.y = yawObject.rotation.y;
-        euler.order = "XYZ";
-        quat.setFromEuler(euler);
-        inputVelocity.applyQuaternion(quat);
-        //quat.multiplyVector3(inputVelocity);
-        // Add to the object
-        velocity.x += inputVelocity.x;
-        velocity.z += inputVelocity.z;
         
-        var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
-    
-        yawObject.position.copy(cannonBody.position);
-    
-        if(PLAYER.bike) {
-            // position the bike in front of the camera
-            PLAYER.bike.position.set(
-                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                0,
-                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
-            );
-        }
-        // if(WORLD.verticalMirror) {
-        //     WORLD.verticalMirror.position.set(
-        //         WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
-        //         WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
-        //         WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
-        //     );
-        // }
 
         /** Rotation */
         if(rotateLeft) {
@@ -359,7 +306,60 @@ var Controls = function (camera, cannonBody) {
                     WORLD.player.rotation.z
                 );
             }
+
+            // if(!scope.detectCollision()) {
+            if (moveForward) {
+                inputVelocity.z = -velocityFactor * delta;
+                // PLAYER.status.moving = true;
+            }
+            if (moveBackward) {
+                inputVelocity.z = velocityFactor * delta;
+                // PLAYER.status.moving = true;
+            }
+
+            if (moveLeft) {
+                inputVelocity.x = -velocityFactor * delta;
+                // PLAYER.status.moving = true;
+            }
+            if (moveRight) {
+                inputVelocity.x = velocityFactor * delta;
+                // PLAYER.status.moving = true;
+            }
+            // }    
         }
+
+
+        // Convert velocity to world coordinates
+        euler.x = pitchObject.rotation.x;
+        euler.y = yawObject.rotation.y;
+        euler.order = "XYZ";
+        quat.setFromEuler(euler);
+        inputVelocity.applyQuaternion(quat);
+        //quat.multiplyVector3(inputVelocity);
+        // Add to the object
+        velocity.x += inputVelocity.x;
+        velocity.z += inputVelocity.z;
+        
+        var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
+        PLAYER.status.speed = (3.6 * speed * 0.5).toFixed(1); // convert mps to kph
+    
+        yawObject.position.copy(cannonBody.position);
+    
+        if(PLAYER.bike) {
+            // position the bike in front of the camera
+            PLAYER.bike.position.set(
+                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
+                0,
+                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
+            );
+        }
+        // if(WORLD.verticalMirror) {
+        //     WORLD.verticalMirror.position.set(
+        //         WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 3,
+        //         WORLD.player.position.y,// + Math.sin(delta*4 + WORLD.player.position.x + WORLD.player.position.z)*0.01,
+        //         WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 3
+        //     );
+        // }
 
 
         if(lightOn) {
