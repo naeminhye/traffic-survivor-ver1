@@ -32,7 +32,7 @@ var ROUNDABOUT = "R";
 const manager = new THREE.LoadingManager();
 
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-	$("#loading-text").text( 'Quá trình tải sẽ mất mốt ít thời gian...' );
+	$("#loading-text").text( 'Quá trình tải sẽ mất một ít thời gian...' );
 };
 
 manager.onProgress = (item, loaded, total) => {
