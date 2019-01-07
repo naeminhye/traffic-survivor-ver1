@@ -636,7 +636,7 @@ const environmentInit = function (file) {
                 unit_size: UNIT_SIZE, 
                 isMultiple: false, 
                 minimap: {
-                    color: "red"
+                    color: "blue"
                 },
                 callback: null
             },
@@ -680,7 +680,7 @@ const environmentInit = function (file) {
                 unit_size: UNIT_SIZE, 
                 isMultiple: false, 
                 minimap: {
-                    color: "red"
+                    color: "blue"
                 },
                 callback: null
             },
