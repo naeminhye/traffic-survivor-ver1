@@ -426,7 +426,7 @@ button.menu-button {
 }
 
 .confirmation-popup {
-    padding: 20px; background-color: cornflowerblue; text-align: center; text-decoration: none; border: 2px white solid;
+    padding: 20px; background-color: steelblue; text-align: center; text-decoration: none; border: 2px white solid;
 }
 
 .confirmation-popup .answers {
@@ -653,13 +653,12 @@ button.menu-button {
     position: absolute;
     width: 50vw;
     height: 50vh;
+    overflow-y: auto;
     min-height: fit-content;
     min-height: -moz-fit-content;
-}
-.key-instruction-container table {
-    width: 100%;
-    border: 4px black solid;
-    background-color: white;
+    border: 2px white solid;
+    background-color: steelblue;
+    padding: 20px;
 }
 
 .key-instruction-container td {
@@ -682,6 +681,10 @@ button.menu-button {
 }
 .key-instruction-container .key-instruction-btn a {
     font-size: 16px;
+}
+
+#instruction-close {
+    width: 100%;
 }
 
 .game-board-detail {
