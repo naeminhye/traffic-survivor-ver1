@@ -40,10 +40,10 @@
             camera.lookAt(scene.position);	
             
             loader = new THREE.ObjectLoader();
-            var bike = loader.load("/models/fbx/bike/bike.json", ( obj ) => {
+            var bike = loader.load("/models/fbx/bike/bike-rider.json", ( obj ) => {
                 obj.traverse((child) => {
 
-                    if (child instanceof THREE.Mesh) {
+                    if (child instanceof THREE.Mesh && child.name === "bike") {
                         child.castShadow = true;
                         child.receiveShadow = true;
                         var texture = new THREE.TextureLoader().load("/models/fbx/bike/bike-uvmap.png");
@@ -52,13 +52,12 @@
                             side: THREE.DoubleSide
                         });  
                         child.material = material;
-                        child.scale.set(20,20,20);
-                        // child.position.y = -50;
-                        child.position.set(-150, -50, 0);
-                        mesh = child;
-                        scene.add(mesh);
                     }
                 });
+                obj.scale.set(20,20,20);
+                obj.position.set(-150, -50, 0);
+                mesh = obj;
+                scene.add(mesh);
             });
             
             var ambientLight = new THREE.AmbientLight(0x111111);

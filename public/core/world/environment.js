@@ -1285,10 +1285,10 @@ const environmentInit = function (file) {
                     child.material = material;
                 }
             });
-            obj.position.x = WORLD.player.position.x;
-            obj.position.y = WORLD.player.position.y - 10;
-            obj.position.z = WORLD.player.position.z;
-            obj.scale.set(0.3, 0.3, 0.3);
+            // obj.position.x = WORLD.player.position.x;
+            // obj.position.y = WORLD.player.position.y;
+            // obj.position.z = WORLD.player.position.z;
+            obj.scale.set(0.28, 0.28, 0.28);
             //obj.rotation.y = Math.PI;
             var v = new THREE.Vector3();
             obj.lookAt(WORLD.player.getWorldDirection(v));
@@ -1297,9 +1297,9 @@ const environmentInit = function (file) {
             if(PLAYER.bike) {
                 // position the bike in front of the camera
                 PLAYER.bike.position.set(
-                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                    0, 
-                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
+                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.45,
+                    0.1, 
+                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.45
                 );
                 PLAYER.bike.rotation.set(
                     WORLD.player.rotation.x,
