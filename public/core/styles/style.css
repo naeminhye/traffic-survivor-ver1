@@ -796,3 +796,65 @@ button.menu-button {
 .note-board > span {
     display: inherit;
 }
+
+/*style wrapper to give some space*/
+.wrapper {
+    position: relative;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+/*style label to give some more space*/
+.wrapper label {
+  display: block;
+  padding: 12px 0 12px 48px;
+  color: white;
+}
+
+/*style and hide original checkbox*/
+.wrapper input {
+  height: 40px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 40px;
+}
+
+/*position new box*/
+.wrapper input + label::before {
+  border: 2px solid;
+  content: "";
+  height: 40px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 40px;
+}
+
+/*svg background styles*/
+.wrapper input + label::after {
+  content: "";
+  opacity: 0;
+  background-image: url("../../images/check-content.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 20px;
+position: absolute;
+  left: 10px;
+  top: 10px;
+transition: opacity 0.2s ease-in-out;
+}
+
+/*reveal check for 'on' state*/
+.wrapper input:checked + label::after {
+  opacity: 1;
+}
+
+/*focus styles*/
+.wrapper input:focus + label::before {
+  box-shadow: 0 0 0 3px #ffbf47;	
+outline: 3px solid transparent; /* For Windows high contrast mode. */
+
+}
