@@ -194,8 +194,12 @@ WORLD.init = () => {
     // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
-    // document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
-    // WORLD.renderer.vr.enabled = true;
+    
+    const gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
+    if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
+        document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
+        WORLD.renderer.vr.enabled = true;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
 	//		use THREEx.RendererStats					//

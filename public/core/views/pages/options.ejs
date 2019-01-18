@@ -30,7 +30,7 @@
 
     <% include ../partials/libs %>
     <script>
-        const gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
+        var gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
         $(document).ready(function() {
             let mode = false;
             if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
@@ -41,8 +41,13 @@
 
         $("#webvrMode").change(function() {
             let mode = $(this).prop('checked');
-            let newGameOptions = Object.assign({ "webvrMode": mode }, gameOptions);
-            localStorage.setObject("gameOptions", newGameOptions)
+            if(gameOptions.hasOwnProperty("webvrMode")) {
+                gameOptions["webvrMode"] = mode;
+            }
+            else {
+                gameOptions = Object.assign({ webvrMode: mode }, gameOptions);
+            }
+            localStorage.setObject("gameOptions", gameOptions)
         });
     </script>
 </body>
