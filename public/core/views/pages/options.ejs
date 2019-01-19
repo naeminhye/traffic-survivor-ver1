@@ -24,6 +24,7 @@
                     <label for="webvrMode">Sử dụng WebVR</label>
                 </div>
             </div>
+            <button class="clip menu-button" id="option-save">Lưu</button>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
         </div>
     </div>
@@ -39,15 +40,15 @@
             $("#webvrMode").prop('checked', mode);
         });
 
-        $("#webvrMode").change(function() {
-            let mode = $(this).prop('checked');
+        $("#option-save").click(function() {
+            let mode = $("#webvrMode").prop('checked');
             if(gameOptions.hasOwnProperty("webvrMode")) {
                 gameOptions["webvrMode"] = mode;
             }
             else {
                 gameOptions = Object.assign({ webvrMode: mode }, gameOptions);
             }
-            localStorage.setObject("gameOptions", gameOptions)
+            localStorage.setObject("gameOptions", gameOptions);
         });
     </script>
 </body>
