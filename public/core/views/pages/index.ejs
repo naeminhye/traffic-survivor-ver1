@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="core/libs/toastr.js/toastr.min.css">
     <link rel="stylesheet" href="core/libs/nes_css/nes.min.css">
     <link rel="stylesheet" href="core/styles/style.css">
+    <style>
+        body {
+            background-image:url(../../images/showroom_background.jpg);
+        }
+    </style>
 </head>
 
 <body>
@@ -28,52 +33,6 @@
         animate();
 
         function init() {
-
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color( 0x5171a5 );
-
-            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-            // camera.position.z = 500;
-            // camera.lookAt(scene.position);
-            scene.add(camera);
-            camera.position.set(0,150,400);
-            camera.lookAt(scene.position);	
-            
-            loader = new THREE.ObjectLoader();
-            var bike = loader.load("/models/fbx/bike/bike-rider.json", ( obj ) => {
-                obj.traverse((child) => {
-
-                    if (child instanceof THREE.Mesh && child.name === "bike") {
-                        child.castShadow = true;
-                        child.receiveShadow = true;
-                        var texture = new THREE.TextureLoader().load("/models/fbx/bike/bike-uvmap.png");
-                        var material = new THREE.MeshBasicMaterial({
-                            map: texture,
-                            side: THREE.DoubleSide
-                        });  
-                        child.material = material;
-                    }
-                });
-                obj.scale.set(20,20,20);
-                obj.position.set(-150, -50, 0);
-                mesh = obj;
-                scene.add(mesh);
-            });
-            
-            var ambientLight = new THREE.AmbientLight(0x111111);
-            scene.add(ambientLight);
-        
-            renderer = new THREE.WebGLRenderer({
-                antialias: true
-            });
-            
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            // CONTROLS
-            // controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-            window.addEventListener( 'resize', onWindowResize, false );
-
-            document.getElementById("showroom").appendChild(renderer.domElement);
 
         }
 
