@@ -194,8 +194,12 @@ WORLD.init = () => {
     // WORLD.renderer.setClearColor(WORLD.scene.fog.color, 1);
 
     document.body.appendChild(WORLD.renderer.domElement);
-    // document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
-    // WORLD.renderer.vr.enabled = true;
+    
+    const gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
+    if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
+        document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
+        WORLD.renderer.vr.enabled = true;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
 	//		use THREEx.RendererStats					//
@@ -208,7 +212,7 @@ WORLD.init = () => {
     
     GAME.stats = new Stats();
     GAME.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild( GAME.stats.dom );
+    // document.body.appendChild( GAME.stats.dom );
 
     // $("#music").play();
 
@@ -443,7 +447,7 @@ const updateTrafficLights = () => {
 
     /** _flag = true nếu đang ở trong vùng intersect */
     if (isInIntersectArea && trafficLightViolation && !isViolating) {
-        GAME.handleFining("You have just blown through a red light!!", 100);
+        GAME.handleFining("Bạn vừa vượt đèn đỏ!", 100);
         isViolating = true;
     }
     if (!isInIntersectArea && isViolating) {
@@ -508,7 +512,7 @@ const checkRoundaboutViolation = () => {
     }
     else {
         if (!roundaboutViolationFlag) {
-            GAME.handleFining("Riding violations performed within the roundabout!", 100000);
+            GAME.handleFining("Đi sai đường tại vòng xuyến!", 100000);
             roundaboutViolationFlag = true;
         }
     }
@@ -539,7 +543,7 @@ const checkOneWayViolation = () => {
             thisRoad.direction.z));
 
         if (!violationFlag && (Math.abs(minifyAngle(angleDelta)) > 90)) {
-            GAME.handleFining("You made a wrong turn and have entered a one way road!", 300);
+            GAME.handleFining("Bạn vừa đi vào đường một chiều, vui lòng thay đổi hướng đi!", 300);
             violationFlag = true;
         }
     }

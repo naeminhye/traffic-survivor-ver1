@@ -97,6 +97,11 @@ GAME.endGame = () => {
 
 }
 
+/** 
+ * @param message: lời nhắn về mức phạt và vi phạm
+ * @param money: số tiền bị phạt 
+ * @param callback: callback xử lí khác khi vi phạm xảy ra
+ */
 GAME.handleFining = (message, money, callback) => {
 
     //var date = new Date();

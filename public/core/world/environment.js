@@ -10,7 +10,7 @@ var SMALL_BUILDING_ID = "3";
 var NEW_BUILDING_ID = "5";
 var OFFICE_BUILDING_ID = "6";
 var GRASS_ID = "G";
-var COBBLESTONE_ID = "CS"; //cobblestones.jpg
+var COBBLESTONE_ID = "CS"; 
 var START_POS_Z = "S";
 var START_POS_X = "-S";
 var END_POS_Z = "E";
@@ -636,7 +636,7 @@ const environmentInit = function (file) {
                 unit_size: UNIT_SIZE, 
                 isMultiple: false, 
                 minimap: {
-                    color: "red"
+                    color: "blue"
                 },
                 callback: null
             },
@@ -680,7 +680,7 @@ const environmentInit = function (file) {
                 unit_size: UNIT_SIZE, 
                 isMultiple: false, 
                 minimap: {
-                    color: "red"
+                    color: "blue"
                 },
                 callback: null
             },
@@ -1270,17 +1270,11 @@ const environmentInit = function (file) {
         }
 
         // bike model
-        WORLD.objectLoader.load("/models/fbx/bike/bike.json", ( obj ) => {
-            obj.position.x = WORLD.player.position.x;
-            obj.position.y = WORLD.player.position.y - 6;
-            obj.position.z = WORLD.player.position.z;
-            //obj.rotation.y = Math.PI;
-            var v = new THREE.Vector3();
-            obj.lookAt(WORLD.player.getWorldDirection(v));
+        WORLD.objectLoader.load("/models/fbx/bike/bike-rider.json", ( obj ) => {
             obj.name = "xe"
             obj.traverse((child) => {
 
-                if (child instanceof THREE.Mesh) {
+                if (child instanceof THREE.Mesh && child.name === "bike") {
                     child.castShadow = true;
                     child.receiveShadow = true;
                     var texture = new THREE.TextureLoader().load("/models/fbx/bike/bike-uvmap.png");
@@ -1291,15 +1285,21 @@ const environmentInit = function (file) {
                     child.material = material;
                 }
             });
+            // obj.position.x = WORLD.player.position.x;
+            // obj.position.y = WORLD.player.position.y;
+            // obj.position.z = WORLD.player.position.z;
+            obj.scale.set(0.28, 0.28, 0.28);
+            //obj.rotation.y = Math.PI;
+            var v = new THREE.Vector3();
+            obj.lookAt(WORLD.player.getWorldDirection(v));
             PLAYER.bike = obj;
 
             if(PLAYER.bike) {
-                PLAYER.bike.scale.set(0.003, 0.003, 0.003);
                 // position the bike in front of the camera
                 PLAYER.bike.position.set(
-                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                    0, 
-                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
+                    WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.45,
+                    0.1, 
+                    WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.45
                 );
                 PLAYER.bike.rotation.set(
                     WORLD.player.rotation.x,

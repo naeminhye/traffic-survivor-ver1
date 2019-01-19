@@ -19,12 +19,38 @@
     <div class="content-container">
         <div id="options" style="postion: relative; width: 40vw;">
             <div class="note-board" style="width: 100%; height: 50vh;overflow-y: auto;">
+                <div class="wrapper">
+                    <input id="webvrMode" name="webvr-mode" type="checkbox" value="webvr-mode">
+                    <label for="webvrMode">Sử dụng WebVR</label>
+                </div>
             </div>
+            <button class="clip menu-button" id="option-save">Lưu</button>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
         </div>
     </div>
 
     <% include ../partials/libs %>
+    <script>
+        var gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
+        $(document).ready(function() {
+            let mode = false;
+            if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
+                mode = true;
+            }
+            $("#webvrMode").prop('checked', mode);
+        });
+
+        $("#option-save").click(function() {
+            let mode = $("#webvrMode").prop('checked');
+            if(gameOptions.hasOwnProperty("webvrMode")) {
+                gameOptions["webvrMode"] = mode;
+            }
+            else {
+                gameOptions = Object.assign({ webvrMode: mode }, gameOptions);
+            }
+            localStorage.setObject("gameOptions", gameOptions);
+        });
+    </script>
 </body>
 
 </html>

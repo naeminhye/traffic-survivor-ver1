@@ -348,9 +348,9 @@ var Controls = function (camera, cannonBody) {
         if(PLAYER.bike) {
             // position the bike in front of the camera
             PLAYER.bike.position.set(
-                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.75,
-                0,
-                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.75
+                WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.45,
+                0.1,
+                WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.45
             );
         }
         // if(WORLD.verticalMirror) {
