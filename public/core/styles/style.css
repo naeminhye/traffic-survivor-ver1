@@ -130,7 +130,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #5171a5;
+    background-image:url(../../images/showroom_background.jpg);
 }
 .content-container .content {
     margin: 1em;
@@ -366,6 +366,8 @@ hr {
     justify-content: center;
     min-width: 200px;
     width: 400px;
+    height: 300px;
+    right: 50px;
 }
 
 .menu-item {
@@ -388,6 +390,7 @@ hr {
 
 button.menu-button {
     margin: 10px 0; width: 100%;
+    background-color: black;
 }
 
 #controllers {
