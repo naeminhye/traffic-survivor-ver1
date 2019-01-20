@@ -36,7 +36,12 @@ GAME.updateStatusChange = () => {
     if (GAME.status === "PLAYING") {
         WORLD.controls.enabled = true;
         GAME.blocker.css("display", "none");
-    } else {
+    } 
+    else if (GAME.status === "CHANGE_CAMERA") {
+        WORLD.controls.enabled = false;
+        GAME.blocker.css("display", "none");
+    }
+    else {
         WORLD.controls.enabled = false;
         if (GAME.status !== "END") {
             GAME.blocker.css("display", "-webkit-box");
