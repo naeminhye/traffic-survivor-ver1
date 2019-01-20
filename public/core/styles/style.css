@@ -664,11 +664,11 @@ button.menu-button {
     border: 2px white solid;
     background-color: steelblue;
     padding: 20px;
+    color: white;
 }
 
 .key-instruction-container td {
     padding: 5px 10px; 
-    
 }
 
 .key-instruction-container td.key-name {

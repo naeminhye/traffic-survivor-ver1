@@ -72,7 +72,7 @@
         }
 
         let lhref = "location.href='/game?level=easy&chapter=" + i + "'";
-        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + i + ": " + levels[i - 1] + tick + "</button>"
+        element1 += "<button class='clip menu-button' " + (isPassed ? "style='color: white;'" : "") + " onclick=" + lhref + ">Bài " + i + ": " + levels[i - 1] + tick + "</button>"
     } 
     $("#level-easy .level-container").append($(element1));
     var element2 = "";

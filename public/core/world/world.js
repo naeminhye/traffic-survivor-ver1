@@ -125,13 +125,13 @@ WORLD.initCannon = () => {
 
     // Create a sphere
     var mass = 5,
-        radius = 1.8;
+        radius = 1.6;
     sphereShape = new CANNON.Sphere(radius);
     sphereBody = new CANNON.Body({
         mass: mass
     });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(46, 1.8, 55);
+    sphereBody.position.set(46, 1.6, 55);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 

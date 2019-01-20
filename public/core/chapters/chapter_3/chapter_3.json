@@ -2,7 +2,7 @@
 	"map_url": "./core/chapters/chapter_3/chapter_3.txt",
 	"size": 5,
     "player": {
-        "position": {"x": 25, "y": 1.8, "z": 215}
+        "position": {"x": 25, "y": 1.6, "z": 215}
     },
     "models": {
         "vehicles": [
