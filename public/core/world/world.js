@@ -230,23 +230,23 @@ WORLD.init = () => {
         if(event.keyCode === 27 && GAME.status === "PLAYING") { // ESC
             GAME.status = "PAUSED";
         }
-        else if(event.keyCode === 48 && GAME.status === "PLAYING") {
+        else if((event.keyCode === 48 || event.keyCode === 96) && GAME.status === "PLAYING") {
             GAME.cameraMode = 0;
             
             WORLD.camera.position.set(0, 0, 0)
         }
-        else if(event.keyCode === 49 && GAME.status === "PLAYING") {
+        else if((event.keyCode === 49 || event.keyCode === 97) && GAME.status === "PLAYING") {
             GAME.cameraMode = 1;
 
             WORLD.camera.position.set(0, 0, 10)
         }
-        else if(event.keyCode === 50 && GAME.status === "PLAYING") {
+        else if((event.keyCode === 50 || event.keyCode === 98) && GAME.status === "PLAYING") {
             GAME.cameraMode = 2;
 
             WORLD.camera.position.set(0, 10, 20);
             WORLD.camera.rotateX(- Math.PI/8);
         }
-        else if(event.keyCode === 51 && GAME.status === "PLAYING") {
+        else if((event.keyCode === 51 || event.keyCode === 99) && GAME.status === "PLAYING") {
             GAME.cameraMode = 3;
 
             WORLD.camera.position.set(0, 20, -5);
