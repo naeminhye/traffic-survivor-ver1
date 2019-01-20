@@ -230,31 +230,31 @@ WORLD.init = () => {
         if(event.keyCode === 27 && GAME.status === "PLAYING") { // ESC
             GAME.status = "PAUSED";
         }
-        else if((event.keyCode === 48 || event.keyCode === 96) && GAME.status === "PLAYING") {
+        else if((event.keyCode === 48 || event.keyCode === 96) && GAME.status === "PLAYING" && GAME.enableCameraChange) {
             GAME.cameraMode = 0;
             
             WORLD.camera.position.set(0, 0, 0);
             WORLD.camera.rotation.set(0, 0, 0);
         }
-        else if((event.keyCode === 49 || event.keyCode === 97) && GAME.status === "PLAYING") {
+        else if((event.keyCode === 49 || event.keyCode === 97) && GAME.status === "PLAYING" && GAME.enableCameraChange) {
             GAME.cameraMode = 1;
 
             WORLD.camera.position.set(0, 0, 10);
             WORLD.camera.rotation.set(0, 0, 0);
         }
-        else if((event.keyCode === 50 || event.keyCode === 98) && GAME.status === "PLAYING") {
+        else if((event.keyCode === 50 || event.keyCode === 98) && GAME.status === "PLAYING" && GAME.enableCameraChange) {
             GAME.cameraMode = 2;
 
             WORLD.camera.position.set(0, 10, 20);
             WORLD.camera.rotation.set(- Math.PI/8, 0, 0);
         }
-        else if((event.keyCode === 51 || event.keyCode === 99) && GAME.status === "PLAYING") {
+        else if((event.keyCode === 51 || event.keyCode === 99) && GAME.status === "PLAYING" && GAME.enableCameraChange) {
             GAME.cameraMode = 3;
 
             WORLD.camera.position.set(0, 20, 20);
             WORLD.camera.rotation.set(- Math.PI/4, 0, 0);
         }
-        else if((event.keyCode === 52 || event.keyCode === 100) && GAME.status === "PLAYING") {
+        else if((event.keyCode === 52 || event.keyCode === 100) && GAME.status === "PLAYING" && GAME.enableCameraChange) {
             GAME.cameraMode = 4;
 
             WORLD.camera.position.set(0, 20, -8);

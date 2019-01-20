@@ -17,11 +17,15 @@
 <body>
 
     <div class="content-container">
-        <div id="options" style="postion: relative; width: 40vw;">
-            <div class="note-board" style="width: 100%; height: 50vh;overflow-y: auto;">
+        <div id="options" style="position: relative; width: 40vw;">
+            <div class="note-board" style="width: 100%; height: 50vh; overflow-y: auto;">
                 <div class="wrapper">
                     <input id="webvrMode" name="webvr-mode" type="checkbox" value="webvr-mode">
                     <label for="webvrMode">Sử dụng WebVR</label>
+                </div>
+                <div class="wrapper">
+                    <input id="enableCameraChange" name="camera-mode" type="checkbox" value="camera-mode">
+                    <label for="enableCameraChange">Cho phép thay đổi góc nhìn của Camera</label>
                 </div>
             </div>
             <button class="clip menu-button" id="option-save">Lưu</button>
@@ -33,11 +37,15 @@
     <script>
         var gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
         $(document).ready(function() {
-            let mode = false;
+            let mode = false, cameraMode = false;
             if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
                 mode = true;
             }
             $("#webvrMode").prop('checked', mode);
+            if( gameOptions.hasOwnProperty("enableCameraChange") && gameOptions["enableCameraChange"] ) {
+                cameraMode = true;
+            }
+            $("#enableCameraChange").prop('checked', cameraMode);
         });
 
         $("#option-save").click(function() {
@@ -47,6 +55,14 @@
             }
             else {
                 gameOptions = Object.assign({ webvrMode: mode }, gameOptions);
+            }
+            
+            let cameraMode = $("#enableCameraChange").prop('checked');
+            if(gameOptions.hasOwnProperty("enableCameraChange")) {
+                gameOptions["enableCameraChange"] = cameraMode;
+            }
+            else {
+                gameOptions = Object.assign({ enableCameraChange: cameraMode }, gameOptions);
             }
             localStorage.setObject("gameOptions", gameOptions);
         });

@@ -3,6 +3,11 @@ GAME.status = "READY";
 GAME.passedSignList = [];
 GAME.startTime;
 GAME.endTime;
+var gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
+if(!gameOptions.hasOwnProperty("enableCameraChange")) {
+    gameOptions = Object.assign({ enableCameraChange: false }, gameOptions);
+}
+GAME.enableCameraChange = gameOptions["enableCameraChange"];
 
 GAME.blocker = $('#blocker');
 GAME.instructions = $('#instructions');
