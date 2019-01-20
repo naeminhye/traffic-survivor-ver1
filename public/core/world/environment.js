@@ -868,7 +868,7 @@ const environmentInit = function (file) {
                 /** residental buildings */
                 var houseTexture;
                 var randomSize = 0;//= Math.random();
-                var randomHeight = Math.floor((Math.random()) * 4) + 1; 
+                var randomHeight = Math.floor((Math.random()) * 6) + 1; 
                 var randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
 
                 var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
