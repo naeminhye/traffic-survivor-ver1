@@ -233,24 +233,32 @@ WORLD.init = () => {
         else if((event.keyCode === 48 || event.keyCode === 96) && GAME.status === "PLAYING") {
             GAME.cameraMode = 0;
             
-            WORLD.camera.position.set(0, 0, 0)
+            WORLD.camera.position.set(0, 0, 0);
+            WORLD.camera.rotation.set(0, 0, 0);
         }
         else if((event.keyCode === 49 || event.keyCode === 97) && GAME.status === "PLAYING") {
             GAME.cameraMode = 1;
 
-            WORLD.camera.position.set(0, 0, 10)
+            WORLD.camera.position.set(0, 0, 10);
+            WORLD.camera.rotation.set(0, 0, 0);
         }
         else if((event.keyCode === 50 || event.keyCode === 98) && GAME.status === "PLAYING") {
             GAME.cameraMode = 2;
 
             WORLD.camera.position.set(0, 10, 20);
-            WORLD.camera.rotateX(- Math.PI/8);
+            WORLD.camera.rotation.set(- Math.PI/8, 0, 0);
         }
         else if((event.keyCode === 51 || event.keyCode === 99) && GAME.status === "PLAYING") {
             GAME.cameraMode = 3;
 
-            WORLD.camera.position.set(0, 20, -5);
-            WORLD.camera.rotateX(- Math.PI/2);
+            WORLD.camera.position.set(0, 20, 20);
+            WORLD.camera.rotation.set(- Math.PI/4, 0, 0);
+        }
+        else if((event.keyCode === 52 || event.keyCode === 100) && GAME.status === "PLAYING") {
+            GAME.cameraMode = 4;
+
+            WORLD.camera.position.set(0, 20, -8);
+            WORLD.camera.rotation.set(- Math.PI/2, 0, 0);
         }
     }, false);
     window.onblur = function() { 

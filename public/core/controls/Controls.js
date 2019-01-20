@@ -80,6 +80,8 @@ var Controls = function (camera, cannonBody) {
     var PI_2 = Math.PI / 2;
 
     var onMouseMove = function (event) {
+        
+        if( GAME.cameraMode !== 0 ) return;
 
         if (scope.enabled === false) return;
 
@@ -200,9 +202,7 @@ var Controls = function (camera, cannonBody) {
         }
     };
     
-    if(GAME.cameraMode === 0) {
-        document.addEventListener('mousemove', onMouseMove, false);
-    }
+    document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('keyup', onKeyUp, false);
 
