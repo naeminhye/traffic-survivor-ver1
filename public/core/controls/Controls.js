@@ -80,6 +80,8 @@ var Controls = function (camera, cannonBody) {
     var PI_2 = Math.PI / 2;
 
     var onMouseMove = function (event) {
+        
+        if( GAME.cameraMode !== 0 ) return;
 
         if (scope.enabled === false) return;
 
@@ -344,12 +346,15 @@ var Controls = function (camera, cannonBody) {
         PLAYER.status.speed = (3.6 * (speed / 60)); // convert mps to kph
     
         yawObject.position.copy(cannonBody.position);
+        if(WORLD.player) {
+            PLAYER.position.set(WORLD.player.position.x, WORLD.player.position.y, WORLD.player.position.z);
+        }
     
         if(PLAYER.bike) {
             // position the bike in front of the camera
             PLAYER.bike.position.set(
                 WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.45,
-                0.1,
+                0,
                 WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.45
             );
         }

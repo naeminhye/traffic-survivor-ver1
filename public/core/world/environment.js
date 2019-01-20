@@ -568,6 +568,11 @@ const environmentInit = function (file) {
         WORLD.player.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
         sphereBody.position.set(mapInfo.player.position.x, mapInfo.player.position.y, mapInfo.player.position.z);
 
+        if(mapInfo.player.rotation) {
+            WORLD.player.rotation.set(mapInfo.player.rotation.x, mapInfo.player.rotation.y, mapInfo.player.rotation.z);
+            //sphereBody.rotation.set(mapInfo.player.rotation.x, mapInfo.player.rotation.y, mapInfo.player.rotation.z);        
+        }
+
         if(mapInfo.player.rotateY) {
             WORLD.player.rotateY(mapInfo.player.rotateY);
         }
@@ -1298,7 +1303,7 @@ const environmentInit = function (file) {
                 // position the bike in front of the camera
                 PLAYER.bike.position.set(
                     WORLD.player.position.x - Math.sin(WORLD.player.rotation.y) * 0.45,
-                    0.1, 
+                    0, 
                     WORLD.player.position.z - Math.cos(WORLD.player.rotation.y) * 0.45
                 );
                 PLAYER.bike.rotation.set(
