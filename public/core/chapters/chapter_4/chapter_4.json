@@ -109,7 +109,7 @@
 				}
             },
             {
-				"x": 5,
+				"x": 6,
 				"z": 12,
 				"loader_type": "object",
                 "object_type": "guidance_signs",
@@ -200,7 +200,7 @@
             },
             {
 				"x": 3,
-				"z": 11,
+				"z": 13,
 				"loader_type": "object",
                 "object_type": "guidance_signs",
                 "sign_id": "306",
@@ -616,9 +616,9 @@
             "max_speed": null,
             "position": {
                 "x": 4,
-                "z": 12,
+                "z": 14,
                 "x_width": 2, 
-                "z_width": 19
+                "z_width": 17
             },
 			"direction": {"x": 0, "y": 0, "z": 1}
         },

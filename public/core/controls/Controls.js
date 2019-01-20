@@ -309,10 +309,8 @@ var Controls = function (camera, cannonBody) {
                 );
             }
 
-            // if(!scope.detectCollision()) {
             if (moveForward) {
                 inputVelocity.z = -velocityFactor * delta;
-                // PLAYER.status.moving = true;
             }
             if (moveBackward) {
                 inputVelocity.z = velocityFactor * delta;
@@ -327,7 +325,6 @@ var Controls = function (camera, cannonBody) {
                 inputVelocity.x = velocityFactor * delta;
                 // PLAYER.status.moving = true;
             }
-            // }    
         }
 
 
@@ -441,15 +438,3 @@ var Controls = function (camera, cannonBody) {
     //     return flag;
     // }
 };
-
-// Takes a ray and sees if it's colliding with anything from the list of collidable objects
-// Returns true if certain distance away from object
-const rayIntersect = (ray, distance) => {
-    var intersects = ray.intersectObjects(WORLD.collidableObjects);
-    for (var i = 0; i < intersects.length; i++) {
-        if (intersects[i].distance < distance) {
-            return true;
-        }
-    }
-    return false;
-}

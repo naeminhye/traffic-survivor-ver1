@@ -50,7 +50,7 @@ manager.onLoad = () => {
     setTimeout(() => {
         $("#loading-text").fadeOut(500);
         WORLD.loaded = true;
-        $("#loading").fadeOut(5000);
+        $("#loading").fadeOut(2000);
         GAME.blocker.css("display", "block");
     }, 500)
 }

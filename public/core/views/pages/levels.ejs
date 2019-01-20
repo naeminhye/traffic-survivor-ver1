@@ -81,13 +81,13 @@
         let isPassed = passedLessons.includes(j);
         let isLearning = learningLessons.includes(j);
         if(isPassed) {
-            tick = "<span style='font-size: 30px; color: green;'>✔</span>";
+            tick = "<span style='font-size: 30px; color: green; margin-left: 5px;'>✔</span>";
         }
         else if (isLearning){
             tick = "<span style='font-size: 30px; color: red; margin-left: 5px;'>✘</span>";
         }
         let lhref = "location.href='/game?level=medium&chapter=" + j + "'";
-        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: black;'" : "") + " onclick=" + lhref + ">Bài " + j + ": " + levels[j - 1] + tick + "</button>"
+        element2 += "<button class='clip menu-button' " + (isPassed ? "style='color: white;'" : "") + " onclick=" + lhref + ">Bài " + j + ": " + levels[j - 1] + tick + "</button>"
     }
     $("#level-medium .level-container").append($(element2));
     
