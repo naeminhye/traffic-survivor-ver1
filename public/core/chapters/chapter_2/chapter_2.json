@@ -113,6 +113,33 @@
                 "velocity": 0.035
             },
             {
+                "name": "simple-car-36-32",
+                "loader_type": "object",
+                "object_type": "vehicles",
+                "position": {"x":180,"y":0,"z":160},
+                "url": "./models/fbx/simple-car/car.json",
+                "animate": false,
+                "castShadow": true,
+                "receiveShadow": true,
+                "path": [
+                	{"x":180,"y":0,"z":160},
+                	{"x":180,"y":0,"z":170},
+                	{"x":170,"y":0,"z":170},
+                	{"x":95,"y":0,"z":170},
+                	{"x":85,"y":0,"z":170},
+                	{"x":85,"y":0,"z":160},
+                	{"x":85,"y":0,"z":145},
+                	{"x":85,"y":0,"z":135},
+                	{"x":85,"y":0,"z":125},
+                	{"x":95,"y":0,"z":125},
+                	{"x":170,"y":0,"z":125},
+                	{"x":180,"y":0,"z":125},
+                    {"x":180,"y":0,"z":135},
+                    {"x":180,"y":0,"z":160}
+                ],
+                "velocity": 0.03
+			},
+            {
                 "name": "camero-17-29",
                 "loader_type": "object",
                 "object_type": "vehicles",
