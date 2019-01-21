@@ -20,12 +20,16 @@
         <div id="options" style="position: relative; width: 40vw;">
             <div class="note-board" style="width: 100%; height: 50vh; overflow-y: auto;">
                 <div class="wrapper">
-                    <input id="webvrMode" name="webvr-mode" type="checkbox" value="webvr-mode">
-                    <label for="webvrMode">Sử dụng WebVR</label>
+                    <input id="enableWebvr" name="webvr-mode" type="checkbox" value="webvr-mode">
+                    <label for="enableWebvr">Sử dụng WebVR</label>
                 </div>
                 <div class="wrapper">
                     <input id="enableCameraChange" name="camera-mode" type="checkbox" value="camera-mode">
                     <label for="enableCameraChange">Cho phép thay đổi góc nhìn của Camera</label>
+                </div>
+                <div class="wrapper">
+                    <input id="enableCollision" name="collision-mode" type="checkbox" value="collision-mode">
+                    <label for="enableCollision">Cho phép kiểm tra va chạm</label>
                 </div>
             </div>
             <button class="clip menu-button" id="option-save">Lưu</button>
@@ -37,26 +41,38 @@
     <script>
         var gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
         $(document).ready(function() {
-            let mode = false, cameraMode = false;
-            if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
+            let mode = false, cameraMode = false, collisionMode = false;
+            
+            // enable webvr mode
+            if( gameOptions.hasOwnProperty("enableWebvr") && gameOptions["enableWebvr"] ) {
                 mode = true;
             }
-            $("#webvrMode").prop('checked', mode);
+            $("#enableWebvr").prop('checked', mode);
+            
+            // enable camera change mode
             if( gameOptions.hasOwnProperty("enableCameraChange") && gameOptions["enableCameraChange"] ) {
                 cameraMode = true;
             }
             $("#enableCameraChange").prop('checked', cameraMode);
+            
+            // enable collision mode
+            if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
+                collisionMode = true;
+            }
+            $("#enableCollision").prop('checked', collisionMode);
         });
 
         $("#option-save").click(function() {
-            let mode = $("#webvrMode").prop('checked');
-            if(gameOptions.hasOwnProperty("webvrMode")) {
-                gameOptions["webvrMode"] = mode;
+            // enable webvr mode
+            let mode = $("#enableWebvr").prop('checked');
+            if(gameOptions.hasOwnProperty("enableWebvr")) {
+                gameOptions["enableWebvr"] = mode;
             }
             else {
-                gameOptions = Object.assign({ webvrMode: mode }, gameOptions);
+                gameOptions = Object.assign({ enableWebvr: mode }, gameOptions);
             }
             
+            // enable camera change mode
             let cameraMode = $("#enableCameraChange").prop('checked');
             if(gameOptions.hasOwnProperty("enableCameraChange")) {
                 gameOptions["enableCameraChange"] = cameraMode;
@@ -64,6 +80,17 @@
             else {
                 gameOptions = Object.assign({ enableCameraChange: cameraMode }, gameOptions);
             }
+
+            // enable collision mode
+            let collisionMode = $("#enableCollision").prop('checked');
+            if(gameOptions.hasOwnProperty("enableCollision")) {
+                gameOptions["enableCollision"] = collisionMode;
+            }
+            else {
+                gameOptions = Object.assign({ enableCollision: collisionMode }, gameOptions);
+            }
+
+            // save to local storage
             localStorage.setObject("gameOptions", gameOptions);
         });
     </script>

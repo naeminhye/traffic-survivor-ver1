@@ -154,7 +154,7 @@ WORLD.init = () => {
     // WORLD.scene.background = new THREE.Color(0xcce0ff);
     var cubeMap = loadCubemap('./images/textures/cubemap/', 'png');
     WORLD.scene.background = cubeMap;
-    WORLD.scene.fog = new THREE.Fog(0x000000, 0, 300);
+    WORLD.scene.fog = new THREE.Fog(0xffffff, 0, 300);
 
     var ambient = new THREE.AmbientLight(0x111111);
     // WORLD.scene.add(ambient);
@@ -201,7 +201,7 @@ WORLD.init = () => {
     document.body.appendChild(WORLD.renderer.domElement);
     
     const gameOptions = localStorage.getObject("gameOptions") ? localStorage.getObject("gameOptions") : [];
-    if( gameOptions.hasOwnProperty("webvrMode") && gameOptions["webvrMode"] ) {
+    if( gameOptions.hasOwnProperty("enableWebvr") && gameOptions["enableWebvr"] ) {
         document.body.appendChild( WEBVR.createButton( WORLD.renderer ) );
         WORLD.renderer.vr.enabled = true;
     }
