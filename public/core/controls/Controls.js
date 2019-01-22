@@ -247,14 +247,6 @@ var Controls = function (camera, cannonBody) {
         var rotateAngle = Math.PI / 2 * 0.02;
 
         inputVelocity.set(0, 0, 0);
-        if(speedup) {
-            // velocityFactor += 0.1;
-        }
-
-        // if(WORLD.detectCollision() !== 0){
-        //     // TODO: Handle collision event
-        //     console.log("collision")
-        // }
 
         if(leftSignal) {
             $("#left-led").addClass("active");
@@ -408,33 +400,33 @@ var Controls = function (camera, cannonBody) {
         // }
     };
 
-    // this.detectCollision = () => {
-    //     var flag = 0;
-    //     WORLD.collidableObjects.forEach((mesh) => {
+    this.detectCollision = () => {
+        var flag = 0;
+        WORLD.collidableObjects.forEach((mesh) => {
 
-    //         var helper = new THREE.BoxHelper(mesh, 0xff0000);
-    //         helper.update();
+            var helper = new THREE.BoxHelper(mesh, 0xff0000);
+            helper.update();
 
-    //         // If you want a visible bounding box
-    //         // WORLD.scene.add(helper);
-    //         var object = new THREE.Box3().setFromObject(helper);
+            // If you want a visible bounding box
+            // WORLD.scene.add(helper);
+            var object = new THREE.Box3().setFromObject(helper);
 
-    //         // if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
-    //         if (PLAYER.bike) {
+            // if (object instanceof THREE.Sphere || object instanceof THREE.Box3) {
+            if (PLAYER.bike) {
 
-    //             if (object.containsPoint(PLAYER.bike.position)) {
-    //                 console.log("Collided ---", object);
-    //                 flag++;
-    //             }
-    //         }
-    //         else {
-    //             if (object.containsPoint(scope.getObject().position)) {
-    //                 console.log("Collided ---", object);
-    //                 flag++;
-    //             }
-    //         }
-    //         // }
-    //     });
-    //     return flag;
-    // }
+                if (object.containsPoint(PLAYER.bike.position)) {
+                    console.log("Collided ---", object);
+                    flag++;
+                }
+            }
+            else {
+                if (object.containsPoint(scope.getObject().position)) {
+                    console.log("Collided ---", object);
+                    flag++;
+                }
+            }
+            // }
+        });
+        return flag;
+    }
 };

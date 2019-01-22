@@ -314,6 +314,7 @@ WORLD.animate = () => {
                     WORLD.vehicleControls.forEach(function (control) {
                         // moving vehicles
                         control.update(Date.now() - time);
+                        control.detectCollision(WORLD.player);
                     });
                 }
 

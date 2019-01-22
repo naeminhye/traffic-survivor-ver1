@@ -893,7 +893,7 @@ const environmentInit = function (file) {
                     // Add the cube
                     WORLD.scene.add(cube);
                     //cube.material.map.minFilter = THREE.LinearFilter;
-                    // WORLD.collidableObjects.push(cube);
+                    WORLD.collidableObjects.push(cube);
                     // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                     // houseMaterials.push(buildingMaterial);
                     // materialIndex ++;

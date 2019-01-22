@@ -60,3 +60,16 @@ CONTROLS.PathControls.prototype.showPath = function () {
 CONTROLS.PathControls.prototype.getPosition = function () {
 	return this._object.position;
 }
+
+CONTROLS.PathControls.prototype.detectCollision = function (mesh) {
+	// console.log("position",this._object.position);
+	// console.log("boundingSphere",this._object.geometry.boundingSphere);
+	if (this._object && this._object.geometry) {
+		var sphere = new THREE.Sphere(this._object.position, this._object.geometry.boundingSphere.radius);
+		
+		if(sphere.containsPoint(mesh.position)) {
+			console.log("Va cham voi xe")
+		}
+
+	}
+}
