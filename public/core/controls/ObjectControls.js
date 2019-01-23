@@ -41,6 +41,8 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 		this._object.lookAt(this.path.getPointAt(this._pos));
 	}
 
+	this.detectCollision(WORLD.player);
+
 }
 
 CONTROLS.PathControls.prototype.showPath = function () {
@@ -69,6 +71,7 @@ CONTROLS.PathControls.prototype.detectCollision = function (mesh) {
 		
 		if(sphere.containsPoint(mesh.position)) {
 			console.log("Va cham voi xe")
+			mesh.position.set(this._object.position.x, this._object.position.y, this._object.position.z);
 		}
 
 	}
