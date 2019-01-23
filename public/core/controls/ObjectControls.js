@@ -70,7 +70,13 @@ CONTROLS.PathControls.prototype.detectCollision = function (mesh) {
 		var sphere = new THREE.Sphere(this._object.position, this._object.geometry.boundingSphere.radius);
 		
 		if(sphere.containsPoint(mesh.position)) {
-			console.log("Va cham voi xe")
+			toastr.options = {
+				"closeButton": false,
+				"newestOnTop": true,
+				"positionClass": "toast-top-right",
+				"preventDuplicates": true
+			}
+			toastr.error("Va cham với phương tiện giao thông khác!");
 			mesh.position.set(this._object.position.x, this._object.position.y, this._object.position.z);
 		}
 
