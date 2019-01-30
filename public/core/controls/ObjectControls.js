@@ -36,7 +36,6 @@ CONTROLS.PathControls = function (object, body, path, prop) {
 };
 
 CONTROLS.PathControls.prototype.update = function (delta) {
-	var flag = 0;
 
 	this._object.position.copy(this.path.getPointAt(this._pos));
 	this._objectBody.position.copy(this.path.getPointAt(this._pos));
@@ -64,22 +63,6 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 		this._object.lookAt(this.path.getPointAt(this._pos));
 		this._objectBody.position.copy(this.path.getPointAt(this._pos));
 	}
-
-	// this.detectCollision(WORLD.player);
-
-	// if(WORLD.vehicleControls) {
-	// 	WORLD.vehicleControls.forEach(control => {
-
-	// 		if (this._object && this._object.geometry && control._object && control._object.geometry) {
-	// 			var thisSphere = new THREE.Sphere(this._object.position, this._object.geometry.boundingSphere.radius);
-	// 			var thatSphere = new THREE.Sphere(control._object.position, control._object.geometry.boundingSphere.radius);
-	// 			if(thisSphere.intersectsSphere(thatSphere)) {
-	// 				// toastr.error("Va cham!");
-	// 				// flag ++;
-	// 			}
-	// 		}		
-	// 	});
-	// }
 
 }
 

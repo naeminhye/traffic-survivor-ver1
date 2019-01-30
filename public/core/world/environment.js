@@ -359,7 +359,11 @@ const loadModelToWorld = (model) => {
                     var boxShape = new CANNON.Box(halfExtents);
                     var boxBody = new CANNON.Body({ mass: 0.1 });
                     boxBody.addShape(boxShape);
-                    WORLD.world.add(boxBody);
+
+                    if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
+                        WORLD.world.add(boxBody);
+                    }
+
                     boxBody.position.copy(obj.position);
 
                     if(path) {
@@ -1325,7 +1329,10 @@ const environmentInit = function (file) {
             WORLD.scene.add(PLAYER.bike);
 
             bikeBody = objectToBody(PLAYER.bike)
-            WORLD.world.add(bikeBody);
+
+            if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
+                // WORLD.world.add(bikeBody);
+            }
         });
     });
 }

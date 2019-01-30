@@ -329,7 +329,6 @@ WORLD.animate = () => {
                     });
                 }
 
-
             }
 
             PLAYER.pin = $("#player-pin");
