@@ -353,8 +353,17 @@ const loadModelToWorld = (model) => {
                 }
                 else if(object_type === "vehicles") {
                     WORLD.vehicle.push(storeObj);
+
+                    // Add boxes
+                    var halfExtents = new CANNON.Vec3(1, 1, 1);
+                    var boxShape = new CANNON.Box(halfExtents);
+                    var boxBody = new CANNON.Body({ mass: 0.1 });
+                    boxBody.addShape(boxShape);
+                    WORLD.world.add(boxBody);
+                    boxBody.position.copy(obj.position);
+
                     if(path) {
-                        var control = new CONTROLS.PathControls(obj, new THREE.CatmullRomCurve3(jsonToThreeObject(path)), {"velocity": velocity || 0.02});
+                        var control = new CONTROLS.PathControls(obj, boxBody, new THREE.CatmullRomCurve3(jsonToThreeObject(path)), {"velocity": velocity || 0.02});
                         // control.showPath();
                         WORLD.vehicleControls.push(control);
                     }
@@ -405,43 +414,6 @@ const loadModelToWorld = (model) => {
                     }
                     WORLD.trafficLightList.push(storeObj);
                 }
-
-                WORLD.scene.add( obj );
-
-                var helper = new THREE.BoxHelper(obj, 0xff0000);
-                helper.update();
-
-                // If you want a visible bounding box
-                // WORLD.scene.add(helper);
-                var bbox = new THREE.Box3().setFromObject(helper);
-
-                // WORLD.world.add(createBoxBody(helper, function(object) {
-                //     if(object.body.id == 0) 
-                //         console.log("Player collided with " + name + "!");
-                // }));
-
-                // create a cannon body
-                var shape = new CANNON.Box(new CANNON.Vec3(
-                    (bbox.max.x - bbox.min.x) / 2,
-                    (bbox.max.y - bbox.min.y) / 2,
-                    (bbox.max.z - bbox.min.z) / 2
-                ));
-                var boxBody = new CANNON.Body({ mass: 5 });
-                boxBody.addShape(shape);
-                boxBody.position.copy(helper.position);
-                boxBody.useQuaternion = true;
-                boxBody.computeAABB();
-                // disable collision response so objects don't move when they collide
-                // against each other
-                boxBody.collisionResponse = true;
-                // keep a reference to the mesh so we can update its properties later
-                // boxBody.addEventListener('collide', function(object) {
-                //     if(object.body.id == 0) 
-                //         console.log("Player collided with object.");
-                // });
-                // boxBody.angularVelocity.set(0, 0, 3.5);
-                // boxBody.angularDamping = 0.1;
-                // WORLD.world.add(boxBody);
 
                 obj.traverse((child) => {
 
@@ -498,6 +470,44 @@ const loadModelToWorld = (model) => {
                         }
                     }
                 });
+
+                WORLD.scene.add( obj );
+
+                var helper = new THREE.BoxHelper(obj, 0xff0000);
+                helper.update();
+
+                // If you want a visible bounding box
+                // WORLD.scene.add(helper);
+                var bbox = new THREE.Box3().setFromObject(helper);
+
+                // WORLD.world.add(createBoxBody(helper, function(object) {
+                //     if(object.body.id == 0) 
+                //         console.log("Player collided with " + name + "!");
+                // }));
+
+                // create a cannon body
+                var shape = new CANNON.Box(new CANNON.Vec3(
+                    (bbox.max.x - bbox.min.x) / 2,
+                    (bbox.max.y - bbox.min.y) / 2,
+                    (bbox.max.z - bbox.min.z) / 2
+                ));
+                var boxBody = new CANNON.Body({ mass: 0.1 });
+                boxBody.addShape(shape);
+                boxBody.position.copy(obj.position);
+                boxBody.useQuaternion = true;
+                boxBody.computeAABB();
+                // disable collision response so objects don't move when they collide
+                // against each other
+                boxBody.collisionResponse = true;
+                // keep a reference to the mesh so we can update its properties later
+                // boxBody.addEventListener('collide', function(object) {
+                //     if(object.body.id == 0) 
+                //         console.log("Player collided with object.");
+                // });
+                // boxBody.angularVelocity.set(0, 0, 3.5);
+                // boxBody.angularDamping = 0.1;
+                // WORLD.world.add(boxBody);
+
             }
         );
     }
@@ -1313,6 +1323,9 @@ const environmentInit = function (file) {
                 );
             }
             WORLD.scene.add(PLAYER.bike);
+
+            bikeBody = objectToBody(PLAYER.bike)
+            WORLD.world.add(bikeBody);
         });
     });
 }

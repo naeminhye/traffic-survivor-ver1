@@ -1,9 +1,9 @@
 var CONTROLS = CONTROLS || {};
 
-CONTROLS.PathControls = function (object, path, prop) {
+CONTROLS.PathControls = function (object, body, path, prop) {
 	this.path = path;
 	this._object = object;
-	// this._oldRotation = object.rotation.y;
+	this._objectBody = body;
 	this._pos = 0;
 	this.velocity = 1; //unidades por segundo
 	if (prop && prop.velocity) {
@@ -11,12 +11,35 @@ CONTROLS.PathControls = function (object, path, prop) {
 	}
 	this._factor = this.velocity / this.path.getLength();
 	// this._object.add( WORLD.bgSound )
+	var contactNormal = new CANNON.Vec3(); 
+	this._objectBody.addEventListener("collide", function (e) {
 
+        var contact = e.contact;
+
+        // // contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
+        // // We do not yet know which one is which! Let's check.
+        if (contact.bi.id == sphereBody.id)  // bi is the player body, flip the contact normal
+        {
+        //     contact.ni.negate(contactNormal);
+			toastr.options = {
+				"closeButton": false,
+				"newestOnTop": true,
+				"positionClass": "toast-top-right",
+				"preventDuplicates": true
+			}
+			toastr.error("Va cham với phương tiện giao thông khác!");
+        }
+        // else
+        //     contactNormal.copy(contact.ni); // bi is something else. Keep the normal as it is
+
+    });
 };
 
 CONTROLS.PathControls.prototype.update = function (delta) {
-	var flag = false;
+	var flag = 0;
+
 	this._object.position.copy(this.path.getPointAt(this._pos));
+	this._objectBody.position.copy(this.path.getPointAt(this._pos));
 
 	var canGo = (WORLD.trafficLightList.findIndex((light) => {
 		var v = new THREE.Vector3();
@@ -39,9 +62,24 @@ CONTROLS.PathControls.prototype.update = function (delta) {
 		this._pos += (this._factor * delta);
 		if (this._pos > 1) { this._pos = 0; };
 		this._object.lookAt(this.path.getPointAt(this._pos));
+		this._objectBody.position.copy(this.path.getPointAt(this._pos));
 	}
 
-	this.detectCollision(WORLD.player);
+	// this.detectCollision(WORLD.player);
+
+	// if(WORLD.vehicleControls) {
+	// 	WORLD.vehicleControls.forEach(control => {
+
+	// 		if (this._object && this._object.geometry && control._object && control._object.geometry) {
+	// 			var thisSphere = new THREE.Sphere(this._object.position, this._object.geometry.boundingSphere.radius);
+	// 			var thatSphere = new THREE.Sphere(control._object.position, control._object.geometry.boundingSphere.radius);
+	// 			if(thisSphere.intersectsSphere(thatSphere)) {
+	// 				// toastr.error("Va cham!");
+	// 				// flag ++;
+	// 			}
+	// 		}		
+	// 	});
+	// }
 
 }
 
@@ -64,8 +102,6 @@ CONTROLS.PathControls.prototype.getPosition = function () {
 }
 
 CONTROLS.PathControls.prototype.detectCollision = function (mesh) {
-	// console.log("position",this._object.position);
-	// console.log("boundingSphere",this._object.geometry.boundingSphere);
 	if (this._object && this._object.geometry) {
 		var sphere = new THREE.Sphere(this._object.position, this._object.geometry.boundingSphere.radius);
 		
@@ -77,7 +113,6 @@ CONTROLS.PathControls.prototype.detectCollision = function (mesh) {
 				"preventDuplicates": true
 			}
 			toastr.error("Va cham với phương tiện giao thông khác!");
-			mesh.position.set(this._object.position.x, this._object.position.y, this._object.position.z);
 		}
 
 	}

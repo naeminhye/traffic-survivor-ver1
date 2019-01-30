@@ -11,7 +11,7 @@ var PLAYER = PLAYER || {
 };
 var UNITWIDTH = 9; // Width of a cubes in the maze
 var UNITHEIGHT = 9; // Height of the cubes in the maze
-var sphereShape, sphereBody, physicsMaterial, walls = [];
+var sphereShape, sphereBody, bikeBody, physicsMaterial, walls = [];
 WORLD.world = null;
 WORLD.camera = null;
 WORLD.scene = null;
@@ -96,6 +96,11 @@ WORLD.initCannon = () => {
     WORLD.world = new CANNON.World();
     WORLD.world.quatNormalizeSkip = 0;
     WORLD.world.quatNormalizeFast = false;
+    // WORLD.world.defaultContactMaterial.contactEquationStiffness = 1e128;
+    // WORLD.world.defaultContactMaterial.contactEquationRelaxation = 4;
+    // WORLD.world.gravity.set(0, -9.82, 0);
+    // WORLD.world.solver.iterations = 20;
+    // WORLD.world.solver.tolerance = 0.0;
 
     var solver = new CANNON.GSSolver();
 
@@ -131,7 +136,7 @@ WORLD.initCannon = () => {
         mass: mass
     });
     sphereBody.addShape(sphereShape);
-    sphereBody.position.set(46, 1.6, 55);
+    //sphereBody.position.set(46, 1.6, 55);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
 
