@@ -96,19 +96,14 @@ WORLD.initCannon = () => {
     WORLD.world = new CANNON.World();
     WORLD.world.quatNormalizeSkip = 0;
     WORLD.world.quatNormalizeFast = false;
-    // WORLD.world.defaultContactMaterial.contactEquationStiffness = 1e128;
-    // WORLD.world.defaultContactMaterial.contactEquationRelaxation = 4;
-    // WORLD.world.gravity.set(0, -9.82, 0);
-    // WORLD.world.solver.iterations = 20;
-    // WORLD.world.solver.tolerance = 0.0;
 
     var solver = new CANNON.GSSolver();
 
-    WORLD.world.defaultContactMaterial.contactEquationStiffness = 1e9;
-    WORLD.world.defaultContactMaterial.contactEquationRelaxation = 4;
+    WORLD.world.defaultContactMaterial.contactEquationStiffness = 1e6;
+    WORLD.world.defaultContactMaterial.contactEquationRelaxation = 10;
 
-    solver.iterations = 10;
-    solver.tolerance = 0.1;
+    solver.iterations = 5;
+    // solver.tolerance = 0.1;
     var split = true;
     if (split)
         WORLD.world.solver = new CANNON.SplitSolver(solver);
