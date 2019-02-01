@@ -134,6 +134,7 @@ WORLD.initCannon = () => {
     //sphereBody.position.set(46, 1.6, 55);
     sphereBody.linearDamping = 0.9;
     WORLD.world.add(sphereBody);
+    // sphereBody.collisionFilterGroup = 1;      
 
     // Create a plane
     var groundShape = new CANNON.Plane();
@@ -142,7 +143,7 @@ WORLD.initCannon = () => {
     });
     groundBody.addShape(groundShape);
     groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-    WORLD.world.add(groundBody);
+    WORLD.world.add(groundBody);    
 }
 
 WORLD.init = () => {
