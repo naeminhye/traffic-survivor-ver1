@@ -486,11 +486,6 @@ const loadModelToWorld = (model) => {
                 // WORLD.scene.add(helper);
                 var bbox = new THREE.Box3().setFromObject(helper);
 
-                // WORLD.world.add(createBoxBody(helper, function(object) {
-                //     if(object.body.id == 0) 
-                //         console.log("Player collided with " + name + "!");
-                // }));
-
                 // create a cannon body
                 var shape = new CANNON.Box(new CANNON.Vec3(
                     (bbox.max.x - bbox.min.x) / 2,
@@ -902,23 +897,37 @@ const environmentInit = function (file) {
                     map: houseTexture
                 });
                 
-                // for(var i = 0; i < randomHeight; i++) {
-                    var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) * randomHeight / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
-                    // Set the cube position
-                    cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * 0) / ratio, buildingZWidth);
-                    // Add the cube
-                    WORLD.scene.add(cube);
-                    //cube.material.map.minFilter = THREE.LinearFilter;
-                    WORLD.collidableObjects.push(cube);
-                    // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
-                    // houseMaterials.push(buildingMaterial);
-                    // materialIndex ++;
-                // }
+                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) * randomHeight / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
+                // Set the cube position
+                cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * 0) / ratio, buildingZWidth);
+                // Add the cube
+                WORLD.scene.add(cube);
+                //cube.material.map.minFilter = THREE.LinearFilter;
+                WORLD.collidableObjects.push(cube);
+                // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
+                // houseMaterials.push(buildingMaterial);
+                // materialIndex ++;
 
-                // WORLD.world.add(createBoxBody(cube, function (object) {
-                //     if (object.body.id == 0)
-                //         console.log("Player collided with walls.");
-                // }));
+                // create a cannon body
+                var houseShape = new CANNON.Box(new CANNON.Vec3(
+                    (tile.size * UNIT_SIZE - randomSize) / 2, 
+                    ((UNIT_SIZE * tile.size) * randomHeight / ratio) / 2, 
+                    (tile.size * UNIT_SIZE - randomSize) / 2
+                ));
+                var houseBody = new CANNON.Body({ mass: 5 });
+                houseBody.addShape(houseShape);
+                houseBody.position.copy(cube.position);
+                houseBody.useQuaternion = true;
+                houseBody.computeAABB();
+                // disable collision response so objects don't move when they collide
+                // against each other
+                houseBody.collisionResponse = true;
+                houseBody.addEventListener('collide', function (object) {
+                    if (object.body.id == 0)
+                        console.log("Player collided with walls.");
+                });
+                WORLD.world.add(houseBody);
+
             });
 
             // Geometry of the combined mesh
@@ -973,10 +982,26 @@ const environmentInit = function (file) {
                 WORLD.collidableObjects.push(cube);
                 // houseMeshes.push({mesh: cube, materialIndex: materialIndex});
                 // materialIndex ++;
-                // WORLD.world.add(createBoxBody(cube, function (object) {
-                //     if (object.body.id == 0)
-                //         console.log("Player collided with walls.");
-                // }));
+
+                // create a cannon body
+                var houseShape = new CANNON.Box(new CANNON.Vec3(
+                    (tile.size * UNIT_SIZE) / 2, 
+                    ((UNIT_SIZE * tile.size) / ratio) / 2, 
+                    (tile.size * UNIT_SIZE) / 2
+                ));
+                var houseBody = new CANNON.Body({ mass: 5 });
+                houseBody.addShape(houseShape);
+                houseBody.position.copy(cube.position);
+                houseBody.useQuaternion = true;
+                houseBody.computeAABB();
+                // disable collision response so objects don't move when they collide
+                // against each other
+                houseBody.collisionResponse = true;
+                houseBody.addEventListener('collide', function (object) {
+                    if (object.body.id == 0)
+                        console.log("Player collided with walls.");
+                });
+                WORLD.world.add(houseBody);
             });
 
     // ─────────────────────────────────────────────────────────────────

@@ -287,10 +287,16 @@ const readMapInfoFromJson = (path, callback) => {
 }
 
 const createBoxBody = (object, callback) => {
-    WORLD.scene.add(object);
+    // WORLD.scene.add(object);
     // Used later for collision detection
+    var helper = new THREE.BoxHelper(object, 0xff0000);
+    helper.update();
+
+    // If you want a visible bounding box
+    WORLD.scene.add(helper);
+
     var bbox = new THREE.Box3().setFromObject(object);
-    WORLD.collidableObjects.push(bbox);
+    // WORLD.collidableObjects.push(bbox);
 
     // create a cannon body
     var shape = new CANNON.Box(new CANNON.Vec3(
@@ -308,8 +314,8 @@ const createBoxBody = (object, callback) => {
     boxBody.collisionResponse = true;
     boxBody.addEventListener('collide', callback);
 
-    boxBody.angularVelocity.set(0, 0, 3.5);
-    boxBody.angularDamping = 0.1;
+    // boxBody.angularVelocity.set(0, 0, 3.5);
+    // boxBody.angularDamping = 0.1;
 
     return boxBody;
 }
