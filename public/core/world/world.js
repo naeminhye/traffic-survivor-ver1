@@ -34,6 +34,8 @@ WORLD.warningSignList = [];
 WORLD.guidanceSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
+WORLD.roadPosZList = [];
+WORLD.roadPosXList = [];
 WORLD.loaded = false;
 WORLD.warningFlag = false;
 WORLD.mapSize = 0;
@@ -412,6 +414,16 @@ const checkViolation = () => {
     if(WORLD.roundabouts) {
         checkRoundaboutViolation();
     }
+
+    // if(WORLD.roadPosXList) {
+        // WORLD.roadPosXList.forEach((road) => {
+            // console.log("road", road.distanceToPoint(WORLD.player.position))
+    
+            // if(road.distanceToPoint(WORLD.player.position) === 0) {
+            // }
+
+        // });
+    // }
 
 }
 

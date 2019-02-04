@@ -610,7 +610,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: WORLD.roadPosXList
             },
             {
                 id: ROAD_POS_Z, 
@@ -621,7 +622,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: WORLD.roadPosZList
             },
             {
                 id: DOUBLE_ROAD_POS_Z, 
@@ -632,7 +634,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: WORLD.doubleRoadPosZList
             },
             {
                 id: START_POS_Z, 
@@ -643,7 +646,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "red"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: END_POS_Z, 
@@ -654,7 +658,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "blue"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: ROAD_POS_X, 
@@ -665,7 +670,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: DOUBLE_ROAD_POS_X, 
@@ -676,7 +682,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: WORLD.doubleRoadPosXList
             },
             {
                 id: START_POS_X, 
@@ -687,7 +694,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "red"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: END_POS_X, 
@@ -698,7 +706,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "blue"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: INTERSECT_1, 
@@ -709,7 +718,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: INTERSECT_2, 
@@ -720,7 +730,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: INTERSECT_3, 
@@ -731,7 +742,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: INTERSECT_4, 
@@ -742,7 +754,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: INTERSECT_5, 
@@ -753,7 +766,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: PAVEMENT_ID, 
@@ -764,7 +778,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: ZEBRA_CROSSING_TOP, 
@@ -775,7 +790,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: ZEBRA_CROSSING_BOTTOM, 
@@ -786,7 +802,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: ZEBRA_CROSSING_LEFT, 
@@ -797,7 +814,8 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null
+                callback: null,
+                list: null
             },
             {
                 id: ZEBRA_CROSSING_RIGHT, 
@@ -807,7 +825,9 @@ const environmentInit = function (file) {
                 isMultiple: false, 
                 minimap: {
                     color: "orange"
-                }
+                },
+                callback: null,
+                list: null
             },
             {
                 id: GRASS_ID, 
@@ -817,7 +837,9 @@ const environmentInit = function (file) {
                 isMultiple: true, 
                 minimap: {
                     color: "grey"
-                }
+                },
+                callback: null,
+                list: null
             },
             {
                 id: COBBLESTONE_ID, 
@@ -827,7 +849,9 @@ const environmentInit = function (file) {
                 isMultiple: false, 
                 minimap: {
                     color: "grey"
-                }
+                },
+                callback: null,
+                list: null
             },
             {
                 id: NORMAL_LAND, 
@@ -837,7 +861,9 @@ const environmentInit = function (file) {
                 isMultiple: true, 
                 minimap: {
                     color: "grey"
-                }
+                },
+                callback: null,
+                list: null
             },
             {
                 id: ROUNDABOUT, 
@@ -847,7 +873,9 @@ const environmentInit = function (file) {
                 isMultiple: false, 
                 minimap: {
                     color: "orange"
-                }
+                },
+                callback: null,
+                list: null
             }
         ]
 
@@ -860,7 +888,8 @@ const environmentInit = function (file) {
                                     texture.unit_size, 
                                     texture.isMultiple, 
                                     texture.minimap, 
-                                    texture.callback);
+                                    texture.callback,
+                                    texture.list);
             });
         }
 
@@ -896,8 +925,12 @@ const environmentInit = function (file) {
                 var buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
+
+                var _width = tile.size * UNIT_SIZE - randomSize;
+                var _height = (UNIT_SIZE * tile.size) * randomHeight / ratio;
+                var _depth =  tile.size * UNIT_SIZE - randomSize;
                 
-                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE - randomSize , (UNIT_SIZE * tile.size) * randomHeight / ratio, tile.size * UNIT_SIZE - randomSize), buildingMaterial);
+                var cube = new THREE.Mesh(new THREE.BoxGeometry(_width, _height, _depth), buildingMaterial);
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * 0) / ratio, buildingZWidth);
                 // Add the cube
@@ -910,13 +943,13 @@ const environmentInit = function (file) {
 
                 // create a cannon body
                 var houseShape = new CANNON.Box(new CANNON.Vec3(
-                    (tile.size * UNIT_SIZE - randomSize) / 2, 
-                    ((UNIT_SIZE * tile.size) * randomHeight / ratio) / 2, 
-                    (tile.size * UNIT_SIZE - randomSize) / 2
+                    _width / 2, 
+                    _height / 2, 
+                    _depth / 2
                 ));
                 var houseBody = new CANNON.Body({ mass: 5 });
                 houseBody.addShape(houseShape);
-                houseBody.position.copy(cube.position);
+                houseBody.position.set(cube.position.x, cube.position.y, cube.position.z);
                 houseBody.useQuaternion = true;
                 houseBody.computeAABB();
                 // disable collision response so objects don't move when they collide
@@ -1366,7 +1399,7 @@ const environmentInit = function (file) {
     });
 }
 
-const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
+const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback, list) => {
     findSquareSubMap(map, id).forEach(function (tile) {
 
         if(minimap) {
@@ -1389,16 +1422,37 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             material.map.repeat.set(1, 1);
         }
         // material.map.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
-        var plane = new THREE.Mesh(
-            new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size),
+
+        // // Create plane
+        // var dir = new THREE.Vector3(0, 0, 1);
+        // var centroid = new THREE.Vector3(0, 0, 0);
+        // var plane = new THREE.Plane();
+        // plane.setFromNormalAndCoplanarPoint(dir, centroid).normalize();
+
+        var planeGeometry = new THREE.PlaneGeometry(tile.size * unit_size, tile.size * unit_size);
+
+        // Align the geometry to the plane
+        // var targetV = new THREE.Vector3();
+        // var coplanarPoint = plane.coplanarPoint(targetV);
+        // var focalPoint = new THREE.Vector3().copy(coplanarPoint).add(plane.normal);
+        // planeGeometry.lookAt(focalPoint);
+        // planeGeometry.translate(coplanarPoint.x, coplanarPoint.y, coplanarPoint.z);
+
+        var planeMesh = new THREE.Mesh(
+            planeGeometry,
             material
         );
-        plane.position.set(PLANE_X, 0, PLANE_Z);
-        plane.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
-        WORLD.scene.add(plane);
+
+        planeMesh.position.set(PLANE_X, 0, PLANE_Z);
+        planeMesh.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(- Math.PI / 2));
+        WORLD.scene.add(planeMesh);
 
         if (callback) {
             WORLD.world.add(createBoxBody(plane, callback));
+        }
+        if(list) {
+            //plane1.distanceToPoint( q1 )
+            // list.push(plane);
         }
     });
 }
