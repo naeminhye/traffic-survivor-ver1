@@ -415,15 +415,31 @@ const checkViolation = () => {
         checkRoundaboutViolation();
     }
 
-    // if(WORLD.roadPosXList) {
-        // WORLD.roadPosXList.forEach((road) => {
-            // console.log("road", road.distanceToPoint(WORLD.player.position))
-    
-            // if(road.distanceToPoint(WORLD.player.position) === 0) {
-            // }
+    if(WORLD.roadPosXList) {
+        WORLD.roadPosXList.forEach((road) => {
+            if(road.bbox.containsPoint(WORLD.player.position)) {
+                console.log("road pos x")
+            }
+        });
+    }
+    if(WORLD.roadPosZList) {
+        WORLD.roadPosZList.forEach((road) => {
+            if(road.bbox.containsPoint(WORLD.player.position)) {
+                var upDir = new THREE.Vector3(0, 0, 1);
+                var angleToPlayerDelta = calculateAngleToPlayer(upDir);
+                var upDirAngle = Math.abs(minifyAngle(angleToPlayerDelta));
+                if(upDirAngle < 90) {
+                    // UP
+                    console.log("road pos z UP")
+                }
+                else {
+                    // DOWN
+                    console.log("road pos z DOWN")
+                }
 
-        // });
-    // }
+            }
+        });
+    }
 
 }
 

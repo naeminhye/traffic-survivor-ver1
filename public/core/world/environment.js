@@ -1455,6 +1455,25 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
             // list.push(plane);
         }
     });
+
+    if(id === ROAD_POS_Z) {
+        let roadList = findDoubledRoadByDirection(ROAD_POS_Z, "VERTICAL", map);
+        if(roadList) {
+            roadList.forEach(function(position) {
+                var box = createBBox(position, unit_size);
+                WORLD.roadPosZList.push({ box: box.area, bbox: box.areaBBox });
+            });
+        }
+    }
+    else if(id === ROAD_POS_X) {
+        let roadList = findDoubledRoadByDirection(ROAD_POS_X, "HORIZONTAL", map);
+        if(roadList) {
+            roadList.forEach(function(position) {
+                var box = createBBox(position, unit_size);
+                WORLD.roadPosXList.push({ box: box.area, bbox: box.areaBBox });
+            });
+        }
+    }
 }
 
 const mappingSigns = (sign, UNIT_SIZE) => {
