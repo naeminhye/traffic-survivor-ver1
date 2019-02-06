@@ -478,6 +478,88 @@ const findSquareSubMapWithSize = (mat, target, size) => {
     return results;
 }
 
+const findSingleRoadByDirection = (id, direction, sourceArray) => {
+    var result = [];
+    
+    if (direction === "VERTICAL") {
+    
+      let flagMat = [];
+      for(let temp = 0; temp < sourceArray.length; temp++){
+        flagMat[temp] = new Array(sourceArray.length); 
+        flagMat[temp].fill(0);
+      }
+      
+      for(let j = 0; j < sourceArray.length; j++) {
+        for(let i = 0; i < sourceArray[j].length; i++) {
+          
+          if(sourceArray[j][i] === id && flagMat[j][i] === 0) {
+            flagMat[j][i] = 1;
+            
+            let count = 1;
+            for (let k = j + 1; k < sourceArray.length; k++) {
+              if (sourceArray[k][i] === id) {
+                count++;
+                flagMat[k][i] = 1;
+              }
+              else {
+                break;
+              }
+            }
+            
+            result.push({
+                x: i,
+                z: j,
+                x_width: 1,
+                z_width: count
+            });
+          }
+          
+        }
+      }
+      
+    }
+    else { 
+        // direction === "HORIZONTAL"
+    
+      let flagMat = [];
+      for(let temp = 0; temp < sourceArray.length; temp++){
+        flagMat[temp] = new Array(sourceArray.length); 
+        flagMat[temp].fill(0);
+      }
+      
+      for(let j = 0; j < sourceArray.length; j++) {
+        for(let i = 0; i < sourceArray[j].length; i++) {
+          if(sourceArray[i][j] === id && flagMat[i][j] === 0) {
+  
+            flagMat[i][j] = 1;
+            
+            let count = 1;
+            for (let k = j + 1; k < sourceArray.length; k++) {
+              if (sourceArray[i][k] === id) {
+                count++;
+                flagMat[i][k] = 1;
+              }
+              else {
+                break;
+              }
+            }
+            
+            
+            result.push({
+                x: j,
+                z: i,
+                x_width: count,
+                z_width: 1
+            });
+          }
+        }
+      }
+      
+    }
+    
+    return result;
+}
+
 const findDoubledRoadByDirection = (id, direction, sourceArray) => {
     var result = [];
     
@@ -509,10 +591,18 @@ const findDoubledRoadByDirection = (id, direction, sourceArray) => {
             }
             
             result.push({
-              x: i,
-              z: j,
-              x_width: 2,
-              z_width: count
+                "down": {
+                    x: i,
+                    z: j,
+                    x_width: 1,
+                    z_width: count
+                },
+                "up": {
+                    x: i + 1,
+                    z: j,
+                    x_width: 1,
+                    z_width: count
+                }
             });
           }
           
@@ -550,10 +640,18 @@ const findDoubledRoadByDirection = (id, direction, sourceArray) => {
             
             
             result.push({
-              x: j,
-              z: i,
-              x_width: count,
-              z_width: 2
+                "left": {
+                    x: j,
+                    z: i,
+                    x_width: count,
+                    z_width: 1
+                },
+                "right": {
+                    x: j,
+                    z: i + 1,
+                    x_width: count,
+                    z_width: 1
+                }
             });
           }
         }

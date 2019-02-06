@@ -34,8 +34,11 @@ WORLD.warningSignList = [];
 WORLD.guidanceSignList = [];
 WORLD.trafficLightList = [];
 WORLD.vehicle = [];
-WORLD.roadPosZList = [];
-WORLD.roadPosXList = [];
+WORLD.roadPosZUpList = [];
+WORLD.roadPosZDownList = [];
+WORLD.roadPosXLeftList = [];
+WORLD.roadPosXRightList = [];
+WORLD.pavement = [];
 WORLD.loaded = false;
 WORLD.warningFlag = false;
 WORLD.mapSize = 0;
@@ -415,26 +418,61 @@ const checkViolation = () => {
         checkRoundaboutViolation();
     }
 
-    if(WORLD.roadPosXList) {
-        WORLD.roadPosXList.forEach((road) => {
+    if(WORLD.pavement) {
+        checkPavementViolation();
+    }
+
+    if(WORLD.roadPosXLeftList) {
+        WORLD.roadPosXLeftList.forEach((road) => {
             if(road.bbox.containsPoint(WORLD.player.position)) {
-                console.log("road pos x")
+                var leftDir = new THREE.Vector3(1, 0, 0);
+                var angleToPlayerDelta = calculateAngleToPlayer(leftDir);
+                var leftDirAngle = Math.abs(minifyAngle(angleToPlayerDelta));
+                if(leftDirAngle > 90) {
+                    // LEFT
+                    console.log("LEFT, đi sai làn đường")
+                }
+
             }
         });
     }
-    if(WORLD.roadPosZList) {
-        WORLD.roadPosZList.forEach((road) => {
+    if(WORLD.roadPosXRightList) {
+        WORLD.roadPosXRightList.forEach((road) => {
+            if(road.bbox.containsPoint(WORLD.player.position)) {
+                var rightDir = new THREE.Vector3(-1, 0, 0);
+                var angleToPlayerDelta = calculateAngleToPlayer(rightDir);
+                var rightDirAngle = Math.abs(minifyAngle(angleToPlayerDelta));
+                if(rightDirAngle > 90) {
+                    // RIGHT
+                    console.log("RIGHT, đi sai làn đường")
+                }
+
+            }
+        });
+    }
+    if(WORLD.roadPosZUpList) {
+        WORLD.roadPosZUpList.forEach((road) => {
             if(road.bbox.containsPoint(WORLD.player.position)) {
                 var upDir = new THREE.Vector3(0, 0, 1);
                 var angleToPlayerDelta = calculateAngleToPlayer(upDir);
                 var upDirAngle = Math.abs(minifyAngle(angleToPlayerDelta));
-                if(upDirAngle < 90) {
+                if(upDirAngle > 90) {
                     // UP
-                    console.log("road pos z UP")
+                    console.log("UP, đi sai làn đường")
                 }
-                else {
+
+            }
+        });
+    }
+    if(WORLD.roadPosZDownList) {
+        WORLD.roadPosZDownList.forEach((road) => {
+            if(road.bbox.containsPoint(WORLD.player.position)) {
+                var downDir = new THREE.Vector3(0, 0, -1);
+                var angleToPlayerDelta = calculateAngleToPlayer(downDir);
+                var downDirAngle = Math.abs(minifyAngle(angleToPlayerDelta));
+                if(downDirAngle > 90) {
                     // DOWN
-                    console.log("road pos z DOWN")
+                    console.log("DOWN, đi sai làn đường")
                 }
 
             }
@@ -608,6 +646,31 @@ const checkOneWayViolation = () => {
         if (!violationFlag && (Math.abs(minifyAngle(angleDelta)) > 90)) {
             GAME.handleFining("Bạn vừa đi vào đường một chiều, vui lòng thay đổi hướng đi!", 300);
             violationFlag = true;
+        }
+    }
+}
+
+var pavementViolationFlag = false;
+var pavementIndex = -1;
+const checkPavementViolation = () => {
+
+    var oldIndex = pavementIndex;
+    pavementIndex = WORLD.pavement.findIndex((road) => road.bbox.containsPoint(WORLD.player.position));
+
+    if(oldIndex !== pavementIndex) {
+        /** đi vào đường khác */
+        pavementViolationFlag = false;
+    }
+
+    if ( pavementIndex === -1 ) {
+        /** Không đi vào vỉa hè nào nên không cần xét */
+        pavementViolationFlag = false;
+    }
+    else {
+        if (!pavementViolationFlag) {
+            toastr.remove();
+            toastr.error("Bạn vừa đi lên vỉa hè!!!");
+            pavementViolationFlag = true;
         }
     }
 }

@@ -610,8 +610,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: WORLD.roadPosXList
+                callback: null
             },
             {
                 id: ROAD_POS_Z, 
@@ -622,8 +621,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: WORLD.roadPosZList
+                callback: null
             },
             {
                 id: DOUBLE_ROAD_POS_Z, 
@@ -634,8 +632,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: WORLD.doubleRoadPosZList
+                callback: null
             },
             {
                 id: START_POS_Z, 
@@ -646,8 +643,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "red"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: END_POS_Z, 
@@ -658,8 +654,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "blue"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ROAD_POS_X, 
@@ -670,8 +665,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: DOUBLE_ROAD_POS_X, 
@@ -682,8 +676,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: WORLD.doubleRoadPosXList
+                callback: null
             },
             {
                 id: START_POS_X, 
@@ -694,8 +687,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "red"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: END_POS_X, 
@@ -706,8 +698,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "blue"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: INTERSECT_1, 
@@ -718,8 +709,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: INTERSECT_2, 
@@ -730,8 +720,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: INTERSECT_3, 
@@ -742,8 +731,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: INTERSECT_4, 
@@ -754,8 +742,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: INTERSECT_5, 
@@ -766,8 +753,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: PAVEMENT_ID, 
@@ -778,8 +764,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ZEBRA_CROSSING_TOP, 
@@ -790,8 +775,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ZEBRA_CROSSING_BOTTOM, 
@@ -802,8 +786,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ZEBRA_CROSSING_LEFT, 
@@ -814,8 +797,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ZEBRA_CROSSING_RIGHT, 
@@ -826,8 +808,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: GRASS_ID, 
@@ -838,8 +819,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: COBBLESTONE_ID, 
@@ -850,8 +830,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: NORMAL_LAND, 
@@ -862,8 +841,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "grey"
                 },
-                callback: null,
-                list: null
+                callback: null
             },
             {
                 id: ROUNDABOUT, 
@@ -874,8 +852,7 @@ const environmentInit = function (file) {
                 minimap: {
                     color: "orange"
                 },
-                callback: null,
-                list: null
+                callback: null
             }
         ]
 
@@ -888,8 +865,7 @@ const environmentInit = function (file) {
                                     texture.unit_size, 
                                     texture.isMultiple, 
                                     texture.minimap, 
-                                    texture.callback,
-                                    texture.list);
+                                    texture.callback);
             });
         }
 
@@ -1399,7 +1375,7 @@ const environmentInit = function (file) {
     });
 }
 
-const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback, list) => {
+const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callback) => {
     findSquareSubMap(map, id).forEach(function (tile) {
 
         if(minimap) {
@@ -1450,27 +1426,43 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
         if (callback) {
             WORLD.world.add(createBoxBody(plane, callback));
         }
-        if(list) {
-            //plane1.distanceToPoint( q1 )
-            // list.push(plane);
-        }
     });
 
     if(id === ROAD_POS_Z) {
         let roadList = findDoubledRoadByDirection(ROAD_POS_Z, "VERTICAL", map);
         if(roadList) {
-            roadList.forEach(function(position) {
-                var box = createBBox(position, unit_size);
-                WORLD.roadPosZList.push({ box: box.area, bbox: box.areaBBox });
+            roadList.forEach(function(road) {
+                var upBox = createBBox(road.up, unit_size);
+                WORLD.roadPosZUpList.push({ box: upBox.area, bbox: upBox.areaBBox });
+                var downBox = createBBox(road.down, unit_size);
+                WORLD.roadPosZDownList.push({ box: downBox.area, bbox: downBox.areaBBox });
             });
         }
     }
     else if(id === ROAD_POS_X) {
         let roadList = findDoubledRoadByDirection(ROAD_POS_X, "HORIZONTAL", map);
         if(roadList) {
-            roadList.forEach(function(position) {
-                var box = createBBox(position, unit_size);
-                WORLD.roadPosXList.push({ box: box.area, bbox: box.areaBBox });
+            roadList.forEach(function(road) {
+                var leftBox = createBBox(road.left, unit_size);
+                WORLD.roadPosXLeftList.push({ box: leftBox.area, bbox: leftBox.areaBBox });
+                var rightBox = createBBox(road.right, unit_size);
+                WORLD.roadPosXRightList.push({ box: rightBox.area, bbox: rightBox.areaBBox });
+            });
+        }
+    }
+    else if(id === PAVEMENT_ID) {
+        let verticalPavementList = findSingleRoadByDirection(PAVEMENT_ID, "VERTICAL", map);
+        let horizontalPavementList = findSingleRoadByDirection(PAVEMENT_ID, "HORIZONTAL", map);
+        if(verticalPavementList) {
+            verticalPavementList.forEach(function(pos) {
+                var box = createBBox(pos, unit_size);
+                WORLD.pavement.push({ box: box.area, bbox: box.areaBBox });
+            });
+        }
+        if(horizontalPavementList) {
+            horizontalPavementList.forEach(function(pos) {
+                var box = createBBox(pos, unit_size);
+                WORLD.pavement.push({ box: box.area, bbox: box.areaBBox });
             });
         }
     }
