@@ -1483,20 +1483,20 @@ const mappingSigns = (sign, UNIT_SIZE) => {
 	
 	switch(sign.directionToMap) {
 		case "up":
-			data.direction = new THREE.Vector3(0, 0, 1);
-            data.rotation = new THREE.Euler(0, -Math.PI/2, 0, "XYZ");
+			data.direction = UP_DIRECTION;
+            data.rotation = UP_ROTATION;
 			break;
 		case "down":
-			data.direction = new THREE.Vector3(0, 0, -1);
-            data.rotation = new THREE.Euler(0, Math.PI/2, 0, "XYZ");
+			data.direction = DOWN_DIRECTION;
+            data.rotation = DOWN_ROTATION;
 			break;
 		case "left":
-			data.direction = new THREE.Vector3(1, 0, 0);
-            data.rotation = new THREE.Euler(0, 0, 0, "XYZ");
+			data.direction = LEFT_DIRECTION;
+            data.rotation = LEFT_ROTATION;
 			break;
 		case "right":
-			data.direction = new THREE.Vector3(-1, 0, 0);
-            data.rotation = new THREE.Euler(0, Math.PI, 0, "XYZ");
+			data.direction = RIGHT_DIRECTION;
+            data.rotation = RIGHT_ROTATION;
 			break;
     }
 	if(sign.children) {
