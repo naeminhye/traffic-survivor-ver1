@@ -431,24 +431,16 @@ const checkLaneViolation = () => {
     var oldDir = laneDir;
 
     // LEFT
-    // console.log("LEFT, đi sai làn đường")
     var roadPosXLeftIndex = WORLD.roadPosXLeftList.findIndex((road) => (road.bbox.containsPoint(WORLD.player.position) && leftDirAngle > 90));
-    // console.log("roadPosXLeftIndex", roadPosXLeftIndex);
 
     // RIGHT
-    // console.log("RIGHT, đi sai làn đường")
     var roadPosXRightIndex = WORLD.roadPosXRightList.findIndex((road) => (road.bbox.containsPoint(WORLD.player.position) && rightDirAngle > 90));
-    // console.log("roadPosXRightIndex", roadPosXRightIndex);
     
     // UP
-    // console.log("UP, đi sai làn đường")
     var roadPosZUpIndex = WORLD.roadPosZUpList.findIndex((road) => (road.bbox.containsPoint(WORLD.player.position) && upDirAngle > 90));
-    // console.log("roadPosZUpIndex", roadPosZUpIndex);
     
     // DOWN
-    // console.log("DOWN, đi sai làn đường")
     var roadPosZDownIndex = WORLD.roadPosZDownList.findIndex((road) => (road.bbox.containsPoint(WORLD.player.position) && downDirAngle > 90));
-    // console.log("roadPosZDownIndex", roadPosZDownIndex);
 
     if(roadPosXLeftIndex !== -1 && oldIndex !== roadPosXLeftIndex && oldDir !== "left") {
         laneIndex = roadPosXLeftIndex;
