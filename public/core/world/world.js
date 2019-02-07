@@ -338,7 +338,25 @@ WORLD.animate = () => {
 
             WORLD.controls.update(Date.now() - time);
             // WORLD.controls.detectCollision()
-            checkViolation();
+
+            /**
+             * Check Violation
+             */
+            handleSignPassing(WORLD.warningSignList);
+            handleSignPassing(WORLD.regulatorySignList);
+            handleSignPassing(WORLD.guidanceSignList);
+
+            updateTrafficLights();
+            checkOneWayViolation();
+            checkSpeedViolation();
+            checkEndZone();
+
+            checkRoundaboutViolation();
+            checkPavementViolation();
+            checkLaneViolation();
+
+            /*************************************************/
+
             if (!WORLD.warningFlag) {
                 $("#message").css("display", "none");
             }
@@ -388,39 +406,7 @@ function addSunlight(scene) {
     scene.add(sunlight);
 }
 
-const checkViolation = () => {
-
-    handleSignPassing(WORLD.warningSignList);
-    handleSignPassing(WORLD.regulatorySignList);
-    handleSignPassing(WORLD.guidanceSignList);
-
-    if (WORLD.trafficLightList) {
-        updateTrafficLights();
-    }
-    if (WORLD.one_ways) {
-        checkOneWayViolation();
-    }
-    if (WORLD.speed_restriction_ways) {
-        checkSpeedViolation();
-    }
-
-    if (WORLD.endZone) {
-        WORLD.endZone.forEach((zone) => {
-            if(zone.bbox.containsPoint(WORLD.player.position) /**  && GAME.numOfSign === 0 */) {
-                setTimeout(function(){ 
-                    GAME.endGame();
-                }, 2000);
-            }
-        });
-    }
-
-    if(WORLD.roundabouts) {
-        checkRoundaboutViolation();
-    }
-
-    if(WORLD.pavement) {
-        checkPavementViolation();
-    }
+const checkLaneViolation = () => {
 
     if(WORLD.roadPosXLeftList) {
         WORLD.roadPosXLeftList.forEach((road) => {
@@ -530,6 +516,10 @@ var trafficLightViolation = false;
 var isInIntersectArea = false;
 var isViolating = false;
 const updateTrafficLights = () => {
+    if (!WORLD.trafficLightList) {
+        return;
+    }
+
     /** 
      * check Red Light violation
      */
@@ -560,6 +550,9 @@ const updateTrafficLights = () => {
 var speedViolating = false;
 var speedRestrictionIndex = -1;
 const checkSpeedViolation = () => {
+    if (!WORLD.speed_restriction_ways) {
+        return;
+    }
     var newIndex = WORLD.speed_restriction_ways.findIndex((child) => child.bbox.containsPoint(WORLD.player.position));
     if(speedRestrictionIndex !== newIndex && newIndex !== -1 && !speedViolating) {
         var thisRoad = WORLD.speed_restriction_ways[newIndex];
@@ -595,10 +588,25 @@ const checkSpeedViolation = () => {
     }
 }
 
+const checkEndZone = () => {
+    if (!WORLD.endZone) {
+        return;
+    }
+    WORLD.endZone.forEach((zone) => {
+        if(zone.bbox.containsPoint(WORLD.player.position) /**  && GAME.numOfSign === 0 */) {
+            setTimeout(function(){ 
+                GAME.endGame();
+            }, 2000);
+        }
+    });
+}
+
 var roundaboutViolationFlag = false;
 var roundaboutIndex = -1;
 const checkRoundaboutViolation = () => {
-
+    if(!WORLD.roundabouts) {
+        return;
+    }
     var oldIndex = roundaboutIndex;
     roundaboutIndex = WORLD.roundabouts.findIndex((sphere) => sphere.containsPoint(WORLD.player.position));
 
@@ -622,6 +630,9 @@ const checkRoundaboutViolation = () => {
 var violationFlag = false;
 var oneWayIndex = -1;
 const checkOneWayViolation = () => {
+    if (!WORLD.one_ways) {
+        return;
+    }
 
     var oldWay = oneWayIndex;
     /** kiểm tra xe player có đang ở trong vùng one way nào không */
@@ -653,7 +664,9 @@ const checkOneWayViolation = () => {
 var pavementViolationFlag = false;
 var pavementIndex = -1;
 const checkPavementViolation = () => {
-
+    if(!WORLD.pavement) {
+        return;
+    }
     var oldIndex = pavementIndex;
     pavementIndex = WORLD.pavement.findIndex((road) => road.bbox.containsPoint(WORLD.player.position));
 
