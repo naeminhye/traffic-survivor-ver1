@@ -882,13 +882,13 @@ const environmentInit = function (file) {
                 GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
                 /** residental buildings */
-                var houseTexture;
-                var randomSize = 0;//= Math.random();
-                var randomHeight = Math.floor((Math.random()) * 6) + 1; 
-                var randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
+                let houseTexture;
+                let randomSize = 0;//= Math.random();
+                let randomHeight = Math.floor((Math.random()) * 6) + 1; 
+                let randomHouse = Math.floor((Math.random()) * attachedHouseList.length) + 0; 
 
-                var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-                var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+                let buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+                let buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
                 houseTexture = WORLD.textureLoader.load(attachedHouseList[randomHouse].url, function ( texture ) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -896,17 +896,17 @@ const environmentInit = function (file) {
                     texture.repeat.set( 1, randomHeight );
                     // texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
                 });
-                var ratio = attachedHouseList[randomHouse].width / attachedHouseList[randomHouse].height;
+                let ratio = attachedHouseList[randomHouse].width / attachedHouseList[randomHouse].height;
 
-                var buildingMaterial = new THREE.MeshBasicMaterial({
+                let buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
 
-                var _width = tile.size * UNIT_SIZE - randomSize;
-                var _height = (UNIT_SIZE * tile.size) * randomHeight / ratio;
-                var _depth =  tile.size * UNIT_SIZE - randomSize;
+                let _width = tile.size * UNIT_SIZE - randomSize;
+                let _height = (UNIT_SIZE * tile.size) / ratio;
+                let _depth =  tile.size * UNIT_SIZE - randomSize;
                 
-                var cube = new THREE.Mesh(new THREE.BoxGeometry(_width, _height, _depth), buildingMaterial);
+                let cube = new THREE.Mesh(new THREE.BoxGeometry(_width, _height * randomHeight, _depth), buildingMaterial);
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)) + (UNIT_SIZE * tile.size * 0) / ratio, buildingZWidth);
                 // Add the cube
@@ -918,18 +918,16 @@ const environmentInit = function (file) {
                 // materialIndex ++;
 
                 // create a cannon body
-                var houseShape = new CANNON.Box(new CANNON.Vec3(
+                let houseShape = new CANNON.Box(new CANNON.Vec3(
                     _width / 2, 
                     _height / 2, 
                     _depth / 2
                 ));
-                var houseBody = new CANNON.Body({ mass: 5 });
+                let houseBody = new CANNON.Body({ mass: 5 });
                 houseBody.addShape(houseShape);
-                houseBody.position.set(cube.position.x, cube.position.y, cube.position.z);
+                houseBody.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
                 houseBody.useQuaternion = true;
                 houseBody.computeAABB();
-                // disable collision response so objects don't move when they collide
-                // against each other
                 houseBody.collisionResponse = true;
                 houseBody.addEventListener('collide', function (object) {
                     if (object.body.id == 0)
@@ -960,29 +958,30 @@ const environmentInit = function (file) {
                 GAME.mapContext.fillRect(tile.x * CANVAS_UNIT, tile.z * CANVAS_UNIT, tile.size * CANVAS_UNIT, tile.size * CANVAS_UNIT);
 
                 /** residental buildings */
-                var houseTexture;
-                var randomHouse = Math.floor((Math.random()) * terraceHouseList.length) + 0; 
+                let houseTexture;
+                let randomHouse = Math.floor((Math.random()) * terraceHouseList.length) + 0; 
                 /** residental buildings */
-                var houseTexture;
 
-                var buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
-                var buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
+                let buildingXWidth = ((2 * tile.x + tile.size - 1) * UNIT_SIZE) / 2;
+                let buildingZWidth = ((2 * tile.z + tile.size - 1) * UNIT_SIZE) / 2;
 
-                
                 houseTexture = WORLD.textureLoader.load(terraceHouseList[randomHouse].url, function ( texture ) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.offset.set( 0, 0 );
                     texture.repeat.set( 1, 1 );
                     // texture.anisotropy = WORLD.renderer.capabilities.getMaxAnisotropy();
                 });
-                var ratio = terraceHouseList[randomHouse].width / terraceHouseList[randomHouse].height;
+                let ratio = terraceHouseList[randomHouse].width / terraceHouseList[randomHouse].height;
 
-                var buildingMaterial = new THREE.MeshBasicMaterial({
+                let buildingMaterial = new THREE.MeshBasicMaterial({
                     map: houseTexture
                 });
                 // houseMaterials.push(buildingMaterial);
+                let _width = tile.size * UNIT_SIZE;
+                let _height = (UNIT_SIZE * tile.size) / ratio;
+                let _depth =  tile.size * UNIT_SIZE;
                 
-                var cube = new THREE.Mesh(new THREE.BoxGeometry(tile.size * UNIT_SIZE, (UNIT_SIZE * tile.size) / ratio, tile.size * UNIT_SIZE), buildingMaterial);
+                let cube = new THREE.Mesh(new THREE.BoxGeometry(_width, _height, _depth), buildingMaterial);
                 // cube.material.map.minFilter = THREE.LinearFilter;
                 // Set the cube position
                 cube.position.set(buildingXWidth, ((UNIT_SIZE * tile.size) / (ratio * 2)), buildingZWidth);
@@ -993,18 +992,16 @@ const environmentInit = function (file) {
                 // materialIndex ++;
 
                 // create a cannon body
-                var houseShape = new CANNON.Box(new CANNON.Vec3(
-                    (tile.size * UNIT_SIZE) / 2, 
-                    ((UNIT_SIZE * tile.size) / ratio) / 2, 
-                    (tile.size * UNIT_SIZE) / 2
+                let houseShape = new CANNON.Box(new CANNON.Vec3(
+                    _width / 2, 
+                    _height / 2, 
+                    _depth / 2
                 ));
-                var houseBody = new CANNON.Body({ mass: 5 });
+                let houseBody = new CANNON.Body({ mass: 5 });
                 houseBody.addShape(houseShape);
                 houseBody.position.copy(cube.position);
                 houseBody.useQuaternion = true;
                 houseBody.computeAABB();
-                // disable collision response so objects don't move when they collide
-                // against each other
                 houseBody.collisionResponse = true;
                 houseBody.addEventListener('collide', function (object) {
                     if (object.body.id == 0)

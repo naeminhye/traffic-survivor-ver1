@@ -445,28 +445,24 @@ const checkLaneViolation = () => {
     if(roadPosXLeftIndex !== -1 && oldIndex !== roadPosXLeftIndex && oldDir !== "left") {
         laneIndex = roadPosXLeftIndex;
         laneDir = "left";
-        console.log("roadPosXLeftIndex", roadPosXLeftIndex);
         toastr.remove();
         toastr.error("Bạn vừa đi sai làng đường!!!");
     }
     if (roadPosXRightIndex !== -1 && oldIndex !== roadPosXRightIndex && oldDir !== "right") {
         laneIndex = roadPosXRightIndex;
         laneDir = "right";
-        console.log("roadPosXRightIndex", roadPosXRightIndex);
         toastr.remove();
         toastr.error("Bạn vừa đi sai làng đường!!!");
     }
     if (roadPosZUpIndex !== -1 && oldIndex !== roadPosZUpIndex && oldDir !== "up") {
         laneIndex = roadPosZUpIndex;
         laneDir = "up";
-        console.log("roadPosZUpIndex", roadPosZUpIndex);
         toastr.remove();
         toastr.error("Bạn vừa đi sai làng đường!!!");
     }
     if (roadPosZDownIndex !== -1 && oldIndex !== roadPosZDownIndex && oldDir !== "down") {
         laneIndex = roadPosZDownIndex;
         laneDir = "down";
-        console.log("roadPosZDownIndex", roadPosZDownIndex);
         toastr.remove();
         toastr.error("Bạn vừa đi sai làng đường!!!");
     }
