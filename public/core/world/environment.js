@@ -362,9 +362,7 @@ const loadModelToWorld = (model) => {
                     // boxBody.collisionFilterGroup = 2;       
                     // boxBody.collisionFilterMask = 1;
 
-                    if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
-                        WORLD.world.add(boxBody);
-                    }
+                    WORLD.world.add(boxBody);
 
                     boxBody.position.copy(obj.position);
 
@@ -1363,11 +1361,6 @@ const environmentInit = function (file) {
 
             bikeBody = objectToBody(PLAYER.bike)
 
-            if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
-                // WORLD.world.add(bikeBody);
-                // bikeBody.collisionFilterGroup = 1;       
-                // bikeBody.collisionFilterMask = 2;
-            }
         });
     });
 }

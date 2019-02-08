@@ -27,10 +27,6 @@
                     <input id="enableCameraChange" name="camera-mode" type="checkbox" value="camera-mode">
                     <label for="enableCameraChange">Cho phép thay đổi góc nhìn của Camera</label>
                 </div>
-                <div class="wrapper">
-                    <input id="enableCollision" name="collision-mode" type="checkbox" value="collision-mode">
-                    <label for="enableCollision">Cho phép kiểm tra va chạm</label>
-                </div>
             </div>
             <button class="clip menu-button" id="option-save">Lưu</button>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
@@ -54,12 +50,7 @@
                 cameraMode = true;
             }
             $("#enableCameraChange").prop('checked', cameraMode);
-            
-            // enable collision mode
-            if( gameOptions.hasOwnProperty("enableCollision") && gameOptions["enableCollision"] ) {
-                collisionMode = true;
-            }
-            $("#enableCollision").prop('checked', collisionMode);
+        
         });
 
         $("#option-save").click(function() {
@@ -80,16 +71,7 @@
             else {
                 gameOptions = Object.assign({ enableCameraChange: cameraMode }, gameOptions);
             }
-
-            // enable collision mode
-            let collisionMode = $("#enableCollision").prop('checked');
-            if(gameOptions.hasOwnProperty("enableCollision")) {
-                gameOptions["enableCollision"] = collisionMode;
-            }
-            else {
-                gameOptions = Object.assign({ enableCollision: collisionMode }, gameOptions);
-            }
-
+            
             // save to local storage
             localStorage.setObject("gameOptions", gameOptions);
         });
