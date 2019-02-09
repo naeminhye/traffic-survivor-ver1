@@ -27,9 +27,21 @@
                     <input id="enableCameraChange" name="camera-mode" type="checkbox" value="camera-mode">
                     <label for="enableCameraChange">Cho phép thay đổi góc nhìn của Camera</label>
                 </div>
+                <button class="clip menu-button" id="option-clear-storage" data-target="#reset-dialog">Reset</button>
             </div>
             <button class="clip menu-button" id="option-save">Lưu</button>
             <button class="clip menu-button" onclick="javascript:history.back()">Trở về</button>
+        </div>
+        <div id="reset-dialog" class="center-div dialog">
+            <div class="confirmation-popup">
+                <div class="question">
+                    <span>Bạn muốn reset?</span>
+                </div>
+                <div class="answers">
+                    <button id="confirm-reset" class="clip menu-button">Có</button>
+                    <button id="cancel-reset" class="clip menu-button">Không</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -74,6 +86,19 @@
             
             // save to local storage
             localStorage.setObject("gameOptions", gameOptions);
+        });
+
+        $("#option-clear-storage").click(function() {
+            $("#reset-dialog").css("display", "block");
+        });
+
+        $("#cancel-reset").click(() => {
+            $("#reset-dialog").css("display", "none");
+        });
+
+        $("#confirm-reset").click(() => {
+            localStorage.clear();
+            window.location.reload();
         });
     </script>
 </body>

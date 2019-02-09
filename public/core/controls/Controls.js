@@ -274,7 +274,7 @@ var Controls = function (camera, cannonBody) {
                     PLAYER.bike.rotation.y += rotateAngle * 1.2;
                 }
                 // if (Math.abs(angleToPlayerDelta) < 170 && !leftSignal) {
-                //     GAME.handleFining("Không bật si nhang!!", 100000);
+                //     GAME.handleFining("Không bật si nhang!!", 100);
                 // }
             }
         }
@@ -288,7 +288,7 @@ var Controls = function (camera, cannonBody) {
                     PLAYER.bike.rotation.y -= rotateAngle * 1.2;
                 }
                 // if (Math.abs(angleToPlayerDelta) < 170 && !rightSignal) {
-                //     GAME.handleFining("Không bật si nhang!!", 100000);
+                //     GAME.handleFining("Không bật si nhang!!", 100);
                 // }
             }
         }

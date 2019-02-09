@@ -1419,7 +1419,7 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
     });
 
     if(id === ROAD_POS_Z) {
-        let roadList = findDoubledRoadByDirection(ROAD_POS_Z, "VERTICAL", map);
+        let roadList = findDoubleRoadByDirection(ROAD_POS_Z, "VERTICAL", map);
         if(roadList) {
             roadList.forEach(function(road) {
                 var upBox = createBBox(road.up, unit_size);
@@ -1430,7 +1430,29 @@ const loadTextureToGround = (id, url, map, unit_size, isMultiple, minimap, callb
         }
     }
     else if(id === ROAD_POS_X) {
-        let roadList = findDoubledRoadByDirection(ROAD_POS_X, "HORIZONTAL", map);
+        let roadList = findDoubleRoadByDirection(ROAD_POS_X, "HORIZONTAL", map);
+        if(roadList) {
+            roadList.forEach(function(road) {
+                var leftBox = createBBox(road.left, unit_size);
+                WORLD.roadPosXLeftList.push({ box: leftBox.area, bbox: leftBox.areaBBox });
+                var rightBox = createBBox(road.right, unit_size);
+                WORLD.roadPosXRightList.push({ box: rightBox.area, bbox: rightBox.areaBBox });
+            });
+        }
+    }
+    else if(id === DOUBLE_ROAD_POS_Z) {
+        let roadList = findQuadrupleRoadByDirection(DOUBLE_ROAD_POS_Z, "VERTICAL", map);
+        if(roadList) {
+            roadList.forEach(function(road) {
+                var upBox = createBBox(road.up, unit_size);
+                WORLD.roadPosZUpList.push({ box: upBox.area, bbox: upBox.areaBBox });
+                var downBox = createBBox(road.down, unit_size);
+                WORLD.roadPosZDownList.push({ box: downBox.area, bbox: downBox.areaBBox });
+            });
+        }
+    }
+    else if(id === DOUBLE_ROAD_POS_X) {
+        let roadList = findQuadrupleRoadByDirection(DOUBLE_ROAD_POS_X, "HORIZONTAL", map);
         if(roadList) {
             roadList.forEach(function(road) {
                 var leftBox = createBBox(road.left, unit_size);

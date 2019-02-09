@@ -445,26 +445,22 @@ const checkLaneViolation = () => {
     if(roadPosXLeftIndex !== -1 && oldIndex !== roadPosXLeftIndex && oldDir !== "left") {
         laneIndex = roadPosXLeftIndex;
         laneDir = "left";
-        toastr.remove();
-        toastr.error("Bạn vừa đi sai làng đường!!!");
+        GAME.handleFining("Bạn vừa đi sai làng đường!!!", 300);
     }
     if (roadPosXRightIndex !== -1 && oldIndex !== roadPosXRightIndex && oldDir !== "right") {
         laneIndex = roadPosXRightIndex;
         laneDir = "right";
-        toastr.remove();
-        toastr.error("Bạn vừa đi sai làng đường!!!");
+        GAME.handleFining("Bạn vừa đi sai làng đường!!!", 300);
     }
     if (roadPosZUpIndex !== -1 && oldIndex !== roadPosZUpIndex && oldDir !== "up") {
         laneIndex = roadPosZUpIndex;
         laneDir = "up";
-        toastr.remove();
-        toastr.error("Bạn vừa đi sai làng đường!!!");
+        GAME.handleFining("Bạn vừa đi sai làng đường!!!", 300);
     }
     if (roadPosZDownIndex !== -1 && oldIndex !== roadPosZDownIndex && oldDir !== "down") {
         laneIndex = roadPosZDownIndex;
         laneDir = "down";
-        toastr.remove();
-        toastr.error("Bạn vừa đi sai làng đường!!!");
+        GAME.handleFining("Bạn vừa đi sai làng đường!!!", 300);
     }
     // else {
     //     laneIndex = -1;
@@ -626,7 +622,7 @@ const checkRoundaboutViolation = () => {
     }
     else {
         if (!roundaboutViolationFlag) {
-            GAME.handleFining("Đi sai đường tại vòng xuyến!", 100000);
+            GAME.handleFining("Đi sai đường tại vòng xuyến!", 100);
             roundaboutViolationFlag = true;
         }
     }
