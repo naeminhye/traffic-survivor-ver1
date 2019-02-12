@@ -277,7 +277,7 @@
 	"models": {
 		"vehicles": [
             {
-                "name": "simple-car-10-42",
+                "name": "simple-car-4-5",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":20,"y":0,"z":25},
@@ -304,7 +304,7 @@
                 "velocity": 0.04
 			},
 			{
-                "name": "simple-car-10-42",
+                "name": "simple-car-15-18",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":125,"y":0,"z":90},
@@ -316,7 +316,7 @@
                 "velocity": 0.045
 			},
 			{
-                "name": "simple-car-10-42",
+                "name": "simple-car-40-19",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":200,"y":0,"z":95},
@@ -342,7 +342,7 @@
                 "velocity": 0.045
 			},
 			{
-                "name": "simple-car-10-42",
+                "name": "simple-car-24-4",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":120,"y":0,"z":20},
@@ -373,7 +373,7 @@
                 "velocity": 0.04
             },
 			{
-                "name": "simple-car-10-42",
+                "name": "simple-car-27-4",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":135,"y":0,"z":20},
@@ -385,7 +385,7 @@
                 "velocity": 0.04
             },
 			{
-                "name": "simple-car-10-42",
+                "name": "simple-car-24-24",
                 "loader_type": "object",
                 "object_type": "vehicles",
 				"position": {"x":120,"y":0,"z":210},

@@ -216,26 +216,7 @@ var Controls = function (camera, cannonBody) {
         targetVec.set(0, 0, -1);
         quat.multiplyVector3(targetVec);
     }
-
-    // this.getDirection = function () {
-
-	// 	// assumes the camera itself is not rotated
-
-	// 	var direction = new THREE.Vector3( 0, 0, - 1 );
-	// 	var rotation = new THREE.Euler( 0, 0, 0, 'YXZ' );
-
-	// 	return function ( v ) {
-
-	// 		rotation.set( pitchObject.rotation.x, yawObject.rotation.y, 0 );
-
-	// 		v.copy( direction ).applyEuler( rotation );
-
-	// 		return v;
-
-	// 	};
-
-	// }();
-
+    
     // Moves the camera to the Cannon.js object position and adds velocity to the object if the run key is down
     var inputVelocity = new THREE.Vector3();
     var euler = new THREE.Euler();
@@ -260,8 +241,6 @@ var Controls = function (camera, cannonBody) {
         else {
             $("#right-led").removeClass("active");
         }
-
-        
 
         /** Rotation */
         if(rotateLeft) {
@@ -332,7 +311,7 @@ var Controls = function (camera, cannonBody) {
         velocity.z += inputVelocity.z;
         
         var speed = Math.sqrt((velocity.x)*(velocity.x) + (velocity.z)*(velocity.z));
-        PLAYER.status.speed = (3.6 * (speed / 60)); // convert mps to kph
+        PLAYER.status.speed = (3.6 * (speed / 60) * 0.5); // convert mps to kph
     
         yawObject.position.copy(cannonBody.position);
         if(WORLD.player) {
